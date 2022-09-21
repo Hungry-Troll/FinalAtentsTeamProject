@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/LoadSelect.cs.meta
+guid: e08a417dc2990ee41bc9e15d03a94161
+========
+guid: d734e259af22e0d4b8ed7170a9e8c70a
+>>>>>>>> origin/TeamProject:Assets/Scripts/Managers/DataManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
