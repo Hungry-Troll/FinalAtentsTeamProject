@@ -6,7 +6,7 @@ public class FieldManager : MonoBehaviour
 {
     //게임 시작시 Awake , Start, Update 사용 용도 매니저
     PlayerController _player;
-    _Pet_01 _pet;
+    Pet _pet;
     ItemController _item;
 
     public GameObject _startPosObject;
@@ -56,7 +56,7 @@ public class FieldManager : MonoBehaviour
         }
         return null;
     }
-    public _Pet_01 CreatePet(Vector3 origin, string petName)
+    public Pet CreatePet(Vector3 origin, string petName)
     {
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
@@ -67,7 +67,7 @@ public class FieldManager : MonoBehaviour
             if (temPet != null)
             {
                 GameObject pet = GameObject.Instantiate<GameObject>(temPet, hit.point, Quaternion.identity);
-                _pet = pet.AddComponent<_Pet_01>();
+                _pet = pet.AddComponent<Pet>();
                 return _pet;
             }
         }
