@@ -14,23 +14,26 @@ using UnityEngine;
 public class PlayerStat : Stat
 {
     // 플레이어 스탯 싱글톤으로 관리
-    private static PlayerStat _instance;
+    // private static PlayerStat _instance;
+
 
     // null 대비 getter
-    public static PlayerStat Instance()
+
+/*    public static PlayerStat Instance()
     {
         if (_instance == null)
         {
             _instance = new PlayerStat();
         }
         return _instance;
-    }
+    }*/
 
     // setter
-    public static PlayerStat SetInstance
+/*    public static PlayerStat SetInstance
     {
         set { _instance = value; }
-    }
+        // 생성한 게임매니저 플레이어 스텟에 넣음
+    }*/
 
     // 이름
     [SerializeField]
@@ -73,10 +76,3 @@ public class PlayerStat : Stat
     }
 }
 
-// 직업 코드
-public enum JOB
-{
-    Superhuman,
-    Cyborg,
-    Scientist
-}

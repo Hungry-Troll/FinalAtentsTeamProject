@@ -20,7 +20,9 @@ public class Pet : MonoBehaviour
     }
     void Start()
     {
-        player = GameObject.Find("Player").transform;
+        //  오브젝트매니저에서 게임 시작할 때 생성한 플레이어 정보를 이용해서 연결
+        player= GameManager.Obj._playerController.transform;
+        //player = GameObject.Find("Player").transform;
         target = GameObject.FindGameObjectWithTag("Monster").transform;
     }
     void ChaseStart()

@@ -11,7 +11,7 @@ using UnityEngine;
 // 레벨
 
 [System.Serializable]
-public class Stat
+public class Stat : MonoBehaviour
 {
     // 현재 체력
     [SerializeField]

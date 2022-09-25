@@ -5,16 +5,18 @@ using UnityEditorInternal;
 using UnityEngine;
 using static Define;
 
-public class MonsterManager : MonoBehaviour
+public class MonsterManagerEX
 {
-    // 몬스터 매니저 싱글톤 생성
-    public static MonsterManager instance;
+    // 몬스터 매니저 싱글톤 생성 >> 게임매니저로 연결
+    // public static MonsterManager instance;
     MonsterController _mobCon;
     //몬스터가 죽었을때
     public bool Property_isDie
     { get; set; }
     // 생성할 프리팹
-    [SerializeField] GameObject MobPrefab = null;
+    // 하단 CreateMonster() RandomPos() 주석 풀고 나서 같이 처리
+    //[SerializeField] GameObject MobPrefab = null;
+
     // 객체를 저장할 리스트
     public List<Vector3> _mobPosList
     { get; set; }
@@ -33,11 +35,12 @@ public class MonsterManager : MonoBehaviour
     {
         _mobPosList = new List<Vector3>();
         _mobCount = 5;
-        instance = this;
+        // 몬스터 매니저 싱글톤 생성 >> 게임매니저로 연결
+        //instance = this;
 
         for (int i = 0; i < _mobCount; i++)
         {
-            CreateMonster();
+            // CreateMonster();
             Debug.Log(_mobPosList[i]);
         }
         _currentTime = new float[_mobCount];
@@ -48,20 +51,27 @@ public class MonsterManager : MonoBehaviour
         ReSpawnTime();
     }
 
-    public void CreateMonster()
-    {
-        GameObject mob = Instantiate(MobPrefab, gameObject.transform);
-        _mobCon = mob.transform.GetComponent<MonsterController>();
-        _mobCon._mobNum = _mobSetNum++;
-        mob.transform.position = RandomPos(40);
-        _mobPosList.Add(mob.transform.position);
-        Property_isDie = false;
-        gameObject.SetActive(true);
+    // 몬스터 생성코드 >> 추후 필드매니저를 통해서 생성
+    // 던전 나오면 적용
 
-    }
+    //public void CreateMonster()
+    //{
+    //    GameObject mob = Instantiate(MobPrefab, gameObject.transform);
+    //    _mobCon = mob.transform.GetComponent<MonsterController>();
+    //    _mobCon._mobNum = _mobSetNum++;
+    //    mob.transform.position = RandomPos(40);
+    //    _mobPosList.Add(mob.transform.position);
+    //    Property_isDie = false;
+    //    gameObject.SetActive(true);
+
+    //}
+
+
+    // 몬스터 위치 코드 >> 추후 필드매니저를 통해서 생성하는 것으로 변경
+    // 던전 나오면 적용
 
     //onUnitSphere함수를 사용하여 임의의 원 범위 안에서 몬스터 스폰
-    public Vector3 RandomPos(float radius)
+    public Vector3 RandomPos(float radius, Transform transform)
     {
         Vector3 _pos = Random.onUnitSphere;
         //높이는 0으로 설정
@@ -69,6 +79,9 @@ public class MonsterManager : MonoBehaviour
         float r = Random.Range(0.0f, radius);
         return (_pos * r) + transform.position;
     }
+
+
+    // 리스폰 시간
 
     public void ReSpawnTime()
     {

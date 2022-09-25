@@ -1953,7 +1953,7 @@ GameObject:
   - component: {fileID: 7903527019718776812}
   - component: {fileID: -1197828656884701881}
   m_Layer: 0
-  m_Name: Velociraptor
+  m_Name: Velociraptor 1
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

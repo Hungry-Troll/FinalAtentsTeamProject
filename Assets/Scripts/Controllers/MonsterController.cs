@@ -12,7 +12,7 @@ public class MonsterController : MonoBehaviour
     //몬스터 오브젝트 좌표
     public Vector3 _mobpos;
     //몬스터 이동속도
-    [SerializeField] float _speed = 10.0f;
+    [SerializeField] float _speed = 2.0f;
     //몬스터 회전속도
     float _rotateSpeed;
     //몬스터 공격반경
@@ -48,7 +48,9 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _PlayerPos = GameObject.Find("player").transform;
+        // 게임매니저에서 플레이어 정보 가지고 옴
+        _PlayerPos= GameManager.Obj._playerController.transform;
+        //_PlayerPos = GameObject.Find("player").transform;
         _PosToPos = Vector3.Distance(_PlayerPos.position, transform.position);
         UpdateState();
     }
@@ -124,7 +126,7 @@ public class MonsterController : MonoBehaviour
     
     public void UpdateMoving()
     {
-        _speed = 7.0f;
+        _speed = 2.0f;
         if(_PosToPos <= _distance && _PosToPos > _attack)
         {
             Vector3 targetPos = new Vector3(2.5f, 0, 0);
@@ -142,11 +144,12 @@ public class MonsterController : MonoBehaviour
         else if(_PosToPos > _distance)
         {
             //this.gameObject.transform.position = MonsterManager.instance._mobPosList[_mobNum];
-            this.transform.position = Vector3.MoveTowards(transform.position, MonsterManager.instance._mobPosList[_mobNum], _speed * Time.deltaTime);
-            Vector3 _lookRotation = MonsterManager.instance._mobPosList[_mobNum] - this.transform.position;
+            //MonsterManager를 게임매니저에 연결해서 사용. MonsterManager >> GameManager.Mob
+            this.transform.position = Vector3.MoveTowards(transform.position, GameManager.Mob._mobPosList[_mobNum], _speed * Time.deltaTime);
+            Vector3 _lookRotation = GameManager.Mob._mobPosList[_mobNum] - this.transform.position;
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(_lookRotation), Time.deltaTime * _rotateSpeed);
 
-            if(this.transform.position == MonsterManager.instance._mobPosList[_mobNum])
+            if(this.transform.position == GameManager.Mob._mobPosList[_mobNum])
             {
                 Property_state=CreatureState.Idle;
                 return;
@@ -191,7 +194,8 @@ public class MonsterController : MonoBehaviour
             Debug.Log("현재 몬스터 체력 = " + _hp);
             if (_hp <= 0)
             {
-                MonsterManager.instance.Property_isDie = true;
+                //MonsterManager를 게임매니저에 연결해서 사용. MonsterManager >> GameManager.Mob
+                GameManager.Mob.Property_isDie = true;
                 Debug.Log("몬스터 죽음!!");
                 Property_state = CreatureState.Dead;
                 _hp = 10.0f;

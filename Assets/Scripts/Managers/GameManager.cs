@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     UiManager _ui = new UiManager();
     ObjectManager _obj = new ObjectManager();
     CameraManager _cam = new CameraManager();
+    MonsterManagerEX _mob = new MonsterManagerEX();
+    StatManager _stat = new StatManager();
     //
     public static ResourceManager Resource 
     { 
@@ -47,6 +49,14 @@ public class GameManager : MonoBehaviour
     public static CameraManager Cam
     {
         get { return _instance._cam; }
+    }
+    public static MonsterManagerEX Mob
+    {
+        get { return _instance._mob; }
+    }
+    public static StatManager Stat
+    {
+        get { return _instance._stat; }
     }
     //
     // Start is called before the first frame update

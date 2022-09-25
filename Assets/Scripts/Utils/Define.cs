@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class Define
 {
+
+    public enum Monster
+    {
+        Parasaurolophus,
+        Pteranodon,
+        Velociraptor,
+    }
+
+    public enum Job
+    {
+        Superhuman,
+        Cyborg,
+        Scientist
+    }
+
     public enum ItemType
     {
         Equipment,

@@ -23,7 +23,6 @@ public class ItemController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTrigger");
         // 플레이어 콜라이더와 충돌하면
         if(other == _playerCollider)
         {

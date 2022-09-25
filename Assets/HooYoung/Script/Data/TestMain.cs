@@ -8,8 +8,10 @@ using System.Text;
 
 public class TestMain : MonoBehaviour
 {
+    //StatManager 로 변경함
+
     // 싱글톤 객체 가져오기
-    private PlayerStat _player = PlayerStat.Instance();
+/*    private PlayerStat _player = PlayerStat.Instance();
 
     private void Start()
     {
@@ -18,7 +20,7 @@ public class TestMain : MonoBehaviour
 
         // 로드하고 PlayerStat 싱글톤 객체에 넣는다
         LoadJson();
-    }
+    }*/
 
     void Update()
     {
@@ -26,7 +28,7 @@ public class TestMain : MonoBehaviour
     }
 
     // json 파일 로드 후 스탯들 PlayerStat 싱글톤 객체에 넣는 함수
-    void LoadJson()
+/*    void LoadJson()
     {
         // 불러올 파일 이름
         string fileName = "playerStat";
@@ -43,25 +45,25 @@ public class TestMain : MonoBehaviour
         PlayerStat.SetInstance = JsonUtility.FromJson<PlayerStat>(json);
 
         // 디버깅용
-        /*
+        *//*
         Debug.Log("플레이어 이름 : " + _player.Name);
         Debug.Log("레벨 : " + _player.Lv);
         Debug.Log("직업 : " + _player.Job);
         Debug.Log("기본 공격력 : " + _player.Atk);
         Debug.Log("최대 체력 : " + _player.Max_Hp);
         Debug.Log("레벨업 경험치 : " + _player.Lv_Exp);
-        */
-    }
+        *//*
+    }*/
 
     // 플레이어 스탯 json 파일 생성 및 저장 
     // _Job : JOB 타입 enum
     // 강화인간 : JOB.Superhuman
     // 사이보그 : JOB.Cyborg
     // 사이언티스트 : JOB.Scientist
-    void CreateFile(int _Lv, JOB _Job)
+/*    void CreateFile(int _Lv, JOB _Job)
     {
         // 디버깅용 임시로 리터럴 값 넣음
-        /*
+        *//*
         _player.Name = "p1";
         _player.Lv = 2;
         _player.Hp = 100;
@@ -69,7 +71,7 @@ public class TestMain : MonoBehaviour
         _player.Def = 0;
         _player.Exp = 0;
         _player.Job = "Scientist";
-        */
+        *//*
 
         // 레벨별 직업별 갈리는 스탯 setting
         SortStat(_Lv, _Job);
@@ -85,10 +87,10 @@ public class TestMain : MonoBehaviour
         byte[] data = Encoding.UTF8.GetBytes(json);
         fileStream.Write(data, 0, data.Length);
         fileStream.Close();
-    }
+    }*/
 
     // 레벨, 직업별 초기값 정하는 함수
-    void SortStat(int lv, JOB job)
+/*    void SortStat(int lv, JOB job)
     {
         // 레벨
         _player.Lv = lv;
@@ -132,5 +134,5 @@ public class TestMain : MonoBehaviour
                 _player.Lv_Exp = 0;
                 break;
         }
-    }
+    }*/
 }
