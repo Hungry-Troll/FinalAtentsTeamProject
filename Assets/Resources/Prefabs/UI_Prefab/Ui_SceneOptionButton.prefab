@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -322, y: -427}
+  m_AnchoredPosition: {x: -188, y: -427}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3125510323609675795
@@ -60,14 +60,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.47058824}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.64705884}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fe52f932f95cf2f45b9df4274cf2f653, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cd30ba7e3893c240b8eba178574f1f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -121,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3125510323738522291}
-        m_TargetAssemblyTypeName: Ui_SceneInventoryButton, Assembly-CSharp
-        m_MethodName: OpenInventory
+      - m_Target: {fileID: 1603669218343016276}
+        m_TargetAssemblyTypeName: Ui_SceneOptionButton, Assembly-CSharp
+        m_MethodName: OpenOption
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -145,9 +145,9 @@ GameObject:
   - component: {fileID: 3125510323738522302}
   - component: {fileID: 3125510323738522301}
   - component: {fileID: 3125510323738522300}
-  - component: {fileID: 3125510323738522291}
+  - component: {fileID: 1603669218343016276}
   m_Layer: 5
-  m_Name: Ui_SceneInventoryButton
+  m_Name: Ui_SceneOptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3125510323738522291
+--- !u!114 &1603669218343016276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,6 +244,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3125510323738522290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33d800d434e16e840b203158bc75face, type: 3}
+  m_Script: {fileID: 11500000, guid: a2fca942ec3a73049a84f591efd9e6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

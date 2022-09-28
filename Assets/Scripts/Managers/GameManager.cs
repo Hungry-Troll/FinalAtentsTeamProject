@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
     CameraManager _cam = new CameraManager();
     MonsterManagerEX _mob = new MonsterManagerEX();
     StatManager _stat = new StatManager();
-    //
+    SoundManagerEX _sound = new SoundManagerEX();
+    
     public static ResourceManager Resource 
     { 
         get{ return _instance._resource; } 
@@ -58,7 +59,11 @@ public class GameManager : MonoBehaviour
     {
         get { return _instance._stat; }
     }
-    //
+    public static SoundManagerEX Sound
+    {
+        get { return _instance._sound; }
+    }
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -72,8 +77,9 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
-        // 게임매니저에서 Resource매니저/Ui매니저 Init(Awake 함수 대체)
-        GameManager.Resource.Init();  
+        // 게임매니저에서 리소스 매니저/사운드 매니저 Init(Awake 함수 대체)
+        GameManager.Resource.Init();
+        GameManager.Sound.Init();
     }
 }
 

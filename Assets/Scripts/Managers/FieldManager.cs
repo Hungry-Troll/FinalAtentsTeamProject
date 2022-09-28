@@ -24,13 +24,14 @@ public class FieldManager : MonoBehaviour
         // 게임매니저에서 Ui매니저 Init(Awake 함수 대체)
         // Ui 불러옴
         GameManager.Ui.Init();
-        GameManager.Cam.Init();
         // 플레이어 캐릭터 생성
         // 추후 플레이어 선택창에서 string 으로 이름만 받아오면 됨
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
         // Obj매니저에서 플레이어스크립트를 들고있게함
         GameManager.Obj._playerController = CreatePlayerCharacter(_startPos, "player");
+
+        GameManager.Cam.Init();
 
         // 몬스터 생성용 테스트 코드
         for (int i = 0; i < GameManager.Resource._monster.Count; i++)

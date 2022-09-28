@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
+using static Util;
+
 
 public class UiManager
 {
@@ -22,8 +24,17 @@ public class UiManager
     public InventoryController _inventoryController;
     public GameObject _inven;
 
-    // 인벤버튼
+    // 인벤 버튼
     public GameObject _invenButton;
+
+    // 옵션 버튼
+    public GameObject _OptionButton;
+
+    // 옵션 창
+    public GameObject _Option;
+
+    // 미니맵
+    public GameObject _miniMap;
 
     // 공격 타겟 몬스터
     public GameObject targetMonster;
@@ -78,6 +89,23 @@ public class UiManager
             _inventoryController._invenSlotList.Add(one);
         }
 
+        // 시작하면 미니맵 불러옴
+        GameObject miniMap = GameManager.Resource.GetUi("UI_MiniMap");
+        _miniMap = GameObject.Instantiate<GameObject>(miniMap);
+        _miniMap.transform.SetParent(go.transform);
+
+        // 시작하면 옵션버튼 불러옴
+        GameObject optionButton = GameManager.Resource.GetUi("Ui_SceneOptionButton");
+        _OptionButton = GameObject.Instantiate<GameObject>(optionButton);
+        _OptionButton.transform.SetParent(go.transform);
+
+        // 시작하면 옵션창 불러옴 // 사운드연결을 위해서 옵션창을 사운드 매니저에서 먼저 사용함. 동일한 게임오브젝트여야지만
+        // 옵션창 슬라이드가 정상 작동 되므로 사운드 매니저에서 옵션창을 가지고 옴
+
+        GameObject Option = GameManager.Sound._option;
+        _Option = GameObject.Instantiate<GameObject>(Option);
+        _Option.SetActive(false);
+
     }
     /// <summary>
     /// 인벤토리 관련
@@ -90,6 +118,29 @@ public class UiManager
     public void InventoryClose()
     {
         _inventoryController.gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// 옵션창 관련
+    /// </summary>
+
+    public void OptionOpen()
+    {
+        _Option.SetActive(true);
+        _Option.transform.localScale = new Vector3(1, 1, 1);
+        _Option.transform.localPosition = new Vector3(0, 0, 0);
+        Transform videoPlayer = Util.FindChild("VideoPlay", _Option.transform);
+        Transform tiltle = Util.FindChild("Title", _Option.transform);
+        Transform buttons = Util.FindChild("Buttons", _Option.transform);
+        Transform option = Util.FindChild("Option", _Option.transform);
+        videoPlayer.gameObject.SetActive(false);
+        tiltle.gameObject.SetActive(false);
+        buttons.gameObject.SetActive(false);
+        option.gameObject.SetActive(true);
+    }
+
+    public void OptionClose()
+    {
+        _Option.SetActive(false);
     }
 
     /// <summary>

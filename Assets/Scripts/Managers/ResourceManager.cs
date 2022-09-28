@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class ResourceManager 
@@ -13,6 +14,8 @@ public class ResourceManager
     public List<GameObject> _ui;
     public List<GameObject> _camera;
     public List<Sprite> _itemImage;
+    public List<AudioClip> _audioClip;
+    public List<AudioMixer> _audioMixer;
 
     // Start is called before the first frame update
     public void Init()
@@ -25,6 +28,8 @@ public class ResourceManager
         _ui = new List<GameObject>();
         _camera = new List<GameObject>();
         _itemImage = new List<Sprite>();
+        _audioClip = new List<AudioClip>();
+        _audioMixer = new List<AudioMixer>();
 
         GameObject[] player = Resources.LoadAll<GameObject>("Prefabs/Character_Prefab/");
         GameObject[] monster = Resources.LoadAll<GameObject>("Prefabs/Monster_Prefab/");
@@ -34,6 +39,8 @@ public class ResourceManager
         GameObject[] ui = Resources.LoadAll<GameObject>("Prefabs/Ui_Prefab/");
         GameObject[] camera = Resources.LoadAll<GameObject>("Prefabs/Camera_Prefab/");
         Sprite[] itemImage = Resources.LoadAll<Sprite>("Resource/Image/ItemImage");
+        AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Resource/Sound");
+        AudioMixer[] audioMixer = Resources.LoadAll<AudioMixer>("Resource/Sound");
 
         ListAdd(_player, player);
         ListAdd(_monster, monster);
@@ -43,19 +50,36 @@ public class ResourceManager
         ListAdd(_ui, ui);
         ListAdd(_camera, camera);
         ListAddImage(_itemImage, itemImage);
+        ListAddAudio(_audioClip, audioClip);
+        ListAddAudioMixer(_audioMixer, audioMixer);
     }
-    public void ListAddImage(List<Sprite> images, Sprite[] loadListImage)
-    {
-        foreach(Sprite one in loadListImage)
-        {
-            images.Add(one);
-        }
-    }
+
     public void ListAdd(List<GameObject> go, GameObject[] loadList)
     {
         foreach(GameObject one in loadList)
         {
             go.Add(one);
+        }
+    }
+    public void ListAddImage(List<Sprite> images, Sprite[] loadListImage)
+    {
+        foreach (Sprite one in loadListImage)
+        {
+            images.Add(one);
+        }
+    }
+    public void ListAddAudio(List<AudioClip> audioSource, AudioClip[] loadListAudio)
+    {
+        foreach (AudioClip one in loadListAudio)
+        {
+            audioSource.Add(one);
+        }
+    }
+    public void ListAddAudioMixer(List<AudioMixer> audioMixer, AudioMixer[] loadAudioMixer)
+    {
+        foreach (AudioMixer one in loadAudioMixer)
+        {
+            audioMixer.Add(one);
         }
     }
     public GameObject GetCharacter(string playerName)
@@ -146,4 +170,29 @@ public class ResourceManager
         }
         return null;
     }
+
+    public AudioClip GetAudioSource(string audioClip)
+    {
+        foreach (AudioClip one in _audioClip)
+        {
+            if (one.name.Equals(audioClip))
+            {
+                return one;
+            }
+        }
+        return null;
+    }
+
+    public AudioMixer GetAudioMixer(string audioMixer)
+    {
+        foreach (AudioMixer one in _audioMixer)
+        {
+            if (one.name.Equals(audioMixer))
+            {
+                return one;
+            }
+        }
+        return null;
+    }
+
 }
