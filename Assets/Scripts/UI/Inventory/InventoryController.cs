@@ -13,9 +13,18 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
 
     // 인벤토리 슬롯 배열을 리스트로 변환
     public List<InvenSlotController> _invenSlotList = new List<InvenSlotController>();
+
+    // 인벤토리 슬롯 번호 확인용 변수
+    public int _invenSlotCount;
+
+    // 플레이어 장착 무기
+    public GameObject _weapon;
+    // 플레이어 장착 방어구
+    public GameObject _armour;
+
     private void Start()
     {
-
+        _invenSlotCount = 0;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

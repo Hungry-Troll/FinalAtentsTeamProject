@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Define;
 using static Util;
 
 
 public class UiManager
 {
+
+    // UI Root용 변수
+    GameObject go;
+
     // HpMp바
     public GameObject _hpMpBar;
 
@@ -30,11 +35,18 @@ public class UiManager
     // 옵션 버튼
     public GameObject _OptionButton;
 
-    // 옵션 창
+    // 옵션 창(화면)
     public GameObject _Option;
 
     // 미니맵
     public GameObject _miniMap;
+
+    // 아이템스텟창
+    public GameObject _ItemStatView;
+
+    // 아이템 스텟창을 한개씩만 띄우기 위한 변수
+    // 추후 UI 창 갯수관리를 해야 되면 변경
+    public bool _itemStatOpen;
 
     // 공격 타겟 몬스터
     public GameObject targetMonster;
@@ -42,7 +54,7 @@ public class UiManager
     //Ui 관리는 여기에서 처리
     public void Init()
     {
-        GameObject go = new GameObject();
+        go = new GameObject();
         go.name = "@UI_Root";
 
         ////////////////////////////////
@@ -101,11 +113,16 @@ public class UiManager
 
         // 시작하면 옵션창 불러옴 // 사운드연결을 위해서 옵션창을 사운드 매니저에서 먼저 사용함. 동일한 게임오브젝트여야지만
         // 옵션창 슬라이드가 정상 작동 되므로 사운드 매니저에서 옵션창을 가지고 옴
-
         GameObject Option = GameManager.Sound._option;
         _Option = GameObject.Instantiate<GameObject>(Option);
         _Option.SetActive(false);
 
+        // 시작하면 아이템 스텟창을 한개씩만 띄우기 위한 변수를 초기화 // 1개만 열 수 있음
+        _itemStatOpen = false;
+        // 테스트용 임시 코드
+        GameObject itemStat = GameManager.Resource.GetUi("UI_ItemStatView");
+        _ItemStatView = GameObject.Instantiate<GameObject>(itemStat);
+        _ItemStatView.SetActive(false);
     }
     /// <summary>
     /// 인벤토리 관련
@@ -125,6 +142,8 @@ public class UiManager
 
     public void OptionOpen()
     {
+        // 옵션창 불러오고 위치와 크기 초기화
+        // 캔버스에서 필요없는 게임오브젝트 비활성화
         _Option.SetActive(true);
         _Option.transform.localScale = new Vector3(1, 1, 1);
         _Option.transform.localPosition = new Vector3(0, 0, 0);
@@ -138,13 +157,63 @@ public class UiManager
         option.gameObject.SetActive(true);
     }
 
-    public void OptionClose()
+    // 이름으로 각각 아이템 ui를 가지고 올 예정
+    // 아니면 ui에 직접 접근해서 재귀함수를 이용 각각 스텟이나 이미지 등등을 변경하는 방법도 존재함
+
+    public GameObject ItemStatViewOpen(GameObject invenSlotItem)
     {
-        _Option.SetActive(false);
+        //_itemStatOpen로 창 열려있는지 체크
+        if (_itemStatOpen == false)
+        {
+            // 아이템 정보 창 열고
+            _ItemStatView.SetActive(true);
+            _ItemStatView.transform.position = _inventoryController.transform.position;
+            // 넣을 대상 찾음
+            Transform itemImage = Util.FindChild("ItemImage", _ItemStatView.transform);
+            Image FindItemImage = itemImage.GetComponent<Image>();
+
+            // 넣을 이미지를 찾음
+            Sprite _sprite = GameManager.Resource.GetImage(invenSlotItem.name);
+            FindItemImage.sprite = _sprite;
+            _itemStatOpen = true;
+            return invenSlotItem;
+        }
+        return null;
     }
+
+    public void ItemStatViewClose(string name)
+    {
+        //_itemStatOpen로 창 열려있는지 체크
+        if (_itemStatOpen == true)
+        {
+            _ItemStatView.SetActive(false);
+            _itemStatOpen = false;
+        }
+    }
+
+    public void ItemStatViewWeaponEquip(Sprite sprite, Transform itemStatViewTr)
+    {
+/*        // 넣을 대상을 찾음
+        Transform itemImage = Util.FindChild("ItemImage", itemStatViewTr);
+
+        // 이미지 컴포넌트 찾고
+        Image findImage = itemImage.GetComponent<Image>();
+
+        // 이미지 넣음
+        findImage.sprite = sprite;
+
+        // 장착한 이미지 인벤에서 제거
+        GameManager.Ui._inventoryController._invenSlotList[GameManager.Ui._inventoryController._invenSlotCount - 1]._SlotItem.Clear();
+        GameManager.Ui._inventoryController._invenSlotCount--;*/
+    }
+
+
+
 
     /// <summary>
     /// 이하 씬 Attack버튼 관련
+    /// 추후 코드 수정 필요 
+    /// UI 매니저가 너무 비대해질경우 아래 공격버튼 및 스킬 버튼은 스킬매니저를 생성해서 관리 해야 될 수 있음
     /// </summary>
     public void AttackButton()
     {

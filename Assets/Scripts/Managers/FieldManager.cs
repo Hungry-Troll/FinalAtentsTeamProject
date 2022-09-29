@@ -97,6 +97,8 @@ public class FieldManager : MonoBehaviour
         }
         return null;
     }
+
+    // 아이템 타입에 따라 함수를 더 만들던지 아니면 조건문을 넣던지 // 함수를 하나 더 만드는게 편하긴 함
     public ItemController CreateFieldItem(Vector3 origin, string fieldItemName)
     {
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
@@ -110,6 +112,8 @@ public class FieldManager : MonoBehaviour
                 string tempName = temfieldItem.name;
                 GameObject fieldItem = GameObject.Instantiate<GameObject>(temfieldItem, hit.point, Quaternion.identity);
                 _item = fieldItem.AddComponent<ItemController>();
+                // 임시코드 우선 나오는 모든 아이템은 무기로 지정
+                _item._itemType = Define.ItemType.Weapon;
                 GameManager.Obj._itemContList.Add(_item);
                 _item.name = tempName;
                 return _item;

@@ -21,7 +21,8 @@ public class Define
 
     public enum ItemType
     {
-        Equipment,
+        Weapon,
+        Armour,
         Consumables,
     }
     public enum CreatureState

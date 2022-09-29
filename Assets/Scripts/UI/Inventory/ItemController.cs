@@ -11,7 +11,7 @@ public class ItemController : MonoBehaviour
     // 아이템 이미지 전달 용
     Sprite _sprite;
     // 아이템 타입 (아이템이 생성 될 때 정해줘야 됨 / 어떤 방식으로 구현할지 고민)
-    ItemType _itemType;
+    public ItemType _itemType;
 
 
     // Start is called before the first frame update
@@ -42,6 +42,9 @@ public class ItemController : MonoBehaviour
             Image image = invenImageTr.gameObject.GetComponent<Image>();
             // 이미지 대입 
             image.sprite = _sprite;
+            // 아이템 획득 시 인벤슬롯에서 카운트를 따로 세고 카운트를 다시 슬롯컨트롤러에 넘겨줌
+            // 아이템 장착 시 사용
+            GameManager.Ui._inventoryController._invenSlotCount++;
             // 필드 아이템 제거
             gameObject.SetActive(false);
         }

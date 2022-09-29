@@ -228,6 +228,146 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 0}
   _text: {fileID: 0}
+--- !u!1 &303217520979261372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6513808406600694598}
+  - component: {fileID: 6849424585551597140}
+  - component: {fileID: 2171523582653394104}
+  - component: {fileID: 6990916001590985619}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6513808406600694598
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303217520979261372}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3233695319466226881}
+  - {fileID: 3245877208034562550}
+  m_Father: {fileID: 2316786273716790743}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 202.37231, y: 332.2232}
+  m_SizeDelta: {x: -959.1519, y: -1006.0598}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6849424585551597140
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303217520979261372}
+  m_CullTransparentMesh: 1
+--- !u!114 &2171523582653394104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303217520979261372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6990916001590985619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303217520979261372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 753c4a5465333c74cb671a01bb4174ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _item: []
+  _invenSlotArray:
+  - {fileID: 7989969554460710918}
+  - {fileID: 3068990869349691934}
+  - {fileID: 3000595606719357593}
+  - {fileID: 4582820865439499923}
+  - {fileID: 1242537014839475228}
+  - {fileID: 2309721576042201755}
+  - {fileID: 644002622074945294}
+  - {fileID: 4526368103988417713}
+  - {fileID: 6642598617014764459}
+  - {fileID: 453891556272612715}
+  - {fileID: 2882229088493680348}
+  - {fileID: 5392797497205223940}
+  - {fileID: 5938306772138746423}
+  - {fileID: 1959045542850626604}
+  - {fileID: 8829888533966179036}
+  - {fileID: 8504048139019792901}
+  - {fileID: 7317434754701283616}
+  - {fileID: 4323355041579515516}
+  - {fileID: 7977789683138254545}
+  - {fileID: 1124489287910140850}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _invenSlotList:
+  - {fileID: 7989969554460710918}
+  - {fileID: 3068990869349691934}
+  - {fileID: 3000595606719357593}
+  - {fileID: 4582820865439499923}
+  - {fileID: 1242537014839475228}
+  - {fileID: 2309721576042201755}
+  - {fileID: 644002622074945294}
+  - {fileID: 4526368103988417713}
+  - {fileID: 6642598617014764459}
+  - {fileID: 453891556272612715}
+  - {fileID: 2882229088493680348}
+  - {fileID: 5392797497205223940}
+  - {fileID: 5938306772138746423}
+  - {fileID: 1959045542850626604}
+  - {fileID: 8829888533966179036}
+  - {fileID: 8504048139019792901}
+  - {fileID: 7317434754701283616}
+  - {fileID: 4323355041579515516}
+  - {fileID: 7977789683138254545}
+  - {fileID: 1124489287910140850}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &311188328497049856
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +382,7 @@ GameObject:
   - component: {fileID: 8282255717013793974}
   - component: {fileID: 8504048139019792901}
   m_Layer: 5
-  m_Name: Ui_Slot (15)
+  m_Name: Ui_Slot_16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,7 +490,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4077502228618367895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8504048139019792901}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8504048139019792901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,6 +548,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3836120071576138695}
+  - {fileID: 6513808406600694598}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -705,7 +858,7 @@ GameObject:
   - component: {fileID: 8613846962146187144}
   - component: {fileID: 7977789683138254545}
   m_Layer: 5
-  m_Name: Ui_Slot (18)
+  m_Name: Ui_Slot _19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -813,7 +966,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 138765124355836380}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7977789683138254545}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7977789683138254545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1143,7 +1308,7 @@ GameObject:
   - component: {fileID: 8680109156424124367}
   - component: {fileID: 4582820865439499923}
   m_Layer: 5
-  m_Name: Ui_Slot (3)
+  m_Name: Ui_Slot_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1251,7 +1416,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7333910665108242547}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4582820865439499923}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4582820865439499923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1411,7 +1588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00074220257}
+  m_AnchoredPosition: {x: 0, y: 0.000040225605}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2074016839932838696
@@ -1462,7 +1639,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3836120071576138695}
   - component: {fileID: 4494226990830386006}
-  - component: {fileID: 5769526808449281886}
   - component: {fileID: 2935796243443082538}
   m_Layer: 5
   m_Name: ScriptPanel
@@ -1470,7 +1646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3836120071576138695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1482,8 +1658,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3233695319466226881}
+  m_Children: []
   m_Father: {fileID: 2316786273716790743}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1500,36 +1675,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245571461933014395}
   m_CullTransparentMesh: 1
---- !u!114 &5769526808449281886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245571461933014395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &2935796243443082538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1605,7 +1750,7 @@ GameObject:
   - component: {fileID: 6518351942645639450}
   - component: {fileID: 2309721576042201755}
   m_Layer: 5
-  m_Name: Ui_Slot (5)
+  m_Name: Ui_Slot_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1713,7 +1858,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2804344886469125972}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2309721576042201755}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2309721576042201755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1764,8 +1921,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.060676128}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -9.407013}
-  m_SizeDelta: {x: 0, y: -9.407}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &967112424187479715
 CanvasRenderer:
@@ -1925,7 +2082,7 @@ GameObject:
   - component: {fileID: 3930783589486205640}
   - component: {fileID: 1124489287910140850}
   m_Layer: 5
-  m_Name: Ui_Slot (19)
+  m_Name: Ui_Slot_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2033,7 +2190,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3526725662815946797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1124489287910140850}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1124489287910140850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2061,7 +2230,7 @@ GameObject:
   - component: {fileID: 7229843854174305138}
   - component: {fileID: 6642598617014764459}
   m_Layer: 5
-  m_Name: Ui_Slot (8)
+  m_Name: Ui_Slot_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2169,7 +2338,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3119946125664700696}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6642598617014764459}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6642598617014764459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2211,19 +2392,18 @@ RectTransform:
   m_GameObject: {fileID: 2613144603332679266}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8000001, y: 0.8000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3245877208034562550}
   - {fileID: 7747314835489029118}
   - {fileID: 553273380517796287}
-  m_Father: {fileID: 3836120071576138695}
+  m_Father: {fileID: 6513808406600694598}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -351.05475}
-  m_SizeDelta: {x: 600, y: 800}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 247.62775, y: -282.2232}
+  m_SizeDelta: {x: -360.84808, y: 725.95044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2796863907005991641
 CanvasRenderer:
@@ -2246,7 +2426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07450981, g: 0.09019608, b: 0.101960786, a: 0.78431374}
+  m_Color: {r: 0.07450981, g: 0.09019608, b: 0.101960786, a: 0.77254903}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2306,17 +2486,17 @@ RectTransform:
   m_GameObject: {fileID: 2823405840088359136}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8000001, y: 0.8000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7177396661307213602}
   - {fileID: 3084689146487267234}
-  m_Father: {fileID: 3233695319466226881}
-  m_RootOrder: 0
+  m_Father: {fileID: 6513808406600694598}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -611.3, y: 0}
+  m_AnchoredPosition: {x: -241.41238, y: -282.2232}
   m_SizeDelta: {x: 600, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4653643951703901590
@@ -2836,7 +3016,7 @@ GameObject:
   - component: {fileID: 438303619238407184}
   - component: {fileID: 644002622074945294}
   m_Layer: 5
-  m_Name: Ui_Slot (6)
+  m_Name: Ui_Slot_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2944,7 +3124,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2931033505174645942}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 644002622074945294}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &644002622074945294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2972,7 +3164,7 @@ GameObject:
   - component: {fileID: 8083893800433767627}
   - component: {fileID: 1959045542850626604}
   m_Layer: 5
-  m_Name: Ui_Slot (13)
+  m_Name: Ui_Slot_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3080,7 +3272,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3691828893351316033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1959045542850626604}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1959045542850626604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3108,7 +3312,7 @@ GameObject:
   - component: {fileID: 3770099434215549159}
   - component: {fileID: 7317434754701283616}
   m_Layer: 5
-  m_Name: Ui_Slot (16)
+  m_Name: Ui_Slot_17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3216,7 +3420,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8556696269008773122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7317434754701283616}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7317434754701283616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3426,7 +3642,7 @@ GameObject:
   - component: {fileID: 4760314443064290111}
   - component: {fileID: 8829888533966179036}
   m_Layer: 5
-  m_Name: Ui_Slot (14)
+  m_Name: Ui_Slot_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3534,7 +3750,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5984693736054132070}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8829888533966179036}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8829888533966179036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4013,7 +4241,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4777521080573613345}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4024,7 +4252,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00098991, y: -25.1}
+  m_AnchoredPosition: {x: 0.00093078613, y: -25.099976}
   m_SizeDelta: {x: 580, y: 627.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4790807308427765358
@@ -4079,7 +4307,7 @@ GameObject:
   - component: {fileID: 334256377537212870}
   - component: {fileID: 4323355041579515516}
   m_Layer: 5
-  m_Name: Ui_Slot (17)
+  m_Name: Ui_Slot_18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4187,7 +4415,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7091996655143440357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4323355041579515516}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4323355041579515516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4443,7 +4683,7 @@ GameObject:
   - component: {fileID: 5674361001404176722}
   - component: {fileID: 5392797497205223940}
   m_Layer: 5
-  m_Name: Ui_Slot (11)
+  m_Name: Ui_Slot_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4551,7 +4791,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7497749840786280638}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5392797497205223940}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5392797497205223940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4579,7 +4831,7 @@ GameObject:
   - component: {fileID: 2929224540546696041}
   - component: {fileID: 7989969554460710918}
   m_Layer: 5
-  m_Name: Ui_Slot
+  m_Name: Ui_Slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4687,7 +4939,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7301665771333132745}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7989969554460710918}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7989969554460710918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4715,7 +4979,7 @@ GameObject:
   - component: {fileID: 3236308899262944758}
   - component: {fileID: 1242537014839475228}
   m_Layer: 5
-  m_Name: Ui_Slot (4)
+  m_Name: Ui_Slot_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4823,7 +5087,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8529391833969208292}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1242537014839475228}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1242537014839475228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4851,7 +5127,7 @@ GameObject:
   - component: {fileID: 5094816069727087211}
   - component: {fileID: 453891556272612715}
   m_Layer: 5
-  m_Name: Ui_Slot (9)
+  m_Name: Ui_Slot_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4959,7 +5235,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4061624492861430718}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 453891556272612715}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &453891556272612715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5181,18 +5469,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6854562018974093858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3536590775713801331}
   m_Father: {fileID: 3233695319466226881}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00098991, y: -25.1}
+  m_AnchoredPosition: {x: 0.0009918213, y: -25.099976}
   m_SizeDelta: {x: 580, y: 627.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7011094574914466711
@@ -5277,7 +5565,7 @@ GameObject:
   - component: {fileID: 216616593769085796}
   - component: {fileID: 5938306772138746423}
   m_Layer: 5
-  m_Name: Ui_Slot (12)
+  m_Name: Ui_Slot_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5385,7 +5673,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7023635274675261920}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5938306772138746423}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5938306772138746423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5981,7 +6281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 345}
+  m_AnchoredPosition: {x: 0, y: 344.99997}
   m_SizeDelta: {x: -20, y: -710}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1807341884259522688
@@ -6056,11 +6356,11 @@ RectTransform:
   - {fileID: 1375883301692232963}
   - {fileID: 3079544509689151228}
   m_Father: {fileID: 3233695319466226881}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 345}
+  m_AnchoredPosition: {x: -0.00012207031, y: 344.99997}
   m_SizeDelta: {x: -20, y: -710}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1696138436325842452
@@ -6206,7 +6506,7 @@ GameObject:
   - component: {fileID: 681583791279688261}
   - component: {fileID: 3068990869349691934}
   m_Layer: 5
-  m_Name: Ui_Slot (1)
+  m_Name: Ui_Slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6314,7 +6614,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6580967647226068796}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3068990869349691934}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3068990869349691934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6876,7 +7188,7 @@ GameObject:
   - component: {fileID: 1982968408793600716}
   - component: {fileID: 3000595606719357593}
   m_Layer: 5
-  m_Name: Ui_Slot (2)
+  m_Name: Ui_Slot_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6984,7 +7296,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 39372258451618855}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3000595606719357593}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3000595606719357593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7012,7 +7336,7 @@ GameObject:
   - component: {fileID: 4921622261803891985}
   - component: {fileID: 2882229088493680348}
   m_Layer: 5
-  m_Name: Ui_Slot (10)
+  m_Name: Ui_Slot _11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7120,7 +7444,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8045733526774543442}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882229088493680348}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2882229088493680348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7239,7 +7575,7 @@ GameObject:
   - component: {fileID: 5973870230889194210}
   - component: {fileID: 4526368103988417713}
   m_Layer: 5
-  m_Name: Ui_Slot (7)
+  m_Name: Ui_Slot_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7347,7 +7683,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4431156145573717257}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4526368103988417713}
+        m_TargetAssemblyTypeName: InvenSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4526368103988417713
 MonoBehaviour:
   m_ObjectHideFlags: 0
