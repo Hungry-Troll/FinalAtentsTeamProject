@@ -38,10 +38,17 @@ public class ItemController : MonoBehaviour
             Transform invenImageTr = GameManager.Ui._inventoryController._invenSlotArray[count - 1].transform.GetChild(0);
             // 슬롯이미지 활성화
             invenImageTr.gameObject.SetActive(true);
+
             // 이미지를 넣기위한 GetComponent
-            Image image = invenImageTr.gameObject.GetComponent<Image>();
+            //Image image = invenImageTr.gameObject.GetComponent<Image>();
             // 이미지 대입 
-            image.sprite = _sprite;
+            //image.sprite = _sprite;
+
+            // 위 코드를 UI 매니저 Init() 함수에서 미리 불러온 인벤토리 슬롯이미지에 저장하는 것으로 변경 함 : GameManager.Ui._slotImage[count - 1].sprite
+            // GetComponent 사용을 줄임
+            // 이미지를 대입
+            GameManager.Ui._slotImage[count - 1].sprite = _sprite;
+
             // 아이템 획득 시 인벤슬롯에서 카운트를 따로 세고 카운트를 다시 슬롯컨트롤러에 넘겨줌
             // 아이템 장착 시 사용
             GameManager.Ui._inventoryController._invenSlotCount++;

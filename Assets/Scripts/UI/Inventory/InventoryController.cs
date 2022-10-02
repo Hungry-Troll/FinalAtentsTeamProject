@@ -24,7 +24,11 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
 
     private void Start()
     {
+        // 필요없을수도 있음
         _invenSlotCount = 0;
+        // 무기 방어구 장착 게임 시작 시 null 추후 세이브 기능 추가시 체크
+        _weapon = null;
+        _armour = null;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

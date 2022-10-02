@@ -662,8 +662,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2840626515291081682}
-        m_TargetAssemblyTypeName: ItemStatView, Assembly-CSharp
-        m_MethodName: EquipItem
+        m_TargetAssemblyTypeName: ItemStatViewController, Assembly-CSharp
+        m_MethodName: WeaponEquipItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1244,7 +1244,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2840626515291081682}
-        m_TargetAssemblyTypeName: ItemStatView, Assembly-CSharp
+        m_TargetAssemblyTypeName: ItemStatViewController, Assembly-CSharp
         m_MethodName: DropItem
         m_Mode: 1
         m_Arguments:
@@ -1501,9 +1501,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5715874280941600211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68ae37b66fa754645b6c0d0585308e80, type: 3}
+  m_Script: {fileID: 11500000, guid: f35966294d4250f498b0fadd8701a83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 0}
 --- !u!1 &5870148149145291064
 GameObject:
   m_ObjectHideFlags: 0

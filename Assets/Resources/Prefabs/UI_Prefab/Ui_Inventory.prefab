@@ -368,6 +368,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _invenSlotCount: 0
+  _weapon: {fileID: 0}
+  _armour: {fileID: 0}
 --- !u!1 &311188328497049856
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &361217143547299671
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &874168530505593010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,6 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &1075616336073317814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,7 +1688,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245571461933014395}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 753c4a5465333c74cb671a01bb4174ff, type: 3}
   m_Name: 
@@ -1736,6 +1742,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _invenSlotCount: 0
+  _weapon: {fileID: 0}
+  _armour: {fileID: 0}
 --- !u!1 &1526599961858030451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,6 +1893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &1686474843819312378
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,6 +2226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &2196485527370150621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,6 +2375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &2613144603332679266
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,6 +3162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &3792191243200424018
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,6 +3311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &4180929275153436635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3446,6 +3460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &4502193788823691784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3776,6 +3791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &4614472441488295113
 GameObject:
   m_ObjectHideFlags: 0
@@ -4441,6 +4457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &5108802291774534791
 GameObject:
   m_ObjectHideFlags: 0
@@ -4817,6 +4834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &5501163989526854752
 GameObject:
   m_ObjectHideFlags: 0
@@ -4965,6 +4983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &5514197688724899825
 GameObject:
   m_ObjectHideFlags: 0
@@ -5113,6 +5132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &5903580543014697987
 GameObject:
   m_ObjectHideFlags: 0
@@ -5261,6 +5281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &6277413949110561152
 GameObject:
   m_ObjectHideFlags: 0
@@ -5699,6 +5720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &7532216835086457173
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,7 +5870,7 @@ GameObject:
   - component: {fileID: 5087304042251918717}
   - component: {fileID: 4004602514984736496}
   m_Layer: 5
-  m_Name: ItemImage
+  m_Name: WeaponImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6640,6 +6662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &8233950909731654782
 GameObject:
   m_ObjectHideFlags: 0
@@ -7322,6 +7345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &8954915918831732001
 GameObject:
   m_ObjectHideFlags: 0
@@ -7470,6 +7494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &9103638116989853562
 GameObject:
   m_ObjectHideFlags: 0
@@ -7709,6 +7734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlotItem: []
+  _invenSlotCount: 0
 --- !u!1 &9174798441900066727
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class InvenSlotController : MonoBehaviour
         // 아이템 타입에 따라서 추후 나눠야됨 우선 무기만
         if (_SlotItem.Count > 0 )
         {
-            GameManager.Ui._inventoryController._weapon = GameManager.Ui.ItemStatViewOpen(_SlotItem[0]);
+            GameManager.Ui.ItemStatViewOpen(_SlotItem[0]);
         } 
     }
 }

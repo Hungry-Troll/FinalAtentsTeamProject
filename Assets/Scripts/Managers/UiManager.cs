@@ -28,6 +28,8 @@ public class UiManager
     // 인벤토리
     public InventoryController _inventoryController;
     public GameObject _inven;
+    // 인벤 슬롯 이미지 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
+    public List<Image> _slotImage;
 
     // 인벤 버튼
     public GameObject _invenButton;
@@ -41,15 +43,20 @@ public class UiManager
     // 미니맵
     public GameObject _miniMap;
 
-    // 아이템스텟창
-    public GameObject _ItemStatView;
+    // 아이템 스텟창
+    public GameObject _itemStatView;
+    // 아이템 스텟창 스크립트
+    public ItemStatViewController _itemStatViewContoller;
 
     // 아이템 스텟창을 한개씩만 띄우기 위한 변수
     // 추후 UI 창 갯수관리를 해야 되면 변경
     public bool _itemStatOpen;
 
+
     // 공격 타겟 몬스터
     public GameObject targetMonster;
+
+    
 
     //Ui 관리는 여기에서 처리
     public void Init()
@@ -91,15 +98,17 @@ public class UiManager
         _inven = GameObject.Instantiate<GameObject>(inven);
         _inventoryController = _inven.GetComponentInChildren<InventoryController>();
         _inven.transform.SetParent(go.transform);
-        InventoryClose();
 
-        // 인벤토리 슬롯을 배열로 가지고옴 인벤토리 컨트롤러에서 하려고 했지만 SetActive(false)라  Start() 함수 사용이 안됨
-        _inventoryController._invenSlotArray = _inventoryController.GetComponentsInChildren<InvenSlotController>();
-        // 가지고 온 배열을 리스트로 변환
-        foreach (InvenSlotController one in _inventoryController._invenSlotArray)
+        // 아이템 교체용 인벤토리 이미지를 미리 UI 매니지에서 들고있음 // GetComponent 줄이는 용도
+        _slotImage = new List<Image>();
+        for (int i = 0; i < 20; i++)
         {
-            _inventoryController._invenSlotList.Add(one);
+            Transform invenImageTr = GameManager.Ui._inventoryController._invenSlotArray[i].transform.GetChild(0);
+            // 처음 실행에만 GetComponent 를 20번 사용함 // 이전 방식대로하면 아이템 교체마다 GetComponent를 사용해야됨
+            Image slotImage = invenImageTr.gameObject.GetComponent<Image>();
+            _slotImage.Add(slotImage);
         }
+        InventoryClose();
 
         // 시작하면 미니맵 불러옴
         GameObject miniMap = GameManager.Resource.GetUi("UI_MiniMap");
@@ -119,10 +128,12 @@ public class UiManager
 
         // 시작하면 아이템 스텟창을 한개씩만 띄우기 위한 변수를 초기화 // 1개만 열 수 있음
         _itemStatOpen = false;
-        // 테스트용 임시 코드
-        GameObject itemStat = GameManager.Resource.GetUi("UI_ItemStatView");
-        _ItemStatView = GameObject.Instantiate<GameObject>(itemStat);
-        _ItemStatView.SetActive(false);
+        // 시작하면 아이템 스텟창 불러 우선 SetActive(false)로 함
+        GameObject itemStatView = GameManager.Resource.GetUi("UI_ItemStatView");
+        _itemStatView = GameObject.Instantiate<GameObject>(itemStatView);
+        _itemStatView.SetActive(false);
+        // 아이템 스텟창 스크립트도 미리 들고있음
+        _itemStatViewContoller = _itemStatView.GetComponentInChildren<ItemStatViewController>();
     }
     /// <summary>
     /// 인벤토리 관련
@@ -136,10 +147,10 @@ public class UiManager
     {
         _inventoryController.gameObject.SetActive(false);
     }
+
     /// <summary>
     /// 옵션창 관련
     /// </summary>
-
     public void OptionOpen()
     {
         // 옵션창 불러오고 위치와 크기 초기화
@@ -157,54 +168,162 @@ public class UiManager
         option.gameObject.SetActive(true);
     }
 
-    // 이름으로 각각 아이템 ui를 가지고 올 예정
-    // 아니면 ui에 직접 접근해서 재귀함수를 이용 각각 스텟이나 이미지 등등을 변경하는 방법도 존재함
+    /// <summary>
+    /// 아이템 상태창 관련
+    /// </summary>
 
+    // 아이템 상태창 UI를 한개만 쓰고 이미지와 스텟은 불러오는 방식으로 구현함
+    // 추후 스텟 비교 기능을 넣으면 좋음
     public GameObject ItemStatViewOpen(GameObject invenSlotItem)
     {
         //_itemStatOpen로 창 열려있는지 체크
-        if (_itemStatOpen == false)
+        if(_itemStatOpen == false)
         {
             // 아이템 정보 창 열고
-            _ItemStatView.SetActive(true);
-            _ItemStatView.transform.position = _inventoryController.transform.position;
-            // 넣을 대상 찾음
-            Transform itemImage = Util.FindChild("ItemImage", _ItemStatView.transform);
-            Image FindItemImage = itemImage.GetComponent<Image>();
-
-            // 넣을 이미지를 찾음
-            Sprite _sprite = GameManager.Resource.GetImage(invenSlotItem.name);
-            FindItemImage.sprite = _sprite;
-            _itemStatOpen = true;
-            return invenSlotItem;
+            _itemStatView.SetActive(true);
         }
-        return null;
-    }
 
+        _itemStatView.transform.position = _inventoryController.transform.position;
+        // UI_ItemStatView 에서 넣을 위치 찾음
+        Transform itemImage = Util.FindChild("ItemImage", _itemStatView.transform);
+        Image FindItemImage = itemImage.GetComponent<Image>();
+
+        // 넣을 이미지를 찾음
+        Sprite _sprite = GameManager.Resource.GetImage(invenSlotItem.name);
+        FindItemImage.sprite = _sprite;
+        // 이왕 찾은 이미지를 스텟뷰에 넣어놓음 (아이템 장착용)
+        _itemStatViewContoller._sprite = _sprite;
+        _itemStatOpen = true;
+
+        return invenSlotItem;
+    }
+    
     public void ItemStatViewClose(string name)
     {
         //_itemStatOpen로 창 열려있는지 체크
-        if (_itemStatOpen == true)
+        if(_itemStatOpen == true)
         {
-            _ItemStatView.SetActive(false);
+            _itemStatView.SetActive(false);
             _itemStatOpen = false;
         }
     }
 
-    public void ItemStatViewWeaponEquip(Sprite sprite, Transform itemStatViewTr)
+    // 무기 장착 함수 (계산)
+    // 추후 방어구도 동일하게 적용
+    public void ItemStatViewWeaponEquip()
     {
-/*        // 넣을 대상을 찾음
-        Transform itemImage = Util.FindChild("ItemImage", itemStatViewTr);
+        // 장착 대상을 찾음
+        Transform weaponImage = Util.FindChild("WeaponImage", _inventoryController.transform);
+        Image findImage = weaponImage.GetComponent<Image>();
 
-        // 이미지 컴포넌트 찾고
-        Image findImage = itemImage.GetComponent<Image>();
+        // 이미지 넣음 (_itemStatviewContlloer에서 이미지를 이미지를 들고있음)
+        findImage.sprite = _itemStatViewContoller._sprite;
+        // 이미지 활성화
+        findImage.gameObject.SetActive(true);
 
-        // 이미지 넣음
-        findImage.sprite = sprite;
+        // 인벤 컨트롤러에서 아이템 이름과 이미지 아이템 이름을 비교해서 동일 이름이면 인벤 컨트롤러 Weapon 게임오브젝트에 넣음 (장착의미)
+        // 인벤토리 아이템 중 찾음 이미지와 이름이 같으면 (동일 아이템)
 
-        // 장착한 이미지 인벤에서 제거
-        GameManager.Ui._inventoryController._invenSlotList[GameManager.Ui._inventoryController._invenSlotCount - 1]._SlotItem.Clear();
-        GameManager.Ui._inventoryController._invenSlotCount--;*/
+        // 인벤토리에서 웨폰이 널이라면 (기존 무기 착용 x)
+        if(_inventoryController._weapon == null)
+        {
+            // 인벤토리 아이템 숫자만큼 루프
+            for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+            {
+                // 인벤토리 아이템하고 이미지가 동일하면
+                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
+                {
+                    // 무기 장착
+                    _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
+                    // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                    GameManager.Ui._inventoryController._item.RemoveAt(i);
+                    _slotImage[i].sprite = null;
+                    _slotImage[i].gameObject.SetActive(false);
+                    break;
+                }
+            }
+        }
+        // 인벤토리에서 웨폰이 널이 아니라면 (기존 무기 착용을 했다면)
+        else if (_inventoryController._weapon != null)
+        {
+            // 임시 무기 변수
+            GameObject tmpWeapon = null;
+            // 기존 착용 무기를 임시 변수에 대입
+            tmpWeapon = _inventoryController._weapon;
+            // 인벤토리 아이템 숫자만큼 루프
+            for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+            {
+                // 인벤토리 아이템하고 이미지가 동일하면
+                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
+                {
+                    // 무기 장착
+                    _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
+                    // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                    GameManager.Ui._inventoryController._item.RemoveAt(i);
+                    _slotImage[i].sprite = null;
+                    _slotImage[i].gameObject.SetActive(false);
+
+                    // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpWeapon);
+                    GameManager.Ui._inventoryController._item.Add(tmpWeapon);
+                    break;
+                }
+            }
+        }
+        // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
+        InventoryImageArray();
+    }
+
+    // 아이템 버리는 함수
+    public void ItemStatViewWeaponDrop()
+    {
+        // 인벤토리의 아이템을 버리는 경우
+        // 인벤토리 아이템 숫자만큼 루프
+        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        {
+            // 인벤토리 아이템하고 이미지가 동일하면
+            if (_itemStatViewContoller._sprite.name == GameManager.Ui._inventoryController._item[i].name)
+            {
+                // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
+                GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                GameManager.Ui._inventoryController._item.RemoveAt(i);
+                _slotImage[i].sprite = null;
+                _slotImage[i].gameObject.SetActive(false);
+                break;
+            }
+        }
+        // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
+        InventoryImageArray();
+    }
+
+    // 인벤토리 이미지 정렬 함수 (랜더링)
+    // 아이템 장착 시 해제 시 사용
+    void InventoryImageArray()
+    {
+        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        {
+            // 인벤토리 아이템 이름
+            string tmpName = GameManager.Ui._inventoryController._item[i].name;
+            // 이름을 이용한 이미지 찾기
+            Sprite tmpSprite = GameManager.Resource.GetImage(tmpName);
+            // 찾은 이미지를 각 슬롯 이미지에 넣음
+            _slotImage[i].sprite = tmpSprite;
+            // 활성화
+            _slotImage[i].gameObject.SetActive(true);
+            // 동일한 이름의 게임오브젝트를 동일한 슬롯에 넣음
+            GameObject tmpGameObject = GameManager.Resource.GetfieldItem(tmpName);
+            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpGameObject);
+        }
+        for(int i = 19; i > GameManager.Ui._inventoryController._item.Count -1; i--)
+        {
+            // 나머지 슬롯 이미지 전부 삭제 비활성화
+            _slotImage[i].sprite = null;
+            _slotImage[i].gameObject.SetActive(false);
+            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+        }
     }
 
 

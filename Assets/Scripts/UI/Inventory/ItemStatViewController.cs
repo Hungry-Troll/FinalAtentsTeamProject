@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Util;
 
-public class ItemStatView : MonoBehaviour , IBeginDragHandler, IDragHandler
+public class ItemStatViewController : MonoBehaviour , IBeginDragHandler, IDragHandler
 {
     // 아이템 이미지 전달용
-    Sprite _sprite;
+    public Sprite _sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -35,18 +35,13 @@ public class ItemStatView : MonoBehaviour , IBeginDragHandler, IDragHandler
 
     public void WeaponEquipItem()
     {
-        // 아이템 이미지 로드 
-        // ItemStatView가 켜지면서 자동으로 인벤토리컨트롤러 웨폰에 게임오브젝트가 저장 됨
-
-        // 아이템 이미지만 우선 교체
         // 추후 아이템 스텟을 적용
-        _sprite = GameManager.Resource.GetImage(GameManager.Ui._inventoryController._weapon.name);
-        GameManager.Ui.ItemStatViewWeaponEquip(_sprite, gameObject.transform);
+        GameManager.Ui.ItemStatViewWeaponEquip();
     }
 
     public void DropItem()
     {
-        // 아이템 버리기 코드
+        GameManager.Ui.ItemStatViewWeaponDrop();
     }
 
 }
