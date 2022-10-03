@@ -10,6 +10,13 @@ public class PlayerController : MonoBehaviour
     public float _autoMoveSpeed;
     public CreatureState _creatureState;
     public Animator _anim;
+    public PlayerStat _playerStat;
+
+    Coroutine _coAttack;
+
+    // 공격속도 코루틴 대입용 
+    float _attackDelay;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -17,6 +24,8 @@ public class PlayerController : MonoBehaviour
         _creatureState = CreatureState.Idle;
         _anim = GetComponent<Animator>();
         _autoMoveSpeed = _moveSpeed + 2.0f;
+        _playerStat = GetComponent<PlayerStat>();
+        _attackDelay = 1.0f;
     }
 
     // Update is called once per frame
@@ -37,6 +46,32 @@ public class PlayerController : MonoBehaviour
                 Attack();
                 break;
             case CreatureState.Dead:
+                Dead();
+                break;
+            case CreatureState.None:
+                break;
+        }
+        UpdateAnimation();
+    }
+    // 애니메이션을 따로 관리
+    private void UpdateAnimation()
+    {
+        switch (_creatureState)
+        {
+            case CreatureState.Idle:
+                _anim.SetInteger("playerStat", 0);
+                break;
+            case CreatureState.Move:
+                _anim.SetInteger("playerStat", 1);
+                break;
+            case CreatureState.AutoMove:
+                _anim.SetInteger("playerStat", 1);
+                break;
+            case CreatureState.Attack:
+                _anim.SetInteger("playerStat", 2);
+                break;
+            case CreatureState.Dead:
+                _anim.SetInteger("playerStat", 3);
                 break;
             case CreatureState.None:
                 break;
@@ -45,7 +80,6 @@ public class PlayerController : MonoBehaviour
 
     private void Idle()
     {
-        _anim.SetInteger("playerStat", 0);
         // 대기 중 이동
         if(GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
         {
@@ -66,7 +100,6 @@ public class PlayerController : MonoBehaviour
         //if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
         if(isMove)
         {
-            _anim.SetInteger("playerStat", 1);
             // 이동
             float x =_inputDir.x;
             float y =_inputDir.y;
@@ -82,14 +115,13 @@ public class PlayerController : MonoBehaviour
 
     private void AutoMove()
     {
-        _anim.SetInteger("playerStat", 1);
         // 거리
-        float distance = Vector3.Distance(GameManager.Ui.targetMonster.transform.position, transform.position);
+        float distance = Vector3.Distance(GameManager.Ui._targetMonster.transform.position, transform.position);
         // 이동
-        transform.position = Vector3.MoveTowards(transform.position, GameManager.Ui.targetMonster.transform.position, Time.deltaTime * _autoMoveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, GameManager.Ui._targetMonster.transform.position, Time.deltaTime * _autoMoveSpeed);
         
         // 회전
-        Vector3 tempDir = GameManager.Ui.targetMonster.transform.position - transform.position;
+        Vector3 tempDir = GameManager.Ui._targetMonster.transform.position - transform.position;
         tempDir = Vector3.RotateTowards(transform.forward, tempDir.normalized, Time.deltaTime * _moveSpeed, 0);
         transform.rotation = Quaternion.LookRotation(tempDir.normalized);
 
@@ -104,16 +136,47 @@ public class PlayerController : MonoBehaviour
     {
         if(GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
         {
-            _anim.SetInteger("playerStat", 2);
             // 회전
-            Vector3 tempDir = GameManager.Ui.targetMonster.transform.position - transform.position;
+            Vector3 tempDir = GameManager.Ui._targetMonster.transform.position - transform.position;
             tempDir = Vector3.RotateTowards(transform.forward, tempDir.normalized, Time.deltaTime * _moveSpeed, 0);
             transform.rotation = Quaternion.LookRotation(tempDir.normalized);
+            // 코루틴을 이용한 공격딜레이 (대미지 계산)
+            if(_coAttack == null)
+            {
+                _coAttack = StartCoroutine(CoAttackDelay(_attackDelay));
+            }
         }
         // 공격 중 이동
         if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
         {
             _creatureState = CreatureState.Move;
+        }
+    }
+
+    // 공격 딜레이 계산
+    IEnumerator CoAttackDelay(float _delay)
+    {
+        // 딜레이
+        yield return new WaitForSeconds(_delay);
+        // 대미지 계산
+        //GameManager.Ui._targetMonsterStat.Hp -= _playerStat.Atk - GameManager.Ui._targetMonsterStat.Def;
+        // 대미지 계산은 몬스터스크립트에서 처리 >> 플레이어 공격력만 넘겨줌
+        GameManager.Ui._targetMonsterController.OnDamaged(_playerStat.Atk);
+        // 코루틴 초기화
+        _coAttack = null;
+    }
+
+    private void Dead()
+    {
+        // 플레이어가 죽으면 유다이 같은 것을 띄울 것
+    }
+
+    public void OnDamaged(int monsterAtk)
+    {
+        _playerStat.Hp -= monsterAtk - _playerStat.Def;
+        if(_playerStat.Hp <= 0)
+        {
+            _creatureState = CreatureState.Dead;
         }
     }
 }

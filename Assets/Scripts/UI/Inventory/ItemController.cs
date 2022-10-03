@@ -14,6 +14,7 @@ public class ItemController : MonoBehaviour
     public ItemType _itemType;
 
 
+
     // Start is called before the first frame update
     private void Start()
     {

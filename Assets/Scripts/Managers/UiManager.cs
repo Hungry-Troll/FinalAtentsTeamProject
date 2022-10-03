@@ -54,9 +54,10 @@ public class UiManager
 
 
     // 공격 타겟 몬스터
-    public GameObject targetMonster;
+    public GameObject _targetMonster;
+    public MonsterController _targetMonsterController; 
+    public MonsterStat _targetMonsterStat;
 
-    
 
     //Ui 관리는 여기에서 처리
     public void Init()
@@ -210,11 +211,23 @@ public class UiManager
 
     // 무기 장착 함수 (계산)
     // 추후 방어구도 동일하게 적용
-    public void ItemStatViewWeaponEquip()
+    public void ItemStatViewWeaponEquip(ItemType itemType)
     {
-        // 장착 대상을 찾음
-        Transform weaponImage = Util.FindChild("WeaponImage", _inventoryController.transform);
-        Image findImage = weaponImage.GetComponent<Image>();
+        // 장착 대상 저장용 임시 변수
+        Transform findTr = null;
+
+        // 장착 대상을 찾음 / 아이템은 Define enum ItemType으로 분류
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                findTr = Util.FindChild("WeaponImage", _inventoryController.transform);
+                break;
+            case ItemType.Armour:
+                findTr = Util.FindChild("ArmourImage", _inventoryController.transform);
+                break;
+        }
+        
+        Image findImage = findTr.GetComponent<Image>();
 
         // 이미지 넣음 (_itemStatviewContlloer에서 이미지를 이미지를 들고있음)
         findImage.sprite = _itemStatViewContoller._sprite;
@@ -224,52 +237,37 @@ public class UiManager
         // 인벤 컨트롤러에서 아이템 이름과 이미지 아이템 이름을 비교해서 동일 이름이면 인벤 컨트롤러 Weapon 게임오브젝트에 넣음 (장착의미)
         // 인벤토리 아이템 중 찾음 이미지와 이름이 같으면 (동일 아이템)
 
-        // 인벤토리에서 웨폰이 널이라면 (기존 무기 착용 x)
-        if(_inventoryController._weapon == null)
-        {
-            // 인벤토리 아이템 숫자만큼 루프
-            for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
-            {
-                // 인벤토리 아이템하고 이미지가 동일하면
-                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
-                {
-                    // 무기 장착
-                    _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
-                    // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
-                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-                    GameManager.Ui._inventoryController._item.RemoveAt(i);
-                    _slotImage[i].sprite = null;
-                    _slotImage[i].gameObject.SetActive(false);
-                    break;
-                }
-            }
-        }
+        // 임시 무기 변수
+        GameObject tmpWeapon = null;
         // 인벤토리에서 웨폰이 널이 아니라면 (기존 무기 착용을 했다면)
-        else if (_inventoryController._weapon != null)
+        if (_inventoryController._weapon != null)
         {
-            // 임시 무기 변수
-            GameObject tmpWeapon = null;
             // 기존 착용 무기를 임시 변수에 대입
             tmpWeapon = _inventoryController._weapon;
-            // 인벤토리 아이템 숫자만큼 루프
-            for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        }
+        // 인벤토리 아이템 숫자만큼 루프
+        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        {
+            // 인벤토리 아이템하고 이미지가 동일하면
+            if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
             {
-                // 인벤토리 아이템하고 이미지가 동일하면
-                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
-                {
-                    // 무기 장착
-                    _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
-                    // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
-                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-                    GameManager.Ui._inventoryController._item.RemoveAt(i);
-                    _slotImage[i].sprite = null;
-                    _slotImage[i].gameObject.SetActive(false);
+                // 무기 장착
+                _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
 
+                // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
+                GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                GameManager.Ui._inventoryController._item.RemoveAt(i);
+                _slotImage[i].sprite = null;
+                _slotImage[i].gameObject.SetActive(false);
+
+                // 임시 저장한 무기가 널이 아니라면 (기존에 장착한 무기가 있다면)
+                if (tmpWeapon != null)
+                {
                     // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
                     GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpWeapon);
                     GameManager.Ui._inventoryController._item.Add(tmpWeapon);
-                    break;
                 }
+                
             }
         }
         // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
@@ -338,24 +336,28 @@ public class UiManager
     {
         List<float> targetDistance = new List<float>();
         float distance = 0;
-        targetMonster = null;
+        _targetMonster = null;
 
         // 몬스터들을 찾는다 >> 추후 몬스터 리스폰 시 오브젝트매니저에서 몬스터를 들고있게 할 예정 그러면 파인드 사용 안해도 됨.
+        // >> GameManager.Obj._mobContList 가 오브젝트매니저에서 가지고 있는 몬스터 리스트임
         // 각각의 몬스터들의 거리 비교
-        GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-        for(int i = 0; i < monster.Length; i++)
+        //GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
+        
+        for(int i = 0; i < GameManager.Obj._mobContList.Count; i++)
         {
-            targetDistance.Add(Vector3.Distance(monster[i].transform.position, GameManager.Obj._playerController.transform.position));
+            targetDistance.Add(Vector3.Distance(GameManager.Obj._mobContList[i].transform.position, GameManager.Obj._playerController.transform.position));
             
             if(distance < targetDistance[i])
             {
                 distance = targetDistance[i];
-                targetMonster = monster[i];
+                _targetMonster = GameManager.Obj._mobContList[i].gameObject;
+                _targetMonsterStat = GameManager.Obj._mobStatList[i];
+                _targetMonsterController = GameManager.Obj._mobContList[i];
             }
         }
 
         // 가까운 몬스터를 찾았으면 가까이 이동하거나 공격한다.
-        if(targetMonster != null)
+        if(_targetMonster != null)
         {
             // 가까이 있으면 공격한다.
             if(distance < 2.0f)

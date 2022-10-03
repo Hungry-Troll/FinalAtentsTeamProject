@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Util;
+using static Define;
 
 public class ItemStatViewController : MonoBehaviour , IBeginDragHandler, IDragHandler
 {
     // 아이템 이미지 전달용
     public Sprite _sprite;
+    // 아이템 타입 구분용 이넘
+    Define.ItemType _itemType;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +38,16 @@ public class ItemStatViewController : MonoBehaviour , IBeginDragHandler, IDragHa
 
     public void WeaponEquipItem()
     {
+        _itemType = Define.ItemType.Weapon;
         // 추후 아이템 스텟을 적용
-        GameManager.Ui.ItemStatViewWeaponEquip();
+        GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
+    }
+
+    public void ArmourEquipItem()
+    {
+        _itemType = Define.ItemType.Armour;
+        // 추후 아이템 스텟을 적용
+        GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
     }
 
     public void DropItem()
