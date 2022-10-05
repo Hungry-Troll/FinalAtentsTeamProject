@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class Define
 {
+    public enum Pet
+    {
+        Triceratops,
+        Pachycephalosaurus,
+        Brachiosaurus,
+        None,
+    }
     public enum Monster
     {
         Parasaurolophus,
         Pteranodon,
         Velociraptor,
+        None,
     }
-
     public enum Job
     {
         Superhuman,
         Cyborg,
-        Scientist
+        Scientist,
+        None,
     }
 
     public enum ItemType
@@ -23,6 +31,7 @@ public class Define
         Weapon,
         Armour,
         Consumables,
+        None,
     }
     public enum CreatureState
     {

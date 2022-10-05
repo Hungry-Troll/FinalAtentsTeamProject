@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class UiDesign2 : MonoBehaviour
 {
     public Light light;
@@ -9,6 +10,7 @@ public class UiDesign2 : MonoBehaviour
     bool bLeft = false;
     bool bCenter = false;
     bool bRight = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,21 +23,27 @@ public class UiDesign2 : MonoBehaviour
     {
         if(bLeft)
         {
-            Debug.Log("Warrior");
+            // Debug.Log("Warrior");
+            // string으로 이름을 넘겨줌 >> 셀렉매니저에서 플레이어 직업 관리
+            GameManager.Select._jobName = "Superhuman";
             light.transform.position = new Vector3(-1.5f, 1, -5);
             bLeft = false;
         }
 
         if(bCenter)
         {
-            Debug.Log("Archer");
+            //Debug.Log("Archer");
+            // string으로 이름을 넘겨줌 >> 셀렉매니저에서 플레이어 직업 관리
+            GameManager.Select._jobName = "Cyborg";
             light.transform.position = new Vector3(0f, 1, -5);
             bCenter = false;
         }
 
         if(bRight)
         {
-            Debug.Log("Scientist");
+            //Debug.Log("Scientist");
+            // string으로 이름을 넘겨줌 >> 셀렉매니저에서 플레이어 직업 관리
+            GameManager.Select._jobName = "Scientist";
             light.transform.position = new Vector3(1.5f, 1, -5);
             bRight = false;
         }

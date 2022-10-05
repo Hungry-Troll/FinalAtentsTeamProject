@@ -107,8 +107,9 @@ public class TurnOnTheStage_Pet : MonoBehaviour
 
             if (i == _characterNum)
             {
-                Debug.Log(_animatorList[i].name);
-
+                //Debug.Log(_animatorList[i].name);
+                //∆Í º±≈√øÎ string ≥—∞‹¡‹
+                GameManager.Select._petName = _animatorList[i].name;
                 // º±≈√µ» ∆Í¿∫ active true
                 _petInfoArr[i].SetActive(true);
 

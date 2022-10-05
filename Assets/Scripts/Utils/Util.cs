@@ -5,8 +5,6 @@ using UnityEngine;
 public class Util
 {
     // Start is called before the first frame update
-
-
     public static Transform FindChild(string name, Transform _tr)
     {
         if (_tr.name == name)

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static Define;
 public class FieldManager : MonoBehaviour
 {
     //게임 시작시 Awake , Start, Update 사용 용도 매니저
@@ -17,6 +17,11 @@ public class FieldManager : MonoBehaviour
     // 플레이어 위치 설정용 / 비어있는 게임오브젝트에 플레이어 위치 대입
     public GameObject _startPosObject;
     public Vector3 _startPos;
+    // 플레이어 직업 확인용
+    public Define.Job _select_Job;
+    // 펫 종류 확인용
+    public Define.Pet _select_Pet;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,16 +34,23 @@ public class FieldManager : MonoBehaviour
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
         // Obj매니저에서 플레이어스크립트를 들고있게함
-        GameManager.Obj._playerController = CreatePlayerCharacter(_startPos, "player");
+        // Select매니저에서 어떤 직업을 선택했는지 확인
+        _select_Job = GameManager.Select.SelectJobCheck();
+        // 확인한 직업으로 플레이어 제작
+        GameManager.Obj._playerController = CreatePlayerCharacter(_startPos, _select_Job.ToString());
 
         GameManager.Cam.Init();
 
         // 몬스터 생성용 테스트 코드
-        for (int i = 0; i < GameManager.Resource._monster.Count; i++)
+        for (int i = 0; i < GameManager.Resource._monster.Count-1; i++)
         {
             Vector3 tempPos = new Vector3(Random.Range(i, i + 3), Random.Range(i, i + 3), Random.Range(i, i + 3));
             CreateMonster(_player.transform.position + tempPos, GameManager.Resource._monster[i].name);
         }
+
+        // Select매니저에서 어떤 펫을 선택했는지 확인
+        // 펫 완성되면 펫 생성에 연결할 것.
+        _select_Pet = GameManager.Select.SelectPelCheck();
 
         // 펫 생성
         CreatePet(_startPos, "Fox");

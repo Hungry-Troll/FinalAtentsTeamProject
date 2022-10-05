@@ -8,7 +8,6 @@ using static Util;
 
 public class UiManager
 {
-
     // UI Root용 변수
     GameObject go;
 
@@ -24,6 +23,9 @@ public class UiManager
 
     // 상태창에 보이는 플레이어
     public GameObject _statePlayerObj;
+    // 상태창 플레이어 이름 확인용
+    public Define.Job _job;
+    public string _jobName;
 
     // 인벤토리
     public InventoryController _inventoryController;
@@ -86,9 +88,26 @@ public class UiManager
         _joyStick.transform.SetParent(go.transform);
 
         // 시작하면 상태창에 보이는 플레이어 불러옴, 상태창은 인벤토리와 세트
-        GameObject statePlayerObj = GameManager.Resource.GetCharacter("tempPlayer");
+        _job = GameManager.Select.SelectJobCheck();
+        // 직업이름에 따른 상태창에 보이는 임시 플레이어
+        switch (_job)
+        {
+            case Define.Job.Superhuman:
+                _jobName = "SuperhumanTemp";
+                break;
+            case Define.Job.Cyborg:
+                _jobName = "CyborgTemp";
+                break;
+            case Define.Job.Scientist:
+                _jobName = "ScientistTemp";
+                break;
+            case Define.Job.None:
+                break;
+        }
+        // 상태창 플레이어 생성
+        GameObject statePlayerObj = GameManager.Resource.GetCharacter(_jobName);
         _statePlayerObj = GameObject.Instantiate<GameObject>(statePlayerObj, new Vector3(0,200,0), Quaternion.identity);
-
+        
         // 시작하면 인벤토리버튼(가방아이콘) 씬에 불러옴
         GameObject invenButton = GameManager.Resource.GetUi("Ui_SceneInventoryButton");
         _invenButton = GameObject.Instantiate<GameObject>(invenButton);
@@ -240,19 +259,27 @@ public class UiManager
         // 임시 무기 변수
         GameObject tmpWeapon = null;
         // 인벤토리에서 웨폰이 널이 아니라면 (기존 무기 착용을 했다면)
-        if (_inventoryController._weapon != null)
+        if(_inventoryController._weapon != null)
         {
             // 기존 착용 무기를 임시 변수에 대입
             tmpWeapon = _inventoryController._weapon;
         }
         // 인벤토리 아이템 숫자만큼 루프
-        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
         {
             // 인벤토리 아이템하고 이미지가 동일하면
-            if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
+            if(findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
             {
-                // 무기 장착
+                // 무기 장착 (인벤토리상 들고있는 무기)
                 _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
+
+                // 무기 위치 찾음 (플레이어가 들고있을 무기 위치)
+                //Transform findPos = GameManager.Weapon.FindWeaponPos(GameManager.Obj._playerController.transform);
+                // 찾은 위치에 무기 착용 (플레이어가 들고있을 무기) 무기 방향 버그가 있어서 아래 Temp함수로 대체
+                //GameManager.Weapon.EquipWeapon(_inventoryController._weapon.name, findPos);
+                
+                // 무기 착용
+                GameManager.Weapon.TempEquipWeapon(_inventoryController._weapon.name, GameManager.Obj._playerController.transform);
 
                 // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
                 GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
@@ -261,7 +288,7 @@ public class UiManager
                 _slotImage[i].gameObject.SetActive(false);
 
                 // 임시 저장한 무기가 널이 아니라면 (기존에 장착한 무기가 있다면)
-                if (tmpWeapon != null)
+                if(tmpWeapon != null)
                 {
                     // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
                     GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpWeapon);
@@ -279,10 +306,10 @@ public class UiManager
     {
         // 인벤토리의 아이템을 버리는 경우
         // 인벤토리 아이템 숫자만큼 루프
-        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
         {
             // 인벤토리 아이템하고 이미지가 동일하면
-            if (_itemStatViewContoller._sprite.name == GameManager.Ui._inventoryController._item[i].name)
+            if(_itemStatViewContoller._sprite.name == GameManager.Ui._inventoryController._item[i].name)
             {
                 // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
                 GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
@@ -372,8 +399,6 @@ public class UiManager
                 GameManager.Obj._playerController._creatureState = CreatureState.AutoMove;
             }
         }
-
-
     }
     public void Skill1Button()
     {

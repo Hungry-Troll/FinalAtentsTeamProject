@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     MonsterManagerEX _mob = new MonsterManagerEX();
     StatManager _stat = new StatManager();
     SoundManagerEX _sound = new SoundManagerEX();
+    SelectManager _select = new SelectManager();
+    WeaponManager _weapon = new WeaponManager();
     
     public static ResourceManager Resource 
     { 
@@ -62,6 +64,14 @@ public class GameManager : MonoBehaviour
     public static SoundManagerEX Sound
     {
         get { return _instance._sound; }
+    }
+    public static SelectManager Select
+    {
+        get { return _instance._select; }
+    }
+    public static WeaponManager Weapon
+    {
+        get { return _instance._weapon; }
     }
 
     // Start is called before the first frame update

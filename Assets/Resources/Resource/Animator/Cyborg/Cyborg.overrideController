@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cyborg
+  m_Controller: {fileID: 9100000, guid: 8b1b4739ce8b8d34883671801e4919fd, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 5128cff875be6a44f9920563f4682725, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3db9173a4c1e3ba4f93d858037369282, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 35f0b2ec7bee13a448dfe43d120c5161, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7706816f71ca7a34585475b193878419, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9d0b0d749dc628c439991411c25a4535, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 86cb94c4dd707c0408d250a24fb440df, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4aec971363e3efd48820c3884948aad9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7976b3a2e15ce7c47878a35c71040bc3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6b067fad8ce1fa640b7779be5e4e5fe9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4a96fc20eadfd614d89ddeaaefd91e1e, type: 2}

@@ -11,6 +11,7 @@ public class ResourceManager
     public List<GameObject> _pet;
     public List<GameObject> _npc;
     public List<GameObject> _fieldItem;
+    public List<GameObject> _equipItem;
     public List<GameObject> _ui;
     public List<GameObject> _camera;
     public List<Sprite> _itemImage;
@@ -25,6 +26,7 @@ public class ResourceManager
         _pet = new List<GameObject>();
         _npc = new List<GameObject>();
         _fieldItem = new List<GameObject>();
+        _equipItem = new List<GameObject>();
         _ui = new List<GameObject>();
         _camera = new List<GameObject>();
         _itemImage = new List<Sprite>();
@@ -36,6 +38,7 @@ public class ResourceManager
         GameObject[] pet = Resources.LoadAll<GameObject>("Prefabs/Pet_Prefab/");
         GameObject[] npc = Resources.LoadAll<GameObject>("Prefabs/Npc_Prefab/");
         GameObject[] fieldItem = Resources.LoadAll<GameObject>("Prefabs/Item_Prefab/");
+        GameObject[] equipItem = Resources.LoadAll<GameObject>("Prefabs/Item_Prefab/EquipItem_Prefab/");
         GameObject[] ui = Resources.LoadAll<GameObject>("Prefabs/Ui_Prefab/");
         GameObject[] camera = Resources.LoadAll<GameObject>("Prefabs/Camera_Prefab/");
         Sprite[] itemImage = Resources.LoadAll<Sprite>("Resource/Image/ItemImage");
@@ -47,6 +50,7 @@ public class ResourceManager
         ListAdd(_pet, pet);
         ListAdd(_npc, npc);
         ListAdd(_fieldItem, fieldItem);
+        ListAdd(_equipItem, equipItem);
         ListAdd(_ui, ui);
         ListAdd(_camera, camera);
         ListAddImage(_itemImage, itemImage);
@@ -131,6 +135,17 @@ public class ResourceManager
         foreach (GameObject one in _fieldItem)
         {
             if (one.name.Equals(fieldItemName))
+            {
+                return one;
+            }
+        }
+        return null;
+    }
+    public GameObject GetEquipItem(string equipItem)
+    {
+        foreach (GameObject one in _equipItem)
+        {
+            if (one.name.Equals(equipItem))
             {
                 return one;
             }
