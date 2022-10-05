@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InteracWithVenice : MonoBehaviour
 {
     Animator VeniceAnimator;
     public GameObject VenicePrefab;
-    public GameObject[] MerDialogs;
-    public GameObject man_guy_Rig;
+    public string[] VeniceDialogs;
     public GameObject Shop;
-
+    public GameObject VenicePanel;
+    CapsuleCollider capsuleCollider;
+    public TextMeshProUGUI VeniceText;
+    
     void Awake()
     {
         VeniceAnimator = VenicePrefab.GetComponent<Animator>();
+        capsuleCollider = gameObject.GetComponentInChildren<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -29,23 +34,21 @@ public class InteracWithVenice : MonoBehaviour
                 if (RayStruct.collider.tag == "Merchant")
                 {
                     VeniceAnimator.SetTrigger("MeetPlayer");
-                    MerDialogs[0].SetActive(true);
+                    VenicePanel.SetActive(true);
+                    VeniceText.text = VeniceDialogs[0];
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
-                    // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.
-                    CapsuleCollider collderOfMan_guy_Rig = 
-                        man_guy_Rig.gameObject.GetComponent<CapsuleCollider>();
-                    collderOfMan_guy_Rig.enabled = false;
+                    // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
+                    capsuleCollider.enabled = false;
                     VeniceAnimator.SetInteger("restoreInt", 1);
                 };
             }
         }
     }
 
-    public void TalkWithMer()
+    public void TalkWithVenice()
     {
         VeniceAnimator.SetTrigger("Talk");
-        MerDialogs[0].SetActive(false);
-        MerDialogs[1].SetActive(true);
+        VeniceText.text = VeniceDialogs[1];
         VeniceAnimator.SetInteger("restoreInt", 1);
     }
     
@@ -59,16 +62,10 @@ public class InteracWithVenice : MonoBehaviour
         Shop.SetActive(false);
     }
 
-    public void MoveToFirstCon()
-    {
-        MerDialogs[1].SetActive(false);
-        MerDialogs[0].SetActive(true);
-    }
 
-    public void EndToTalkWithMer()
+    public void EndToTalkWithVenice()
     {
-        MerDialogs[0].SetActive(false);
-        CapsuleCollider collderOfMan_guy_Rig = man_guy_Rig.gameObject.GetComponent<CapsuleCollider>();
-        collderOfMan_guy_Rig.enabled = true;
+        VenicePanel.SetActive(false);
+        capsuleCollider.enabled = true;
     }
 }
