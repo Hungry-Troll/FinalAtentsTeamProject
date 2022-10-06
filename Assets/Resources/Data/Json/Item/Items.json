@@ -1,0 +1,121 @@
+{
+    "_Id": 111,
+    "_Name": "검",
+    "_Type": "Weapon",
+    "_Skill": 10,
+    "_Info": "평범한 검",
+    "_Get_Price": 100,
+    "_Sale_Price": 10
+}{
+    "_Id": 112,
+    "_Name": "강철검",
+    "_Type": "Weapon",
+    "_Skill": 20,
+    "_Info": "단단한 강철로 만든 검",
+    "_Get_Price": 200,
+    "_Sale_Price": 20
+}{
+    "_Id": 113,
+    "_Name": "전설의 검",
+    "_Type": "Weapon",
+    "_Skill": 30,
+    "_Info": "포스의 힘이 깃든 검",
+    "_Get_Price": 300,
+    "_Sale_Price": 30
+}{
+    "_Id": 121,
+    "_Name": "리볼버",
+    "_Type": "Weapon",
+    "_Skill": 10,
+    "_Info": "단순한 권총",
+    "_Get_Price": 100,
+    "_Sale_Price": 10
+}{
+    "_Id": 122,
+    "_Name": "자동소총",
+    "_Type": "Weapon",
+    "_Skill": 20,
+    "_Info": "연속 사격이 강한 총",
+    "_Get_Price": 200,
+    "_Sale_Price": 20
+}{
+    "_Id": 123,
+    "_Name": "레이저 총",
+    "_Type": "Weapon",
+    "_Skill": 30,
+    "_Info": "포스의 힘이 깃든 총",
+    "_Get_Price": 300,
+    "_Sale_Price": 30
+}{
+    "_Id": 131,
+    "_Name": "행운의 책",
+    "_Type": "Weapon",
+    "_Skill": 10,
+    "_Info": "판매 비용이 비싼 책",
+    "_Get_Price": 100,
+    "_Sale_Price": 80
+}{
+    "_Id": 132,
+    "_Name": "두꺼운 사전",
+    "_Type": "Weapon",
+    "_Skill": 20,
+    "_Info": "모서리가 날카로운 사전",
+    "_Get_Price": 200,
+    "_Sale_Price": 20
+}{
+    "_Id": 133,
+    "_Name": "악마의 예언서",
+    "_Type": "Weapon",
+    "_Skill": 30,
+    "_Info": "세계 종말을 예언한 책",
+    "_Get_Price": 300,
+    "_Sale_Price": 30
+}{
+    "_Id": 211,
+    "_Name": "강화인간 슈트",
+    "_Type": "Armour",
+    "_Skill": 5,
+    "_Info": "강화인간 전용 방어구",
+    "_Get_Price": 100,
+    "_Sale_Price": 10
+}{
+    "_Id": 221,
+    "_Name": "에너지 장막",
+    "_Type": "Armour",
+    "_Skill": 5,
+    "_Info": "사이보그 전용 방어구",
+    "_Get_Price": 100,
+    "_Sale_Price": 10
+}{
+    "_Id": 231,
+    "_Name": "흰색 가운",
+    "_Type": "Armour",
+    "_Skill": 5,
+    "_Info": "사이언티스트 전용 방어구",
+    "_Get_Price": 100,
+    "_Sale_Price": 10
+}{
+    "_Id": 301,
+    "_Name": "체력 물약",
+    "_Type": "Consumables",
+    "_Skill": 0,
+    "_Info": "체력을 50 회복시켜준다",
+    "_Get_Price": 10,
+    "_Sale_Price": 1
+}{
+    "_Id": 302,
+    "_Name": "상태이상 회복 물약",
+    "_Type": "Consumables",
+    "_Skill": 1,
+    "_Info": "상태이상을 회복시켜준다.",
+    "_Get_Price": 20,
+    "_Sale_Price": 2
+}{
+    "_Id": 303,
+    "_Name": "이동속도 증가 물약",
+    "_Type": "Consumables",
+    "_Skill": 2,
+    "_Info": "10초동안 이동속도를 증가시켜준다.",
+    "_Get_Price": 30,
+    "_Sale_Price": 3
+}

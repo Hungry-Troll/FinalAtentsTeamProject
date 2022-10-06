@@ -10,6 +10,7 @@ public class FieldManager : MonoBehaviour
     // 이후 각 변수에 대입해서 GameManager.Obj 를 통한 오브젝트 관리
     PlayerController _player;
     _Pet_01 _pet;
+    PetController _pet2;
     ItemController _item;
     MonsterController _monster;
     MonsterStat _monsterStat;
@@ -34,6 +35,10 @@ public class FieldManager : MonoBehaviour
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
         // Obj매니저에서 플레이어스크립트를 들고있게함
+
+        // 임시로 생성한 코드. 펫 스크립트 넘겨줌
+        //GameManager.Obj._petController = CreatePet2(_startPos, "Triceratops");
+
         // Select매니저에서 어떤 직업을 선택했는지 확인
         _select_Job = GameManager.Select.SelectJobCheck();
         // 확인한 직업으로 플레이어 제작
@@ -105,6 +110,29 @@ public class FieldManager : MonoBehaviour
                 GameObject pet = GameObject.Instantiate<GameObject>(temPet, hit.point, Quaternion.identity);
                 _pet = pet.AddComponent<_Pet_01>();
                 return _pet;
+            }
+        }
+        return null;
+    }
+
+    // 펫 컨트롤러 넘겨줄 임시 함수
+    public PetController CreatePet2(Vector3 origin, string petName)
+    {
+        // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
+        origin.y += 100f;
+        RaycastHit hit;
+        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            GameObject temPet = GameManager.Resource.GetPet(petName);
+            if (temPet != null)
+            {
+                // 생성
+                GameObject pet = GameObject.Instantiate<GameObject>(temPet, hit.point, Quaternion.identity);
+                // 컴포넌트 부착
+                _pet2 = pet.AddComponent<PetController>();
+                // 오브젝트 매니저 관리
+                GameManager.Obj._petStat = pet.AddComponent<PetStat>();
+                return _pet2;
             }
         }
         return null;

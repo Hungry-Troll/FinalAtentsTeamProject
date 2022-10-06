@@ -5,15 +5,15 @@ using static Define;
 
 public class PetController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public PetStat _petStat;
+
     void Start()
     {
-       
+        _petStat = GetComponent<PetStat>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

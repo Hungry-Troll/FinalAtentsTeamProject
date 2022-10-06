@@ -5,7 +5,6 @@ using UnityEngine;
 // 플레이어 스탯
 
 // ===추가사항===
-// 이름
 // 직업
 // 레벨업 경험치
 // 현재 경험치
@@ -35,10 +34,6 @@ public class PlayerStat : Stat
         // 생성한 게임매니저 플레이어 스텟에 넣음
     }*/
 
-    // 이름
-    [SerializeField]
-    private string _Name;
-
     // 직업
     [SerializeField]
     private string _Job;
@@ -50,12 +45,6 @@ public class PlayerStat : Stat
     // 레벨업 경험치
     [SerializeField]
     private int _Lv_Exp;
-
-    public string Name
-    {
-        get { return _Name; }
-        set { _Name = value; }
-    }
 
     public string Job
     {

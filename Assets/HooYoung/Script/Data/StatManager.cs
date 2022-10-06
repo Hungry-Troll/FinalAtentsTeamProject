@@ -15,6 +15,13 @@ public class StatManager
     // 필드매니저에서 캐릭터 생성시 addComponenet로 생성 >> 오브젝트 매니저에 저장한 플레이어 스텟스크립트 가지고 옴
     public PlayerStat _player;
     public MonsterStat _monster;
+    public PetStat _pet;
+    
+    // 아이템 리스트, CreateItemFile() 에서 사용
+    private List<ItemStat> _createdItemList = new List<ItemStat>();
+    private List<ItemStat> _ItemList = new List<ItemStat>();
+    // SplitJson(string json) 에서 사용하는 item 개별포장된 json string배열 
+    private string[] _itemJsonArr;
 
     // 임시 스텟 저장용 클래스 선언
     TempStatEX _tempStat;
@@ -23,6 +30,7 @@ public class StatManager
     {
         // 플레이어 스텟스크립트를 게임매니저에서 가지고옴
         _player = GameManager.Obj._playerStat;
+        _pet = GameManager.Obj._petStat;
 
         // 생성 및 저장
         // 한번 데이터를 생성하는데 사용한 코드
@@ -38,6 +46,53 @@ public class StatManager
         //CreateFile(2, Define.Job.Scientist);
         //CreateFile(3, Define.Job.Scientist);
         //CreateFile(4, Define.Job.Scientist);
+        //CreatePetFile(Define.Pet.Triceratops);
+        //CreatePetFile(Define.Pet.Pachycephalosaurus);
+        //CreatePetFile(Define.Pet.Brachiosaurus);
+
+        // 아이템 생성에 사용한 코드
+        // 코드, 이름(string), 타입(string), 스킬, 상세정보(string), 구매비용, 판매비용
+        /*
+        // Weapon
+        ItemStat Sword = new ItemStat(111, "검", Define.ItemType.Weapon.ToString(), 10, "평범한 검", 100, 10);
+        ItemStat IronSword = new ItemStat(112, "강철검", Define.ItemType.Weapon.ToString(), 20, "단단한 강철로 만든 검", 200, 20);
+        ItemStat LegendSword = new ItemStat(113, "전설의 검", Define.ItemType.Weapon.ToString(), 30, "포스의 힘이 깃든 검", 300, 30);
+        ItemStat Revolver = new ItemStat(121, "리볼버", Define.ItemType.Weapon.ToString(), 10, "단순한 권총", 100, 10);
+        ItemStat AutomaticRifle = new ItemStat(122, "자동소총", Define.ItemType.Weapon.ToString(), 20, "연속 사격이 강한 총", 200, 20);
+        ItemStat LaserGun = new ItemStat(123, "레이저 총", Define.ItemType.Weapon.ToString(), 30, "포스의 힘이 깃든 총", 300, 30);
+        ItemStat LuckyBook = new ItemStat(131, "행운의 책", Define.ItemType.Weapon.ToString(), 10, "판매 비용이 비싼 책", 100, 80);
+        ItemStat ThickDictionary = new ItemStat(132, "두꺼운 사전", Define.ItemType.Weapon.ToString(), 20, "모서리가 날카로운 사전", 200, 20);
+        ItemStat DevilsProphet = new ItemStat(133, "악마의 예언서", Define.ItemType.Weapon.ToString(), 30, "세계 종말을 예언한 책", 300, 30);
+        
+        // Armour
+        ItemStat SuperSuit = new ItemStat(211, "강화인간 슈트", Define.ItemType.Armour.ToString(), 5, "강화인간 전용 방어구", 100, 10);
+        ItemStat EnergyShield = new ItemStat(221, "에너지 장막", Define.ItemType.Armour.ToString(), 5, "사이보그 전용 방어구", 100, 10);
+        ItemStat WhiteCoat = new ItemStat(231, "흰색 가운", Define.ItemType.Armour.ToString(), 5, "사이언티스트 전용 방어구", 100, 10);
+        
+        // Potion(Consumables)
+        ItemStat HP_Potion = new ItemStat(301, "체력 물약", Define.ItemType.Consumables.ToString(), 0, "체력을 50 회복시켜준다", 10, 1);
+        ItemStat Recover_Potion = new ItemStat(302, "상태이상 회복 물약", Define.ItemType.Consumables.ToString(), 1, "상태이상을 회복시켜준다.", 20, 2);
+        ItemStat SpeedUp_Potion = new ItemStat(303, "이동속도 증가 물약", Define.ItemType.Consumables.ToString(), 2, "10초동안 이동속도를 증가시켜준다.", 30, 3);
+        
+        CreateItemFile(Sword);
+        CreateItemFile(IronSword);
+        CreateItemFile(LegendSword);
+        CreateItemFile(Revolver);
+        CreateItemFile(AutomaticRifle);
+        CreateItemFile(LaserGun);
+        CreateItemFile(LuckyBook);
+        CreateItemFile(ThickDictionary);
+        CreateItemFile(DevilsProphet);
+        
+        CreateItemFile(SuperSuit);
+        CreateItemFile(EnergyShield);
+        CreateItemFile(WhiteCoat);
+        
+        CreateItemFile(HP_Potion);
+        CreateItemFile(Recover_Potion);
+        CreateItemFile(SpeedUp_Potion);
+        */
+
 
         // 임시 스텟 저장용 객체 선언
         _tempStat = new TempStatEX();
@@ -49,6 +104,14 @@ public class StatManager
         PlayerStatLoadJson(1, Define.Job.Superhuman);
         // 몬스터 스텟 로드
         MonsterStatLoadJson(Define.Monster.Velociraptor);
+        
+        // 아이템 스텟 로드
+        // item json -> _ItemList<ItemStat> 로 변환
+        LoadItemList();
+
+        // 디버깅용, 아이템 코드로 찾음
+        //Debug.Log("id 123 : " + SearchItem(123).Name);
+        //Debug.Log("id 123 : " + SearchItem(123).Info);
     }
 
     // json 파일 로드 후 스탯들 PlayerStat 싱글톤 객체에 넣는 함수
@@ -58,7 +121,7 @@ public class StatManager
         string fileName = Job.ToString();
         fileName += Lv.ToString();
         // 경로
-        string path = Application.dataPath + "/Resources/Data/Json/" + fileName + ".json";
+        string path = Application.dataPath + "/Resources/Data/Json/Player/" + fileName + ".json";
 
         FileStream fileStream = new FileStream(path, FileMode.Open);
         byte[] data = new byte[fileStream.Length];
@@ -100,7 +163,7 @@ public class StatManager
     {
         string fileName = name.ToString();
         // 경로
-        string path = Application.dataPath + "/Resources/Data/Json/" + fileName + ".json";
+        string path = Application.dataPath + "/Resources/Data/Json/Monster/" + fileName + ".json";
 
         FileStream fileStream = new FileStream(path, FileMode.Open);
         byte[] data = new byte[fileStream.Length];
@@ -127,6 +190,69 @@ public class StatManager
             GameManager.Obj._mobStatList[i].Exp = _tempStat.Exp;
             GameManager.Obj._mobStatList[i].Speed = _tempStat.Speed;
         }
+    }
+
+    // 펫 이름으로 스텟 불러옴
+    void PetStatLoadJson(Define.Pet name)
+    {
+        string fileName = name.ToString();
+        // 경로
+        string path = Application.dataPath + "/Resources/Data/Json/Pet/" + fileName + ".json";
+
+        FileStream fileStream = new FileStream(path, FileMode.Open);
+        byte[] data = new byte[fileStream.Length];
+        fileStream.Read(data, 0, data.Length);
+        fileStream.Close();
+        string json = Encoding.UTF8.GetString(data);
+
+        _tempStat = JsonUtility.FromJson<TempStatEX>(json);
+
+        // 펫 스텟 대입
+        GameManager.Obj._petStat.Hp = _tempStat.Hp;
+        GameManager.Obj._petStat.Atk = _tempStat.Atk;
+        GameManager.Obj._petStat.Def = _tempStat.Def;
+        GameManager.Obj._petStat.Max_Hp = _tempStat.Max_Hp;
+        GameManager.Obj._petStat.Name = _tempStat.Name;
+        GameManager.Obj._petStat.Speed = _tempStat.Speed;
+        GameManager.Obj._petStat.Revive_Time = _tempStat.Revive_Time;
+    }
+
+    // 아이템 로드
+    void LoadItemList()
+    {
+        string fileName = "Items";
+        // 경로
+        string path = Application.dataPath + "/Resources/Data/Json/Item/" + fileName + ".json";
+
+        FileStream fileStream = new FileStream(path, FileMode.Open);
+        byte[] data = new byte[fileStream.Length];
+        fileStream.Read(data, 0, data.Length);
+        fileStream.Close();
+        string json = Encoding.UTF8.GetString(data);
+
+        // {}{}{} -> {} {} {} 각각 배열에 저장
+        SplitJson(json);
+
+        for(int i = 0; i < _itemJsonArr.Length; i++)
+        {
+            // {name, type, skill...} 한 세트씩 ItemStat 타입으로 parsing
+            ItemStat item = JsonUtility.FromJson<ItemStat>(_itemJsonArr[i]);
+            // 리스트에 추가
+            _ItemList.Add(item);
+        }
+    }
+
+    // 아이템 아이디로 검색해서 반환하는 함수
+    ItemStat SearchItem(int findId)
+    {
+        foreach(ItemStat one in _ItemList)
+        {
+            if(one.Id == findId)
+            {
+                return one;
+            }
+        }
+        return null;
     }
 
     // 플레이어 스탯 json 파일 생성 및 저장 
@@ -160,11 +286,82 @@ public class StatManager
         fileName += _Lv.ToString();
 
         // 경로
-        string path = Application.dataPath + "/Resources/Data/Json/" + fileName + ".json";
+        string path = Application.dataPath + "/Resources/Data/Json/Player/" + fileName + ".json";
 
         FileStream fileStream = new FileStream(path, FileMode.Create);
         byte[] data = Encoding.UTF8.GetBytes(json);
         fileStream.Write(data, 0, data.Length);
+        fileStream.Close();
+    }
+
+    void CreatePetFile(Define.Pet _Pet)
+    {
+        // 디버깅용 임시로 리터럴 값 넣음
+        /*
+        _pet.Name = _Pet.ToString();
+        _pet.Lv = 0;
+        _pet.Hp = 160;
+        _pet.Atk = 20;
+        _pet.Def = 5;
+        _pet.Speed = 0;
+        _pet.Revive_Time = 60;
+        */
+
+        // static 객체가 가지고 있던 스탯들 json string 으로 변환
+        string json = JsonUtility.ToJson(_pet, true);
+        // 파일 이름
+        //string fileName = "playerStat";
+
+        // 불러올 파일 이름
+        string fileName = _Pet.ToString();
+
+        // 경로
+        string path = Application.dataPath + "/Resources/Data/Json/Pet/" + fileName + ".json";
+
+        FileStream fileStream = new FileStream(path, FileMode.Create);
+        byte[] data = Encoding.UTF8.GetBytes(json);
+        fileStream.Write(data, 0, data.Length);
+        fileStream.Close();
+    }
+
+    // 아이템 json 파일에 값 추가하는 함수
+    void CreateItemFile(ItemStat _item)
+    {
+
+        // 디버깅용 임시로 리터럴 값 넣음
+        /*
+        _item.Name = "sword3";
+        _item.Type = "Weapon";
+        _item.Skill = 10;
+        _item.Info = "그냥 검";
+        _item.Get_Price = 10;
+        _item.Sale_Price = 5;
+        */
+
+        // json으로 변환될 string
+        string json;
+        // 불러올 파일 이름
+        string fileName = "Items";
+        // 경로
+        string path = Application.dataPath + "/Resources/Data/Json/Item/" + fileName + ".json";
+        // 파일 열어두기
+        FileStream fileStream = new FileStream(path, FileMode.Create);
+
+        // 아이템 리스트에 추가
+        _createdItemList.Add(_item);
+
+        // 리스트 null check
+        if(_createdItemList.Count > 0)
+        {
+            foreach(ItemStat one in _createdItemList)
+            {
+                // static 객체가 가지고 있던 스탯들 json string 으로 변환
+                json = JsonUtility.ToJson(one, true);
+                
+                byte[] data = Encoding.UTF8.GetBytes(json);
+                fileStream.Write(data, 0, data.Length);
+            }
+        }
         fileStream.Close();
     }
 
@@ -212,6 +409,19 @@ public class StatManager
             case 4:
                 _player.Lv_Exp = 0;
                 break;
+        }
+    }
+
+    void SplitJson(string jsonSentence)
+    {
+        _itemJsonArr = jsonSentence.Trim().Split("}");
+
+        for(int i = 0; i < _itemJsonArr.Length-1; i++)
+        {
+            _itemJsonArr[i] += "}";
+            
+            // 디버깅용
+            //Debug.Log(_itemJsonArr += "}");
         }
     }
 }
@@ -262,6 +472,10 @@ public class TempStatEX
     // 이동속도
     [SerializeField]
     private int _Speed;
+
+    // 부활시간
+    [SerializeField]
+    private int _Revive_Time;
 
     public int Hp
     {
@@ -327,6 +541,12 @@ public class TempStatEX
     {
         get { return _Speed; }
         set { _Speed = value; }
+    }
+
+    public int Revive_Time
+    {
+        get { return _Revive_Time; }
+        set { _Revive_Time = value; }
     }
 }
 

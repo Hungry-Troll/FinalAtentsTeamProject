@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour
     SoundManagerEX _sound = new SoundManagerEX();
     SelectManager _select = new SelectManager();
     WeaponManager _weapon = new WeaponManager();
-    
+    DataManager _data = new DataManager();
+
     public static ResourceManager Resource 
     { 
         get{ return _instance._resource; } 
@@ -72,6 +73,10 @@ public class GameManager : MonoBehaviour
     public static WeaponManager Weapon
     {
         get { return _instance._weapon; }
+    }
+    public static DataManager Data
+    {
+        get { return _instance._data; }
     }
 
     // Start is called before the first frame update

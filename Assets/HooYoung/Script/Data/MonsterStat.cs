@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MonsterStat : Stat
 {
-    // ¿Ã∏ß
-    [SerializeField]
-    private string _Name;
+    
     // ∞ÒµÂ
     [SerializeField]
     private int _Gold;
@@ -19,11 +17,6 @@ public class MonsterStat : Stat
     [SerializeField]
     private int _Speed;
 
-    public string Name
-    {
-        get { return _Name; }
-        set { _Name = value; }
-    }
 
     public int Gold
     {

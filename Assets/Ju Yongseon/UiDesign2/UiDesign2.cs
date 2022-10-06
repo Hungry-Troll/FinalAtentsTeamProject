@@ -56,6 +56,8 @@ public class UiDesign2 : MonoBehaviour
         bLeft = true;
         bRight = false;
         bCenter = false;
+        // DataManager 에 정보 넘겨주기
+        GameManager.Data.playData.Job = Define.Job.Superhuman.ToString();
     }
 
     public void CenterButtom()
@@ -63,6 +65,8 @@ public class UiDesign2 : MonoBehaviour
         bLeft = false;
         bRight = false;
         bCenter = true;
+        // DataManager 에 정보 넘겨주기
+        GameManager.Data.playData.Job = Define.Job.Cyborg.ToString();
     }
 
     public void RightButtom()
@@ -70,7 +74,9 @@ public class UiDesign2 : MonoBehaviour
         bLeft = false;
         bRight = true;
         bCenter = false;
+        // DataManager 에 정보 넘겨주기
+        GameManager.Data.playData.Job = Define.Job.Scientist.ToString();
     }
 
-    
+
 }

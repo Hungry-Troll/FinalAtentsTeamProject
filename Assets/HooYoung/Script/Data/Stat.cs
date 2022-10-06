@@ -4,6 +4,7 @@ using UnityEngine;
 
 // 오브젝트(플레이어, 몬스터) 공통 스탯
 
+// 이름
 // 현재 체력
 // 공격력
 // 방어력
@@ -13,6 +14,10 @@ using UnityEngine;
 [System.Serializable]
 public class Stat : MonoBehaviour
 {
+    // 이름
+    [SerializeField]
+    private string _Name;
+
     // 현재 체력
     [SerializeField]
     private int _Hp;
@@ -33,6 +38,11 @@ public class Stat : MonoBehaviour
     [SerializeField]
     private int _Max_Hp;
 
+    public string Name
+    {
+        get { return _Name; }
+        set { _Name = value; }
+    }
 
     public int Hp
     {
