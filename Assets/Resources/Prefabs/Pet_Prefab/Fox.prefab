@@ -1444,7 +1444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4767215741015292742}
   - component: {fileID: 6828950819385486661}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: MiniMapPet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

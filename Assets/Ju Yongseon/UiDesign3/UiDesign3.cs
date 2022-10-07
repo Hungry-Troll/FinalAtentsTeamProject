@@ -45,6 +45,8 @@ public class UiDesign3 : MonoBehaviour
             characterGeneration("viking_Rig");
             SkillInfo.sprite = wSkill;
             WButtom = false;
+            //선택한 직업을 게임매니저에서 관리
+            GameManager.Select._jobName = "Superhuman";
         }
 
         if(AButtom)
@@ -55,6 +57,8 @@ public class UiDesign3 : MonoBehaviour
             characterGeneration("soldier_Rig");
             SkillInfo.sprite = aSkill;
             AButtom = false;
+            //선택한 직업을 게임매니저에서 관리
+            GameManager.Select._jobName = "Cyborg";
         }
 
         if(SButtom)
@@ -65,6 +69,8 @@ public class UiDesign3 : MonoBehaviour
             characterGeneration("doctor_Rig");
             SkillInfo.sprite = sSkill;
             SButtom = false;
+            //선택한 직업을 게임매니저에서 관리
+            GameManager.Select._jobName = "Scientist";
         }
 
 
@@ -168,6 +174,12 @@ public class UiDesign3 : MonoBehaviour
         if (CheckNickname() == true)
         {
             Debug.Log(nickname.text + "은 가능");
+            // 캐릭터 이름 저장함
+            GameManager.Select._playerName = nickname.text;
+            Debug.Log(GameManager.Select._playerName);
+
+            // 다음 씬으로 넘김
+            GameManager.Scene.LoadScene("SelectPet");
         }
         else
         {

@@ -5,6 +5,8 @@ using static Define;
 
 public class SelectManager
 {
+    // 플레이어 이름
+    public string _playerName;
     // 직업 이름 펫 이름 변수
     public string _jobName;
     public string _petName;

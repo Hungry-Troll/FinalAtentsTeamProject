@@ -142,7 +142,9 @@ public class StatManager
         _player.Def = _tempStat.Def;
         _player.Lv = _tempStat.Lv;
         _player.Max_Hp = _tempStat.Max_Hp;
-        _player.Name = _tempStat.Name;
+        // 플레이어 이름은 캐릭터 선택 시 정하기 때문에 그 정보를 게임매니저에 저정하고
+        // 거기서 이름을 가지고 옴
+        _player.Name = GameManager.Select._playerName;
         _player.Job = _tempStat.Job;
         _player.Exp = _tempStat.Exp;
         _player.Lv_Exp = _tempStat.Lv_Exp;
