@@ -1,78 +1,92 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Text.RegularExpressions;
 
 public class UiDesign3 : MonoBehaviour
 {
-    public GameObject warriorB;
-    public GameObject ArcherB;
-    public GameObject ScientistB;
-
     public Text jobName;
     public Text jobInformation;
+    public InputField nickname;
 
-    SpriteRenderer sr;
+    public Sprite wSkill;
+    public Sprite aSkill;
+    public Sprite sSkill;
+    public Image SkillInfo;
+
+    Animator ani;
+    
+    GameObject job;
+    GameObject playerObject;
+    GameObject nicknameObject;
 
     bool WButtom = false;
     bool AButtom = false;
     bool SButtom = false;
 
-    GameObject job;
-    GameObject playerObject;
+    int pickNumber;
+
     // Start is called before the first frame update
     void Start()
     {
-        sr = warriorB.GetComponent<SpriteRenderer>();
+        pickNumber = 0;
+        nicknameObject = GameObject.Find("Canvas/NicknameObject");
+        Debug.Log(nicknameObject);
+        nicknameObject.gameObject.SetActive(false);
     }
-    //¼Ò½ºÆ®¸® È®ÀÎ¿ë
+    //¼ÒšÀÆ®¸® È®ÀÎ¿ë
     void Update()
     {
         if(WButtom)
         {
-            Debug.Log("Warrior");
-
-            job = Resources.Load<GameObject>("PeoplePrefabs/man-viking");
-            playerObject = GameObject.Instantiate<GameObject>(job);
-            playerObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-
-            jobName.text = "Àü»ç";
+            pickNumber = 1;
+            jobName.text = "°­È­ÀÎ°£";
             jobInformation.text = "±ÙÁ¢ÀüÅõ ½ºÅ¸ÀÏ¿¡ ¹ë·±½ºÇüÀÌ Æ¯Â¡";
-            characterGeneration("viking");
-
+            characterGeneration("viking_Rig");
+            SkillInfo.sprite = wSkill;
             WButtom = false;
         }
 
         if(AButtom)
         {
-            Debug.Log("Archer");
+            pickNumber = 2;
             jobName.text = "±Ã¼ö";
             jobInformation.text = "¿ø°Å¸®ÀüÅõ ½ºÅ¸ÀÏ¿¡ Æø¹ßÀûÀÎ µ¥¹ÌÁö°¡ Æ¯Â¡";
-            characterGeneration("soldier");
+            characterGeneration("soldier_Rig");
+            SkillInfo.sprite = aSkill;
             AButtom = false;
         }
 
         if(SButtom)
         {
-            Debug.Log("Scientist");
+            pickNumber = 3;
             jobName.text = "°úÇÐÀÚ";
-            jobInformation.text = "¿ø±â¸®ÀüÅõ ½ºÅ¸ÀÏ¿¡ Àü·«ÇüÀÌ Æ¯Â¡";
-            characterGeneration("doctor");
+            jobInformation.text = "¿ø°Å¸®ÀüÅõ ½ºÅ¸ÀÏ¿¡ Àü·«ÇüÀÌ Æ¯Â¡";
+            characterGeneration("doctor_Rig");
+            SkillInfo.sprite = sSkill;
             SButtom = false;
         }
 
 
     }
     
+    //Ä³¸¯ÅÍ¸¦ ¸®¼Ò½º·Î ºÒ·¯¿À´Â ÄÚµå
     void characterGeneration(string _name)
     {
+        Debug.Log(_name);
         if (playerObject != null)
         {
             Destroy(playerObject);
         }
-        job = Resources.Load<GameObject>("PeoplePrefabs/man-" + _name);
+        job = Resources.Load<GameObject>("Ju Yongseon/Character_Prefab/man-" + _name);
         playerObject = GameObject.Instantiate<GameObject>(job);
+        playerObject.transform.position = new Vector3(0, 0, 0);
         playerObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        ani = playerObject.GetComponent<Animator>();
+        ani.SetInteger("Index", 1);
     }
 
+    //¿øÇÏ´Â Ä³¸¯ÅÍÀÇ ¹öÆ°ÀÌ ´­¸®°Ô ÇÏ±â À§ÇÑ ÄÚµå
     public void WarriorButtom()
     {
         WButtom = true;
@@ -93,6 +107,82 @@ public class UiDesign3 : MonoBehaviour
         AButtom = false;
         SButtom = true;
     }
-
-
+    //start¹öÆ°¿¡ ¸¶¿ì½º¿Ã¸®¸é ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Çàµ¿
+    public void StartPointerEnter()
+    {
+        if(ani != null)
+        {
+            ani.SetInteger("Index",2);
+        }
+    }
+    public void StartPointerExit()
+    {
+        if(ani != null)
+        {
+            ani.SetInteger("Index", 0);
+        }
+    }
+    //´Ù¸¥ Ä³¸¯ÅÍ¸¦ ´©¸£¸é ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ¼­¿îÇÏ°Ô Çàµ¿
+    public void PickPointerEnter(int _number)
+    {
+        if(ani != null)
+        {
+            if(pickNumber != _number)
+            {
+                ani.SetInteger("Index", 3);
+            }
+        }
+    }
+    public void PickPointerExit()
+    {
+        Debug.Log("0");
+        if (ani != null)
+        {
+            
+            ani.SetInteger("Index", 0);
+        }
+    }
+    //Ä³¸¯ÅÍ°¡ ¼±ÅÃÀÌ µÇ¸é ½ºÅ³¿ÀºêÁ§Æ®°¡ º¸ÀÌ°Ô ¼³Á¤
+    public void SkillCheckPointerEnter()
+    {
+        if (SkillInfo.sprite != null)
+        {
+            SkillInfo.gameObject.SetActive(true);
+        }
+        
+    }
+    public void SkillCheckPointerExit()
+    {
+        SkillInfo.gameObject.SetActive(false);
+    }
+    //Ä³¸¯ÅÍ¸¦ ¼±ÅÃÇÏ°í ½ÃÀÛ¹öÆ°À» ´©¸£¸é ´Ð³×ÀÓÃ¢ÀÌ ¶ß°Ô ¼³Á¤
+    public void StartButton()
+    {
+        if(pickNumber !=0)
+        {
+            nicknameObject.gameObject.SetActive(true);
+        }
+    }
+    public void NicknameconfirmedButton()
+    {
+        if (CheckNickname() == true)
+        {
+            Debug.Log(nickname.text + "Àº °¡´É");
+        }
+        else
+        {
+            Debug.Log(nickname.text + "Àº ºÒ°¡´É");
+            nickname.text = null;
+        }
+    }
+    public void CancelButton()
+    {
+        nicknameObject.gameObject.SetActive(false);
+    }
+    //À¯Àú°¡ ´Ð³×ÀÓÀ» Text¿¡ ÀÛ¼ºÇÏ¸é ¼ýÀÚ,¿µ¾î,ÇÑ±Û¸¸ »ç¿ë°¡´ÉÇÏ°Ô ÇÏ´Â ÄÚµå
+    //https://mrbinggrae.tistory.com/175
+    private bool CheckNickname()
+    {
+        return Regex.IsMatch(nickname.text, "^[0-9a-zA-Z°¡-ÆR]*$");
+    }
 }

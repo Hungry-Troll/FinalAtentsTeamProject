@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class UiDesign2 : MonoBehaviour
 {
-    public Light light;
+    public Animator aniViking;
+    public Animator aniSoldier;
+    public Animator aniDoctor;
+    public Light light1;
 
     bool bLeft = false;
     bool bCenter = false;
     bool bRight = false;
 
-
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -23,28 +23,31 @@ public class UiDesign2 : MonoBehaviour
     {
         if(bLeft)
         {
-            // Debug.Log("Warrior");
-            // string으로 이름을 넘겨줌 >> 셀렉매니저에서 플레이어 직업 관리
-            GameManager.Select._jobName = "Superhuman";
-            light.transform.position = new Vector3(-1.5f, 1, -5);
+            Debug.Log("Warrior");
+            light1.transform.position = new Vector3(-1.5f, 1, -5);
+            aniViking.SetInteger("Index", 1);
+            aniSoldier.SetInteger("Index", 0);
+            aniDoctor.SetInteger("Index", 0);
             bLeft = false;
         }
 
         if(bCenter)
         {
-            //Debug.Log("Archer");
-            // string으로 이름을 넘겨줌 >> 셀렉매니저에서 플레이어 직업 관리
-            GameManager.Select._jobName = "Cyborg";
-            light.transform.position = new Vector3(0f, 1, -5);
+            Debug.Log("Archer");
+            light1.transform.position = new Vector3(0f, 1, -5);
+            aniViking.SetInteger("Index", 0);
+            aniSoldier.SetInteger("Index", 1);
+            aniDoctor.SetInteger("Index", 0);
             bCenter = false;
         }
 
         if(bRight)
         {
-            //Debug.Log("Scientist");
-            // string으로 이름을 넘겨줌 >> 셀렉매니저에서 플레이어 직업 관리
-            GameManager.Select._jobName = "Scientist";
-            light.transform.position = new Vector3(1.5f, 1, -5);
+            Debug.Log("Scientist");
+            light1.transform.position = new Vector3(1.5f, 1, -5);
+            aniViking.SetInteger("Index", 0);
+            aniSoldier.SetInteger("Index", 0);
+            aniDoctor.SetInteger("Index", 1);
             bRight = false;
         }
 
@@ -56,8 +59,6 @@ public class UiDesign2 : MonoBehaviour
         bLeft = true;
         bRight = false;
         bCenter = false;
-        // DataManager 에 정보 넘겨주기
-        GameManager.Data.playData.Job = Define.Job.Superhuman.ToString();
     }
 
     public void CenterButtom()
@@ -65,8 +66,6 @@ public class UiDesign2 : MonoBehaviour
         bLeft = false;
         bRight = false;
         bCenter = true;
-        // DataManager 에 정보 넘겨주기
-        GameManager.Data.playData.Job = Define.Job.Cyborg.ToString();
     }
 
     public void RightButtom()
@@ -74,9 +73,7 @@ public class UiDesign2 : MonoBehaviour
         bLeft = false;
         bRight = true;
         bCenter = false;
-        // DataManager 에 정보 넘겨주기
-        GameManager.Data.playData.Job = Define.Job.Scientist.ToString();
     }
 
-
+    
 }
