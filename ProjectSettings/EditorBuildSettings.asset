@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/CharacterSelectScene.unity
+    path: Assets/Scenes/CharacterSelectScene1.unity
     guid: 27ac924de2cebdd43bc9fa97f415df02
   - enabled: 1
     path: Assets/Scenes/SelectPet/SelectPet.unity
