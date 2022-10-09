@@ -16,5 +16,5 @@ public class ObjectManager
     public List<MonsterStat> _mobStatList = new List<MonsterStat>();
     // 아이템 정보
     public List<ItemController> _itemContList = new List<ItemController>();
-
+    public List<ItemStatEX> _itemStatList = new List<ItemStatEX>();
 }

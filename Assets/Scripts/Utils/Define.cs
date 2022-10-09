@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class Define
 {
+    public enum ItemName
+    {
+        sword1,
+        sword2,
+        sword3,
+        gun1,
+        gun2,
+        gun3,
+        book1,
+        book2,
+        book3,
+        armour1,
+        armour2,
+        armour3,
+        potion1,
+        potion2,
+        potion3,
+    }
     public enum Pet
     {
         Triceratops,

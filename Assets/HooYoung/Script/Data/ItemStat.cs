@@ -26,7 +26,7 @@ public class ItemStat
     // 생성자 오버로드시 기본 생성자 사라지므로 만들어 놓음
     public ItemStat() { }
     // 아이템 생성할 때 대비 생성자
-    public ItemStat(int id, string name, string type, int skill, string info, int get_price, int sale_price)
+    public ItemStat(string id, string name, string type, int skill, string info, int get_price, int sale_price)
     {
         _Id = id;
         _Name = name;
@@ -39,7 +39,7 @@ public class ItemStat
 
     // 코드
     [SerializeField]
-    private int _Id;
+    private string _Id;
 
     // 이름
     [SerializeField]
@@ -65,7 +65,7 @@ public class ItemStat
     [SerializeField]
     private int _Sale_Price;
 
-    public int Id
+    public string Id
     {
         get { return _Id; }
         set { _Id = value; }

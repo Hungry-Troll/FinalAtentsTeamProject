@@ -16,10 +16,10 @@ public class StatManager
     public PlayerStat _player;
     public MonsterStat _monster;
     public PetStat _pet;
-    
+
     // 아이템 리스트, CreateItemFile() 에서 사용
-    private List<ItemStat> _createdItemList = new List<ItemStat>();
-    private List<ItemStat> _ItemList = new List<ItemStat>();
+    private List<ItemStat> _createdItemList;
+    private List<ItemStat> _ItemList;
     // SplitJson(string json) 에서 사용하는 item 개별포장된 json string배열 
     private string[] _itemJsonArr;
 
@@ -29,7 +29,7 @@ public class StatManager
     public void Init()
     {
         // 플레이어 스텟스크립트를 게임매니저에서 가지고옴
-        _player = GameManager.Obj._playerStat;
+        // _player = GameManager.Obj._playerStat;
         _pet = GameManager.Obj._petStat;
 
         // 생성 및 저장
@@ -101,21 +101,26 @@ public class StatManager
         // enum JOB 을 Define enum Job으로 통합 >> 추후 다른대서도 공용으로 사용
 
         // 플레이어 스텟 로드
-        PlayerStatLoadJson(1, Define.Job.Superhuman);
+        //PlayerStatLoadJson(1, Define.Job.Superhuman);
         // 몬스터 스텟 로드
-        MonsterStatLoadJson(Define.Monster.Velociraptor);
-        
+        //MonsterStatLoadJson(Define.Monster.Velociraptor);
+
         // 아이템 스텟 로드
         // item json -> _ItemList<ItemStat> 로 변환
+        _createdItemList = new List<ItemStat>();
+        _ItemList = new List<ItemStat>();
         LoadItemList();
+    // 서치 아이템 id 코드를 기존 아이템 이름과 동일하게 변경함
+    // id 코드 대신 직관적인 각 프리팹 이름으로 변경
 
-        // 디버깅용, 아이템 코드로 찾음
-        //Debug.Log("id 123 : " + SearchItem(123).Name);
-        //Debug.Log("id 123 : " + SearchItem(123).Info);
-    }
+
+    // 디버깅용, 아이템 코드로 찾음
+    //Debug.Log("id 123 : " + SearchItem(123).Name);
+    //Debug.Log("id 123 : " + SearchItem(123).Info);
+}
 
     // json 파일 로드 후 스탯들 PlayerStat 싱글톤 객체에 넣는 함수
-    void PlayerStatLoadJson(int Lv, Define.Job Job)
+    public void PlayerStatLoadJson(int Lv, Define.Job Job)
     {
         // 불러올 파일 이름
         string fileName = Job.ToString();
@@ -137,17 +142,17 @@ public class StatManager
         // 플레이어 스텟은 플레이어가 컴포넌트로 들고있어야 수정이나 테스트가 쉽기 때문에 수정합니다.
         _tempStat = JsonUtility.FromJson<TempStatEX>(json);
 
-        _player.Hp = _tempStat.Hp;
-        _player.Atk = _tempStat.Atk;
-        _player.Def = _tempStat.Def;
-        _player.Lv = _tempStat.Lv;
-        _player.Max_Hp = _tempStat.Max_Hp;
+        GameManager.Obj._playerStat.Hp = _tempStat.Hp;
+        GameManager.Obj._playerStat.Atk = _tempStat.Atk;
+        GameManager.Obj._playerStat.Def = _tempStat.Def;
+        GameManager.Obj._playerStat.Lv = _tempStat.Lv;
+        GameManager.Obj._playerStat.Max_Hp = _tempStat.Max_Hp;
         // 플레이어 이름은 캐릭터 선택 시 정하기 때문에 그 정보를 게임매니저에 저정하고
         // 거기서 이름을 가지고 옴
-        _player.Name = GameManager.Select._playerName;
-        _player.Job = _tempStat.Job;
-        _player.Exp = _tempStat.Exp;
-        _player.Lv_Exp = _tempStat.Lv_Exp;
+        GameManager.Obj._playerStat.Name = GameManager.Select._playerName;
+        GameManager.Obj._playerStat.Job = _tempStat.Job;
+        GameManager.Obj._playerStat.Exp = _tempStat.Exp;
+        GameManager.Obj._playerStat.Lv_Exp = _tempStat.Lv_Exp;
 
         // 디버깅용
         /*
@@ -161,9 +166,9 @@ public class StatManager
     }
 
     // 몬스터 이름으로 스텟 불러옴
-    void MonsterStatLoadJson(Define.Monster name)
+    public void MonsterStatLoadJson(string monsterName, MonsterStat monsterStat)
     {
-        string fileName = name.ToString();
+        string fileName = monsterName;
         // 경로
         string path = Application.dataPath + "/Resources/Data/Json/Monster/" + fileName + ".json";
 
@@ -176,22 +181,17 @@ public class StatManager
         // PlayerStat static 변수에 각각의 스탯 넣기
         // PlayerStat.SetInstance = JsonUtility.FromJson<PlayerStat>(json);
 
-
         _tempStat = JsonUtility.FromJson<TempStatEX>(json);
 
-        // 몬스터 스텟 대입
-        for(int i = 0; i < GameManager.Obj._mobStatList.Count; i++)
-        {
-            GameManager.Obj._mobStatList[i].Hp = _tempStat.Hp;
-            GameManager.Obj._mobStatList[i].Atk = _tempStat.Atk;
-            GameManager.Obj._mobStatList[i].Def = _tempStat.Def;
-            GameManager.Obj._mobStatList[i].Lv = _tempStat.Lv;
-            GameManager.Obj._mobStatList[i].Max_Hp = _tempStat.Max_Hp;
-            GameManager.Obj._mobStatList[i].Name = _tempStat.Name;
-            GameManager.Obj._mobStatList[i].Gold = _tempStat.Gold;
-            GameManager.Obj._mobStatList[i].Exp = _tempStat.Exp;
-            GameManager.Obj._mobStatList[i].Speed = _tempStat.Speed;
-        }
+        monsterStat.Hp = _tempStat.Hp;
+        monsterStat.Atk = _tempStat.Atk;
+        monsterStat.Def = _tempStat.Def;
+        monsterStat.Lv = _tempStat.Lv;
+        monsterStat.Max_Hp = _tempStat.Max_Hp;
+        monsterStat.Name = _tempStat.Name;
+        monsterStat.Gold = _tempStat.Gold;
+        monsterStat.Exp = _tempStat.Exp;
+        monsterStat.Speed = _tempStat.Speed;
     }
 
     // 펫 이름으로 스텟 불러옴
@@ -218,9 +218,24 @@ public class StatManager
         GameManager.Obj._petStat.Speed = _tempStat.Speed;
         GameManager.Obj._petStat.Revive_Time = _tempStat.Revive_Time;
     }
+    // 아이템 스텟 불러옴
+    // ItemStatEX 는 순수하게 스텟 붙이는 컴포넌트용도
+    public void ItemStatLoadJson(string itemName, ItemStatEX itemStatEX)
+    {
+        // 이름으로 서치
+        ItemStat tempStat = SearchItem(itemName);
+        // 가져온 데이터 대입
+        itemStatEX.Id = tempStat.Id;
+        itemStatEX.Name = tempStat.Name;
+        itemStatEX.Type = tempStat.Type;
+        itemStatEX.Skill = tempStat.Skill;
+        itemStatEX.Info = tempStat.Info;
+        itemStatEX.Get_Price = tempStat.Get_Price;
+        itemStatEX.Sale_Price = tempStat.Sale_Price;
+    }
 
     // 아이템 로드
-    void LoadItemList()
+    public void LoadItemList()
     {
         string fileName = "Items";
         // 경로
@@ -245,7 +260,7 @@ public class StatManager
     }
 
     // 아이템 아이디로 검색해서 반환하는 함수
-    ItemStat SearchItem(int findId)
+    public ItemStat SearchItem(string findId)
     {
         foreach(ItemStat one in _ItemList)
         {

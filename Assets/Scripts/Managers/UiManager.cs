@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using static Define;
 using static Util;
 
-
 public class UiManager
 {
     // UI Root용 변수
@@ -30,6 +29,9 @@ public class UiManager
     // 인벤토리
     public InventoryController _inventoryController;
     public GameObject _inven;
+    // 인벤토리 스텟창용 Text // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
+    Text atkText;
+    Text defText;
     // 인벤 슬롯 이미지 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
     public List<Image> _slotImage;
 
@@ -49,6 +51,15 @@ public class UiManager
     public GameObject _itemStatView;
     // 아이템 스텟창 스크립트
     public ItemStatViewController _itemStatViewContoller;
+    // 아이템 스텟창 이미지
+    public Image _findItemImage;
+    // 아이템 스텟창 텍스트 >> 아이템창 열었을 때 각각 데이터 적용 용도 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
+    public Text _itemNameText;
+    public Text _itemStatText;
+    public Text _itemStat;
+    public Text _itemIntroduce;
+    public Text _equipText;
+    public Text _dropText;
 
     // 아이템 스텟창을 한개씩만 띄우기 위한 변수
     // 추후 UI 창 갯수관리를 해야 되면 변경
@@ -118,6 +129,11 @@ public class UiManager
         _inven = GameObject.Instantiate<GameObject>(inven);
         _inventoryController = _inven.GetComponentInChildren<InventoryController>();
         _inven.transform.SetParent(go.transform);
+        // 인벤토리 상태창 스텟 넣을 위치 확인용
+        Transform findAtkText = Util.FindChild("AtkText", _inventoryController.transform);
+        Transform findDefText = Util.FindChild("DefText", _inventoryController.transform);
+        atkText = findAtkText.GetComponent<Text>();
+        defText = findDefText.GetComponent<Text>();
 
         // 아이템 교체용 인벤토리 이미지를 미리 UI 매니지에서 들고있음 // GetComponent 줄이는 용도
         _slotImage = new List<Image>();
@@ -148,12 +164,43 @@ public class UiManager
 
         // 시작하면 아이템 스텟창을 한개씩만 띄우기 위한 변수를 초기화 // 1개만 열 수 있음
         _itemStatOpen = false;
-        // 시작하면 아이템 스텟창 불러 우선 SetActive(false)로 함
+
+
+        // 시작하면 아이템 스텟창 불러옴
         GameObject itemStatView = GameManager.Resource.GetUi("UI_ItemStatView");
         _itemStatView = GameObject.Instantiate<GameObject>(itemStatView);
-        _itemStatView.SetActive(false);
+        
         // 아이템 스텟창 스크립트도 미리 들고있음
         _itemStatViewContoller = _itemStatView.GetComponentInChildren<ItemStatViewController>();
+
+        // UI_ItemStatView 에서 이미지 넣을 위치 찾음
+        Transform itemImage = Util.FindChild("ItemImage", _itemStatView.transform);
+        // 아이템 이미지
+        _findItemImage = itemImage.GetComponent<Image>();
+
+        // 스텟창 내용도 미리 들고있어야됨 안그러면 GetComponent 다수 사용 필요
+        // 아이템명
+        Transform itemNameText = Util.FindChild("ItemNameText", _itemStatView.transform);
+        // 공격력 방어력
+        Transform itemStatText = Util.FindChild("ItemStatText", _itemStatView.transform);
+        // 공격력 방어력 실제 데이터
+        Transform itemStat = Util.FindChild("ItemStat", _itemStatView.transform);
+        // 아이템 설명
+        Transform itemIntroduce = Util.FindChild("ItemIntroduce", _itemStatView.transform);
+        // 장착하기 사용하기
+        Transform equipText = Util.FindChild("EquipText", _itemStatView.transform);
+        // 버리기
+        Transform dropText = Util.FindChild("DropText", _itemStatView.transform);
+
+        _itemNameText = itemNameText.GetComponent<Text>();
+        _itemStatText = itemStatText.GetComponent<Text>();
+        _itemStat = itemStat.GetComponent<Text>();
+        _itemIntroduce = itemIntroduce.GetComponent<Text>();
+        _equipText = equipText.GetComponent<Text>();
+        _dropText = dropText.GetComponent<Text>();
+
+        //SetActive(false)로 함
+        _itemStatView.SetActive(false);
     }
     /// <summary>
     /// 인벤토리 관련
@@ -204,13 +251,13 @@ public class UiManager
         }
 
         _itemStatView.transform.position = _inventoryController.transform.position;
-        // UI_ItemStatView 에서 넣을 위치 찾음
-        Transform itemImage = Util.FindChild("ItemImage", _itemStatView.transform);
-        Image FindItemImage = itemImage.GetComponent<Image>();
+
+        //스텟을 상태창에 넣어줌
+        ItemStatViewStatAdd(invenSlotItem);
 
         // 넣을 이미지를 찾음
         Sprite _sprite = GameManager.Resource.GetImage(invenSlotItem.name);
-        FindItemImage.sprite = _sprite;
+        _findItemImage.sprite = _sprite;
         // 이왕 찾은 이미지를 스텟뷰에 넣어놓음 (아이템 장착용)
         _itemStatViewContoller._sprite = _sprite;
         _itemStatOpen = true;
@@ -228,6 +275,48 @@ public class UiManager
         }
     }
 
+    // 아이템창에 스텟 넣는 함수
+    public void ItemStatViewStatAdd(GameObject gameObject)
+    {
+        // 미리 찾은 Text 컴포넌트에 아이템 스텟 적용
+        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        {
+            if(GameManager.Ui._inventoryController._item[i].name == gameObject.name)
+            {
+                // 겟 컴포넌트가 많아질 것 같으면 추후 수정
+                // 우선은 쉽게 아이템인벤토리 목록 게임오브젝트하고 매개변수로 가지고온 게임오브젝르 이름 비교 후 스텟을 넣어줌
+                ItemStatEX tmpStat = GameManager.Ui._inventoryController._item[i].GetComponent<ItemStatEX>();
+                // 아이템 이름
+                _itemNameText.text = tmpStat.Name;
+
+                // 아이템 종류에 따라 다른 텍스트 출력 (공격력 방어력)
+                if(tmpStat.Type == "Weapon")
+                {
+                    // _itemStatText.text (공격력 방어력)
+                    // _equipText.text (착용하기 사용하기)
+                    _itemStatText.text = "공격력";
+                    _equipText.text = "착용하기";
+                }
+                else if(tmpStat.Type == "Armour")
+                {
+                    _itemStatText.text = "방어력";
+                    _equipText.text = "착용하기";
+                }
+                else if(tmpStat.Type == "Consumables")
+                {
+                    _itemStatText.text = null;
+                    _equipText.text = "사용하기";
+                }
+                // 공격력 방어력 실제 수치
+                _itemStat.text = tmpStat.Skill.ToString();
+                // 아이템 설명
+                _itemIntroduce.text = tmpStat.Info;
+                //_dropText >> 거의 쓸일이 없을것으로 추정
+            }
+        }
+    }
+
+
     // 무기 장착 함수 (계산)
     // 추후 방어구도 동일하게 적용
     public void ItemStatViewWeaponEquip(ItemType itemType)
@@ -236,6 +325,7 @@ public class UiManager
         Transform findTr = null;
 
         // 장착 대상을 찾음 / 아이템은 Define enum ItemType으로 분류
+        // json에도 장착 타입이 있으므로 json으로 사용할지 고민
         switch (itemType)
         {
             case ItemType.Weapon:
@@ -245,7 +335,13 @@ public class UiManager
                 findTr = Util.FindChild("ArmourImage", _inventoryController.transform);
                 break;
         }
-        
+
+        // 직업에 따른 무기 장착 확인
+        if (!JobWeaponCheck())
+        {
+            return;
+        }
+
         Image findImage = findTr.GetComponent<Image>();
 
         // 이미지 넣음 (_itemStatviewContlloer에서 이미지를 이미지를 들고있음)
@@ -280,6 +376,10 @@ public class UiManager
                 
                 // 무기 착용
                 GameManager.Weapon.TempEquipWeapon(_inventoryController._weapon.name, GameManager.Obj._playerController.transform);
+                // 넣을 무기에서 스텟 스크립트 가지고 옴
+                ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
+                // 플레이어 스크립트에 스텟 더해줌
+                GameManager.Obj._playerStat.Atk += tmpStatEx.Skill;
 
                 // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
                 GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
@@ -293,8 +393,12 @@ public class UiManager
                     // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
                     GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpWeapon);
                     GameManager.Ui._inventoryController._item.Add(tmpWeapon);
+                    ItemStatEX tmpStat = tmpWeapon.GetComponent<ItemStatEX>();
+                    // 임시 저장한 기존 장착 아이템 스텟 계산
+                    GameManager.Obj._playerStat.Atk -= tmpStat.Skill;
                 }
-                
+                // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+                InventoryStatUpdate();
             }
         }
         // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
@@ -351,8 +455,54 @@ public class UiManager
         }
     }
 
+    // 인벤토리 상태창 공격력 / 방어력 구현 / 우선 무기부터
+    public void InventoryStatUpdate()
+    {
+        atkText.text = GameManager.Obj._playerStat.Atk.ToString();
+        defText.text = GameManager.Obj._playerStat.Def.ToString();
+    }
 
+    // 직업에 따라서 장착가능한 무기 체크 함수
+    public bool JobWeaponCheck()
+    {
+        // 스텟뷰에서 들고있는 이미지가 착용 가능한 무기인지 체크
 
+        // 선택한 직업 확인
+        string jobName = GameManager.Select._jobName;
+        // 들고있는 아이템 스프라이트 확인
+        string ImageName = _itemStatViewContoller._sprite.name;
+        // 임시 리스트
+        List<string> temp = new List<string>();
+
+        // 직접 대입하는것은 좋은 코드 아님
+        switch(jobName)
+        {
+            case "Superhuman":
+                temp.Add("sword1");
+                temp.Add("sword2");
+                temp.Add("sword3");
+                break;
+            case "Cyborg":
+                temp.Add("gun1");
+                temp.Add("gun2");
+                temp.Add("gun3");
+                break;
+            case "Scientist":
+                temp.Add("book1");
+                temp.Add("book2");
+                temp.Add("book3");
+                break;
+        }
+        // 비교해서 들고있는 이미지와 직업별 아이템이 같으면 true
+        foreach (var one in temp)
+        {
+            if(one.Equals(ImageName))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /// <summary>
     /// 이하 씬 Attack버튼 관련

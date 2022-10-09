@@ -38,7 +38,7 @@ public class PlayData
     }
 
 }
-public class DataManager : MonoBehaviour
+public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
 {
     public static DataManager instance;
     public PlayData playData = new PlayData();
@@ -50,7 +50,7 @@ public class DataManager : MonoBehaviour
     void Awake()
     {
         #region 싱글톤
-        if (instance == null)
+/*        if (instance == null)
         {
             instance = this;
         }
@@ -58,9 +58,15 @@ public class DataManager : MonoBehaviour
         {
             Destroy(instance.gameObject);
         }
-        DontDestroyOnLoad(this.gameObject);
-        #endregion
+        DontDestroyOnLoad(this.gameObject);*/
+        #endregion// 싱글톤을 게임매니저에서 관리하도록 변경
 
+        //path = Application.persistentDataPath + "/";
+        path = Application.dataPath + "/Resources/Data/Json/Save/" + filename + ".json";
+    }
+
+    void Init()
+    {
         //path = Application.persistentDataPath + "/";
         path = Application.dataPath + "/Resources/Data/Json/Save/" + filename + ".json";
     }

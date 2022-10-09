@@ -12,6 +12,7 @@ public class FieldManager : MonoBehaviour
     _Pet_01 _pet;
     PetController _pet2;
     ItemController _item;
+    ItemStatEX _itemStatEX;
     MonsterController _monster;
     MonsterStat _monsterStat;
 
@@ -60,6 +61,8 @@ public class FieldManager : MonoBehaviour
         // 펫 생성
         CreatePet(_startPos, "Fox");
 
+        //GameManager.Stat.LoadItemList();
+        GameManager.Stat.Init();
         // 아이템 생성용 테스트 코드
         for (int i = 0; i < GameManager.Resource._fieldItem.Count; i++)
         {
@@ -67,8 +70,6 @@ public class FieldManager : MonoBehaviour
             CreateFieldItem(_player.transform.position + tempPos, GameManager.Resource._fieldItem[i].name);
         }
 
-        // Stat매니저에서 스텟정보 가지고 옴
-        GameManager.Stat.Init();
     }
 
     // Update is called once per frame
@@ -92,6 +93,10 @@ public class FieldManager : MonoBehaviour
                 _player = player.AddComponent<PlayerController>();
                 // Obj 매니저에서 PlayerStat 관리
                 GameManager.Obj._playerStat = player.AddComponent<PlayerStat>();
+                // 스텟 적용
+                GameManager.Stat.PlayerStatLoadJson(1, GameManager.Select._job);
+                // 스텟 캐릭터창 적용
+                GameManager.Ui.InventoryStatUpdate();
                 return _player;
             }
         }
@@ -155,6 +160,12 @@ public class FieldManager : MonoBehaviour
                 // 임시코드 우선 나오는 모든 아이템은 무기로 지정
                 _item._itemType = Define.ItemType.Weapon;
                 GameManager.Obj._itemContList.Add(_item);
+                // 스텟 스크립트를 넣고
+                _itemStatEX = fieldItem.AddComponent<ItemStatEX>();
+                // 오브젝트 매니저에 저장
+                GameManager.Obj._itemStatList.Add(_itemStatEX);
+                // 스텟 스크립트에 json 파일 스텟 적용
+                GameManager.Stat.ItemStatLoadJson(tempName, _itemStatEX);
                 _item.name = tempName;
                 return _item;
             }
@@ -178,6 +189,8 @@ public class FieldManager : MonoBehaviour
                 GameManager.Obj._mobContList.Add(_monster);
                 _monsterStat = monster.AddComponent<MonsterStat>();
                 GameManager.Obj._mobStatList.Add(_monsterStat);
+                // 스텟 스크립트에 json 파일 스텟 적용
+                GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
                 _monster.name = tempName;
                 return _monster;
             }

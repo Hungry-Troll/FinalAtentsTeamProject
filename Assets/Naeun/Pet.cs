@@ -20,7 +20,9 @@ public class Pet : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        Invoke("ChaseStart", 1);
+        // 인보크를 사용하지 않아도 정상작동 하지 않나용?
+        //Invoke("ChaseStart", 1);
+        ChaseStart();
     }
     void Start()
     {
