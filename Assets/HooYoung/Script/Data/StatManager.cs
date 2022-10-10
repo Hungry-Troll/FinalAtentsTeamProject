@@ -195,7 +195,7 @@ public class StatManager
     }
 
     // Æê ÀÌ¸§À¸·Î ½ºÅÝ ºÒ·¯¿È
-    void PetStatLoadJson(Define.Pet name)
+    public void PetStatLoadJson(Define.Pet name)
     {
         string fileName = name.ToString();
         // °æ·Î

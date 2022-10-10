@@ -469,25 +469,26 @@ public class UiManager
 
         // 선택한 직업 확인
         string jobName = GameManager.Select._jobName;
+        Define.Job job = GameManager.Select.SelectJobCheck();
         // 들고있는 아이템 스프라이트 확인
         string ImageName = _itemStatViewContoller._sprite.name;
         // 임시 리스트
         List<string> temp = new List<string>();
 
         // 직접 대입하는것은 좋은 코드 아님
-        switch(jobName)
+        switch(job)
         {
-            case "Superhuman":
+            case Define.Job.Superhuman:
                 temp.Add("sword1");
                 temp.Add("sword2");
                 temp.Add("sword3");
                 break;
-            case "Cyborg":
+            case Define.Job.Cyborg:
                 temp.Add("gun1");
                 temp.Add("gun2");
                 temp.Add("gun3");
                 break;
-            case "Scientist":
+            case Define.Job.Scientist:
                 temp.Add("book1");
                 temp.Add("book2");
                 temp.Add("book3");
@@ -511,44 +512,20 @@ public class UiManager
     /// </summary>
     public void AttackButton()
     {
-        List<float> targetDistance = new List<float>();
-        float distance = 0;
-        _targetMonster = null;
-
-        // 몬스터들을 찾는다 >> 추후 몬스터 리스폰 시 오브젝트매니저에서 몬스터를 들고있게 할 예정 그러면 파인드 사용 안해도 됨.
-        // >> GameManager.Obj._mobContList 가 오브젝트매니저에서 가지고 있는 몬스터 리스트임
-        // 각각의 몬스터들의 거리 비교
-        //GameObject[] monster = GameObject.FindGameObjectsWithTag("Monster");
-        
-        for(int i = 0; i < GameManager.Obj._mobContList.Count; i++)
+        // 캐릭터가 3마리 이므로 코드 수정
+        // 기존 코드는 오브젝트 매니저에서 관리
+        // 몬스터만 찾아서 오브젝트 매니저에 넣어둠
+        GameManager.Obj.FindMobListTarget();
+        // 만약 타겟몬스터가 널이 아니라면
+        if(GameManager.Obj._targetMonster != null)
         {
-            targetDistance.Add(Vector3.Distance(GameManager.Obj._mobContList[i].transform.position, GameManager.Obj._playerController.transform.position));
-            
-            if(distance < targetDistance[i])
-            {
-                distance = targetDistance[i];
-                _targetMonster = GameManager.Obj._mobContList[i].gameObject;
-                _targetMonsterStat = GameManager.Obj._mobStatList[i];
-                _targetMonsterController = GameManager.Obj._mobContList[i];
-            }
+            // 플레이어 컨트롤러에서 처리
+            GameManager.Obj._playerController._creatureState = CreatureState.Attack;
+            // 공격버튼 누르면 펫에게도 몬스터 타겟 몬스터를 알려줌
+            GameManager.Obj._petController._target = GameManager.Obj._targetMonster.transform;
         }
 
-        // 가까운 몬스터를 찾았으면 가까이 이동하거나 공격한다.
-        if(_targetMonster != null)
-        {
-            // 가까이 있으면 공격한다.
-            if(distance < 2.0f)
-            {
-                // 플레이어 컨트롤러에서 처리
-                GameManager.Obj._playerController._creatureState = CreatureState.Attack;
-            }
-            // 멀리 있으면 이동한다.
-            if(distance >= 2.0f)
-            {
-                // 플레이어 컨트롤러에서 처리
-                GameManager.Obj._playerController._creatureState = CreatureState.AutoMove;
-            }
-        }
+
     }
     public void Skill1Button()
     {

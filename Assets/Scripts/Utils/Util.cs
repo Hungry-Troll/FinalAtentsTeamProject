@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Util
 {
-    // Start is called before the first frame update
+    // 게임오브젝트 자식을 찾는 재귀 함수
     public static Transform FindChild(string name, Transform _tr)
     {
         if (_tr.name == name)
@@ -19,5 +19,4 @@ public class Util
         }
         return null;
     }
-
 }

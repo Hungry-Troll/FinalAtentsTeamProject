@@ -34,7 +34,8 @@ public class MonsterController : MonoBehaviour
     PlayerController _playerController;
     //몬스터 기본공격용 코루틴 변수
     Coroutine _coAttack;
-
+    //몬스터 사망용 코루틴 변수
+    Coroutine _coDead;
     public int _mobNum
     {
         get;
@@ -199,9 +200,14 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateDead()
     {
-        // 오브젝트 풀링 추후 구현
-        // 게임매니저로 연결된 몬스터를 리스트에서 제거해야됨 
-        gameObject.SetActive(false);
+        // 죽었을 때 크로스페이드 애니메이션 때문에 에러 발생 
+        // 죽는 시간을 주기위한 코루틴
+        if(_coDead == null)
+        {
+            _coDead = StartCoroutine(DeadDelay(3.0f));
+        }
+        // 이름으로 오브젝트매니저에서 찾아서 제거
+        GameManager.Obj.RemoveMobListTraget(gameObject.name);
     }
 
     private void UpdateSkill()
@@ -242,6 +248,15 @@ public class MonsterController : MonoBehaviour
         _playerController.OnDamaged(_monsterStat.Atk);
         // 코루틴 변수 초기화 
         _coAttack = null;
+    }
+    // 사망 딜레이 때문에 생기는 경고메세지 제거용
+    IEnumerator DeadDelay(float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        // 오브젝트 풀링 추후 구현
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
+        _coDead = null;
     }
 
     //몬스터 대미지 받는 함수

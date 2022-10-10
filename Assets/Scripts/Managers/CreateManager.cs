@@ -4,27 +4,19 @@ using UnityEngine;
 
 // 필드에 있는 크리에잇 함수들을 여기서 처리
 // 추후 다른 씬에서도 다시 플레이어, 펫, 몬스터를 만들어야 되기 때문에 필드매니저에 두고 사용할 수 없음
-public class InstatiateManager : MonoBehaviour
+public class CreateManager
 {
     PlayerController _player;
-    _Pet_01 _pet;
-    PetController _pet2;
+    PetController _pet;
     ItemController _item;
     ItemStatEX _itemStatEX;
     MonsterController _monster;
     MonsterStat _monsterStat;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 플레이어 직업 확인용
+    public Define.Job _select_Job;
+    // 펫 종류 확인용
+    public Define.Pet _select_Pet;
 
     public PlayerController CreatePlayerCharacter(Vector3 origin, string playerName)
     {
@@ -51,26 +43,8 @@ public class InstatiateManager : MonoBehaviour
         }
         return null;
     }
-    public _Pet_01 CreatePet(Vector3 origin, string petName)
-    {
-        // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
-        origin.y += 100f;
-        RaycastHit hit;
-        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
-        {
-            GameObject temPet = GameManager.Resource.GetPet(petName);
-            if (temPet != null)
-            {
-                GameObject pet = GameObject.Instantiate<GameObject>(temPet, hit.point, Quaternion.identity);
-                _pet = pet.AddComponent<_Pet_01>();
-                return _pet;
-            }
-        }
-        return null;
-    }
 
-    // 펫 컨트롤러 넘겨줄 임시 함수
-    public PetController CreatePet2(Vector3 origin, string petName)
+    public PetController CreatePet(Vector3 origin, string petName)
     {
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
@@ -83,10 +57,12 @@ public class InstatiateManager : MonoBehaviour
                 // 생성
                 GameObject pet = GameObject.Instantiate<GameObject>(temPet, hit.point, Quaternion.identity);
                 // 컴포넌트 부착
-                _pet2 = pet.AddComponent<PetController>();
-                // 오브젝트 매니저 관리
+                _pet = pet.AddComponent<PetController>();
+                // Obj 매니저에서 펫 Stat 관리 (스텟 매니저에서 관리해야될지 고민)
                 GameManager.Obj._petStat = pet.AddComponent<PetStat>();
-                return _pet2;
+                // 스텟 적용
+                GameManager.Stat.PetStatLoadJson(_select_Pet);
+                return _pet;
             }
         }
         return null;
@@ -135,9 +111,9 @@ public class InstatiateManager : MonoBehaviour
                 string tempName = temMonsterName.name;
                 GameObject monster = GameObject.Instantiate<GameObject>(temMonsterName, hit.point, Quaternion.identity);
                 _monster = monster.AddComponent<MonsterController>();
-                GameManager.Obj._mobContList.Add(_monster);
+                GameManager.Obj._monsterContList.Add(_monster);
                 _monsterStat = monster.AddComponent<MonsterStat>();
-                GameManager.Obj._mobStatList.Add(_monsterStat);
+                GameManager.Obj._monsterStatList.Add(_monsterStat);
                 // 스텟 스크립트에 json 파일 스텟 적용
                 GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
                 _monster.name = tempName;

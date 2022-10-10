@@ -116,12 +116,12 @@ public class PlayerController : MonoBehaviour
     private void AutoMove()
     {
         // 거리
-        float distance = Vector3.Distance(GameManager.Ui._targetMonster.transform.position, transform.position);
+        float distance = Vector3.Distance(GameManager.Obj._targetMonster.transform.position, transform.position);
         // 이동
-        transform.position = Vector3.MoveTowards(transform.position, GameManager.Ui._targetMonster.transform.position, Time.deltaTime * _autoMoveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, GameManager.Obj._targetMonster.transform.position, Time.deltaTime * _autoMoveSpeed);
         
         // 회전
-        Vector3 tempDir = GameManager.Ui._targetMonster.transform.position - transform.position;
+        Vector3 tempDir = GameManager.Obj._targetMonster.transform.position - transform.position;
         tempDir = Vector3.RotateTowards(transform.forward, tempDir.normalized, Time.deltaTime * _moveSpeed, 0);
         transform.rotation = Quaternion.LookRotation(tempDir.normalized);
 
@@ -134,10 +134,18 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
+        // 타겟 널 판정
+        if (GameManager.Obj._targetMonster == null)
+        {
+            _creatureState = CreatureState.Idle;
+            return;
+        }
+            
+
         if(GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
         {
             // 회전
-            Vector3 tempDir = GameManager.Ui._targetMonster.transform.position - transform.position;
+            Vector3 tempDir = GameManager.Obj._targetMonster.transform.position - transform.position;
             tempDir = Vector3.RotateTowards(transform.forward, tempDir.normalized, Time.deltaTime * _moveSpeed, 0);
             transform.rotation = Quaternion.LookRotation(tempDir.normalized);
             // 코루틴을 이용한 공격딜레이 (대미지 계산)
@@ -161,7 +169,7 @@ public class PlayerController : MonoBehaviour
         // 대미지 계산
         //GameManager.Ui._targetMonsterStat.Hp -= _playerStat.Atk - GameManager.Ui._targetMonsterStat.Def;
         // 대미지 계산은 몬스터스크립트에서 처리 >> 플레이어 공격력만 넘겨줌
-        GameManager.Ui._targetMonsterController.OnDamaged(_playerStat.Atk);
+        GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk);
         // 코루틴 초기화
         _coAttack = null;
     }

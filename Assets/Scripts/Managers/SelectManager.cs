@@ -17,6 +17,15 @@ public class SelectManager
     // string으로 안하고 굳이 디파인으로 하는 이유는 오타를 줄이기 위함
     // 추후 게임 시작시 셀렉매니저에서 아래 함수들을 돌려서 어떤 캐릭터와 펫을 선택했는지 체크 가능
 
+    public void Init()
+    {
+        // Select매니저에서 어떤 직업을 선택했는지 확인
+        _job = GameManager.Select.SelectJobCheck();
+
+        // Select매니저에서 어떤 펫을 선택했는지 확인
+        _pet = GameManager.Select.SelectPelCheck();
+    }
+
     // 플레이어 체크
     public Define.Job SelectJobCheck()
     {
