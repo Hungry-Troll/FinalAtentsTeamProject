@@ -10,6 +10,8 @@ public class SelectManager
     // 직업 이름 펫 이름 변수
     public string _jobName;
     public string _petName;
+    // 인벤토리에 갖고 있던 아이템 리스트 변수
+    public List<string> _itemList;
     // 그에 맞게 사용할 디파인 변수
     public Define.Job _job;
     public Define.Pet _pet;

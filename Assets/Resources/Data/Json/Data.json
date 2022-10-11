@@ -1,0 +1,366 @@
+{
+  "Item": [
+    {
+      "_Id": "sword1",
+      "_Name": "검",
+      "_Type": "Weapon",
+      "_Skill": 10,
+      "_Info": "평범한 검",
+      "_Get_Price": 100,
+      "_Sale_Price": 10
+    },
+    {
+      "_Id": "sword2",
+      "_Name": "강철검",
+      "_Type": "Weapon",
+      "_Skill": 20,
+      "_Info": "단단한 강철로 만든 검",
+      "_Get_Price": 200,
+      "_Sale_Price": 20
+    },
+    {
+      "_Id": "sword3",
+      "_Name": "전설의 검",
+      "_Type": "Weapon",
+      "_Skill": 30,
+      "_Info": "포스의 힘이 깃든 검",
+      "_Get_Price": 300,
+      "_Sale_Price": 30
+    },
+    {
+      "_Id": "sword4",
+      "_Name": "테스트",
+      "_Type": "Weapon",
+      "_Skill": 0,
+      "_Info": "테스트용 무기",
+      "_Get_Price": 0,
+      "_Sale_Price": 0
+    },
+    {
+      "_Id": "gun1",
+      "_Name": "리볼버",
+      "_Type": "Weapon",
+      "_Skill": 10,
+      "_Info": "단순한 권총",
+      "_Get_Price": 100,
+      "_Sale_Price": 10
+    },
+    {
+      "_Id": "gun2",
+      "_Name": "자동소총",
+      "_Type": "Weapon",
+      "_Skill": 20,
+      "_Info": "연속 사격이 강한 총",
+      "_Get_Price": 200,
+      "_Sale_Price": 20
+    },
+    {
+      "_Id": "gun3",
+      "_Name": "레이저 총",
+      "_Type": "Weapon",
+      "_Skill": 30,
+      "_Info": "포스의 힘이 깃든 총",
+      "_Get_Price": 300,
+      "_Sale_Price": 30
+    },
+    {
+      "_Id": "book1",
+      "_Name": "행운의 책",
+      "_Type": "Weapon",
+      "_Skill": 10,
+      "_Info": "판매 비용이 비싼 책",
+      "_Get_Price": 100,
+      "_Sale_Price": 80
+    },
+    {
+      "_Id": "book2",
+      "_Name": "두꺼운 사전",
+      "_Type": "Weapon",
+      "_Skill": 20,
+      "_Info": "모서리가 날카로운 사전",
+      "_Get_Price": 200,
+      "_Sale_Price": 20
+    },
+    {
+      "_Id": "book3",
+      "_Name": "악마의 예언서",
+      "_Type": "Weapon",
+      "_Skill": 30,
+      "_Info": "세계 종말을 예언한 책",
+      "_Get_Price": 300,
+      "_Sale_Price": 30
+    },
+    {
+      "_Id": "armour1",
+      "_Name": "강화인간 슈트",
+      "_Type": "Armour",
+      "_Skill": 5,
+      "_Info": "강화인간 전용 방어구",
+      "_Get_Price": 100,
+      "_Sale_Price": 10
+    },
+    {
+      "_Id": "armour2",
+      "_Name": "에너지 장막",
+      "_Type": "Armour",
+      "_Skill": 5,
+      "_Info": "사이보그 전용 방어구",
+      "_Get_Price": 100,
+      "_Sale_Price": 10
+    },
+    {
+      "_Id": "armour3",
+      "_Name": "흰색 가운",
+      "_Type": "Armour",
+      "_Skill": 5,
+      "_Info": "사이언티스트 전용 방어구",
+      "_Get_Price": 100,
+      "_Sale_Price": 10
+    },
+    {
+      "_Id": "potion1",
+      "_Name": "체력 물약",
+      "_Type": "Consumables",
+      "_Skill": 0,
+      "_Info": "체력을 50 회복시켜준다",
+      "_Get_Price": 10,
+      "_Sale_Price": 1
+    },
+    {
+      "_Id": "potion2",
+      "_Name": "상태이상 회복 물약",
+      "_Type": "Consumables",
+      "_Skill": 1,
+      "_Info": "상태이상을 회복시켜준다.",
+      "_Get_Price": 20,
+      "_Sale_Price": 2
+    },
+    {
+      "_Id": "potion3",
+      "_Name": "이동속도 증가 물약",
+      "_Type": "Consumables",
+      "_Skill": 2,
+      "_Info": "10초동안 이동속도를 증가시켜준다.",
+      "_Get_Price": 30,
+      "_Sale_Price": 3
+    }
+  ],
+  "Monster": [
+    {
+      "_Hp": 150,
+      "_Atk": 15,
+      "_Def": 10,
+      "_Lv": 1,
+      "_Max_Hp": 150,
+      "_Name": "Parasaurolophus",
+      "_Gold": "100",
+      "_Exp": 100,
+      "_Speed": 1
+    },
+    {
+      "_Hp": 80,
+      "_Atk": 20,
+      "_Def": 5,
+      "_Lv": 1,
+      "_Max_Hp": 80,
+      "_Name": "Pteranodon",
+      "_Gold": "100",
+      "_Exp": 100,
+      "_Speed": 1
+    },
+    {
+      "_Hp": 90,
+      "_Atk": 30,
+      "_Def": 5,
+      "_Lv": 1,
+      "_Max_Hp": 90,
+      "_Name": "Velociraptor",
+      "_Gold": "100",
+      "_Exp": 100,
+      "_Speed": 2
+    }
+  ],
+  "Pet": [
+    {
+      "_Name": "Triceratops",
+      "_Hp": 200,
+      "_Atk": 20,
+      "_Def": 5,
+      "_Lv": 0,
+      "_Max_Hp": 0,
+      "_Speed": 0,
+      "_Revive_Time": 60
+    },
+    {
+      "_Name": "Pachycephalosaurus",
+      "_Hp": 120,
+      "_Atk": 30,
+      "_Def": 5,
+      "_Lv": 0,
+      "_Max_Hp": 0,
+      "_Speed": 0,
+      "_Revive_Time": 60
+    },
+    {
+      "_Name": "Brachiosaurus",
+      "_Hp": 160,
+      "_Atk": 20,
+      "_Def": 5,
+      "_Lv": 0,
+      "_Max_Hp": 0,
+      "_Speed": 0,
+      "_Revive_Time": 60
+    }
+  ],
+  "Player": [
+    {
+      "_Hp": 100,
+      "_Atk": 5,
+      "_Def": 10,
+      "_Lv": 1,
+      "_Max_Hp": 100,
+      "_Name": "",
+      "_Job": "Superhuman",
+      "_Exp": 0,
+      "_Lv_Exp": 100
+    },
+    {
+      "_Hp": 150,
+      "_Atk": 10,
+      "_Def": 10,
+      "_Lv": 2,
+      "_Max_Hp": 150,
+      "_Name": "",
+      "_Job": "Superhuman",
+      "_Exp": 0,
+      "_Lv_Exp": 300
+    },
+    {
+      "_Hp": 200,
+      "_Atk": 15,
+      "_Def": 10,
+      "_Lv": 3,
+      "_Max_Hp": 200,
+      "_Name": "",
+      "_Job": "Superhuman",
+      "_Exp": 0,
+      "_Lv_Exp": 500
+    },
+    {
+      "_Hp": 250,
+      "_Atk": 20,
+      "_Def": 10,
+      "_Lv": 4,
+      "_Max_Hp": 250,
+      "_Name": "",
+      "_Job": "Superhuman",
+      "_Exp": 0,
+      "_Lv_Exp": 0
+    },
+    {
+      "_Hp": 80,
+      "_Atk": 5,
+      "_Def": 5,
+      "_Lv": 1,
+      "_Max_Hp": 80,
+      "_Name": "",
+      "_Job": "Cyborg",
+      "_Exp": 0,
+      "_Lv_Exp": 100
+    },
+    {
+      "_Hp": 120,
+      "_Atk": 10,
+      "_Def": 5,
+      "_Lv": 2,
+      "_Max_Hp": 120,
+      "_Name": "",
+      "_Job": "Cyborg",
+      "_Exp": 0,
+      "_Lv_Exp": 300
+    },
+    {
+      "_Hp": 160,
+      "_Atk": 15,
+      "_Def": 5,
+      "_Lv": 3,
+      "_Max_Hp": 160,
+      "_Name": "",
+      "_Job": "Cyborg",
+      "_Exp": 0,
+      "_Lv_Exp": 500
+    },
+    {
+      "_Hp": 200,
+      "_Atk": 20,
+      "_Def": 5,
+      "_Lv": 4,
+      "_Max_Hp": 200,
+      "_Name": "",
+      "_Job": "Cyborg",
+      "_Exp": 0,
+      "_Lv_Exp": 0
+    },
+    {
+      "_Hp": 60,
+      "_Atk": 5,
+      "_Def": 5,
+      "_Lv": 1,
+      "_Max_Hp": 60,
+      "_Name": "",
+      "_Job": "Scientist",
+      "_Exp": 0,
+      "_Lv_Exp": 100
+    },
+    {
+      "_Hp": 90,
+      "_Atk": 10,
+      "_Def": 5,
+      "_Lv": 2,
+      "_Max_Hp": 90,
+      "_Name": "",
+      "_Job": "Scientist",
+      "_Exp": 0,
+      "_Lv_Exp": 300
+    },
+    {
+      "_Hp": 120,
+      "_Atk": 15,
+      "_Def": 5,
+      "_Lv": 3,
+      "_Max_Hp": 120,
+      "_Name": "",
+      "_Job": "Scientist",
+      "_Exp": 0,
+      "_Lv_Exp": 500
+    },
+    {
+      "_Hp": 150,
+      "_Atk": 20,
+      "_Def": 5,
+      "_Lv": 4,
+      "_Max_Hp": 150,
+      "_Name": "",
+      "_Job": "Scientist",
+      "_Exp": 0,
+      "_Lv_Exp": 0
+    }
+  ],
+  "Save": [
+    {
+      "_Name": "me",
+      "_Job": "Scientist",
+      "_Pet": "Brachiosaurus",
+      "_Scene": "Tutorial",
+      "_Item_List": [
+        "book2",
+        "book3",
+        "gun1",
+        "gun2",
+        "gun3",
+        "sword2",
+        "sword1"
+      ]
+    }
+  ]
+}

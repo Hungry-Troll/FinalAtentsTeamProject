@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     WeaponManager _weapon = new WeaponManager();
     DataManager _data = new DataManager();
     CreateManager _create = new CreateManager();
+    ParseManager _parse = new ParseManager();
 
     public static ResourceManager Resource 
     { 
@@ -82,6 +83,10 @@ public class GameManager : MonoBehaviour
     public static CreateManager Create
     {
         get { return _instance._create; }
+    }
+    public static ParseManager Parse
+    {
+        get { return _instance._parse; }
     }
 
     // Start is called before the first frame update

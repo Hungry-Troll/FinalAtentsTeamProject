@@ -264,7 +264,7 @@ public class StatManager
     {
         foreach(ItemStat one in _ItemList)
         {
-            if(one.Id == findId)
+            if(one.Id.Equals(findId))
             {
                 return one;
             }
