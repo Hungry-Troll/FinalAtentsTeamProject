@@ -119,7 +119,7 @@ public class MonsterController : MonoBehaviour
                 UpdateAttack();
                 break;
             case CreatureState.Dead:
-                Invoke("UpdateDead", 5f);
+                Invoke("UpdateDead", 0.5f);
                 break;
             case CreatureState.Skill:
                 UpdateSkill();
@@ -200,14 +200,14 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateDead()
     {
-        // 죽었을 때 크로스페이드 애니메이션 때문에 에러 발생 
-        // 죽는 시간을 주기위한 코루틴
-        if(_coDead == null)
-        {
-            _coDead = StartCoroutine(DeadDelay(3.0f));
-        }
         // 이름으로 오브젝트매니저에서 찾아서 제거
         GameManager.Obj.RemoveMobListTraget(gameObject.name);
+        // 죽었을 때 크로스페이드 애니메이션 때문에 에러 발생 
+        // 죽는 시간을 주기위한 코루틴
+        if (_coDead == null)
+        {
+            _coDead = StartCoroutine(DeadDelay(1.0f));
+        }
     }
 
     private void UpdateSkill()
@@ -245,6 +245,11 @@ public class MonsterController : MonoBehaviour
         Property_state = CreatureState.Attack;
         yield return new WaitForSeconds(_delay);
         // 대미지 계산은 플레이어 스크립트에서 처리 >> 공격력만 넘겨줌
+        // 널체크
+        if(_playerController == null)
+        {
+            yield break;
+        }
         _playerController.OnDamaged(_monsterStat.Atk);
         // 코루틴 변수 초기화 
         _coAttack = null;

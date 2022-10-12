@@ -49,7 +49,7 @@ public class ObjectManager
             {
                 distance = targetDistance[i];
                 _targetMonster = GameManager.Obj._monsterContList[i].gameObject;
-                _targetMonsterStat = GameManager.Obj._monsterStatList[i];
+                //_targetMonsterStat = GameManager.Obj._monsterStatList[i];
                 _targetMonsterController = GameManager.Obj._monsterContList[i];
             }
         }
@@ -57,13 +57,15 @@ public class ObjectManager
     // 몬스터 정보에서 타겟 몬스터를 제거하는 함수
     public void RemoveMobListTraget(string MobName)
     {
-        for(int i = 0; i < GameManager.Obj._monsterContList.Count; i++)
+        for(int i = 0; i < _monsterContList.Count; i++)
         {
             // 이름으로 같은 게임오브젝트인지 확인함
-            if(MobName == GameManager.Obj._monsterContList[i].gameObject.name)
+            if(MobName == _monsterContList[i].gameObject.name)
             {
                 // 같은 이름의 몬스터 컨트롤러 제거
-                GameManager.Obj._monsterContList.RemoveAt(i);
+                _monsterContList.RemoveAt(i);
+                // 타겟 몬스터 제거
+                _targetMonster = null;
             }
         }
     }

@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour
             _creatureState = CreatureState.Idle;
             return;
         }
-            
 
         if(GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
         {
@@ -167,8 +166,14 @@ public class PlayerController : MonoBehaviour
         // 딜레이
         yield return new WaitForSeconds(_delay);
         // 대미지 계산
-        //GameManager.Ui._targetMonsterStat.Hp -= _playerStat.Atk - GameManager.Ui._targetMonsterStat.Def;
+        // GameManager.Ui._targetMonsterStat.Hp -= _playerStat.Atk - GameManager.Ui._targetMonsterStat.Def;
         // 대미지 계산은 몬스터스크립트에서 처리 >> 플레이어 공격력만 넘겨줌
+        // 널체크
+        if(GameManager.Obj._targetMonster == null)
+        {
+            yield break;
+        }
+
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk);
         // 코루틴 초기화
         _coAttack = null;
