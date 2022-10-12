@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
+//50번쨰 줄 Image 사용하려면 UnityEngine.UI; 필요함
+using UnityEngine.UI;
 
 public class MonsterController : MonoBehaviour
 {
@@ -36,6 +38,16 @@ public class MonsterController : MonoBehaviour
     Coroutine _coAttack;
     //몬스터 사망용 코루틴 변수
     Coroutine _coDead;
+
+    //HpBar 프리팹 생성
+    public GameObject _hpBarPrefab;
+    //몬스터 위에 HpBar 프리팹이 생성될 위치 -> 62번째 코드
+    Vector3 _hpBarOffset;
+    //Canvas
+    private Canvas _uiCanvas;
+    //HpBar 이미지 사용
+    private Image _hpBarImage;
+
     public int _mobNum
     {
         get;
@@ -44,6 +56,10 @@ public class MonsterController : MonoBehaviour
 
     void Awake()
     {
+        //몬스터 위 HpBar 위치
+        _hpBarOffset = new Vector3(0, 6f, 0);
+        //Resources 폴더 안에 있는 HpBar 프리팹 불러오기
+        _hpBarPrefab = Resources.Load<GameObject>("HpBar");
         _distance = 15.0f;
         _rotateSpeed = 90f;
         _attack = 3.0f;
@@ -61,6 +77,8 @@ public class MonsterController : MonoBehaviour
         _PlayerPos = GameManager.Obj._playerController.transform;
         // 게임매니저에서 플레이어 스크립트 가지고 옴
         _playerController = GameManager.Obj._playerController;
+        //HpBar함수 호출
+        SetHpBar();
     }
 
     // Update is called once per frame
@@ -277,5 +295,19 @@ public class MonsterController : MonoBehaviour
             //_hp = 10.0f; // 말해준거 같은대 까먹음... 오브젝트 풀링용도면 추후 사용
             return;
         }
+    }
+
+    void SetHpBar()
+    {
+        //Ui 캔버스 찾아서 HpBar프리팹을 자식으로 넣음
+        _uiCanvas = GameObject.Find("Ui Canvas").GetComponent<Canvas>();
+        GameObject _hpbar = Instantiate<GameObject>(_hpBarPrefab, _uiCanvas.transform);
+        //HpBar프리팹이 이미지이기 떄문에 HpBar프리팹 첫번째 자식(HpBar 바탕 말고 안에 있는 체력게이지)를 불러오기 위해 [1] 사용
+        _hpBarImage = _hpbar.GetComponentsInChildren<Image>()[1];
+
+        //HpBar 프리팹 위치 설정
+        var _HpBar = _hpbar.GetComponent<HpBar>();
+        _HpBar._mobPos = this.gameObject.transform;
+        _HpBar.offset = _hpBarOffset;
     }
 }
