@@ -81,4 +81,14 @@ public class Define
         Hp,
         Mp,
     }
+
+    public enum EffectType
+    {
+        Miss,
+        Normal,
+        Critical,
+        Roar,
+        Scratch,
+        Bite
+    }
 }

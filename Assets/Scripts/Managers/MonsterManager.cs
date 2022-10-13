@@ -37,7 +37,7 @@ public class MonsterManager : MonoBehaviour
 
         for (int i = 0; i < _mobCount; i++)
         {
-            CreateMonster();
+            CreateMonster(RandomPos(20));
             Debug.Log(_mobPosList[i]);
         }
         _currentTime = new float[_mobCount];
@@ -48,26 +48,26 @@ public class MonsterManager : MonoBehaviour
         ReSpawnTime();
     }
 
-    public void CreateMonster()
-    {
-        GameObject mob = Instantiate(MobPrefab, gameObject.transform);
-        _mobCon = mob.transform.GetComponent<MonsterController>();
-        _mobCon._mobNum = _mobSetNum++;
-        mob.transform.position = RandomPos(40);
-        _mobPosList.Add(mob.transform.position);
-        Property_isDie = false;
-        gameObject.SetActive(true);
-
-    }
-
-    //onUnitSphere함수를 사용하여 임의의 원 범위 안에서 몬스터 스폰
     public Vector3 RandomPos(float radius)
     {
         Vector3 _pos = Random.onUnitSphere;
-        //높이는 0으로 설정
-        _pos.y = 0.0f;
-        float r = Random.Range(0.0f, radius);
+        float r = Random.Range(-radius, radius);
         return (_pos * r) + transform.position;
+    }
+
+    public void CreateMonster(Vector3 _pos)
+    {
+        _pos.y += 100f;
+        RaycastHit hit;
+        if (Physics.Raycast(_pos, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            GameObject mob = Instantiate(MobPrefab, hit.point, Quaternion.identity, gameObject.transform);
+            _mobCon = mob.transform.GetComponent<MonsterController>();
+            _mobCon._mobNum = _mobSetNum++;
+            _mobPosList.Add(mob.transform.position);
+            Property_isDie = false;
+            gameObject.SetActive(true);
+        }
     }
 
     public void ReSpawnTime()
