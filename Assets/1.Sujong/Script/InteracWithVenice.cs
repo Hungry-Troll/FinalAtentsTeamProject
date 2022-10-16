@@ -28,7 +28,7 @@ public class InteracWithVenice : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit RayStruct;
-            if (Physics.Raycast(ray, out RayStruct, Mathf.Infinity))
+            if (Physics.Raycast(ray, out RayStruct, 7f))
             {
                 // 태그 설정은 프리팹이 아니라 프리팹 안의 man-samurai-black_Rig를 이용할 것.
                 if (RayStruct.collider.tag == "Merchant")
