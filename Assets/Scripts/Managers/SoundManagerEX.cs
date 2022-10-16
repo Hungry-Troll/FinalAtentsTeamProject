@@ -18,6 +18,7 @@ public class SoundManagerEX
 
     // 효과음 오디오 소스
     public List<AudioSource> _sfxAudioSource;
+    public AudioSource audio;
 
     // 효과음 오디오 소스 들고있을 게임오브젝트
     public List<GameObject> _sfxAudioSourceGameObj;
@@ -146,7 +147,8 @@ public class SoundManagerEX
         // 오디오 클립 저장 숫자
         _cnt++;
     }
-    
+
+
     // 재귀 함수
     public Transform FindSlider(string name, Transform _tr)
     {

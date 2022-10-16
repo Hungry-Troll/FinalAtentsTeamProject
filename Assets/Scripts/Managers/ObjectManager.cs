@@ -12,12 +12,12 @@ public class ObjectManager
     public PetController _petController;
     public PetStat _petStat;
     // 몬스터 정보
-    public List<MonsterController> _monsterContList = new List<MonsterController>();
+    public List<MonsterControllerEX> _monsterContList = new List<MonsterControllerEX>();
     public List<MonsterStat> _monsterStatList = new List<MonsterStat>();
 
     // 공격 타겟 몬스터 // 찾은 몬스터
     public GameObject _targetMonster;
-    public MonsterController _targetMonsterController;
+    public MonsterControllerEX _targetMonsterController;
     public MonsterStat _targetMonsterStat;
 
 

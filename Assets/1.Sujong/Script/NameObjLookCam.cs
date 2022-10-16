@@ -11,6 +11,7 @@ public class NameObjLookCam : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = Cam.transform.rotation;
+        // 
+        //transform.rotation = Cam.transform.rotation;
     }
 }

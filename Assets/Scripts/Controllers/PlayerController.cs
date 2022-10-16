@@ -173,8 +173,10 @@ public class PlayerController : MonoBehaviour
         {
             yield break;
         }
-
+        // 대미지 계산
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk);
+        // 사운드 추가
+        GameManager.Sound.SFXPlay("Punch1");
         // 코루틴 초기화
         _coAttack = null;
     }

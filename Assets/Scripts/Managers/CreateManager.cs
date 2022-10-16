@@ -10,7 +10,7 @@ public class CreateManager
     PetController _pet;
     ItemController _item;
     ItemStatEX _itemStatEX;
-    MonsterController _monster;
+    MonsterControllerEX _monster;
     MonsterStat _monsterStat;
 
     // 플레이어 직업 확인용
@@ -38,6 +38,8 @@ public class CreateManager
                 GameManager.Stat.PlayerStatLoadJson(1, GameManager.Select._job);
                 // 스텟 캐릭터창 적용
                 GameManager.Ui.InventoryStatUpdate();
+                // Hp 바 적용
+                GameManager.Ui.PlayerHpBarCreate(player);
                 return _player;
             }
         }
@@ -62,6 +64,8 @@ public class CreateManager
                 GameManager.Obj._petStat = pet.AddComponent<PetStat>();
                 // 스텟 적용
                 GameManager.Stat.PetStatLoadJson(_select_Pet);
+                // Hp 바 적용
+                GameManager.Ui.HpBarCreate(pet);
                 return _pet;
             }
         }
@@ -98,7 +102,7 @@ public class CreateManager
         return null;
     }
 
-    public MonsterController CreateMonster(Vector3 origin, string monsterName)
+    public MonsterControllerEX CreateMonster(Vector3 origin, string monsterName)
     {
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
@@ -110,16 +114,27 @@ public class CreateManager
             {
                 string tempName = temMonsterName.name;
                 GameObject monster = GameObject.Instantiate<GameObject>(temMonsterName, hit.point, Quaternion.identity);
-                _monster = monster.AddComponent<MonsterController>();
+                _monster = monster.AddComponent<MonsterControllerEX>();
                 GameManager.Obj._monsterContList.Add(_monster);
                 _monsterStat = monster.AddComponent<MonsterStat>();
                 GameManager.Obj._monsterStatList.Add(_monsterStat);
                 // 스텟 스크립트에 json 파일 스텟 적용
                 GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
                 _monster.name = tempName;
+                // Hp 바 적용
+                GameManager.Ui.HpBarCreate(monster);
                 return _monster;
             }
         }
         return null;
+    }
+
+    //UI 생성 함수 uiRoot는 UI매니저 go
+    public GameObject CreateUi(string uiName, GameObject uiRoot) 
+    {
+        GameObject tmpUi = GameManager.Resource.GetUi(uiName);
+        GameObject tmepUi = GameObject.Instantiate<GameObject>(tmpUi);
+        tmepUi.transform.SetParent(uiRoot.transform);
+        return tmepUi;
     }
 }

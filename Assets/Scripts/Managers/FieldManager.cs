@@ -19,7 +19,9 @@ public class FieldManager : MonoBehaviour
     public GameObject _startPosObject;
     public Vector3 _startPos;
 
-
+    // 임시 몬스터 위치 설정용 / 비어있는 게임오브젝트에 플레이어 위치 대입
+    public GameObject _startPosMonster;
+    public Vector3 _startPosMob;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +42,13 @@ public class FieldManager : MonoBehaviour
         //플레이어 제작
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
 
+
+        // 몬스터 시작 위치
+        _startPosMob = _startPosMonster.transform.position;
         // 몬스터 생성용 테스트 코드
         for (int i = 0; i < GameManager.Resource._monster.Count-1; i++)
         {
-            Vector3 tempPos = new Vector3(Random.Range(i, i + 3), Random.Range(i, i + 3), Random.Range(i, i + 3));
-            GameManager.Create.CreateMonster(_startPos + tempPos, GameManager.Resource._monster[i].name);
+            GameManager.Create.CreateMonster(_startPosMob, GameManager.Resource._monster[i].name);
         }
 
         // 펫 생성 테스트 코드
@@ -57,12 +61,7 @@ public class FieldManager : MonoBehaviour
             Vector3 tempPos = new Vector3(Random.Range(i, i + 3), Random.Range(i, i + 3), Random.Range(i, i + 3));
             GameManager.Create.CreateFieldItem(_startPos + tempPos, GameManager.Resource._fieldItem[i].name);
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         
     }
-
 }

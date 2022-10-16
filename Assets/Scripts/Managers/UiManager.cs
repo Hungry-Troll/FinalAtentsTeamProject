@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using static Define;
 using static Util;
@@ -10,8 +11,12 @@ public class UiManager
     // UI Root용 변수
     GameObject go;
 
-    // HpMp바
-    public GameObject _hpMpBar;
+    // 플레이어 Hp바
+    public GameObject _playerHpBar;
+
+    // 포트레이트
+    public GameObject _portrait;
+    public Image _portraitImage;
 
     // 씬 버튼
     public GameObject _sceneButton;
@@ -35,7 +40,7 @@ public class UiManager
     // 인벤 슬롯 이미지 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
     public List<Image> _slotImage;
 
-    // 인벤 버튼
+    // 인벤 버튼 (가방아이콘)
     public GameObject _invenButton;
 
     // 옵션 버튼
@@ -73,62 +78,37 @@ public class UiManager
 
 
     //Ui 관리는 여기에서 처리
+    //현재 UI 이름 개판 Ui // UI ... 추후 정리...
     public void Init()
     {
         go = new GameObject();
         go.name = "@UI_Root";
 
         ////////////////////////////////
-        /// 반복되는 내용 나중에 함수로 정리
+        /// 반복되는 내용 1차 정리 완료
+        /// 추후 캔버스를 정리한다면 여기서 더 정리 할 수도 있음
         ////////////////////////////////
-        ///
-        // 시작하면 HpMp바 씬에 불러옴
-        GameObject hpMpBar = GameManager.Resource.GetUi("Ui_HpMpBar");
-        _hpMpBar = GameObject.Instantiate<GameObject>(hpMpBar);
-        _hpMpBar.transform.SetParent(go.transform);
 
-        // 시작하면 씬 버튼(공격 스킬 버튼) 씬에 불러옴
-        GameObject sceneButton = GameManager.Resource.GetUi("Ui_Scene_Button");
-        _sceneButton = GameObject.Instantiate<GameObject>(sceneButton);
-        _sceneButton.transform.SetParent(go.transform);
+        // 시작하면 포트레이트 불러옴
+        _portrait = GameManager.Create.CreateUi("UI_Portrait", go);
+        _portraitImage = _portrait.GetComponentInChildren<Image>();
+        // 직업에 따른 포트레이트 체크
+        PortraitCheck();
 
+        // 시작하면 Ui 버튼 불러옴
+        _sceneButton = GameManager.Create.CreateUi("Ui_Scene_Button", go);
         // 시작하면 조이스틱 씬에 불러옴
-        GameObject joystick = GameManager.Resource.GetUi("Ui_JoystickController");
-        _joyStick = GameObject.Instantiate<GameObject>(joystick);
+        _joyStick = GameManager.Create.CreateUi("Ui_JoystickController", go);
         _joyStickController = _joyStick.GetComponentInChildren<JoyStickController>();
-        _joyStick.transform.SetParent(go.transform);
 
-        // 시작하면 상태창에 보이는 플레이어 불러옴, 상태창은 인벤토리와 세트
-        _job = GameManager.Select.SelectJobCheck();
-        // 직업이름에 따른 상태창에 보이는 임시 플레이어
-        switch (_job)
-        {
-            case Define.Job.Superhuman:
-                _jobName = "SuperhumanTemp";
-                break;
-            case Define.Job.Cyborg:
-                _jobName = "CyborgTemp";
-                break;
-            case Define.Job.Scientist:
-                _jobName = "ScientistTemp";
-                break;
-            case Define.Job.None:
-                break;
-        }
         // 상태창 플레이어 생성
-        GameObject statePlayerObj = GameManager.Resource.GetCharacter(_jobName);
+        GameObject statePlayerObj = GameManager.Resource.GetCharacter(GameManager.Select._jobName + "Temp");
         _statePlayerObj = GameObject.Instantiate<GameObject>(statePlayerObj, new Vector3(0,200,0), Quaternion.identity);
-        
         // 시작하면 인벤토리버튼(가방아이콘) 씬에 불러옴
-        GameObject invenButton = GameManager.Resource.GetUi("Ui_SceneInventoryButton");
-        _invenButton = GameObject.Instantiate<GameObject>(invenButton);
-        _invenButton.transform.SetParent(go.transform);
-
+        _invenButton = GameManager.Create.CreateUi("Ui_SceneInventoryButton", go);
         // 시작하면 인벤토리를 미리 불러와서 우선 SetActive(false)로 함
-        GameObject inven = GameManager.Resource.GetUi("Ui_Inventory");
-        _inven = GameObject.Instantiate<GameObject>(inven);
+        _inven = GameManager.Create.CreateUi("Ui_Inventory", go);
         _inventoryController = _inven.GetComponentInChildren<InventoryController>();
-        _inven.transform.SetParent(go.transform);
         // 인벤토리 상태창 스텟 넣을 위치 확인용
         Transform findAtkText = Util.FindChild("AtkText", _inventoryController.transform);
         Transform findDefText = Util.FindChild("DefText", _inventoryController.transform);
@@ -147,32 +127,19 @@ public class UiManager
         InventoryClose();
 
         // 시작하면 미니맵 불러옴
-        GameObject miniMap = GameManager.Resource.GetUi("UI_MiniMap");
-        _miniMap = GameObject.Instantiate<GameObject>(miniMap);
-        _miniMap.transform.SetParent(go.transform);
-
+        _miniMap = GameManager.Create.CreateUi("UI_MiniMap", go);
         // 시작하면 옵션버튼 불러옴
-        GameObject optionButton = GameManager.Resource.GetUi("Ui_SceneOptionButton");
-        _OptionButton = GameObject.Instantiate<GameObject>(optionButton);
-        _OptionButton.transform.SetParent(go.transform);
-
+        _OptionButton = GameManager.Create.CreateUi("Ui_SceneOptionButton", go);
         // 시작하면 옵션창 불러옴 // 사운드연결을 위해서 옵션창을 사운드 매니저에서 먼저 사용함. 동일한 게임오브젝트여야지만
         // 옵션창 슬라이드가 정상 작동 되므로 사운드 매니저에서 옵션창을 가지고 옴
         GameObject Option = GameManager.Sound._option;
         _Option = GameObject.Instantiate<GameObject>(Option);
         _Option.SetActive(false);
-
         // 시작하면 아이템 스텟창을 한개씩만 띄우기 위한 변수를 초기화 // 1개만 열 수 있음
         _itemStatOpen = false;
-
-
         // 시작하면 아이템 스텟창 불러옴
-        GameObject itemStatView = GameManager.Resource.GetUi("UI_ItemStatView");
-        _itemStatView = GameObject.Instantiate<GameObject>(itemStatView);
-        
-        // 아이템 스텟창 스크립트도 미리 들고있음
+        _itemStatView = GameManager.Create.CreateUi("UI_ItemStatView", go);
         _itemStatViewContoller = _itemStatView.GetComponentInChildren<ItemStatViewController>();
-
         // UI_ItemStatView 에서 이미지 넣을 위치 찾음
         Transform itemImage = Util.FindChild("ItemImage", _itemStatView.transform);
         // 아이템 이미지
@@ -337,7 +304,7 @@ public class UiManager
         }
 
         // 직업에 따른 무기 장착 확인
-        if (!JobWeaponCheck())
+        if(!JobWeaponCheck())
         {
             return;
         }
@@ -503,6 +470,63 @@ public class UiManager
             }
         }
         return false;
+    }
+    // 몬스터 펫 Hp 바
+    public void HpBarCreate(GameObject gameObject)
+    {
+        GameObject hpBar = GameManager.Resource.GetUi("UI_HpBar");
+        GameObject _hpBar = GameObject.Instantiate<GameObject>(hpBar);
+        Canvas canvas = _hpBar.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.worldCamera = Camera.main; // 이것만 다름
+        //위치 잡아주는 코드
+        _hpBar.transform.SetParent(gameObject.transform);
+        _hpBar.transform.position = gameObject.transform.position + Vector3.up * (gameObject.GetComponent<NavMeshAgent>().height);
+    }
+    // 플레이어에게 HP바 연결하는 함수
+    public void PlayerHpBarCreate(GameObject player)
+    {
+        GameObject hpBar = GameManager.Resource.GetUi("Ui_PlayerHpBar");
+        _playerHpBar = GameObject.Instantiate<GameObject>(hpBar);
+        _playerHpBar.transform.SetParent(player.transform);
+    }
+
+    // 플레이어 포트레이트 만드는 함수
+    public void PortraitCheck()
+    {
+        string temp = GameManager.Select._jobName;
+        Sprite tempImage = GameManager.Resource.GetImage(temp);
+        Debug.Log(tempImage.name);
+        _portraitImage.sprite = tempImage;
+    }
+
+    // 대화창 열릴 때 UI 전부 SetActiveFalse
+    public void UISetActiveFalse()
+    {
+        _playerHpBar.SetActive(false);
+        _portrait.SetActive(false);
+        _sceneButton.SetActive(false);
+        _joyStick.SetActive(false);
+        InventoryClose();
+        _OptionButton.SetActive(false);
+        _invenButton.SetActive(false);
+        _Option.SetActive(false);
+        _miniMap.SetActive(false);
+        _itemStatView.SetActive(false);
+    }
+
+    // 대화창 열릴 때 UI 껏던것 다시 킴
+    public void UISetActiveTrue()
+    {
+        _playerHpBar.SetActive(true);
+        _portrait.SetActive(true);
+        _sceneButton.SetActive(true);
+        _joyStick.SetActive(true);
+        _OptionButton.SetActive(true);
+        _invenButton.SetActive(true);
+        //_Option.SetActive(false);
+        _miniMap.SetActive(true);
+        //_itemStatView.SetActive(false);
     }
 
     /// <summary>

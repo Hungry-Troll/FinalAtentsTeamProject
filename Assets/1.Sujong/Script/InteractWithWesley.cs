@@ -26,7 +26,7 @@ public class InteractWithWesley : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit RayStruct;
-            if (Physics.Raycast(ray, out RayStruct, 7f))
+            if (Physics.Raycast(ray, out RayStruct, Mathf.Infinity))
             {
                 // 태그 설정은 프리팹이 아니라 프리팹 안의 woman-metalhead_Rig를 이용할 것.
                 if (RayStruct.collider.tag == "Wesley")
