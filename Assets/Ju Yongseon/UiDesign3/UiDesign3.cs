@@ -12,7 +12,12 @@ public class UiDesign3 : MonoBehaviour
     public Sprite wSkill;
     public Sprite aSkill;
     public Sprite sSkill;
+
+
+
+
     public Image SkillInfo;
+
 
     Animator ani;
     
