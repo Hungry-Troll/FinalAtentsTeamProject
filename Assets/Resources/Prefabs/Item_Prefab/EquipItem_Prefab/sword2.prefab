@@ -13,6 +13,25 @@ GameObject:
   - component: {fileID: 3507845878990761645}
   - component: {fileID: 1990025163057452471}
   - component: {fileID: 446958907377686734}
+  - component: {fileID: 5963522685966536507}
+  - component: {fileID: 4301425919427076603}
+  - component: {fileID: -6814823851598071830}
+  - component: {fileID: -6706472590940256790}
+  - component: {fileID: -3738273706579502128}
+  - component: {fileID: 2608669956799350473}
+  - component: {fileID: 2510898464192648286}
+  - component: {fileID: 8657842641979485906}
+  - component: {fileID: -9190374300085429197}
+  - component: {fileID: -1548851138251145830}
+  - component: {fileID: 3224489019514544119}
+  - component: {fileID: 4137228657202328948}
+  - component: {fileID: -3599320173013015699}
+  - component: {fileID: 8622304417369391384}
+  - component: {fileID: 3039565370350881220}
+  - component: {fileID: 6006231152289661627}
+  - component: {fileID: 8764354808262494213}
+  - component: {fileID: 1872857426306960583}
+  - component: {fileID: -7637578806751801087}
   m_Layer: 0
   m_Name: sword2
   m_TagString: Item
@@ -117,3 +136,364 @@ CapsuleCollider:
   m_Height: 0.12539734
   m_Direction: 1
   m_Center: {x: -0.3350519, y: 0.012775434, z: -0.000000013038516}
+--- !u!114 &5963522685966536507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &4301425919427076603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-6814823851598071830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-6706472590940256790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-3738273706579502128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &2608669956799350473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &2510898464192648286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &8657842641979485906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-9190374300085429197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-1548851138251145830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &3224489019514544119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &4137228657202328948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-3599320173013015699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &8622304417369391384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &3039565370350881220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &6006231152289661627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &8764354808262494213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &1872857426306960583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20
+--- !u!114 &-7637578806751801087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529807087313913337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8570306275e2c4eb307266f74aac36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Id: sword2
+  _Name: "\uAC15\uCCA0\uAC80"
+  _Type: Weapon
+  _Skill: 20
+  _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
+  _Get_Price: 200
+  _Sale_Price: 20

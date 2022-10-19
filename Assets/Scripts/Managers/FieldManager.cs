@@ -24,7 +24,7 @@ public class FieldManager : MonoBehaviour
     public Vector3 _startPosMob;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // 게임매니저에서 Ui매니저 Init(Awake 함수 대체)
         // Ui 불러옴
@@ -42,6 +42,9 @@ public class FieldManager : MonoBehaviour
         //플레이어 제작
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
 
+        // 리소스매니저에서 찾아서 플레이어 아이템 인벤토리에 한개 넣어줌
+        GameObject tmp = GameManager.Resource.GetfieldItem("sword1");
+        GameManager.Item.InventoryItemAdd(tmp, false);
 
         // 몬스터 시작 위치
         _startPosMob = _startPosMonster.transform.position;
@@ -62,6 +65,9 @@ public class FieldManager : MonoBehaviour
             GameManager.Create.CreateFieldItem(_startPos + tempPos, GameManager.Resource._fieldItem[i].name);
         }
 
-        
+        // BGM 변경
+        GameManager.Sound.BGMPlay("-kpop_release-");
+
+
     }
 }

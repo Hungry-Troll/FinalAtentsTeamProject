@@ -233,6 +233,7 @@ MonoBehaviour:
   - {fileID: 0}
   _invenSlotCount: 0
   _weapon: {fileID: 0}
+  _weaponStat: {fileID: 0}
   _armour: {fileID: 0}
 --- !u!1 &311188328497049856
 GameObject:
@@ -1337,6 +1338,7 @@ MonoBehaviour:
   - {fileID: 0}
   _invenSlotCount: 0
   _weapon: {fileID: 0}
+  _weaponStat: {fileID: 0}
   _armour: {fileID: 0}
 --- !u!1 &1526599961858030451
 GameObject:
@@ -3958,9 +3960,9 @@ GameObject:
   - component: {fileID: 5444004481799910287}
   - component: {fileID: 2443167079744554946}
   - component: {fileID: 1716734295769928897}
-  - component: {fileID: 5740810768234634779}
+  - component: {fileID: 5780931762890553438}
   m_Layer: 5
-  m_Name: Ui_Slot
+  m_Name: Ui_Slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4068,8 +4070,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2443167079744554946}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &5740810768234634779
+      m_Calls:
+      - m_Target: {fileID: 5780931762890553438}
+        m_TargetAssemblyTypeName: EquipSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5780931762890553438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4078,10 +4092,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4614472441488295113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94739aa2504a14142b603b3dda9235be, type: 3}
+  m_Script: {fileID: 11500000, guid: 223fa40de72b70949a8597494e8d02d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipSlotItem: []
 --- !u!1 &4661967718510543807
 GameObject:
   m_ObjectHideFlags: 0
@@ -6305,9 +6318,9 @@ GameObject:
   - component: {fileID: 6384034401753226753}
   - component: {fileID: 6162394858126658621}
   - component: {fileID: 6447996695865491500}
-  - component: {fileID: 3146809563227099474}
+  - component: {fileID: 1094470056083425458}
   m_Layer: 5
-  m_Name: Ui_Slot (1)
+  m_Name: Ui_Slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6415,8 +6428,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6162394858126658621}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3146809563227099474
+      m_Calls:
+      - m_Target: {fileID: 1094470056083425458}
+        m_TargetAssemblyTypeName: EquipSlotController, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1094470056083425458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6425,10 +6450,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7532216835086457173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94739aa2504a14142b603b3dda9235be, type: 3}
+  m_Script: {fileID: 11500000, guid: 223fa40de72b70949a8597494e8d02d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipSlotItem: []
 --- !u!1 &7532492809910203713
 GameObject:
   m_ObjectHideFlags: 0

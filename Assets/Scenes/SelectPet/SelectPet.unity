@@ -848,6 +848,10 @@ PrefabInstance:
       value: Pachycephalosaurus
       objectReference: {fileID: 0}
     - target: {fileID: 8514584188228749714, guid: 2d16a240ca268b04888a2cfe2f1afa44, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514584188228749714, guid: 2d16a240ca268b04888a2cfe2f1afa44, type: 3}
       propertyPath: m_TagString
       value: Pet
       objectReference: {fileID: 0}
@@ -1453,6 +1457,10 @@ PrefabInstance:
     - target: {fileID: 1352937588825246, guid: e8fd2075778deb942b1a2986dcce525e, type: 3}
       propertyPath: m_Name
       value: Triceratops
+      objectReference: {fileID: 0}
+    - target: {fileID: 1352937588825246, guid: e8fd2075778deb942b1a2986dcce525e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1352937588825246, guid: e8fd2075778deb942b1a2986dcce525e, type: 3}
       propertyPath: m_TagString
@@ -3644,7 +3652,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 9b0bc1e93142891419b6299aabc12f57, type: 3}
+    m_Font: {fileID: 12800000, guid: cc22c318cc7774545a4f05c4ec45a039, type: 3}
     m_FontSize: 60
     m_FontStyle: 1
     m_BestFit: 0
@@ -3715,6 +3723,10 @@ PrefabInstance:
     - target: {fileID: 1582867359527748, guid: 38bc7d0933a2a474fad8461a0fe49f23, type: 3}
       propertyPath: m_Name
       value: Brachiosaurus
+      objectReference: {fileID: 0}
+    - target: {fileID: 1582867359527748, guid: 38bc7d0933a2a474fad8461a0fe49f23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1582867359527748, guid: 38bc7d0933a2a474fad8461a0fe49f23, type: 3}
       propertyPath: m_TagString

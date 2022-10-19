@@ -40,6 +40,7 @@ public class HpBarEX : MonoBehaviour
         _maxHp = _stat.Max_Hp;
         _currentHp = _stat.Hp;
         _hpBarImage.fillAmount = _currentHp / _maxHp;
+        // HP ≈ÿΩ∫∆Æ
     }
 
 

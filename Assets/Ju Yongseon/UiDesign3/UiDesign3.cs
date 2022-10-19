@@ -38,6 +38,8 @@ public class UiDesign3 : MonoBehaviour
         nicknameObject = GameObject.Find("Canvas/NicknameObject");
         Debug.Log(nicknameObject);
         nicknameObject.gameObject.SetActive(false);
+        // BGM 추가
+        GameManager.Sound.BGMPlay("Sky Is the Limit _ by Supreme Devices (Epic Music World)");
     }
     //소슽트리 확인용
     void Update()

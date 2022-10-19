@@ -108,8 +108,7 @@ public class SoundManagerEX
         }
         //BGM 재생
 
-        BGMPlay("Low Poly Animated Dinosaurs-320k");
-
+        BGMPlay("Emotional Instrumental Music_ ALETHEIA _ by James Otto");
     }
 
     // BGM 재생 함수

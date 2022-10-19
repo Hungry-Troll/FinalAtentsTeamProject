@@ -19,6 +19,9 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
 
     // 플레이어 장착 무기
     public GameObject _weapon;
+    // 플레이어 장착 스텟
+    public ItemStatEX _weaponStat;
+
     // 플레이어 장착 방어구
     public GameObject _armour;
 

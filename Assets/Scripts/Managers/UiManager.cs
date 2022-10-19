@@ -55,7 +55,7 @@ public class UiManager
     // 아이템 스텟창
     public GameObject _itemStatView;
     // 아이템 스텟창 스크립트
-    public ItemStatViewController _itemStatViewContoller;
+    public ItemStatViewController _itemStatViewController;
     // 아이템 스텟창 이미지
     public Image _findItemImage;
     // 아이템 스텟창 텍스트 >> 아이템창 열었을 때 각각 데이터 적용 용도 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
@@ -70,6 +70,29 @@ public class UiManager
     // 추후 UI 창 갯수관리를 해야 되면 변경
     public bool _itemStatOpen;
 
+    // 장착 아이템 스텟창
+    public GameObject _equipStatView;
+    // 장착 아이템 스크립트
+    public EquipStatViewController _equipStatViewController;
+
+    // 장착 아이템 스텟창 이미지
+    public Image _equipFindItemImage;
+    // 장착 아이템 스텟창 텍스트 >> 아이템창 열었을 때 각각 데이터 적용 용도 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
+    public Text _equipItemNameText;
+    public Text _equipItemStatText;
+    public Text _equipItemStat;
+    public Text _equipItemIntroduce;
+    public Text _equipEquipText;
+    public Text _equipDropText;
+    // 장착 아이템 스텟창 갯수 관리용
+    public bool _equipStatOpen;
+
+    // 아이템 스텟창과 장착 아이템 스텟창 사용 구분을 위한 enum
+    Define.StatView _StatViewType;
+
+    // 상점 구매하기 취소하기 버튼
+    public GameObject _buyCancel;
+    public UI_BuyCancelButton _buyCancelScript;
 
     // 공격 타겟 몬스터
     public GameObject _targetMonster;
@@ -135,11 +158,26 @@ public class UiManager
         GameObject Option = GameManager.Sound._option;
         _Option = GameObject.Instantiate<GameObject>(Option);
         _Option.SetActive(false);
+
+        // 아이템 스텟창 만드는 내용이 너무 길어서 함수 처리
+        InitItemStatView();
+        // 장착 아이템 스텟창 만드는 내용이 길어서 함수 처리
+        EquipItemStatView();
+
+        // 상점 구매하기 취소하기 버튼 만들고 비활성화
+        _buyCancel = GameManager.Create.CreateUi("UI_BuyCancel", go);
+        _buyCancelScript = _buyCancel.AddComponent<UI_BuyCancelButton>();
+        _buyCancel.SetActive(false);
+    }
+    
+    // 아이템 스텟창 함수 Init
+    private void InitItemStatView()
+    {
         // 시작하면 아이템 스텟창을 한개씩만 띄우기 위한 변수를 초기화 // 1개만 열 수 있음
         _itemStatOpen = false;
         // 시작하면 아이템 스텟창 불러옴
         _itemStatView = GameManager.Create.CreateUi("UI_ItemStatView", go);
-        _itemStatViewContoller = _itemStatView.GetComponentInChildren<ItemStatViewController>();
+        _itemStatViewController = _itemStatView.GetComponentInChildren<ItemStatViewController>();
         // UI_ItemStatView 에서 이미지 넣을 위치 찾음
         Transform itemImage = Util.FindChild("ItemImage", _itemStatView.transform);
         // 아이템 이미지
@@ -169,9 +207,12 @@ public class UiManager
         //SetActive(false)로 함
         _itemStatView.SetActive(false);
     }
+
     /// <summary>
     /// 인벤토리 관련
     /// </summary>
+    /// 
+
     public void InventoryOpen()
     {
         _inventoryController.gameObject.SetActive(true);
@@ -208,37 +249,61 @@ public class UiManager
 
     // 아이템 상태창 UI를 한개만 쓰고 이미지와 스텟은 불러오는 방식으로 구현함
     // 추후 스텟 비교 기능을 넣으면 좋음
-    public GameObject ItemStatViewOpen(GameObject invenSlotItem)
+    public GameObject ItemStatViewOpen(GameObject SlotItem)
     {
-        //_itemStatOpen로 창 열려있는지 체크
-        if(_itemStatOpen == false)
+        // 널 체크
+        if (SlotItem == null)
+        {
+            return null;
+        }
+            
+        // 넣을 이미지를 찾음
+        Sprite _sprite = GameManager.Resource.GetImage(SlotItem.name);
+
+        if (_itemStatOpen == false)
         {
             // 아이템 정보 창 열고
             _itemStatView.SetActive(true);
+
+            _itemStatOpen = true;
         }
-
+        // 위치용
         _itemStatView.transform.position = _inventoryController.transform.position;
-
-        //스텟을 상태창에 넣어줌
-        ItemStatViewStatAdd(invenSlotItem);
-
-        // 넣을 이미지를 찾음
-        Sprite _sprite = GameManager.Resource.GetImage(invenSlotItem.name);
+        // 이미지 대입
         _findItemImage.sprite = _sprite;
         // 이왕 찾은 이미지를 스텟뷰에 넣어놓음 (아이템 장착용)
-        _itemStatViewContoller._sprite = _sprite;
-        _itemStatOpen = true;
+        _itemStatViewController._sprite = _sprite;
 
-        return invenSlotItem;
+        // 스텟을 상태창에 넣어줌
+        ItemStatViewStatAdd(SlotItem);
+
+        return SlotItem;
     }
-    
-    public void ItemStatViewClose(string name)
+
+
+    // 장착 아이템용 함수... 급해서 복붙
+    public void StatViewClose(Define.StatView statView)
     {
-        //_itemStatOpen로 창 열려있는지 체크
-        if(_itemStatOpen == true)
+        switch (statView)
         {
-            _itemStatView.SetActive(false);
-            _itemStatOpen = false;
+            // 인벤토리 아이템을 클릭했을 때
+            case Define.StatView.ItemStatView:
+                if (_itemStatOpen == true)
+                {
+                    // 아이템 정보 창 열고
+                    _itemStatView.SetActive(false);
+                    _itemStatOpen = false;
+                }
+                break;
+            // 장착 아이템을 클릭했을 때
+            case Define.StatView.EquipStatView:
+                if (_equipStatOpen == true)
+                {
+                    // 아이템 정보 창 열고
+                    _equipStatView.SetActive(false);
+                    _equipStatOpen = false;
+                }
+                break;
         }
     }
 
@@ -283,6 +348,121 @@ public class UiManager
         }
     }
 
+    /// <summary>
+    /// 장착 아이템 함수
+    /// </summary>
+
+    // 장착 아이템 스텟창 함수 Init
+    private void EquipItemStatView()
+    {
+
+        // 시작하면 아이템 스텟창을 한개씩만 띄우기 위한 변수를 초기화 // 1개만 열 수 있음
+        _equipStatOpen = false;
+        // 시작하면 아이템 스텟창 불러옴
+        _equipStatView = GameManager.Create.CreateUi("UI_EquipStatView", go);
+        _equipStatViewController = _equipStatView.GetComponentInChildren<EquipStatViewController>();
+        // UI_ItemStatView 에서 이미지 넣을 위치 찾음
+        Transform itemImage = Util.FindChild("ItemImage", _equipStatView.transform);
+        // 아이템 이미지
+        _equipFindItemImage = itemImage.GetComponent<Image>();
+
+        // 스텟창 내용도 미리 들고있어야됨 안그러면 GetComponent 다수 사용 필요
+        // 아이템명
+        Transform itemNameText = Util.FindChild("ItemNameText", _equipStatView.transform);
+        // 공격력 방어력
+        Transform itemStatText = Util.FindChild("ItemStatText", _equipStatView.transform);
+        // 공격력 방어력 실제 데이터
+        Transform itemStat = Util.FindChild("ItemStat", _equipStatView.transform);
+        // 아이템 설명
+        Transform itemIntroduce = Util.FindChild("ItemIntroduce", _equipStatView.transform);
+        // 장착하기 사용하기
+        Transform equipText = Util.FindChild("EquipText", _equipStatView.transform);
+        // 버리기
+        Transform dropText = Util.FindChild("DropText", _equipStatView.transform);
+
+        _equipItemNameText = itemNameText.GetComponent<Text>();
+        _equipItemStatText = itemStatText.GetComponent<Text>();
+        _equipItemStat = itemStat.GetComponent<Text>();
+        _equipItemIntroduce = itemIntroduce.GetComponent<Text>();
+        _equipEquipText = equipText.GetComponent<Text>();
+        _equipDropText = dropText.GetComponent<Text>();
+
+        //SetActive(false)로 함
+        _equipStatView.SetActive(false);
+    }
+
+    public GameObject EquipStatViewOpen(GameObject SlotItem)
+    {
+        // 널 체크
+        if (SlotItem == null)
+        {
+            return null;
+        }
+        // 넣을 이미지를 찾음
+        Sprite _sprite = GameManager.Resource.GetImage(SlotItem.name);
+
+        // 창 오픈 확인
+        if (_equipStatOpen == false)
+        {
+            // 아이템 정보 창 열고
+            _equipStatView.SetActive(true);
+
+            _equipStatOpen = true;
+        }
+        // 위치용
+        _equipStatView.transform.position = _inventoryController.transform.position;
+        // 이미지 대입
+        _equipFindItemImage.sprite = _sprite;
+
+        // 스텟을 상태창에 넣어줌
+        EquipStatViewStatAdd(SlotItem);
+        return SlotItem;
+    }
+
+    // 장착 아이템창에 스텟 넣는 함수
+    public void EquipStatViewStatAdd(GameObject gameObject)
+    {
+        // 널 체크
+        if(gameObject == null)
+        {
+            return;
+        }
+
+        // 겟 컴포넌트가 많아질 것 같으면 추후 수정
+        // 우선은 쉽게 아이템인벤토리 목록 게임오브젝트하고 매개변수로 가지고온 게임오브젝르 이름 비교 후 스텟을 넣어줌
+        ItemStatEX tmpStat = GameManager.Ui._inventoryController._weaponStat.GetComponent<ItemStatEX>();
+        // 아이템 이름
+        _equipItemNameText.text = tmpStat.Name;
+
+        // 아이템 종류에 따라 다른 텍스트 출력 (공격력 방어력)
+        if(tmpStat.Type == "Weapon")
+        {
+            // _itemStatText.text (공격력 방어력)
+            // _equipText.text (착용하기 사용하기)
+            _equipItemStatText.text = "공격력";
+            _equipEquipText.text = "해제하기";
+        }
+        else if(tmpStat.Type == "Armour")
+        {
+            _equipItemStatText.text = "방어력";
+            _equipEquipText.text = "해제하기";
+        }
+        else if(tmpStat.Type == "Consumables")
+        {
+            _equipItemStatText.text = null;
+            _equipEquipText.text = "사용하기";
+        }
+        // 공격력 방어력 실제 수치
+        _equipItemStat.text = tmpStat.Skill.ToString();
+        // 아이템 설명
+        _equipItemIntroduce.text = tmpStat.Info;
+        //_dropText >> 거의 쓸일이 없을것으로 추정
+    }
+
+
+    /// <summary>
+    /// 무기 장착 관련
+    /// </summary>
 
     // 무기 장착 함수 (계산)
     // 추후 방어구도 동일하게 적용
@@ -306,13 +486,14 @@ public class UiManager
         // 직업에 따른 무기 장착 확인
         if(!JobWeaponCheck())
         {
+            // 추후 여기에 착용할수없습니다 UI 넣으면 됨
             return;
         }
 
         Image findImage = findTr.GetComponent<Image>();
 
         // 이미지 넣음 (_itemStatviewContlloer에서 이미지를 이미지를 들고있음)
-        findImage.sprite = _itemStatViewContoller._sprite;
+        findImage.sprite = _itemStatViewController._sprite;
         // 이미지 활성화
         findImage.gameObject.SetActive(true);
 
@@ -333,14 +514,14 @@ public class UiManager
             // 인벤토리 아이템하고 이미지가 동일하면
             if(findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
             {
-                // 무기 장착 (인벤토리상 들고있는 무기)
+                // 무기 장착 (인벤토리상 들고있는 무기 / 인벤토리에서 들고있음)
                 _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
-
+                _inventoryController._weaponStat = GameManager.Ui._inventoryController._item[i].GetComponent<ItemStatEX>();
                 // 무기 위치 찾음 (플레이어가 들고있을 무기 위치)
                 //Transform findPos = GameManager.Weapon.FindWeaponPos(GameManager.Obj._playerController.transform);
                 // 찾은 위치에 무기 착용 (플레이어가 들고있을 무기) 무기 방향 버그가 있어서 아래 Temp함수로 대체
                 //GameManager.Weapon.EquipWeapon(_inventoryController._weapon.name, findPos);
-                
+
                 // 무기 착용
                 GameManager.Weapon.TempEquipWeapon(_inventoryController._weapon.name, GameManager.Obj._playerController.transform);
                 // 넣을 무기에서 스텟 스크립트 가지고 옴
@@ -380,7 +561,7 @@ public class UiManager
         for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
         {
             // 인벤토리 아이템하고 이미지가 동일하면
-            if(_itemStatViewContoller._sprite.name == GameManager.Ui._inventoryController._item[i].name)
+            if(_itemStatViewController._sprite.name == GameManager.Ui._inventoryController._item[i].name)
             {
                 // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
                 GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
@@ -438,7 +619,7 @@ public class UiManager
         string jobName = GameManager.Select._jobName;
         Define.Job job = GameManager.Select.SelectJobCheck();
         // 들고있는 아이템 스프라이트 확인
-        string ImageName = _itemStatViewContoller._sprite.name;
+        string ImageName = _itemStatViewController._sprite.name;
         // 임시 리스트
         List<string> temp = new List<string>();
 
@@ -528,6 +709,24 @@ public class UiManager
         _miniMap.SetActive(true);
         //_itemStatView.SetActive(false);
     }
+    // 구매하기 취소하기 버튼 함수(UI위치 때문에 Transform 정보를 가지고 와야됨)
+    public void BuyCancelButtonOpen(Transform tr)
+    {
+        // x 축 보정을 위한 변수 / 좋은 코드는 아님 
+        int x = 110;
+        int y = -70;
+        // 활성화
+        _buyCancel.SetActive(true);
+        // 위치 버튼 위치 찾음
+        Transform buy = Util.FindChild("BuyButton", _buyCancel.transform);
+        Transform cancel = Util.FindChild("CancelButton", _buyCancel.transform);
+        Debug.Log(tr.position);
+        // 버튼 생성위치를 클릭한 객체 좌표쪽으로 
+        //
+        buy.position = tr.position + new Vector3(x, y, 0);
+        cancel.position = tr.position + new Vector3(x * 3, y, 0);
+    }
+
 
     /// <summary>
     /// 이하 씬 Attack버튼 관련
@@ -548,9 +747,9 @@ public class UiManager
             // 공격버튼 누르면 펫에게도 몬스터 타겟 몬스터를 알려줌
             GameManager.Obj._petController._target = GameManager.Obj._targetMonster.transform;
         }
-
-
     }
+
+
     public void Skill1Button()
     {
 

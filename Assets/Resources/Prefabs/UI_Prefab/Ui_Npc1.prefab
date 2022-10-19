@@ -3107,10 +3107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9152060d32b8fb3419937a8b6e045c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollRect: {fileID: 3216674688488042768}
-  itemImage: {fileID: 0}
-  shopSlotController: {fileID: 409081069061673618}
-  shopSlotList: []
+  _scrollRect: {fileID: 3216674688488042768}
+  _itemImage: {fileID: 0}
+  _shopSlotController: {fileID: 0}
+  _shopSlotList: []
+  _shopItemList: []
 --- !u!1 &6981064256807753492
 GameObject:
   m_ObjectHideFlags: 0

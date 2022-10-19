@@ -77,7 +77,7 @@ public class VeniceController : MonoBehaviour
 
         // ¸ðµç UI Å´
         GameManager.Ui.UISetActiveTrue();
-        // ÀÎº¥Åä¸® ²û
-        GameManager.Ui.InventoryClose();
+
+        CloseShop();
     }
 }

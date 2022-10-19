@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Define
 {
+    public enum StatView
+    {
+        EquipStatView,
+        ItemStatView,
+    }
+
     public enum ItemName
     {
         sword1,
