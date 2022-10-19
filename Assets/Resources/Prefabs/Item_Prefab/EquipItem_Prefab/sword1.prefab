@@ -31,7 +31,7 @@ GameObject:
   - component: {fileID: -7726256012650589374}
   - component: {fileID: 8304751660868407976}
   - component: {fileID: -7428507028412035596}
-  - component: {fileID: 5845940514022001607}
+  - component: {fileID: -9090096286021776227}
   m_Layer: 0
   m_Name: sword1
   m_TagString: Item
@@ -477,7 +477,7 @@ MonoBehaviour:
   _Info: "\uD3C9\uBC94\uD55C \uAC80"
   _Get_Price: 100
   _Sale_Price: 10
---- !u!114 &5845940514022001607
+--- !u!114 &-9090096286021776227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

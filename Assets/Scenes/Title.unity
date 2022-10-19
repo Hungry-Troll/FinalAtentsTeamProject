@@ -1052,9 +1052,45 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5797994879385953128, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+    - target: {fileID: 5797994878773463699, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994878773463699, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994879178709764, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43a7d98bd4222b64e933596512dc09ad, type: 3}
+    - target: {fileID: 5797994879183730407, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994879183730424, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994879183730424, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994879183730425, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cc0fc3c22326fb645a4c201d0871b367, type: 3}
+    - target: {fileID: 5797994879296338288, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994879296338288, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994879385953128, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797994879691042171, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
       propertyPath: m_IsActive
@@ -1148,9 +1184,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5797994880003099602, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43a7d98bd4222b64e933596512dc09ad, type: 3}
+    - target: {fileID: 5797994880143628418, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43a7d98bd4222b64e933596512dc09ad, type: 3}
     - target: {fileID: 5797994880278063579, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994880278063582, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43a7d98bd4222b64e933596512dc09ad, type: 3}
+    - target: {fileID: 5797994880347495901, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994880347495901, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994880689324235, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797994880689324235, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b5855ac8ab20184ca3f14c748c1fa15, type: 3}

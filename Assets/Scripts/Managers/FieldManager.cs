@@ -66,8 +66,6 @@ public class FieldManager : MonoBehaviour
         }
 
         // BGM º¯°æ
-        GameManager.Sound.BGMPlay("-kpop_release-");
-
-
+        GameManager.Sound.BGMPlay("Sketch 3 - Against All Odds 1");
     }
 }

@@ -31,7 +31,7 @@ GameObject:
   - component: {fileID: 6006231152289661627}
   - component: {fileID: 8764354808262494213}
   - component: {fileID: 1872857426306960583}
-  - component: {fileID: -7637578806751801087}
+  - component: {fileID: -4076049003701283862}
   m_Layer: 0
   m_Name: sword2
   m_TagString: Item
@@ -478,7 +478,7 @@ MonoBehaviour:
   _Info: "\uB2E8\uB2E8\uD55C \uAC15\uCCA0\uB85C \uB9CC\uB4E0 \uAC80"
   _Get_Price: 200
   _Sale_Price: 20
---- !u!114 &-7637578806751801087
+--- !u!114 &-4076049003701283862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

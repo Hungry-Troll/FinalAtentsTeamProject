@@ -279,31 +279,14 @@ public class UiManager
 
         return SlotItem;
     }
-
-
-    // 장착 아이템용 함수... 급해서 복붙
-    public void StatViewClose(Define.StatView statView)
+    
+    // 아이템창 닫는 함수
+    public void ItemStatViewClose()
     {
-        switch (statView)
+        if (_itemStatOpen == true)
         {
-            // 인벤토리 아이템을 클릭했을 때
-            case Define.StatView.ItemStatView:
-                if (_itemStatOpen == true)
-                {
-                    // 아이템 정보 창 열고
-                    _itemStatView.SetActive(false);
-                    _itemStatOpen = false;
-                }
-                break;
-            // 장착 아이템을 클릭했을 때
-            case Define.StatView.EquipStatView:
-                if (_equipStatOpen == true)
-                {
-                    // 아이템 정보 창 열고
-                    _equipStatView.SetActive(false);
-                    _equipStatOpen = false;
-                }
-                break;
+            _itemStatView.SetActive(false);
+            _itemStatOpen = false;
         }
     }
 
@@ -458,7 +441,16 @@ public class UiManager
         _equipItemIntroduce.text = tmpStat.Info;
         //_dropText >> 거의 쓸일이 없을것으로 추정
     }
-
+    // 장착 아이템창 닫는 함수
+    public void EquipStatViewClose()
+    {
+        if (_equipStatOpen == true)
+        {
+            // 아이템 정보 창 열고
+            _equipStatView.SetActive(false);
+            _equipStatOpen = false;
+        }
+    }
 
     /// <summary>
     /// 무기 장착 관련
@@ -549,6 +541,8 @@ public class UiManager
                 InventoryStatUpdate();
             }
         }
+        // 아이템 상태창 닫기
+        ItemStatViewClose();
         // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
         InventoryImageArray();
     }
@@ -571,6 +565,9 @@ public class UiManager
                 break;
             }
         }
+        // 아이템 상태창 닫기
+        ItemStatViewClose();
+
         // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
         InventoryImageArray();
     }

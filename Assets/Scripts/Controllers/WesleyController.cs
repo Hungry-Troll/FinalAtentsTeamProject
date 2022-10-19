@@ -39,6 +39,9 @@ public class WesleyController : MonoBehaviour
                 {
                     WesleyAnimator.SetTrigger("MeetPlayer");
                     DialogsOfWesleyPanel[1].SetActive(true);
+
+                    // BGM 변경
+                    GameManager.Sound.BGMPlay("-kpop_release-");
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
                     capsuleCollider.enabled = false;
@@ -55,7 +58,6 @@ public class WesleyController : MonoBehaviour
         {
             DialogsOfWesleyPanel[i].SetActive(false);
         }
-
         capsuleCollider.enabled = true;
         // 모든 UI 킴
         GameManager.Ui.UISetActiveTrue();

@@ -13,13 +13,11 @@ public class EquipStatViewController : MonoBehaviour, IBeginDragHandler, IDragHa
     public Sprite _sprite;
     // 아이템 타입 구분용 이넘
     Define.ItemType _itemType;
-    Define.StatView _statView;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        _statView = Define.StatView.EquipStatView;
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -36,7 +34,7 @@ public class EquipStatViewController : MonoBehaviour, IBeginDragHandler, IDragHa
     public void CloseItem()
     {
         // 인벤토리 닫기 Ui는 Ui매니저에서 관리함
-        GameManager.Ui.StatViewClose(_statView);
+        GameManager.Ui.EquipStatViewClose();
     }
 
     public void UnEquipWeaponItem()
