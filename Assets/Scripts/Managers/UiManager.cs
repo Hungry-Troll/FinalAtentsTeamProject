@@ -87,9 +87,6 @@ public class UiManager
     // 장착 아이템 스텟창 갯수 관리용
     public bool _equipStatOpen;
 
-    // 아이템 스텟창과 장착 아이템 스텟창 사용 구분을 위한 enum
-    Define.StatView _StatViewType;
-
     // 상점 구매하기 취소하기 버튼
     public GameObject _buyCancel;
     public UI_BuyCancelButton _buyCancelScript;
@@ -588,8 +585,9 @@ public class UiManager
             _slotImage[i].gameObject.SetActive(true);
             // 동일한 이름의 게임오브젝트를 동일한 슬롯에 넣음
             GameObject tmpGameObject = GameManager.Resource.GetfieldItem(tmpName);
+            GameObject go = Util.Instantiate(tmpGameObject);
             GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpGameObject);
+            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(go);
         }
         for(int i = 19; i > GameManager.Ui._inventoryController._item.Count -1; i--)
         {
@@ -724,7 +722,6 @@ public class UiManager
         cancel.position = tr.position + new Vector3(x * 3, y, 0);
     }
 
-
     /// <summary>
     /// 이하 씬 Attack버튼 관련
     /// 추후 코드 수정 필요 
@@ -739,8 +736,8 @@ public class UiManager
         // 만약 타겟몬스터가 널이 아니라면
         if(GameManager.Obj._targetMonster != null)
         {
-            // 플레이어 컨트롤러에서 처리
-            GameManager.Obj._playerController._creatureState = CreatureState.Attack;
+            // 플레이어 컨트롤러에서 처리 >> 우선 오토무브로 다가가도록 처리
+            GameManager.Obj._playerController._creatureState = CreatureState.AutoMove;
             // 공격버튼 누르면 펫에게도 몬스터 타겟 몬스터를 알려줌
             GameManager.Obj._petController._target = GameManager.Obj._targetMonster.transform;
         }

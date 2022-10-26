@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Define
 {
-    public enum StatView
+    public enum SceneName
     {
-        EquipStatView,
-        ItemStatView,
+        Title,
+        CharacterSelectScene,
+        SelectPet,
+        Tutorial,
+        Village02,
+        DunGeon,
     }
-
     public enum ItemName
     {
         sword1,

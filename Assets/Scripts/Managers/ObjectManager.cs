@@ -28,6 +28,12 @@ public class ObjectManager
     // 몬스터 정보에서 타겟 몬스터를 찾는 함수 길찾기 x
     public void FindMobListTarget()
     {
+        // 널체크
+        if(GameManager.Obj._monsterContList.Count <= 0 || GameManager.Obj._monsterContList == null)
+        {
+            return;
+        }
+
         List<float> targetDistance = new List<float>();
         float distance = 0;
         _targetMonster = null;
@@ -68,6 +74,12 @@ public class ObjectManager
                 _targetMonster = null;
             }
         }
+    }
+    // 씬 이동 시 몬스터 정보 초기화 하는 함수 (씬 이동 시 기존 몬스터 정보가 있으면 안됨 )
+    public void RemoveAllMobList()
+    {
+        _monsterContList.Clear();
+        _monsterStatList.Clear();
     }
 
 

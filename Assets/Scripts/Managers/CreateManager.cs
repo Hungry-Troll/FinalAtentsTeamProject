@@ -23,10 +23,10 @@ public class CreateManager
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
         RaycastHit hit;
-        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        if(Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
         {
             GameObject temPlayerChar = GameManager.Resource.GetCharacter(playerName);
-            if (temPlayerChar != null)
+            if(temPlayerChar != null)
             {
                 // 생성
                 GameObject player = GameObject.Instantiate<GameObject>(temPlayerChar, hit.point, Quaternion.identity);
@@ -51,10 +51,10 @@ public class CreateManager
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
         RaycastHit hit;
-        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        if(Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
         {
             GameObject temPet = GameManager.Resource.GetPet(petName);
-            if (temPet != null)
+            if(temPet != null)
             {
                 // 생성
                 GameObject pet = GameObject.Instantiate<GameObject>(temPet, hit.point, Quaternion.identity);
@@ -78,15 +78,15 @@ public class CreateManager
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
         RaycastHit hit;
-        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        if(Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
         {
             GameObject temfieldItem = GameManager.Resource.GetfieldItem(fieldItemName);
-            if (temfieldItem != null)
+            if(temfieldItem != null)
             {
                 string tempName = temfieldItem.name;
                 GameObject fieldItem = GameObject.Instantiate<GameObject>(temfieldItem, hit.point, Quaternion.identity);
                 _item = fieldItem.AddComponent<ItemController>();
-                // 임시코드 우선 나오는 모든 아이템은 무기로 지정
+                // 임시코드 우선 나오는 모든 아이템은 무기로 지정 >> itemStatEx에 있는 아이템 구분으로 사용해도 될 것 같음
                 _item._itemType = Define.ItemType.Weapon;
                 GameManager.Obj._itemContList.Add(_item);
                 // 스텟 스크립트를 넣고
@@ -107,10 +107,10 @@ public class CreateManager
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
         origin.y += 100f;
         RaycastHit hit;
-        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        if(Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
         {
             GameObject temMonsterName = GameManager.Resource.GetMonster(monsterName);
-            if (temMonsterName != null)
+            if(temMonsterName != null)
             {
                 string tempName = temMonsterName.name;
                 GameObject monster = GameObject.Instantiate<GameObject>(temMonsterName, hit.point, Quaternion.identity);
@@ -127,6 +127,18 @@ public class CreateManager
             }
         }
         return null;
+    }
+
+    // 인벤토리에 아이템 생성하는 함수
+    public void CreateInventoryItem(string invenItemName)
+    {
+        // 리소스매니저에서 찾아서 플레이어 아이템 인벤토리에 한개 넣어줌
+        GameObject tmp = GameManager.Resource.GetfieldItem(invenItemName);
+        GameObject Item = Util.Instantiate(tmp);
+        ItemStatEX itemStatEX = Item.AddComponent<ItemStatEX>();
+        // 스텟 스크립트에 json 파일 스텟 적용
+        GameManager.Stat.ItemStatLoadJson(tmp.name, itemStatEX);
+        GameManager.Item.InventoryItemAdd(Item, false);
     }
 
     //UI 생성 함수 uiRoot는 UI매니저 go

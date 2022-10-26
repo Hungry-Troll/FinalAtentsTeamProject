@@ -50,19 +50,22 @@ public class ShopController : MonoBehaviour
             case "Superhuman":
                 for (int i = 0; i < itemCount; i++)
                 {
-                    tmpGo[i] = GameManager.Resource.GetfieldItem("sword" + (i + 1));
+                    GameObject tmp = GameManager.Resource.GetfieldItem("sword" + (i + 1));
+                    tmpGo[i] = Util.Instantiate(tmp);
                 }
                 break;
             case "Cyborg":
                 for (int i = 0; i < itemCount; i++)
                 {
-                    tmpGo[i] = GameManager.Resource.GetfieldItem("gun" + (i + 1));
+                    GameObject tmp = GameManager.Resource.GetfieldItem("gun" + (i + 1));
+                    tmpGo[i] = Util.Instantiate(tmp);
                 }
                 break;
             case "Scientist":
                 for (int i = 0; i < itemCount; i++)
                 {
-                    tmpGo[i] = GameManager.Resource.GetfieldItem("book" + (i + 1));
+                    GameObject tmp = GameManager.Resource.GetfieldItem("book" + (i + 1));
+                    tmpGo[i] = Util.Instantiate(tmp);
                 }
                 break;
         }

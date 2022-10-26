@@ -13,8 +13,6 @@ public class ItemController : MonoBehaviour
     // 아이템 타입 (아이템이 생성 될 때 정해줘야 됨 / 어떤 방식으로 구현할지 고민)
     public ItemType _itemType;
 
-
-
     // Start is called before the first frame update
     private void Start()
     {

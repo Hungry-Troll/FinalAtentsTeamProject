@@ -48,7 +48,7 @@ public class LoadingController : MonoBehaviour
     {
 
         float timer = 0f;
-        _op = SceneManager.LoadSceneAsync(GameManager.Scene.LoadSceneName);
+        _op = SceneManager.LoadSceneAsync(GameManager.Scene._LoadSceneName);
         _op.allowSceneActivation = false;
         
         while(!_op.isDone)

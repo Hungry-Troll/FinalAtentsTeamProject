@@ -19,4 +19,12 @@ public class Util
         }
         return null;
     }
+
+    // 이니시에잇 할때마다 이름 바꾸기 귀찮아서 만든 함수
+    public static GameObject Instantiate(GameObject go)
+    {
+        GameObject GameObj = GameObject.Instantiate<GameObject>(go);
+        GameObj.name = go.name;
+        return GameObj;
+    }
 }

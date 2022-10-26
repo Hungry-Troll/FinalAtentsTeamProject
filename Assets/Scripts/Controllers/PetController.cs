@@ -52,7 +52,7 @@ public class PetController : MonoBehaviour
         //player = GameObject.Find("Player").transform;
 
         // 오브젝트매니저에서 타겟을 찾는 함수 (오브젝트 매니저에서 만든 몬스터 리스트를 가지고 있음)
-        GameManager.Obj.FindMobListTarget();
+        //GameManager.Obj.FindMobListTarget();
 
         if(GameManager.Obj._targetMonster != null)
         {

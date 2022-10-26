@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Text;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class PlayData
@@ -29,6 +30,9 @@ public class PlayData
     [SerializeField]
     private List<string> _Item_List = new List<string>();
 
+    [SerializeField]
+    private string _Weapon;
+
     public string Name
     {
         get { return _Name; }
@@ -54,15 +58,21 @@ public class PlayData
         get { return _Item_List; }
         set { _Item_List = value; }
     }
-
+    public string Weapon
+    {
+        get { return _Weapon; }
+        set { _Weapon = value; }
+    }
 }
 public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
 {
-    public static DataManager instance;
+    //public static DataManager instance;
     public PlayData playData = new PlayData();
     string path;
     string filename = "save";
     public int selectedSlot;
+    // 씬을 이동할때는 씬 로드가 필요 없으므로 bool 변수 하나를 추가하고 LoadData() 함수 매개변수로 사용
+    bool _sceneLoad;
 
     // Start is called before the first frame update
     void Awake()
@@ -87,16 +97,6 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     {
         //path = Application.persistentDataPath + "/";
         path = Application.dataPath + "/Resources/Data/Json/Save/" + filename + ".json";
-    }
-
-    void Start()
-    {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // 저장 : PlayData 타입으로 저장 후 json 파일 생성
@@ -129,11 +129,19 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         }
 
         // SceneManagerEX 에서 가져온 현재 씬 이름
-        playData.Scene = GameManager.Scene.LoadSceneName;
-        
+        playData.Scene = GameManager.Scene._LoadSceneName;
+
+        // UiManager  _inventoryController._weapon 은 장착아이템
+        // 장착 아이템도 저장 필요
+        if (GameManager.Ui._inventoryController._weapon != null)
+        {
+            // null 아닐 때만 담기
+            playData.Weapon = GameManager.Ui._inventoryController._weapon.name;
+        }
+
         // UiManager 에서 가져온 아이템 리스트
         // 인벤토리 컨트롤러부터 널검사
-        if(GameManager.Ui._inventoryController != null)
+        if (GameManager.Ui._inventoryController != null)
         {
             // null 아닐때만 저장
             if(GameManager.Ui._inventoryController._item != null)
@@ -146,6 +154,8 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             }
         }
 
+
+
         string json = JsonUtility.ToJson(playData, true);
         //File.WriteAllText(path + filename + selectedSlot.ToString(), data);
 
@@ -156,7 +166,8 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     }
 
     // save 로드 : DataManager의 멤버 playData 로 받음
-    public void LoadData()
+    // 씬을 이동할때는 씬 로드가 필요 없으므로 bool 변수 하나를 추가하고 LoadData() 함수 매개변수로 사용
+    public void LoadData(bool _sceneLoad)
     {
         //string data = File.ReadAllText(path + filename + selectedSlot.ToString());
         //playData = JsonUtility.FromJson<PlayData>(data);
@@ -170,7 +181,9 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         string name = "None";
         string job = "None";
         string pet = "None";
+        string weapon = "None";
         List<string> itemList = new List<string>();
+
 
         // 파일 가져와서 읽는 코드
         FileStream fileStream = new FileStream(path, FileMode.Open);
@@ -193,7 +206,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         {
             // null 아닐 때만 넣어주기
             name = playData.Name;
-            GameManager.Select._playerName = playData.Name;
+            //GameManager.Select._playerName = playData.Name;
         }
 
         // save 파일에서 가져온 직업
@@ -201,7 +214,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         {
             // null 아닐 때만 넣어주기
             job = playData.Job;
-            GameManager.Select._jobName = playData.Job;
+            //GameManager.Select._jobName = playData.Job;
         }
 
         // save 파일에서 가져온 펫
@@ -209,7 +222,13 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         {
             // null 아닐 때만 넣어주기
             pet = playData.Pet;
-            GameManager.Select._petName = playData.Pet;
+            //GameManager.Select._petName = playData.Pet;
+        }
+
+        if (playData.Weapon != null)
+        {
+            // null 아닐 때만 넣어주기
+            weapon = playData.Weapon;
         }
 
         // save 파일에서 가져온 인벤토리 리스트
@@ -217,8 +236,13 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         {
             // null 아닐 때만 넣어주기
             itemList = playData.ItemList;
-            GameManager.Select._itemList = playData.ItemList;
+            // 아이템 리스트를 스트링으로 저장해놓은것을 다시 인벤토리에 넣어야 됨
+            //GameManager.Select._itemList = playData.ItemList;
+            // 인벤토리 아이템 로드
+            InventoryLoad();
 
+            // 인벤토리에 바로 넣는것 테스트
+            //GameManager.Ui._inventoryController._item = playData.ItemList;
             // InventoryController에 넣을 때 사용할 코드, 아이템 리스트 저장하는 코드
             // 나중에 수정 혹은 삭제
             /*
@@ -242,16 +266,74 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             */
         }
 
-
         //=========여기서 씬 전환==========
+        if (_sceneLoad == true)
+        {
+            // 마지막에 저장된 씬으로 이동
+            GameManager.Scene.LoadScene(scene);
 
-        // 마지막에 저장된 씬으로 이동
-        GameManager.Scene.LoadScene(scene);
+            // 디버깅용
+            //Debug.Log("save 파일 플레이어 이름 : " + name);
+            //Debug.Log("save 파일 직업 : " + job);
+            //Debug.Log("save 파일 펫 : " + pet);
+            //Debug.Log("save 파일 씬 : " + scene);
+        }
+    }
 
-        // 디버깅용
-        //Debug.Log("save 파일 플레이어 이름 : " + name);
-        //Debug.Log("save 파일 직업 : " + job);
-        //Debug.Log("save 파일 펫 : " + pet);
-        //Debug.Log("save 파일 씬 : " + scene);
+    //playData에서 인벤토리 데이터 가지고 오는 함수
+    public void InventoryLoad()
+    {
+        for (int i = 0; i < playData.ItemList.Count; i++)
+        {
+            string temp = playData.ItemList[i];
+            GameObject tempItem = GameManager.Resource.GetfieldItem(temp);
+            GameObject Item = Util.Instantiate(tempItem);
+            if (Item != null)
+            {
+                Item.AddComponent<ItemController>();
+                // 스텟 스크립트를 넣고
+                ItemStatEX _itemStatEX = Item.AddComponent<ItemStatEX>();
+                // 스텟 스크립트에 json 파일 스텟 적용
+                GameManager.Stat.ItemStatLoadJson(Item.name, _itemStatEX);
+                // 인벤토리에 넣기
+                GameManager.Item.InventoryItemAdd(Item, false);
+            }
+        }
+    }
+
+    // playData에서 장착아이템 가지고 오는 함수 LoaData()에 넣고 싶은대 플레이어 정보를 LoadData보다 늦게 불러와서 따로 불러와야됨 (필드매니저에서 사용)
+    // 추후 수정
+    public void EquipWeaponLoad()
+    {
+        string tempName = playData.Weapon;
+        // UI매니저 인벤토리컨트롤러에서 WeaponImage 게임오브젝트를 재귀함수로 찾음 
+        Transform findTr = Util.FindChild("WeaponImage", GameManager.Ui._inventoryController.transform);
+        // 찾은 게임오브젝트에서 이미지컴포넌트를 빼옴
+        Image findImage = findTr.GetComponent<Image>();
+        // 리소스매니저에서 이미지 찾음
+        Sprite weaponImage = GameManager.Resource.GetImage(tempName);
+        // 찾은 이미지 넣어줌
+        findImage.sprite = weaponImage;
+        // 이미지 활성화
+        findImage.gameObject.SetActive(true);
+
+        // 무기를 찾음 
+        GameObject weaponTemp = GameManager.Resource.GetEquipItem(tempName);
+        GameObject weapon = Util.Instantiate(weaponTemp);
+        // 무기 장착 (인벤토리에서 들고있는 무기 / 계산용 / 실제로 캐릭터가 들고잇지 않음)
+        GameManager.Ui._inventoryController._weapon = weapon;
+        // 스텟 스크립트를 넣고
+        ItemStatEX itemStatEX = weapon.AddComponent<ItemStatEX>();
+        // 스텟 스크립트에 json 파일 스텟 적용
+        GameManager.Stat.ItemStatLoadJson(tempName, itemStatEX);
+        // UI 매니저에 장착 무기 스텟도 넣어 놓음
+        GameManager.Ui._inventoryController._weaponStat = itemStatEX;
+
+        // 무기 착용 (실제 캐릭터가 들고있는 것)
+        GameManager.Weapon.TempEquipWeapon(tempName, GameManager.Obj._playerController.transform);
+        // 플레이어 스크립트에 스텟 더함
+        GameManager.Obj._playerStat.Atk += itemStatEX.Skill;
+        // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+        GameManager.Ui.InventoryStatUpdate();
     }
 }

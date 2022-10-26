@@ -25,11 +25,12 @@ public class LoadSelect : MonoBehaviour
 
     public void Slot(int number)
     {
-        DataManager.instance.selectedSlot = number;
-
+        //DataManager.instance.selectedSlot = number;
+        GameManager.Data.selectedSlot = number;
         Creat();
 
-        DataManager.instance.LoadData();
+        //DataManager.instance.LoadData();
+        GameManager.Data.LoadData(true);
         StartGame();
     }
 
