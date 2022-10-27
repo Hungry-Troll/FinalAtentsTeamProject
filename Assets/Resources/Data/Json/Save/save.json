@@ -4,10 +4,9 @@
     "_Pet": "Triceratops",
     "_Scene": "Tutorial",
     "_Item_List": [
-        "book2",
+        "sword1",
         "sword2",
-        "sword3",
         "sword1"
     ],
-    "_Weapon": "sword1"
+    "_Weapon": "sword3"
 }
