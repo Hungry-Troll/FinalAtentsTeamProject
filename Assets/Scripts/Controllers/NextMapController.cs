@@ -19,13 +19,39 @@ public class NextMapController : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         // 플레이어 콜라이더와 충돌했다면
-        if(other == _playerCollider)
+        if (other == _playerCollider)
         {
-            GameManager.Data.SaveData();
-            GameManager.Scene.LoadScene("Village02");
-            // 현재 데이터를 저장한다.
-            // 다음 씬으로 넘어간다.
-            // 저장한 데이터를 불러온다.
+            // 현재 씬 체크
+            SceneCheck();
         }
     }
+    // 현재 씬 체크 후 각각 맞는 함수 실행
+    private void SceneCheck()
+    {
+        switch (GameManager.Scene._sceneNameEnum)
+        {
+            case Define.SceneName.Tutorial:
+                MoveToVillage02();
+                break;
+            case Define.SceneName.Village02:
+                MoveToDunGeon();
+                break;
+        }
+    }
+    // 마을로 씬 이동하는 함수
+    public void MoveToVillage02()
+    {   
+         GameManager.Data.SaveData();
+         GameManager.Scene.LoadScene("Village02");
+         // 현재 데이터를 저장한다.
+         // 다음 씬으로 넘어간다.
+         // 저장한 데이터를 불러온다.
+    }   
+    // 던전으로 씬 이동하는 함수
+    public void MoveToDunGeon()
+    {
+        GameManager.Data.SaveData();
+        GameManager.Scene.LoadScene("DunGeon");
+    }
+
 }

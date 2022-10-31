@@ -26,22 +26,22 @@ public class SceneManagerEX
         switch (_LoadSceneName)
         {
             case "Title":
-                _sceneNameEnum = SceneName.Title;
+                _sceneNameEnum = Define.SceneName.Title;
                 break;
             case "CharacterSelectScene":
-                _sceneNameEnum = SceneName.CharacterSelectScene;
+                _sceneNameEnum = Define.SceneName.CharacterSelectScene;
                 break;
             case "SelectPet":
-                _sceneNameEnum = SceneName.SelectPet;
+                _sceneNameEnum = Define.SceneName.SelectPet;
                 break;
             case "Tutorial":
-                _sceneNameEnum = SceneName.Tutorial;
+                _sceneNameEnum = Define.SceneName.Tutorial;
                 break;
             case "Village02":
-                _sceneNameEnum = SceneName.Village02;
+                _sceneNameEnum = Define.SceneName.Village02;
                 break;
             case "DunGeon":
-                _sceneNameEnum = SceneName.DunGeon;
+                _sceneNameEnum = Define.SceneName.DunGeon;
                 break;
         }
     }

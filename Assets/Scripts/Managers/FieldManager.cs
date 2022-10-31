@@ -40,10 +40,10 @@ public class FieldManager : MonoBehaviour
                 TutorialAwake();
                 break;
             case Define.SceneName.Village02:
-                Village02Awake();
+                NextSceneAwake();
                 break;
             case Define.SceneName.DunGeon:
-                DunGeonAwake();
+                NextSceneAwake();
                 break;
         }
     }
@@ -93,7 +93,7 @@ public class FieldManager : MonoBehaviour
         GameManager.Sound.BGMPlay("Sketch 3 - Against All Odds 1");
     }
 
-    private void Village02Awake()
+    private void NextSceneAwake()
     {
       
         // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
@@ -119,20 +119,6 @@ public class FieldManager : MonoBehaviour
         // 펫 생성 코드
         Vector3 temPos = new Vector3(Random.Range(3, 5), Random.Range(3, 5), Random.Range(3, 5));
         GameManager.Obj._petController = GameManager.Create.CreatePet(_startPos + temPos, GameManager.Select._pet.ToString());
-    }
-
-    private void DunGeonAwake()
-    {
-        // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
-        GameManager.Obj.RemoveAllMobList();
-        // Ui 불러옴
-        GameManager.Ui.Init();
-        // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
-        GameManager.Select.Init();
-        // 스텟 매니저에서 스텟 데이터 불러옴
-        GameManager.Stat.Init();
-        // 카메라 생성
-        GameManager.Cam.Init();
     }
 
 }

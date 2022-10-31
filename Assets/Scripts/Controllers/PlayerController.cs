@@ -184,13 +184,19 @@ public class PlayerController : MonoBehaviour
     private void Dead()
     {
         // 플레이어가 죽으면 유다이 같은 것을 띄울 것
+        GameManager.Ui.GameOverUI();
+        // 모든 유아이 끔
+        GameManager.Ui.UISetActiveFalse();
     }
 
     public void OnDamaged(int monsterAtk)
     {
+        // 대미지 받는 함수
         _playerStat.Hp -= monsterAtk - _playerStat.Def;
         if(_playerStat.Hp <= 0)
         {
+            // HP가 -20,-40 이러면 이상하므로 고정
+            _playerStat.Hp = 0;
             _creatureState = CreatureState.Dead;
         }
     }

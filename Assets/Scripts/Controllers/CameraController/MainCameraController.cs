@@ -31,10 +31,10 @@ public class MainCameraController : MonoBehaviour
                 TutorialStart();
                 break;
             case Define.SceneName.Village02:
-                Village02Start();
+                NextSceneStart();
                 break;
             case Define.SceneName.DunGeon:
-                //DunGeonStart();
+                NextSceneStart();
                 break;
         }
     }
@@ -52,7 +52,7 @@ public class MainCameraController : MonoBehaviour
         FirstMainCamPosCal();
     }
 
-    private void Village02Start()
+    private void NextSceneStart()
     {
         // 마을맵 카메라 시작 위치
         _player = GameObject.FindWithTag("Player");
@@ -64,21 +64,11 @@ public class MainCameraController : MonoBehaviour
         transform.position = _cameraPos;
         transform.rotation = _cameraRot;
     }
+
     // 카메라 위치 구하는 함수 // 카메라 시점 변경시 코드 수정 필요
     private void FirstMainCamPosCal()
     {
         // 카메라 벡터 계산해서 카메라매니저에 넣어둠
         GameManager.Cam._mainCameraPos = _cameraPos - _player.transform.position;
-    }
-
-    private void DistanceCal()
-    {
-
-    }
-
-    private void LastMainCameraPos()
-    {
-
-
     }
 }

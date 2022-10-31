@@ -103,7 +103,6 @@ public class UiManager
     {
         go = new GameObject();
         go.name = "@UI_Root";
-
         ////////////////////////////////
         /// 반복되는 내용 1차 정리 완료
         /// 추후 캔버스를 정리한다면 여기서 더 정리 할 수도 있음
@@ -662,9 +661,7 @@ public class UiManager
     // 플레이어에게 HP바 연결하는 함수
     public void PlayerHpBarCreate(GameObject player)
     {
-        GameObject hpBar = GameManager.Resource.GetUi("Ui_PlayerHpBar");
-        _playerHpBar = GameObject.Instantiate<GameObject>(hpBar);
-        _playerHpBar.transform.SetParent(player.transform);
+        _playerHpBar = GameManager.Create.CreateUi("Ui_PlayerHpBar", player);
     }
 
     // 플레이어 포트레이트 만드는 함수
@@ -672,7 +669,6 @@ public class UiManager
     {
         string temp = GameManager.Select._jobName;
         Sprite tempImage = GameManager.Resource.GetImage(temp);
-        Debug.Log(tempImage.name);
         _portraitImage.sprite = tempImage;
     }
 
@@ -720,6 +716,12 @@ public class UiManager
         //
         buy.position = tr.position + new Vector3(x, y, 0);
         cancel.position = tr.position + new Vector3(x * 3, y, 0);
+    }
+
+    // 게임오버
+    public void GameOverUI()
+    {
+        GameManager.Create.CreateUi("UI_GameOver", go);
     }
 
     /// <summary>
