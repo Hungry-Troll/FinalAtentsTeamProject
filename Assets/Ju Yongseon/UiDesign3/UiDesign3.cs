@@ -59,7 +59,7 @@ public class UiDesign3 : MonoBehaviour
         if(AButtom)
         {
             pickNumber = 2;
-            jobName.text = "궁수";
+            jobName.text = "사이보그";
             jobInformation.text = "원거리전투 스타일에 폭발적인 데미지가 특징";
             characterGeneration("soldier_Rig");
             SkillInfo.sprite = aSkill;
