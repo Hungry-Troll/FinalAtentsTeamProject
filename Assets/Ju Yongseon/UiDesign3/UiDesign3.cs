@@ -9,12 +9,9 @@ public class UiDesign3 : MonoBehaviour
     public Text jobInformation;
     public InputField nickname;
 
-    public Sprite wSkill;
-    public Sprite aSkill;
-    public Sprite sSkill;
-
-
-
+    public Text wSkill;
+    public Text aSkill;
+    public Text sSkill;
 
     public Image SkillInfo;
 
@@ -31,13 +28,14 @@ public class UiDesign3 : MonoBehaviour
 
     int pickNumber;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         pickNumber = 0;
         nicknameObject = GameObject.Find("Canvas/NicknameObject");
         Debug.Log(nicknameObject);
         nicknameObject.gameObject.SetActive(false);
+        SkillInfo.gameObject.SetActive(false);
         // BGM 추가
         GameManager.Sound.BGMPlay("Sky Is the Limit _ by Supreme Devices (Epic Music World)");
     }
@@ -50,7 +48,9 @@ public class UiDesign3 : MonoBehaviour
             jobName.text = "강화인간";
             jobInformation.text = "근접전투 스타일에 밸런스형이 특징";
             characterGeneration("viking_Rig");
-            SkillInfo.sprite = wSkill;
+            SkillInfo.gameObject.SetActive(true);
+            wSkill.text = "설명";
+            //SkillInfo.sprite = wSkill;
             WButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Superhuman";
@@ -62,7 +62,9 @@ public class UiDesign3 : MonoBehaviour
             jobName.text = "사이보그";
             jobInformation.text = "원거리전투 스타일에 폭발적인 데미지가 특징";
             characterGeneration("soldier_Rig");
-            SkillInfo.sprite = aSkill;
+            SkillInfo.gameObject.SetActive(true);
+            aSkill.text = "설명";
+            //SkillInfo.sprite = aSkill;
             AButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Cyborg";
@@ -74,7 +76,9 @@ public class UiDesign3 : MonoBehaviour
             jobName.text = "과학자";
             jobInformation.text = "원거리전투 스타일에 전략형이 특징";
             characterGeneration("doctor_Rig");
-            SkillInfo.sprite = sSkill;
+            SkillInfo.gameObject.SetActive(true);
+            //SkillInfo.sprite = sSkill;
+            sSkill.text = "설명";
             SButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Scientist";
