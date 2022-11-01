@@ -13,10 +13,13 @@ EditorBuildSettings:
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/CharacterSelectScene.unity
-    guid: 727447e177711204a8fef31f22bdd566
+    guid: d98f798e3ce427b489d4970bd4360abe
   - enabled: 1
     path: Assets/Scenes/SelectPet/SelectPet.unity
     guid: aa56a1c89a0ae68409a12ea1602057f8
+  - enabled: 0
+    path: Assets/Scenes/CharacterSelectScene4.unity
+    guid: 727447e177711204a8fef31f22bdd566
   - enabled: 0
     path: Assets/Scenes/SelectPet/SelectPet3.unity
     guid: fbd951b3e8c61264f9a7a300595575e0
