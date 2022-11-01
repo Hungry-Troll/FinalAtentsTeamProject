@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,32 +42,36 @@ public class ShopController : MonoBehaviour
         // 추후 방어구 구현 되면 그때 구현
 
         string tmpName = GameManager.Select._jobName;
-        int itemCount = 3;
-        GameObject[] tmpGo = new GameObject[3];
+        //int itemCount = 3;
+        GameObject[] tmpGo = new GameObject[4];
+        GameObject potion = GameManager.Resource.GetfieldItem("potion1");
 
         // 이름으로 게임오브젝트 찾음
         switch (tmpName)
         {
             case "Superhuman":
-                for (int i = 0; i < itemCount; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     GameObject tmp = GameManager.Resource.GetfieldItem("sword" + (i + 1));
                     tmpGo[i] = Util.Instantiate(tmp);
                 }
+                tmpGo[3] = Util.Instantiate(potion);
                 break;
             case "Cyborg":
-                for (int i = 0; i < itemCount; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     GameObject tmp = GameManager.Resource.GetfieldItem("gun" + (i + 1));
                     tmpGo[i] = Util.Instantiate(tmp);
                 }
+                tmpGo[3] = Util.Instantiate(potion);
                 break;
             case "Scientist":
-                for (int i = 0; i < itemCount; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     GameObject tmp = GameManager.Resource.GetfieldItem("book" + (i + 1));
                     tmpGo[i] = Util.Instantiate(tmp);
                 }
+                tmpGo[3] = Util.Instantiate(potion);
                 break;
         }
 
@@ -123,10 +128,36 @@ public class ShopController : MonoBehaviour
         itemImage.sprite = GameManager.Resource.GetImage(go.name);
         // 이름 넣음
         itemName.text = itemStat.Name;
-        // 추후 방어구 생길경우 수정
-        itemStatText.text = "공격력";
-        abilityStat.text = itemStat.Skill.ToString();
-        // 가격 넣음
-        itemPrice.text = itemStat.Get_Price.ToString() + " 골드";
+        string tmpName = GameManager.Select._jobName;
+        if (tmpName == GameManager.Select._jobName)
+        {
+            switch (tmpName)
+            {
+                case "Superhuman":
+                    itemStatText.text = "공격력";
+                    break;
+                case "Cyborg":
+                    itemStatText.text = "공격속도";
+                    break;
+                case "Scientist":
+                    itemStatText.text = "주문력";
+                    break;
+            }
+            if (itemStat.name == "potion1")
+            {
+                itemStatText.text = "회복력";
+            }
+            // 추후 방어구 생길경우 수정
+            abilityStat.text = itemStat.Skill.ToString();
+            // 가격 넣음
+            itemPrice.text = itemStat.Get_Price.ToString() + " 골드";
+        }
+
+
+        //// 추후 방어구 생길경우 수정
+        //itemStatText.text = "공격력";
+        //abilityStat.text = itemStat.Skill.ToString();
+        //// 가격 넣음
+        //itemPrice.text = itemStat.Get_Price.ToString() + " 골드";
     }
 }

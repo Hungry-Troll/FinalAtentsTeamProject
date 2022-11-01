@@ -98,7 +98,7 @@
     "_Id": "potion1",
     "_Name": "체력 물약",
     "_Type": "Consumables",
-    "_Skill": 0,
+    "_Skill": 50,
     "_Info": "체력을 50 회복시켜준다",
     "_Get_Price": 10,
     "_Sale_Price": 1

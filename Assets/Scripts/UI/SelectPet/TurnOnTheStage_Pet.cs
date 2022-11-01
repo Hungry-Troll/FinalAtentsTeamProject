@@ -39,7 +39,7 @@ public class TurnOnTheStage_Pet : MonoBehaviour
         _animatorList[1] = _pet2Ani;
         _animatorList[2] = _pet3Ani;
 
-        _petInfoArr = GameObject.FindGameObjectsWithTag("Pet_Info");
+        //_petInfoArr = GameObject.FindGameObjectsWithTag("Pet_Info");
     }
 
     private void Start()
@@ -48,7 +48,7 @@ public class TurnOnTheStage_Pet : MonoBehaviour
         _turn.eulerAngles = new Vector3(0, _value, 0);
     }
 
-    // Update is called once per frame
+
     private void Update()
     {
         if(_bTurnLeft)
@@ -97,21 +97,24 @@ public class TurnOnTheStage_Pet : MonoBehaviour
 
         // 선택한 펫만 움직이도록 나머지는 애니메이션 off
         // 선택한 펫 정보만 나오도록 SetActive
-        for (int i = 0; i < _animatorList.Length; i++)
+        for (int i = 0; i < 3; i++)
         {
             // 선택 x 펫들은 active false
-            _petInfoArr[i].SetActive(false);
+
+            //_petInfoArr[i].SetActive(false);
 
             // 선택 x 펫들 애니메이션 x
             _animatorList[i].SetInteger("state", 0);
 
             if (i == _characterNum)
             {
-                //Debug.Log(_animatorList[i].name);
+                Debug.Log(_animatorList[i].name);
                 //펫 선택용 string 넘겨줌
+
                 GameManager.Select._petName = _animatorList[i].name;
+
                 // 선택된 펫은 active true
-                _petInfoArr[i].SetActive(true);
+                //_petInfoArr[i].SetActive(true);
 
                 // 선택된 펫 애니메이션 Idle 상태로 전환
                 _animatorList[i].SetInteger("state", 1);
