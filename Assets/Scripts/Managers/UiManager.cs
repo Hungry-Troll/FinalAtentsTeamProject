@@ -461,6 +461,7 @@ public class UiManager
 
         // 장착 대상을 찾음 / 아이템은 Define enum ItemType으로 분류
         // json에도 장착 타입이 있으므로 json으로 사용할지 고민
+
         switch (itemType)
         {
             case ItemType.Weapon:
@@ -468,6 +469,8 @@ public class UiManager
                 break;
             case ItemType.Armour:
                 findTr = Util.FindChild("ArmourImage", _inventoryController.transform);
+                break;
+            case ItemType.Consumables:
                 break;
         }
 

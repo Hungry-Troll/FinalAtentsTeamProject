@@ -12,8 +12,8 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
     public Sprite _sprite;
     // 아이템 타입 구분용 이넘
     Define.ItemType _itemType;
+    Define.ItemName _itemName;
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -36,19 +36,56 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
         GameManager.Ui.ItemStatViewClose();
     }
 
+    
     public void WeaponEquipItem()
     {
-        _itemType = Define.ItemType.Weapon;
-        // 추후 아이템 스텟을 적용
-        GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
+        
+        switch (_itemType)
+        {       //작동안함 로그만 찍어봄
+
+            case Define.ItemType.Consumables:   
+                //case Define.ItemName.potion1:
+                Debug.Log("포션클릭");
+                StartCoroutine("PotionEquipItem");
+                break;
+
+            case Define.ItemType.Weapon:
+                GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
+                Debug.Log("무기클릭");
+                break;
+
+            case Define.ItemType.Armour:
+                GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
+                Debug.Log("방어구클릭");
+                break;
+        }
     }
 
-    public void ArmourEquipItem()
+
+    IEnumerator PotionEquipItem()
     {
-        _itemType = Define.ItemType.Armour;
-        // 추후 아이템 스텟을 적용
-        GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
-    }
+        Debug.Log("코루틴 전 포문");
+        for (int i = 0; i < 50; i++)
+        {
+            Debug.Log("코루틴 포문 안");
+            PlayerHpBarEX playerHP = new PlayerHpBarEX();
+            float current = playerHP._currentHp;
+            Debug.Log(current);
+            yield return new WaitForSeconds(0.1f);
+        }StopCoroutine("PotionEquipItem");
+    }  
+  
+
+    
+
+
+
+    //public void ArmourEquipItem()
+    //{
+    //    _itemType = Define.ItemType.Armour;
+    //    // 추후 아이템 스텟을 적용
+    //    GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
+    //}
 
     public void DropItem()
     {

@@ -10,8 +10,8 @@ public class PlayerHpBarEX : MonoBehaviour
     // Hp 바 이미지
     Image _hpBarImage;
     // HP 바 계산용 변수
-    float _maxHp;
-    float _currentHp;
+    public float _maxHp;
+    public float _currentHp;
     // 이름 계산용
     Text _name;
     // HP 숫자용
@@ -49,13 +49,16 @@ public class PlayerHpBarEX : MonoBehaviour
     }
 
     // HP 계산 함수
-    private void HpBarSystem()
+    public void HpBarSystem()
     {
         _maxHp = _stat.Max_Hp;
         _currentHp = _stat.Hp;
         _hpBarImage.fillAmount = _currentHp / _maxHp;
         // HP 바 숫자
         _hpText.text = _stat.Hp.ToString() + "/" + _stat.Max_Hp.ToString();
+
+        
+
     }
 
 
