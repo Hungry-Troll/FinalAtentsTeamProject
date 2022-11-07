@@ -9,7 +9,7 @@ using static Util;
 public class UiManager
 {
     // UI Root용 변수
-    GameObject go;
+    public GameObject go;
 
     // 플레이어 Hp바
     public GameObject _playerHpBar;
@@ -17,6 +17,10 @@ public class UiManager
     // 포트레이트
     public GameObject _portrait;
     public Image _portraitImage;
+    public PortraitController _portraitController;
+
+    // 스킬상태창
+    public SkillViewController _skillViewController;
 
     // 씬 버튼
     public GameObject _sceneButton;
@@ -111,8 +115,15 @@ public class UiManager
         // 시작하면 포트레이트 불러옴
         _portrait = GameManager.Create.CreateUi("UI_Portrait", go);
         _portraitImage = _portrait.GetComponentInChildren<Image>();
+        _portraitController = _portrait.AddComponent<PortraitController>();
         // 직업에 따른 포트레이트 체크
         PortraitCheck();
+
+        // 포트레이트와 연결할 스킬창 UI 생성
+        GameObject skillView = GameManager.Create.CreateUi("Ui_Skill", go);
+        _skillViewController = skillView.GetComponent<SkillViewController>();
+        // 스킬창 생성 후 비활성화
+        skillView.gameObject.SetActive(false);
 
         // 시작하면 Ui 버튼 불러옴
         _sceneButton = GameManager.Create.CreateUi("Ui_Scene_Button", go);
@@ -665,6 +676,17 @@ public class UiManager
     public void PlayerHpBarCreate(GameObject player)
     {
         _playerHpBar = GameManager.Create.CreateUi("Ui_PlayerHpBar", player);
+        // 파티클 설정을 위한 카메라 모드 변경 코드
+        // 캔버스를 가지고 와서
+        // 캔버스 모드 스크린스페이트카메라로 변경후
+        // 카메라 연결
+
+        Canvas canvas = _playerHpBar.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = GameManager.Cam._uiParticleCam;
+        // 화면에 보이는 것이 포트레이트보다 아래에 보여야 되고, 파티클보다 아래에 보여야 되기 때문에 소팅오더를 -1로 수정함
+        // 포트레이트와 파티클은 기본값
+        canvas.sortingOrder = -1;
     }
 
     // 플레이어 포트레이트 만드는 함수
@@ -688,6 +710,10 @@ public class UiManager
         _Option.SetActive(false);
         _miniMap.SetActive(false);
         _itemStatView.SetActive(false);
+        if(GameManager.Effect._levelUpPar.gameObject.activeSelf == true)
+        {
+            GameManager.Effect.LevelUpPortraitEffectOff();
+        }   
     }
 
     // 대화창 열릴 때 UI 껏던것 다시 킴
@@ -702,6 +728,11 @@ public class UiManager
         //_Option.SetActive(false);
         _miniMap.SetActive(true);
         //_itemStatView.SetActive(false);
+        // 스킬 포인트가 0보다 클 경우에만 포트레이트 이펙트 온
+        if(_skillViewController._skillLevel.skillPoint > 0)
+        {
+            GameManager.Effect.LevelUpPortraitEffectOn();
+        }
     }
     // 구매하기 취소하기 버튼 함수(UI위치 때문에 Transform 정보를 가지고 와야됨)
     public void BuyCancelButtonOpen(Transform tr)

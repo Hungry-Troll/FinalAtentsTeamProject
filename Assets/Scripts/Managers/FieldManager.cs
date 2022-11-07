@@ -59,6 +59,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Stat.Init();
         // 카메라 생성
         GameManager.Cam.Init();
+        // 파티클 생성
+        GameManager.Effect.Init();
 
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
@@ -68,6 +70,9 @@ public class FieldManager : MonoBehaviour
 
         // 리소스매니저에서 찾아서 플레이어 아이템 인벤토리에 한개 넣어줌
         GameManager.Create.CreateInventoryItem("sword1");
+
+        // 레벨업 이펙트 생성
+        GameManager.Ui._skillViewController.LevelUp();
 
         // 몬스터 시작 위치
         _startPosMob = _startPosMonster.transform.position;
@@ -108,6 +113,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Stat.Init();
         // 카메라 생성
         GameManager.Cam.Init();
+        // 파티클 생성
+        GameManager.Effect.Init();
 
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;

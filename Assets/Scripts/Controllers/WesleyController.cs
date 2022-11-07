@@ -12,6 +12,8 @@ public class WesleyController : MonoBehaviour
     public GameObject WesleyPrefab;
     public GameObject[] DialogsOfWesleyPanel;
     CapsuleCollider capsuleCollider;
+    //다이얼로그 숫자 용도
+    public int _dialogCount;
 
     void Awake()
     {
@@ -20,10 +22,13 @@ public class WesleyController : MonoBehaviour
     }
 
     private void Start()
-    {
+    {       
+        // 다이얼로그 숫자 변수 초기화
+        _dialogCount = 0;
         // 모든 UI 끔
         GameManager.Ui.UISetActiveFalse();
         DialogsOfWesleyPanel[0].SetActive(true);
+        _dialogCount++;
     }
     // Update is called once per frame
     void Update()
@@ -35,18 +40,18 @@ public class WesleyController : MonoBehaviour
             if (Physics.Raycast(ray, out RayStruct, Mathf.Infinity))
             {
                 // 태그 설정은 프리팹이 아니라 프리팹 안의 woman-metalhead_Rig를 이용할 것.
-                if (RayStruct.collider.tag == "Wesley")
+                if (RayStruct.collider.tag == "Wesley" && _dialogCount == 1)
                 {
                     WesleyAnimator.SetTrigger("MeetPlayer");
-                    DialogsOfWesleyPanel[1].SetActive(true);
+                    DialogsOfWesleyPanel[_dialogCount].SetActive(true);
 
-                    // BGM 변경
-                    GameManager.Sound.BGMPlay("-kpop_release-");
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
                     capsuleCollider.enabled = false;
                     // 모든 UI 끔
                     GameManager.Ui.UISetActiveFalse();
+                    // 추가 대화를 추후 만들어야 됨
+                    // 무전기 추가 필요
                 };
             }
         }
@@ -61,5 +66,16 @@ public class WesleyController : MonoBehaviour
         capsuleCollider.enabled = true;
         // 모든 UI 킴
         GameManager.Ui.UISetActiveTrue();
+    }
+
+    // 회상씬 비디오
+    public void OpeningVideoPlay()
+    {
+        for (int i = 0; i < DialogsOfWesleyPanel.Length; i++)
+        {
+            DialogsOfWesleyPanel[i].SetActive(false);
+        }
+        capsuleCollider.enabled = true;
+        GameManager.Create.CreateUi("UI_TutorialVideo", gameObject);
     }
 }

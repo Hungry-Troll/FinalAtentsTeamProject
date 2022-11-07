@@ -9,6 +9,9 @@ public class CameraManager
     public GameObject _mainCamera;
     public GameObject _stateCamera;
     public GameObject _miniMapCamera;
+    public GameObject _uiParticleCamera;
+    public Camera _uiParticleCam;
+
     public MainCameraController _mainCameraController;
     public StateCameraController _stateCameraController;
     public MiniMapCameraController _miniMapCameraController;
@@ -39,6 +42,12 @@ public class CameraManager
         _miniMapCamera = GameObject.Instantiate<GameObject>(miniMapCamera);
         _miniMapCameraController = _miniMapCamera.AddComponent<MiniMapCameraController>();
         _miniMapCameraController.transform.SetParent(go.transform);
+
+        // UI 파티클용 카메라 불러오기
+        GameObject uiParticleCamera = GameManager.Resource.GetCamera("UIParticleCamera");
+        _uiParticleCamera = GameObject.Instantiate<GameObject>(uiParticleCamera);
+        _uiParticleCam = _uiParticleCamera.GetComponent<Camera>();
+        _uiParticleCamera.transform.SetParent(go.transform);
     }
 }
 

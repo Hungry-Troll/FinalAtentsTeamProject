@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     CreateManager _create = new CreateManager();
     ParseManager _parse = new ParseManager();
     ItemManager _item = new ItemManager();
+    EffectManagerEX _effect = new EffectManagerEX();
 
     public static ResourceManager Resource 
     { 
@@ -92,6 +93,10 @@ public class GameManager : MonoBehaviour
     public static ItemManager Item
     {
         get { return _instance._item; }
+    }
+    public static EffectManagerEX Effect
+    {
+        get { return _instance._effect; }
     }
 
     // Start is called before the first frame update

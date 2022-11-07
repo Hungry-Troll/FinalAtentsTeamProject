@@ -17,6 +17,7 @@ public class ResourceManager
     public List<Sprite> _itemImage;
     public List<AudioClip> _audioClip;
     public List<AudioMixer> _audioMixer;
+    public List<ParticleSystem> _particle;
 
     // Start is called before the first frame update
     public void Init()
@@ -32,6 +33,7 @@ public class ResourceManager
         _itemImage = new List<Sprite>();
         _audioClip = new List<AudioClip>();
         _audioMixer = new List<AudioMixer>();
+        _particle = new List<ParticleSystem>();
 
         GameObject[] player = Resources.LoadAll<GameObject>("Prefabs/Character_Prefab/");
         GameObject[] monster = Resources.LoadAll<GameObject>("Prefabs/Monster_Prefab/");
@@ -44,6 +46,7 @@ public class ResourceManager
         Sprite[] itemImage = Resources.LoadAll<Sprite>("Resource/Image/ItemImage");
         AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Resource/Sound");
         AudioMixer[] audioMixer = Resources.LoadAll<AudioMixer>("Resource/Sound");
+        ParticleSystem[] particle = Resources.LoadAll<ParticleSystem>("Resource/Particle");
 
         ListAdd(_player, player);
         ListAdd(_monster, monster);
@@ -56,6 +59,7 @@ public class ResourceManager
         ListAddImage(_itemImage, itemImage);
         ListAddAudio(_audioClip, audioClip);
         ListAddAudioMixer(_audioMixer, audioMixer);
+        ListAddParticle(_particle, particle);
     }
 
     public void ListAdd(List<GameObject> go, GameObject[] loadList)
@@ -84,6 +88,13 @@ public class ResourceManager
         foreach (AudioMixer one in loadAudioMixer)
         {
             audioMixer.Add(one);
+        }
+    }
+    public void ListAddParticle(List<ParticleSystem> audioSource, ParticleSystem[] loadParticle)
+    {
+        foreach (ParticleSystem one in loadParticle)
+        {
+            audioSource.Add(one);
         }
     }
     public GameObject GetCharacter(string playerName)
@@ -210,4 +221,15 @@ public class ResourceManager
         return null;
     }
 
+    public ParticleSystem GetParticle(string particle)
+    {
+        foreach (ParticleSystem one in _particle)
+        {
+            if (one.name.Equals(particle))
+            {
+                return one;
+            }
+        }
+        return null;
+    }
 }

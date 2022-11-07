@@ -1,8 +1,10 @@
 {
     "_Name": "1234",
     "_Job": "Superhuman",
-    "_Pet": "Triceratops",
-    "_Scene": "Village02",
-    "_Item_List": [],
-    "_Weapon": "sword1"
+    "_Pet": "Brachiosaurus",
+    "_Scene": "Tutorial",
+    "_Item_List": [
+        "sword1"
+    ],
+    "_Weapon": ""
 }
