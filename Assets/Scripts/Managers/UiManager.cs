@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -280,6 +281,32 @@ public class UiManager
         _findItemImage.sprite = _sprite;
         // 이왕 찾은 이미지를 스텟뷰에 넣어놓음 (아이템 장착용)
         _itemStatViewController._sprite = _sprite;
+
+        foreach (Define.ItemType itemType in Enum.GetValues(typeof(Define.ItemType)))
+        {
+            if (GameManager.Stat.SearchItem(SlotItem.name).Type == itemType.ToString())
+            {
+                _itemStatViewController._itemType = itemType;
+                break;
+            }
+            else
+            {
+                _itemStatViewController._itemType = Define.ItemType.None;
+            }
+        }
+        foreach (Define.ItemName itemName in Enum.GetValues(typeof(Define.ItemName)))
+        {
+            if (GameManager.Stat.SearchItem(SlotItem.name).Id == itemName.ToString())
+            {
+                _itemStatViewController._itemName = itemName;
+                break;
+            }
+            else
+            {
+                _itemStatViewController._itemName = Define.ItemName.None;
+            }
+        }
+
 
         // 스텟을 상태창에 넣어줌
         ItemStatViewStatAdd(SlotItem);

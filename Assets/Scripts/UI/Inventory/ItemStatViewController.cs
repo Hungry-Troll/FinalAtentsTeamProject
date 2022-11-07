@@ -11,8 +11,8 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
     // 아이템 이미지 전달용
     public Sprite _sprite;
     // 아이템 타입 구분용 이넘
-    Define.ItemType _itemType;
-    Define.ItemName _itemName;
+    public Define.ItemType _itemType;
+    public Define.ItemName _itemName;
 
     void Start()
     {
@@ -36,17 +36,47 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
         GameManager.Ui.ItemStatViewClose();
     }
 
-    
+
     public void WeaponEquipItem()
     {
-        
-        switch (_itemType)
-        {       //작동안함 로그만 찍어봄
 
-            case Define.ItemType.Consumables:   
-                //case Define.ItemName.potion1:
+        Debug.Log(_itemType);
+        Debug.Log(_itemName);
+
+        PlayerHpBarEX PhpEX = gameObject.GetComponent<PlayerHpBarEX>(); //
+        HpBarEX hpbarEX = gameObject.GetComponent<HpBarEX>();   //
+        Stat stat = gameObject.GetComponent<Stat>();   //
+        PlayerStat playerStat = gameObject.GetComponent<PlayerStat>();
+        PlayerStat ob = GameManager.Obj._playerStat;
+        int max = GameManager.Obj._playerStat.Max_Hp;
+
+
+        switch (_itemType)
+        {
+            case Define.ItemType.Consumables:
+
                 Debug.Log("포션클릭");
-                StartCoroutine("PotionEquipItem");
+
+                //PhpEX._currentHp += 50;
+                //Debug.Log(PhpEX._currentHp);
+
+                //TempStatEX tmp = new TempStatEX();
+                //tmp.Hp = +50;
+                //Debug.Log(tmp.Hp);
+
+                //playerStat.Hp += 50;
+                //Debug.Log(playerStat.Hp);
+
+                if(ob.Hp <= max)
+                {
+                    ob.Hp += 50;
+                    Debug.Log(ob.Hp);
+                    if(ob.Hp >= max)
+                    {
+                        ob.Hp = max;
+                    }
+                }
+
                 break;
 
             case Define.ItemType.Weapon:
@@ -59,37 +89,11 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
                 Debug.Log("방어구클릭");
                 break;
         }
-    }
 
 
-    IEnumerator PotionEquipItem()
-    {
-        Debug.Log("코루틴 전 포문");
-        for (int i = 0; i < 50; i++)
-        {
-            Debug.Log("코루틴 포문 안");
-            PlayerHpBarEX playerHP = new PlayerHpBarEX();
-            float current = playerHP._currentHp;
-            Debug.Log(current);
-            yield return new WaitForSeconds(0.1f);
-        }StopCoroutine("PotionEquipItem");
-    }  
-  
-
-    
-
-
-
-    //public void ArmourEquipItem()
-    //{
-    //    _itemType = Define.ItemType.Armour;
-    //    // 추후 아이템 스텟을 적용
-    //    GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
-    //}
-
-    public void DropItem()
+    } 
+    void DropItem()
     {
         GameManager.Ui.ItemStatViewWeaponDrop();
     }
-
 }

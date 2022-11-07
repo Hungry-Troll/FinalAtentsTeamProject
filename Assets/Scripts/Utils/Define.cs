@@ -15,6 +15,7 @@ public class Define
     }
     public enum ItemName
     {
+        None,
         sword1,
         sword2,
         sword3,
@@ -55,10 +56,11 @@ public class Define
 
     public enum ItemType
     {
+        None,
         Weapon,
         Armour,
         Consumables,
-        None,
+
     }
     public enum CreatureState
     {
