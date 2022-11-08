@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Util;
 using static Define;
+using TMPro.EditorUtilities;
 
 public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
@@ -13,10 +14,12 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
     // 아이템 타입 구분용 이넘
     public Define.ItemType _itemType;
     public Define.ItemName _itemName;
+    public Text _text;
+    
 
     void Start()
     {
-
+        
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -39,33 +42,18 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
 
     public void WeaponEquipItem()
     {
-
+        //확인용 로그
         Debug.Log(_itemType);
         Debug.Log(_itemName);
 
-        PlayerHpBarEX PhpEX = gameObject.GetComponent<PlayerHpBarEX>(); //
-        HpBarEX hpbarEX = gameObject.GetComponent<HpBarEX>();   //
-        Stat stat = gameObject.GetComponent<Stat>();   //
-        PlayerStat playerStat = gameObject.GetComponent<PlayerStat>();
         PlayerStat ob = GameManager.Obj._playerStat;
         int max = GameManager.Obj._playerStat.Max_Hp;
-
 
         switch (_itemType)
         {
             case Define.ItemType.Consumables:
 
                 Debug.Log("포션클릭");
-
-                //PhpEX._currentHp += 50;
-                //Debug.Log(PhpEX._currentHp);
-
-                //TempStatEX tmp = new TempStatEX();
-                //tmp.Hp = +50;
-                //Debug.Log(tmp.Hp);
-
-                //playerStat.Hp += 50;
-                //Debug.Log(playerStat.Hp);
 
                 if(ob.Hp <= max)
                 {
@@ -75,8 +63,7 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
                     {
                         ob.Hp = max;
                     }
-                }
-
+                 }
                 break;
 
             case Define.ItemType.Weapon:

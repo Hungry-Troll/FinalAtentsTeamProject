@@ -1505,6 +1505,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprite: {fileID: 0}
+  _itemType: 0
+  _itemName: 0
+  _text: {fileID: 0}
 --- !u!1 &5870148149145291064
 GameObject:
   m_ObjectHideFlags: 0

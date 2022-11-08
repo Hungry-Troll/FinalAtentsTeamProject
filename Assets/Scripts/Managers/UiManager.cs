@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ using static Util;
 
 public class UiManager
 {
+    public Define.ItemType _itemType;
+
     // UI Root용 변수
     public GameObject go;
 
@@ -100,6 +103,8 @@ public class UiManager
     public GameObject _targetMonster;
     public MonsterController _targetMonsterController; 
     public MonsterStat _targetMonsterStat;
+
+    
 
 
     //Ui 관리는 여기에서 처리
@@ -257,6 +262,8 @@ public class UiManager
 
     // 아이템 상태창 UI를 한개만 쓰고 이미지와 스텟은 불러오는 방식으로 구현함
     // 추후 스텟 비교 기능을 넣으면 좋음
+
+    
     public GameObject ItemStatViewOpen(GameObject SlotItem)
     {
         // 널 체크
@@ -307,7 +314,6 @@ public class UiManager
             }
         }
 
-
         // 스텟을 상태창에 넣어줌
         ItemStatViewStatAdd(SlotItem);
 
@@ -353,7 +359,7 @@ public class UiManager
                 }
                 else if(tmpStat.Type == "Consumables")
                 {
-                    _itemStatText.text = null;
+                    _itemStatText.text = "회복력";
                     _equipText.text = "사용하기";
                 }
                 // 공격력 방어력 실제 수치
@@ -466,7 +472,7 @@ public class UiManager
         }
         else if(tmpStat.Type == "Consumables")
         {
-            _equipItemStatText.text = null;
+            _equipItemStatText.text = "회복력";
             _equipEquipText.text = "사용하기";
         }
         // 공격력 방어력 실제 수치
@@ -509,11 +515,12 @@ public class UiManager
                 findTr = Util.FindChild("ArmourImage", _inventoryController.transform);
                 break;
             case ItemType.Consumables:
+
                 break;
         }
 
         // 직업에 따른 무기 장착 확인
-        if(!JobWeaponCheck())
+        if (!JobWeaponCheck())
         {
             // 추후 여기에 착용할수없습니다 UI 넣으면 됨
             return;
@@ -542,7 +549,7 @@ public class UiManager
         {
             // 인벤토리 아이템하고 이미지가 동일하면
             if(findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
-            {
+            {          
                 // 무기 장착 (인벤토리상 들고있는 무기 / 인벤토리에서 들고있음)
                 _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
                 _inventoryController._weaponStat = GameManager.Ui._inventoryController._item[i].GetComponent<ItemStatEX>();
@@ -557,13 +564,6 @@ public class UiManager
                 ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
                 // 플레이어 스크립트에 스텟 더해줌
                 GameManager.Obj._playerStat.Atk += tmpStatEx.Skill;
-
-                // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
-                GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-                GameManager.Ui._inventoryController._item.RemoveAt(i);
-                _slotImage[i].sprite = null;
-                _slotImage[i].gameObject.SetActive(false);
-
                 // 임시 저장한 무기가 널이 아니라면 (기존에 장착한 무기가 있다면)
                 if(tmpWeapon != null)
                 {
@@ -573,9 +573,14 @@ public class UiManager
                     ItemStatEX tmpStat = tmpWeapon.GetComponent<ItemStatEX>();
                     // 임시 저장한 기존 장착 아이템 스텟 계산
                     GameManager.Obj._playerStat.Atk -= tmpStat.Skill;
-                }
+                }   
+                // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
+                GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                GameManager.Ui._inventoryController._item.RemoveAt(i);
+                _slotImage[i].sprite = null;
+                _slotImage[i].gameObject.SetActive(false);
                 // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
-                InventoryStatUpdate();
+                InventoryStatUpdate();   
             }
         }
         // 아이템 상태창 닫기
