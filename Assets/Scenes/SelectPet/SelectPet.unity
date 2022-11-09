@@ -395,14 +395,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152345858}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 3.4, z: 5.36}
+  m_LocalRotation: {x: 0.99109423, y: 0.0050201747, z: 0.039118968, w: 0.12718807}
+  m_LocalPosition: {x: -0.3, y: 3.78, z: 9.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1860474328}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 165.421, y: -4.6710205, z: -1.1779785}
 --- !u!108 &152345860
 Light:
   m_ObjectHideFlags: 0
@@ -415,9 +415,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 4.43
   m_Range: 10
-  m_SpotAngle: 40
+  m_SpotAngle: 65
   m_InnerSpotAngle: 4
   m_CookieSize: 10
   m_Shadows:
@@ -1310,7 +1310,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.047169805, g: 0.046262443, b: 0.04378782, a: 1}
+  m_Color: {r: 0.7830189, g: 0.57372135, b: 0.57372135, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1401,7 +1401,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474260267}
   m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
-  m_LocalPosition: {x: -0, y: 1.52, z: 8.22}
+  m_LocalPosition: {x: -0, y: 1.85, z: 15.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1422,7 +1422,7 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
-  m_SpotAngle: 60
+  m_SpotAngle: 14
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -3817,7 +3817,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819963804}
   m_LocalRotation: {x: 0.00008118502, y: -0.9967358, z: 0.08062456, w: -0.0041784965}
-  m_LocalPosition: {x: -0.29, y: 2.07, z: 9.69}
+  m_LocalPosition: {x: -0.29, y: 2.32, z: 9.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
