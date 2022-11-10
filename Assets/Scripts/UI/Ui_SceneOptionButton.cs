@@ -8,5 +8,6 @@ public class Ui_SceneOptionButton : MonoBehaviour
     {
         // Ui는 Ui매니저에서 관리함
         GameManager.Ui.OptionOpen();
+        Time.timeScale = 0f;
     }
 }

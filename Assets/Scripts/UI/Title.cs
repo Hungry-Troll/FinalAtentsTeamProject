@@ -29,11 +29,13 @@ public class Title : MonoBehaviour
     public void OptionOn()
     {
         Option.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void OptionOff()
     {
         Option.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void Exit()
