@@ -14,6 +14,11 @@ public class WesleyController : MonoBehaviour
     CapsuleCollider capsuleCollider;
     //다이얼로그 숫자 용도
     public int _dialogCount;
+    public Text WesleyDialog0;
+    public Text WesleyDialog1;
+    string StrWesleyDialog0;
+    string StrWesleyDialog1;
+    char[] ArrOfWesleyDialog1;
 
     void Awake()
     {
@@ -22,13 +27,20 @@ public class WesleyController : MonoBehaviour
     }
 
     private void Start()
-    {       
+    {
+        WesleyDialog0.text = string.Empty;
+        WesleyDialog1.text = string.Empty;
+        StrWesleyDialog0 = "도와주세요!!!";
+        StrWesleyDialog1 = "구해주셔서 고맙습니다.";
+        char[] ArrOfWesleyDialog0 = StrWesleyDialog0.ToCharArray();
+        ArrOfWesleyDialog1 = StrWesleyDialog1.ToCharArray();
         // 다이얼로그 숫자 변수 초기화
         _dialogCount = 0;
         // 모든 UI 끔
         GameManager.Ui.UISetActiveFalse();
         DialogsOfWesleyPanel[0].SetActive(true);
         _dialogCount++;
+        StartCoroutine(WesleyDialog0Coroutine(ArrOfWesleyDialog0));
     }
     // Update is called once per frame
     void Update()
@@ -44,7 +56,7 @@ public class WesleyController : MonoBehaviour
                 {
                     WesleyAnimator.SetTrigger("MeetPlayer");
                     DialogsOfWesleyPanel[_dialogCount].SetActive(true);
-
+                    StartCoroutine(WesleyDialog1Coroutine(ArrOfWesleyDialog1));
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
                     capsuleCollider.enabled = false;
@@ -77,5 +89,23 @@ public class WesleyController : MonoBehaviour
         }
         capsuleCollider.enabled = true;
         GameManager.Create.CreateUi("UI_TutorialVideo", gameObject);
+    }
+
+    IEnumerator WesleyDialog0Coroutine(char[] _Arr)
+    {
+        for (int i = 0; i < _Arr.Length; i++)
+        {
+            WesleyDialog0.text += _Arr[i];
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    IEnumerator WesleyDialog1Coroutine(char[] _Arr)
+    {
+        for (int i = 0; i < _Arr.Length; i++)
+        {
+            WesleyDialog1.text += _Arr[i];
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
