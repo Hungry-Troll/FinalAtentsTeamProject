@@ -6048,6 +6048,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
+--- !u!114 &884359087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5955990839044124072, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
+  m_PrefabInstance: {fileID: 3538686506597392223}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &884359088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2412317241412342480, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
+  m_PrefabInstance: {fileID: 3538686506597392223}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &897347486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4204080227342600, guid: 074700f32b31a43309b09f3a7802af1d, type: 3}
@@ -10626,6 +10648,8 @@ MonoBehaviour:
   DialogOfVenicePanels:
   - {fileID: 3538686506597392225}
   - {fileID: 3538686506597392224}
+  VeniceDialog0: {fileID: 884359088}
+  VeniceDialog1: {fileID: 884359087}
 --- !u!4 &1641582122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4696600790055844, guid: ef9ce9e71f9c842deb423b67ce619bac, type: 3}
@@ -13593,6 +13617,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2412317241412342480, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3314841213862936702, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
       propertyPath: m_Text
       value: 
@@ -13708,6 +13736,10 @@ PrefabInstance:
     - target: {fileID: 5814234902268295509, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955990839044124072, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6310083680364048187, guid: 2ccbfedab51ff52448f25411ff29d6fe, type: 3}
       propertyPath: _itemImage

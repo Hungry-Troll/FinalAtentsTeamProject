@@ -102,6 +102,7 @@ public class WesleyController : MonoBehaviour
 
     IEnumerator WesleyDialog1Coroutine(char[] _Arr)
     {
+        WesleyDialog1.text = string.Empty;
         for (int i = 0; i < _Arr.Length; i++)
         {
             WesleyDialog1.text += _Arr[i];

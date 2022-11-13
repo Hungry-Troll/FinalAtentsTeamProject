@@ -14,11 +14,28 @@ public class VeniceController : MonoBehaviour
     public GameObject Shop;
     public GameObject[] DialogOfVenicePanels;
     CapsuleCollider capsuleCollider;
-    
+    public Text VeniceDialog0;
+    public Text VeniceDialog1;
+    string StrVeniceDialog0;
+    string StrVeniceDialog1;
+    char[] ArrOfStrVeniceDialog0;
+    char[] ArrOfStrVeniceDialog1;
+
+
     void Awake()
     {
         VeniceAnimator = VenicePrefab.GetComponent<Animator>();
         capsuleCollider = gameObject.GetComponentInChildren<CapsuleCollider>();
+    }
+
+    private void Start()
+    {
+        StrVeniceDialog0 = string.Empty;
+        StrVeniceDialog1 = string.Empty;
+        StrVeniceDialog0 = "안녕하세요. 무엇을 도와드릴까요?";
+        StrVeniceDialog1 = "주변에 위험한 동물이 많아요. 조심하세요.";
+        ArrOfStrVeniceDialog0 = StrVeniceDialog0.ToCharArray();
+        ArrOfStrVeniceDialog1 = StrVeniceDialog1.ToCharArray();
     }
 
     // Update is called once per frame
@@ -37,6 +54,7 @@ public class VeniceController : MonoBehaviour
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
                     DialogOfVenicePanels[0].SetActive(true);
+                    StartCoroutine(VeniceDialog0Coroutine(ArrOfStrVeniceDialog0));
                     capsuleCollider.enabled = false;
                     VeniceAnimator.SetInteger("restoreInt", 1);
                     // 모든 UI 끔
@@ -46,18 +64,40 @@ public class VeniceController : MonoBehaviour
         }
     }
 
+    IEnumerator VeniceDialog0Coroutine(char[] _Arr)
+    {
+        VeniceDialog0.text = string.Empty;
+        for (int i = 0; i < _Arr.Length; i++)
+        {            
+            VeniceDialog0.text += _Arr[i];
+            yield return new WaitForSeconds(0.2f);
+        }        
+    }
+
+    IEnumerator VeniceDialog1Coroutine(char[] _Arr)
+    {
+        VeniceDialog1.text = string.Empty;
+        for (int i = 0; i < _Arr.Length; i++)
+        {             
+            VeniceDialog1.text += _Arr[i];
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
     // 이 밑으로는 회의로 어떻게 만들 건지 결정해도 되는 부분
     public void TalkWithVenice()
     {
         DialogOfVenicePanels[0].SetActive(false);
         VeniceAnimator.SetTrigger("Talk");
         DialogOfVenicePanels[1].SetActive(true);
+        StartCoroutine(VeniceDialog1Coroutine(ArrOfStrVeniceDialog1));
         VeniceAnimator.SetInteger("restoreInt", 1);
     }
     public void BackToDialog0()
     {
         DialogOfVenicePanels[1].SetActive(false);
         DialogOfVenicePanels[0].SetActive(true);
+        StartCoroutine(VeniceDialog0Coroutine(ArrOfStrVeniceDialog0));
     }
     public void OpenShop()
     {
