@@ -83,4 +83,10 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
     {
         GameManager.Ui.ItemStatViewWeaponDrop();
     }
+
+    // Âø¿ëºÒ°¡ Ã¢ ´Ý±â
+    public void CloseCannotEquipView()
+    {
+        GameManager.Ui.CannotEquipViewClose();
+    }
 }

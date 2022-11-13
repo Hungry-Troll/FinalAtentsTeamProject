@@ -78,6 +78,10 @@ public class WesleyController : MonoBehaviour
         capsuleCollider.enabled = true;
         // 모든 UI 킴
         GameManager.Ui.UISetActiveTrue();
+        // 장소 팝업
+        GameManager.Ui.PopUpLocation("본 아일랜드");
+        // 팝업 close
+        StartCoroutine(GameManager.Ui.ClosePopUpLocation());
     }
 
     // 회상씬 비디오

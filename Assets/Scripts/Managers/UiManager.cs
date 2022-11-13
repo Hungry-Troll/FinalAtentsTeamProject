@@ -23,6 +23,10 @@ public class UiManager
     public Image _portraitImage;
     public PortraitController _portraitController;
 
+    // 장소 팝업
+    public GameObject _locationPopUp;
+    public Text _locationPopUpText;
+
     // 스킬상태창
     public SkillViewController _skillViewController;
 
@@ -95,6 +99,9 @@ public class UiManager
     // 장착 아이템 스텟창 갯수 관리용
     public bool _equipStatOpen;
 
+    // 장착 불가 창
+    public GameObject _cannotEquipView;
+
     // 상점 구매하기 취소하기 버튼
     public GameObject _buyCancel;
     public UI_BuyCancelButton _buyCancelScript;
@@ -124,6 +131,12 @@ public class UiManager
         _portraitController = _portrait.AddComponent<PortraitController>();
         // 직업에 따른 포트레이트 체크
         PortraitCheck();
+
+        // 장소 팝업 불러옴
+        _locationPopUp = GameManager.Create.CreateUi("UI_LocationPopUp", go);
+        _locationPopUpText = _locationPopUp.GetComponentInChildren<Text>();
+        // 생성하자마자 애니메이션 실행되기 때문에 active false
+        _locationPopUp.SetActive(false);
 
         // 포트레이트와 연결할 스킬창 UI 생성
         GameObject skillView = GameManager.Create.CreateUi("Ui_Skill", go);
@@ -209,6 +222,8 @@ public class UiManager
         Transform equipText = Util.FindChild("EquipText", _itemStatView.transform);
         // 버리기
         Transform dropText = Util.FindChild("DropText", _itemStatView.transform);
+        // 장착 불가 창
+        Transform cannotEquipView = Util.FindChild("CannotEquipPanel", _itemStatView.transform);
 
         _itemNameText = itemNameText.GetComponent<Text>();
         _itemStatText = itemStatText.GetComponent<Text>();
@@ -216,8 +231,10 @@ public class UiManager
         _itemIntroduce = itemIntroduce.GetComponent<Text>();
         _equipText = equipText.GetComponent<Text>();
         _dropText = dropText.GetComponent<Text>();
+        _cannotEquipView = cannotEquipView.gameObject;
 
         //SetActive(false)로 함
+        _cannotEquipView.SetActive(false);
         _itemStatView.SetActive(false);
     }
 
@@ -325,6 +342,7 @@ public class UiManager
     {
         if (_itemStatOpen == true)
         {
+            _cannotEquipView.SetActive(false);
             _itemStatView.SetActive(false);
             _itemStatOpen = false;
         }
@@ -492,6 +510,15 @@ public class UiManager
         }
     }
 
+    // 장착 불가 메세지 창 닫는 함수
+    public void CannotEquipViewClose()
+    {
+        if (_itemStatOpen == true)
+        {
+            _cannotEquipView.gameObject.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// 무기 장착 관련
     /// </summary>
@@ -523,6 +550,7 @@ public class UiManager
         if (!JobWeaponCheck())
         {
             // 추후 여기에 착용할수없습니다 UI 넣으면 됨
+            _cannotEquipView.SetActive(true);
             return;
         }
 
@@ -811,6 +839,24 @@ public class UiManager
         }
     }
 
+    // 장소 팝업 함수
+    // 매개변수 타입 추후 변경가능(Define) 
+    public void PopUpLocation(string _locationName)
+    {
+        _locationPopUpText.text = _locationName;
+        _locationPopUp.SetActive(true);
+    }
+
+    // 장소 팝업 close 함수
+    // 끄지 않아도 보이지는 않지만 다시 켤때 대비
+    public IEnumerator ClosePopUpLocation()
+    {
+        float playTime = 3.0f;
+        // 애니메이션 시간동안 멈췄다가
+        yield return new WaitForSeconds(playTime);
+        // 끝나면 active false
+        _locationPopUp.SetActive(false);
+    }
 
     public void Skill1Button()
     {
