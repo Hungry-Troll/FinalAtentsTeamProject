@@ -24,6 +24,8 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
 
     // 플레이어 장착 방어구
     public GameObject _armour = null;
+    // 플레이어 장착 방어구 스텟
+    public ItemStatEX _armourStat;
 
     private void Start()
     {

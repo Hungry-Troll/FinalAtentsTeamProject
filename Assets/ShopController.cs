@@ -43,7 +43,7 @@ public class ShopController : MonoBehaviour
 
         string tmpName = GameManager.Select._jobName;
         //int itemCount = 3;
-        GameObject[] tmpGo = new GameObject[4];
+        GameObject[] tmpGo = new GameObject[5];
         GameObject potion = GameManager.Resource.GetfieldItem("potion1");
 
         // 이름으로 게임오브젝트 찾음
@@ -55,7 +55,8 @@ public class ShopController : MonoBehaviour
                     GameObject tmp = GameManager.Resource.GetfieldItem("sword" + (i + 1));
                     tmpGo[i] = Util.Instantiate(tmp);
                 }
-                tmpGo[3] = Util.Instantiate(potion);
+                tmpGo[3] = Util.Instantiate(GameManager.Resource.GetfieldItem("armour1"));
+                tmpGo[4] = Util.Instantiate(potion);
                 break;
             case "Cyborg":
                 for (int i = 0; i < 3; i++)
@@ -63,7 +64,8 @@ public class ShopController : MonoBehaviour
                     GameObject tmp = GameManager.Resource.GetfieldItem("gun" + (i + 1));
                     tmpGo[i] = Util.Instantiate(tmp);
                 }
-                tmpGo[3] = Util.Instantiate(potion);
+                tmpGo[3] = Util.Instantiate(GameManager.Resource.GetfieldItem("armour2"));
+                tmpGo[4] = Util.Instantiate(potion);
                 break;
             case "Scientist":
                 for (int i = 0; i < 3; i++)
@@ -71,7 +73,8 @@ public class ShopController : MonoBehaviour
                     GameObject tmp = GameManager.Resource.GetfieldItem("book" + (i + 1));
                     tmpGo[i] = Util.Instantiate(tmp);
                 }
-                tmpGo[3] = Util.Instantiate(potion);
+                tmpGo[3] = Util.Instantiate(GameManager.Resource.GetfieldItem("armour3"));
+                tmpGo[4] = Util.Instantiate(potion);
                 break;
         }
 

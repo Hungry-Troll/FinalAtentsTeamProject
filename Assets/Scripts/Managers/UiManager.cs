@@ -463,15 +463,22 @@ public class UiManager
     // 장착 아이템창에 스텟 넣는 함수
     public void EquipStatViewStatAdd(GameObject gameObject)
     {
-        // 널 체크
-        if(gameObject == null)
+        if (gameObject == null)
         {
             return;
         }
 
         // 겟 컴포넌트가 많아질 것 같으면 추후 수정
         // 우선은 쉽게 아이템인벤토리 목록 게임오브젝트하고 매개변수로 가지고온 게임오브젝르 이름 비교 후 스텟을 넣어줌
-        ItemStatEX tmpStat = GameManager.Ui._inventoryController._weaponStat.GetComponent<ItemStatEX>();
+        ItemStatEX tmpStat = null;
+        if (GameManager.Ui._inventoryController._weapon == gameObject)
+        {
+            tmpStat = GameManager.Ui._inventoryController._weaponStat.GetComponent<ItemStatEX>();
+        }
+        else if (GameManager.Ui._inventoryController._armour == gameObject)
+        {
+            tmpStat = GameManager.Ui._inventoryController._armourStat.GetComponent<ItemStatEX>();
+        }
         // 아이템 이름
         _equipItemNameText.text = tmpStat.Name;
 
@@ -529,7 +536,6 @@ public class UiManager
     {
         // 장착 대상 저장용 임시 변수
         Transform findTr = null;
-
         // 장착 대상을 찾음 / 아이템은 Define enum ItemType으로 분류
         // json에도 장착 타입이 있으므로 json으로 사용할지 고민
 
@@ -542,7 +548,6 @@ public class UiManager
                 findTr = Util.FindChild("ArmourImage", _inventoryController.transform);
                 break;
             case ItemType.Consumables:
-
                 break;
         }
 
@@ -550,67 +555,116 @@ public class UiManager
         if (!JobWeaponCheck())
         {
             // 추후 여기에 착용할수없습니다 UI 넣으면 됨
-            _cannotEquipView.SetActive(true);
             return;
         }
-
         Image findImage = findTr.GetComponent<Image>();
 
         // 이미지 넣음 (_itemStatviewContlloer에서 이미지를 이미지를 들고있음)
         findImage.sprite = _itemStatViewController._sprite;
         // 이미지 활성화
         findImage.gameObject.SetActive(true);
-
         // 인벤 컨트롤러에서 아이템 이름과 이미지 아이템 이름을 비교해서 동일 이름이면 인벤 컨트롤러 Weapon 게임오브젝트에 넣음 (장착의미)
         // 인벤토리 아이템 중 찾음 이미지와 이름이 같으면 (동일 아이템)
 
-        // 임시 무기 변수
-        GameObject tmpWeapon = null;
-        // 인벤토리에서 웨폰이 널이 아니라면 (기존 무기 착용을 했다면)
-        if(_inventoryController._weapon != null)
+        if (itemType == ItemType.Weapon)
         {
-            // 기존 착용 무기를 임시 변수에 대입
-            tmpWeapon = _inventoryController._weapon;
-        }
-        // 인벤토리 아이템 숫자만큼 루프
-        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
-        {
-            // 인벤토리 아이템하고 이미지가 동일하면
-            if(findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
-            {          
-                // 무기 장착 (인벤토리상 들고있는 무기 / 인벤토리에서 들고있음)
-                _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
-                _inventoryController._weaponStat = GameManager.Ui._inventoryController._item[i].GetComponent<ItemStatEX>();
-                // 무기 위치 찾음 (플레이어가 들고있을 무기 위치)
-                //Transform findPos = GameManager.Weapon.FindWeaponPos(GameManager.Obj._playerController.transform);
-                // 찾은 위치에 무기 착용 (플레이어가 들고있을 무기) 무기 방향 버그가 있어서 아래 Temp함수로 대체
-                //GameManager.Weapon.EquipWeapon(_inventoryController._weapon.name, findPos);
-
-                // 무기 착용
-                GameManager.Weapon.TempEquipWeapon(_inventoryController._weapon.name, GameManager.Obj._playerController.transform);
-                // 넣을 무기에서 스텟 스크립트 가지고 옴
-                ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
-                // 플레이어 스크립트에 스텟 더해줌
-                GameManager.Obj._playerStat.Atk += tmpStatEx.Skill;
-                // 임시 저장한 무기가 널이 아니라면 (기존에 장착한 무기가 있다면)
-                if(tmpWeapon != null)
+            // 임시 무기 변수
+            GameObject tmpWeapon = null;
+            // 인벤토리에서 웨폰이 널이 아니라면 (기존 무기 착용을 했다면)
+            if (_inventoryController._weapon != null)
+            {
+                // 기존 착용 무기를 임시 변수에 대입
+                tmpWeapon = _inventoryController._weapon;
+            }
+            // 인벤토리 아이템 숫자만큼 루프
+            for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+            {
+                // 인벤토리 아이템하고 이미지가 동일하면
+                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
                 {
-                    // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
-                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpWeapon);
-                    GameManager.Ui._inventoryController._item.Add(tmpWeapon);
-                    ItemStatEX tmpStat = tmpWeapon.GetComponent<ItemStatEX>();
-                    // 임시 저장한 기존 장착 아이템 스텟 계산
-                    GameManager.Obj._playerStat.Atk -= tmpStat.Skill;
-                }   
-                // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
-                GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-                GameManager.Ui._inventoryController._item.RemoveAt(i);
-                _slotImage[i].sprite = null;
-                _slotImage[i].gameObject.SetActive(false);
-                // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
-                InventoryStatUpdate();   
+                    // 무기 장착 (인벤토리상 들고있는 무기 / 인벤토리에서 들고있음)
+                    _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
+                    _inventoryController._weaponStat = GameManager.Ui._inventoryController._item[i].GetComponent<ItemStatEX>();
+                    // 무기 위치 찾음 (플레이어가 들고있을 무기 위치)
+                    //Transform findPos = GameManager.Weapon.FindWeaponPos(GameManager.Obj._playerController.transform);
+                    // 찾은 위치에 무기 착용 (플레이어가 들고있을 무기) 무기 방향 버그가 있어서 아래 Temp함수로 대체
+                    //GameManager.Weapon.EquipWeapon(_inventoryController._weapon.name, findPos);
+
+                    // 무기 착용
+                    GameManager.Weapon.TempEquipWeapon(_inventoryController._weapon.name, GameManager.Obj._playerController.transform);
+                    // 넣을 무기에서 스텟 스크립트 가지고 옴
+                    ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
+                    // 플레이어 스크립트에 스텟 더해줌
+                    GameManager.Obj._playerStat.Atk += tmpStatEx.Skill;
+
+                    // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                    GameManager.Ui._inventoryController._item.RemoveAt(i);
+                    _slotImage[i].sprite = null;
+                    _slotImage[i].gameObject.SetActive(false);
+
+                    // 임시 저장한 무기가 널이 아니라면 (기존에 장착한 무기가 있다면)
+                    if (tmpWeapon != null)
+                    {
+                        // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
+                        GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpWeapon);
+                        GameManager.Ui._inventoryController._item.Add(tmpWeapon);
+                        ItemStatEX tmpStat = tmpWeapon.GetComponent<ItemStatEX>();
+                        // 임시 저장한 기존 장착 아이템 스텟 계산
+                        GameManager.Obj._playerStat.Atk -= tmpStat.Skill;
+                    }
+                    // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+                    InventoryStatUpdate();
+                }
             }
         }
+        if (itemType == ItemType.Armour)
+        {
+            // 임시 방어구 변수
+            GameObject tmpArmour = null;
+            // 인벤토리에서 아머가 널이 아니라면 (기존 무기 착용을 했다면)
+            if (_inventoryController._armour != null)
+            {
+                // 기존 착용 방어구를 임시 변수에 대입
+                tmpArmour = _inventoryController._armour;
+            }
+            // 인벤토리 아이템 숫자만큼 루프
+            for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+            {
+                // 인벤토리 아이템하고 이미지가 동일하면
+                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
+                {
+                    // 방어구 장착 (인벤토리상 들고있는 방어구 / 인벤토리에서 들고있음)
+                    _inventoryController._armour = GameManager.Ui._inventoryController._item[i];
+                    _inventoryController._armourStat = GameManager.Ui._inventoryController._item[i].GetComponent<ItemStatEX>();
+
+                    // 넣을 방어구에서 스텟 스크립트 가지고 옴
+                    ItemStatEX tmpStatEx = _inventoryController._armour.GetComponent<ItemStatEX>();
+                    // 플레이어 스크립트에 스텟 더해줌
+                    GameManager.Obj._playerStat.Def += tmpStatEx.Skill;
+
+                    // 인벤에서 방어구 제거 >> 게임오브젝트 제거, 이미지 제거 
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                    GameManager.Ui._inventoryController._item.RemoveAt(i);
+                    _slotImage[i].sprite = null;
+                    _slotImage[i].gameObject.SetActive(false);
+
+                    // 임시 저장한 무기가 널이 아니라면 (기존에 장착한 무기가 있다면)
+                    if (tmpArmour != null)
+                    {
+                        // 임시 저장한 기존 장착 아이템 인벤토리로 넣음
+                        GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(tmpArmour);
+                        GameManager.Ui._inventoryController._item.Add(tmpArmour);
+                        ItemStatEX tmpStat = tmpArmour.GetComponent<ItemStatEX>();
+                        // 임시 저장한 기존 장착 아이템 스텟 계산
+                        GameManager.Obj._playerStat.Atk -= tmpStat.Skill;
+                    }
+                    // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+                    InventoryStatUpdate();
+                }
+            }
+        }
+
         // 아이템 상태창 닫기
         ItemStatViewClose();
         // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
@@ -692,28 +746,31 @@ public class UiManager
         List<string> temp = new List<string>();
 
         // 직접 대입하는것은 좋은 코드 아님
-        switch(job)
+        switch (job)
         {
             case Define.Job.Superhuman:
                 temp.Add("sword1");
                 temp.Add("sword2");
                 temp.Add("sword3");
+                temp.Add("armour1");
                 break;
             case Define.Job.Cyborg:
                 temp.Add("gun1");
                 temp.Add("gun2");
                 temp.Add("gun3");
+                temp.Add("armour2");
                 break;
             case Define.Job.Scientist:
                 temp.Add("book1");
                 temp.Add("book2");
                 temp.Add("book3");
+                temp.Add("armour3");
                 break;
         }
         // 비교해서 들고있는 이미지와 직업별 아이템이 같으면 true
         foreach (var one in temp)
         {
-            if(one.Equals(ImageName))
+            if (one.Equals(ImageName))
             {
                 return true;
             }
@@ -874,6 +931,6 @@ public class UiManager
 
     public void RollingButton()
     {
-
+        GameManager.Obj._playerController.KeyboardMove(true);
     }
 }

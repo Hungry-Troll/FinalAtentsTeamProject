@@ -22,12 +22,22 @@ public class EquipSlotController : MonoBehaviour
         
     }
 
-    public void OnButtonClick()
+    public void OnButtonClick(string type)
     {
         // 아이템 타입에 따라서 추후 나눠야됨 우선 무기만
-        if (GameManager.Ui._inventoryController._weapon != null)
+        if (type == "Weapon")
         {
-            GameManager.Ui.EquipStatViewOpen(GameManager.Ui._inventoryController._weapon);
-        } 
+            if (GameManager.Ui._inventoryController._weapon != null)
+            {
+                GameManager.Ui.EquipStatViewOpen(GameManager.Ui._inventoryController._weapon);
+            }
+        }
+        else if (type == "Armour")
+        {
+            if (GameManager.Ui._inventoryController._armour != null)
+            {
+                GameManager.Ui.EquipStatViewOpen(GameManager.Ui._inventoryController._armour);
+            }
+        }
     }
 }

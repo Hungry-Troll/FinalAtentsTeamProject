@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public CreatureState _creatureState;
     public Animator _anim;
     public PlayerStat _playerStat;
+    bool KeyboardInputOnOff;
 
     Coroutine _coAttack;
 
@@ -31,13 +32,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        switch(_creatureState)
+        KeyboardInput();
+        switch (_creatureState)
         {
             case CreatureState.Idle:
                 Idle();
                 break;
             case CreatureState.Move:
                 Move();
+                break;
+            case CreatureState.KeyboardMove:
+                KeyboardMove(false);
                 break;
             case CreatureState.AutoMove:
                 AutoMove();
@@ -46,6 +51,9 @@ public class PlayerController : MonoBehaviour
                 Attack();
                 break;
             case CreatureState.Dead:
+                Dead();
+                break;
+            case CreatureState.Roll:
                 Dead();
                 break;
             case CreatureState.None:
@@ -64,6 +72,9 @@ public class PlayerController : MonoBehaviour
             case CreatureState.Move:
                 _anim.SetInteger("playerStat", 1);
                 break;
+            case CreatureState.KeyboardMove:
+                _anim.SetInteger("playerStat", 1);
+                break;
             case CreatureState.AutoMove:
                 _anim.SetInteger("playerStat", 1);
                 break;
@@ -72,6 +83,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case CreatureState.Dead:
                 _anim.SetInteger("playerStat", 3);
+                break;
+            case CreatureState.Roll:
+                Dead();
                 break;
             case CreatureState.None:
                 break;
@@ -112,7 +126,59 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(tempDir.normalized);
         }
     }
+    public void KeyboardInput()
+    {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ||
+            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            _creatureState = CreatureState.KeyboardMove;
+            KeyboardInputOnOff = true;
+        }
+        else
+        {
+            KeyboardInputOnOff = false;
+        }
+    }
+    public void KeyboardMove(bool rollSkill)
+    {
+        float x = 0f;
+        float y = 0f;
+        if (Input.GetKey(KeyCode.W))
+        {
+            y += 1f;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            y -= 1f;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            x -= 1f;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            x += 1f;
+        }
+        Vector3 tempVector = new Vector3(x, 0, y);
+        tempVector = tempVector * Time.deltaTime * _moveSpeed;
+        transform.position += tempVector;
 
+        Vector3 tempDir = new Vector3(x, 0, y);
+        tempDir = Vector3.RotateTowards(transform.forward, tempDir, Time.deltaTime * _moveSpeed, 0);
+        transform.rotation = Quaternion.LookRotation(tempDir.normalized);
+        if (tempVector == Vector3.zero)
+        {
+            _creatureState = CreatureState.Idle;
+        }
+        if (rollSkill == true)
+        {
+
+        }
+    }
+    public void Roll()
+    {
+
+    }
     private void AutoMove()
     {
         // °Å¸®

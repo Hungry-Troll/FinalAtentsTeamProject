@@ -70,7 +70,6 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
                 GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
                 Debug.Log("무기클릭");
                 break;
-
             case Define.ItemType.Armour:
                 GameManager.Ui.ItemStatViewWeaponEquip(_itemType);
                 Debug.Log("방어구클릭");
