@@ -47,7 +47,7 @@ public class UiDesign3 : MonoBehaviour
             pickNumber = 1;
             jobName.text = "강화인간";
             jobInformation.text = "근접전투 스타일에 밸런스형이 특징";
-            characterGeneration("viking_Rig");
+            characterGeneration("SuperhumanCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
             wSkill.text = "설명";
             //SkillInfo.sprite = wSkill;
@@ -61,7 +61,7 @@ public class UiDesign3 : MonoBehaviour
             pickNumber = 2;
             jobName.text = "사이보그";
             jobInformation.text = "원거리전투 스타일에 폭발적인 데미지가 특징";
-            characterGeneration("soldier_Rig");
+            characterGeneration("CyborgCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
             aSkill.text = "설명";
             //SkillInfo.sprite = aSkill;
@@ -75,7 +75,7 @@ public class UiDesign3 : MonoBehaviour
             pickNumber = 3;
             jobName.text = "과학자";
             jobInformation.text = "원거리전투 스타일에 전략형이 특징";
-            characterGeneration("doctor_Rig");
+            characterGeneration("ScientistCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
             //SkillInfo.sprite = sSkill;
             sSkill.text = "설명";
@@ -95,7 +95,7 @@ public class UiDesign3 : MonoBehaviour
         {
             Destroy(playerObject);
         }
-        job = Resources.Load<GameObject>("Ju Yongseon/Character_Prefab/man-" + _name);
+        job = Resources.Load<GameObject>("Prefabs/Character_Prefab/" + _name);
         playerObject = GameObject.Instantiate<GameObject>(job);
         playerObject.transform.position = new Vector3(0, 0, 0);
         playerObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
