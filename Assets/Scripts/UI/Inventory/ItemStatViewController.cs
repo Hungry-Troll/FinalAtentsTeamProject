@@ -15,7 +15,6 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
     public Define.ItemType _itemType;
     public Define.ItemName _itemName;
     public Text _text;
-    
 
     void Start()
     {
@@ -63,7 +62,8 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
                     {
                         ob.Hp = max;
                     }
-                 }
+                    GameManager.Ui.ItemStatViewWeaponDrop();
+                }
                 break;
 
             case Define.ItemType.Weapon:
