@@ -41,12 +41,16 @@ public class MonsterControllerTest : MonoBehaviour
 
     //HpBar 프리팹 생성
     public GameObject _hpBarPrefab;
-    //몬스터 위에 HpBar 프리팹이 생성될 위치 -> 62번째 코드
+    //몬스터 위에 HpBar 프리팹이 생성될 위치
     Vector3 _hpBarOffset;
     //Canvas
     private Canvas _uiCanvas;
     //HpBar 이미지 사용
     private Image _hpBarImage;
+
+    //Damage 프리팹 생성 위치
+    public Vector3 _damageTextOffset;
+    public GameObject hudDamageText;
 
     public int _mobNum
     {
@@ -65,6 +69,10 @@ public class MonsterControllerTest : MonoBehaviour
         _hpBarOffset = new Vector3(0, 6f, 0);
         //Resources 폴더 안에 있는 HpBar 프리팹 불러오기
         _hpBarPrefab = Resources.Load<GameObject>("HpBar");
+        //몬쉬터 위 DamageText 위치
+        _damageTextOffset = new Vector3(0, 8f, 0);
+        //Resources 폴더 안에 있는 HpBar 프리팹 불러오기
+        hudDamageText = Resources.Load<GameObject>("DamageText");
         _distance = 15.0f;
         _rotateSpeed = 90f;
         _attack = 3.0f;
@@ -360,5 +368,14 @@ public class MonsterControllerTest : MonoBehaviour
         var _HpBar = _hpbar.GetComponent<HpBar>();
         _HpBar._mobPos = this.gameObject.transform;
         _HpBar.offset = _hpBarOffset;
+    }
+    public void TakeDamage(int damage)
+    {
+        _uiCanvas = GameObject.Find("Ui Canvas").GetComponent<Canvas>();
+        GameObject hudText = Instantiate<GameObject>(hudDamageText, _uiCanvas.transform); // 생성할 텍스트 오브젝트
+        hudText.GetComponent<DamageText>().damage = damage; // 데미지 전달
+        var _DamageText = hudText.GetComponent<DamageText>();
+        _DamageText._mobPos = this.gameObject.transform;
+        _DamageText.offset = _damageTextOffset;
     }
 }
