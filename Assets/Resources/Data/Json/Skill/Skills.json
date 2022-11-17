@@ -1,0 +1,63 @@
+{
+    "_Id": "Skill1",
+    "_SkillName": "집중공격",
+    "_SkillContent": "순간적으로 10번 찌르는 공격을 합니다.",
+    "_SkillEffect": "1번 공격 20%,(총 공격력 200%)",
+    "_SkillAtk": 200
+}
+{
+    "_Id": "Skill2",
+    "_SkillName": "소용돌이",
+    "_SkillContent": "회전하면서 상대를 공격합니다.",
+    "_SkillEffect": "3초 지속 (초당 공격력 100%) (총 300%)",
+    "_SkillAtk": 300
+}
+{
+    "_Id": "Skill3",
+    "_SkillName": "강화약물",
+    "_SkillContent": "강화 혈청을 이용해서 짧은 순간 몸집이 커진다.",
+    "_SkillEffect": "HP + 100, 공격력 +20, 지속시간 10초",
+    "_SkillAtk": 20
+}
+{
+    "_Id": "Skill4",
+    "_SkillName": "화염방사",
+    "_SkillContent": "강한 불을 내뿜어 적을 공격하고, 100% 확률로 화상 상태를 부여합니다.",
+    "_SkillEffect": "공격력 200%",
+    "_SkillAtk": 200
+}
+{
+    "_Id": "Skill5",
+    "_SkillName": "유탄발사",
+    "_SkillContent": "유탄으로 적을 공격한다.",
+    "_SkillEffect": "공격력 200%",
+    "_SkillAtk": 200
+}
+{
+    "_Id": "Skill6",
+    "_SkillName": "공중폭격",
+    "_SkillContent": "적에게 공중폭격을 내린다.",
+    "_SkillEffect": "공격력 300%",
+    "_SkillAtk": 300
+}
+{
+    "_Id": "Skill7",
+    "_SkillName": "독구름",
+    "_SkillContent": "독구름을 만들어서 적을 공격합니다.",
+    "_SkillEffect": "중독 : (초당 체력이 20씩 감소한다,지속시간 10초)",
+    "_SkillAtk": 20
+}
+{
+    "_Id": "Skill8",
+    "_SkillName": "익스플로전",
+    "_SkillContent": "황산을 투척해 거대한 폭발을 일으킨다, 독 구름과 연계해 더 큰 폭발을 일으킬 수 있다.",
+    "_SkillEffect": "초능력 200% (독구름 연계시 초능력 400%)",
+    "_SkillAtk": 200
+}
+{
+    "_Id": "Skill9",
+    "_SkillName": "번개",
+    "_SkillContent": "번개를 내뿜어 적을 공격한다.",
+    "_SkillEffect": "초능력 300%",
+    "_SkillAtk": 300
+}

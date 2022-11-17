@@ -57,6 +57,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Select.Init();
         // 스텟 매니저에서 스텟 데이터 불러옴
         GameManager.Stat.Init();
+        // 스킬 매니저에서 스킬 데이터 불러옴
+        GameManager.Skill.Init();
         // 카메라 생성
         GameManager.Cam.Init();
         // 파티클 생성
@@ -111,6 +113,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Select.Init();
         // 스텟 매니저에서 스텟 데이터 불러옴
         GameManager.Stat.Init();
+        // 스킬 매니저에서 스킬 데이터 불러옴
+        GameManager.Skill.Init();
         // 카메라 생성
         GameManager.Cam.Init();
         // 파티클 생성

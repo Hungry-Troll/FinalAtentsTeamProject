@@ -123,7 +123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7660537872284423036}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ui_SceneAttackButton, Assembly-CSharp
         m_MethodName: RollingButton
         m_Mode: 1
@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 6253118355307010068}
   - component: {fileID: 6677629177685223981}
   - component: {fileID: 4594372800861819253}
+  - component: {fileID: 4312445991860332466}
   m_Layer: 5
   m_Name: Ui_Skill1_Button
   m_TagString: Untagged
@@ -258,6 +259,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4312445991860332466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993258298700242387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1540d0aa3612cdd40a0601f90e2116bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiImage: {fileID: 3649576111426567842}
+  _rcTransfrom: {fileID: 1500629355822615481}
+  _skillText: {fileID: 7399556202478706171}
 --- !u!1 &3351726425724864283
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +366,7 @@ GameObject:
   - component: {fileID: 8227377778600400972}
   - component: {fileID: 8550200133399595733}
   - component: {fileID: 2584775760683646410}
-  - component: {fileID: 7660537872284423036}
+  - component: {fileID: 3813654247994746962}
   m_Layer: 5
   m_Name: Ui_Scene_Button
   m_TagString: Untagged
@@ -445,7 +461,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7660537872284423036
+--- !u!114 &3813654247994746962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,9 +470,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4023194248478055005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6cb32ed59d54e4ab90c9d0c1a4888e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7982025ee3b3dc74cb886dcf53e85b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillSlots: []
 --- !u!1 &4041131648186222246
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4661297661189841285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -516,7 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.15686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -630,7 +647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3188897329100373842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -672,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.15686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -942,7 +959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3066362959109620245
 RectTransform:
   m_ObjectHideFlags: 0
@@ -984,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.15686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1013,6 +1030,7 @@ GameObject:
   - component: {fileID: 6164519604468234255}
   - component: {fileID: 1655333691963050220}
   - component: {fileID: 1560755580469077389}
+  - component: {fileID: 5579390884831517689}
   m_Layer: 5
   m_Name: Ui_Skill2_Button
   m_TagString: Untagged
@@ -1124,6 +1142,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5579390884831517689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639750764644705761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1540d0aa3612cdd40a0601f90e2116bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiImage: {fileID: 5155905182149585957}
+  _rcTransfrom: {fileID: 5870595868763241694}
+  _skillText: {fileID: 1089499160234716418}
 --- !u!1 &8104460342526455191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,6 +1366,7 @@ GameObject:
   - component: {fileID: 8711692949505234154}
   - component: {fileID: 5575185104805506929}
   - component: {fileID: 7631692404147510916}
+  - component: {fileID: 6598633481870637854}
   m_Layer: 5
   m_Name: Ui_Skill3_Button
   m_TagString: Untagged
@@ -1444,6 +1478,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6598633481870637854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8327097490479365805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1540d0aa3612cdd40a0601f90e2116bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiImage: {fileID: 369609332795486202}
+  _rcTransfrom: {fileID: 5088113259302951991}
+  _skillText: {fileID: 2088275114432762819}
 --- !u!1 &8699466708921624065
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1616,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7660537872284423036}
+      - m_Target: {fileID: 3813654247994746962}
         m_TargetAssemblyTypeName: Ui_SceneAttackButton, Assembly-CSharp
         m_MethodName: AttackButton
         m_Mode: 1

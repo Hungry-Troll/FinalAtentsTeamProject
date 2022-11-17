@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     ParseManager _parse = new ParseManager();
     ItemManager _item = new ItemManager();
     EffectManagerEX _effect = new EffectManagerEX();
+    SkillManager _skill = new SkillManager();
 
     public static ResourceManager Resource 
     { 
@@ -98,6 +99,11 @@ public class GameManager : MonoBehaviour
     {
         get { return _instance._effect; }
     }
+    public static SkillManager Skill
+    {
+        get { return _instance._skill; }
+    }
+
 
     // Start is called before the first frame update
     private void Awake()
