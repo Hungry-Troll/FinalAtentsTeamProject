@@ -24,15 +24,6 @@ public class ParseManager
     // 세이브 파일, 하나라 리스트 아님
     public PlayData _save = new PlayData();
 
-    public void Start()
-    {
-
-    }
-
-    public void Update()
-    {
-        
-    }
 
     // Data json 파일 로드해서 각 리스트로 넘겨주는 함수
     public void LoadJson()
@@ -159,6 +150,7 @@ public class ParseManager
             data.Info = dataList[i]["_Info"].ToString();
             data.Get_Price = int.Parse(dataList[i]["_Get_Price"].ToString());
             data.Sale_Price = int.Parse(dataList[i]["_Sale_Price"].ToString());
+            data.Count = int.Parse((dataList[i]["_Count"]).ToString());
 
             // 리스트에 원소 추가
             _itemList.Add(data);
@@ -278,6 +270,7 @@ public class ParseManager
                 itemStatEX.Info = one.Info;
                 itemStatEX.Get_Price = one.Get_Price;
                 itemStatEX.Sale_Price = one.Sale_Price;
+                itemStatEX.Count = one.Count;
 
                 // 다 넣었으면 탈출
                 break;

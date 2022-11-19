@@ -34,6 +34,10 @@ public class ItemStatEX : MonoBehaviour
     [SerializeField]
     private int _Sale_Price;
 
+    // 보유 개수
+    [SerializeField]
+    private int _Count;
+
     public string Id
     {
         get { return _Id; }
@@ -74,5 +78,11 @@ public class ItemStatEX : MonoBehaviour
     {
         get { return _Sale_Price; }
         set { _Sale_Price = value; }
+    }
+
+    public int Count
+    {
+        get { return _Count; }
+        set { _Count = value; }
     }
 }

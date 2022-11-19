@@ -555,6 +555,7 @@ public class UiManager
         if (!JobWeaponCheck())
         {
             // 추후 여기에 착용할수없습니다 UI 넣으면 됨
+	_cannotEquipView.SetActive(true);
             return;
         }
         Image findImage = findTr.GetComponent<Image>();
