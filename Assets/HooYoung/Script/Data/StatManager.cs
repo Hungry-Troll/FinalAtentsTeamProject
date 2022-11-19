@@ -232,6 +232,7 @@ public class StatManager
         itemStatEX.Info = tempStat.Info;
         itemStatEX.Get_Price = tempStat.Get_Price;
         itemStatEX.Sale_Price = tempStat.Sale_Price;
+        itemStatEX.Count = tempStat.Count;
     }
 
     // 아이템 로드
