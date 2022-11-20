@@ -140,20 +140,20 @@ public class PetController : MonoBehaviour
         }
 
         // 플레이어와 거리가 5이하이고 몬스터와 거리가 3이상이면 적에게 움직임
-        if(GameManager.Obj._targetMonster != null && mondis > 3f && distance < 5)
+        if(GameManager.Obj._targetMonster != null && mondis > 3f && distance < 5f)
         {
             // 대기
             _creatureState = CreatureState.Move;
         }
 
         // 몬스터와 거리가 2.5이하면 공격
-        if(GameManager.Obj._targetMonster != null && mondis <= 2.5f)
+        if(GameManager.Obj._targetMonster != null && mondis <= 6.0f)
         {
             // 공격
             _creatureState = CreatureState.Attack;
         }
-        // 몬스터가 없고 플레이어와 거리가 5이하이면 대기
-        else if (distance < 5f)
+        // 몬스터가 없고 플레이어와 거리가 3이하이면 대기
+        else if (/*GameManager.Obj._targetMonster != null &&*/ distance < 3f)
         {
             _creatureState = CreatureState.Idle;
         }
