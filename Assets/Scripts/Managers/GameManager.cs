@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     ItemManager _item = new ItemManager();
     EffectManagerEX _effect = new EffectManagerEX();
     SkillManager _skill = new SkillManager();
+    // 시네머신 컨트롤러 추가
+    CMController _cine = new CMController();
 
     public static ResourceManager Resource 
     { 
@@ -102,6 +104,12 @@ public class GameManager : MonoBehaviour
     public static SkillManager Skill
     {
         get { return _instance._skill; }
+    }
+    //시네머신 컨트롤러
+    public static CMController Cine
+    {
+        get { return _instance._cine; }
+
     }
 
 

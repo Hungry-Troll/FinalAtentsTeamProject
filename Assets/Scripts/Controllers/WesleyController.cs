@@ -62,8 +62,10 @@ public class WesleyController : MonoBehaviour
                     capsuleCollider.enabled = false;
                     // 모든 UI 끔
                     GameManager.Ui.UISetActiveFalse();
-                    // 추가 대화를 추후 만들어야 됨
+                    // 추가 대화를 추후 만들어야 됨1
                     // 무전기 추가 필요
+
+                    GameManager.Cine.vCam2.gameObject.SetActive(true);
                 };
             }
         }
@@ -82,6 +84,8 @@ public class WesleyController : MonoBehaviour
         GameManager.Ui.PopUpLocation("본 아일랜드");
         // 팝업 close
         StartCoroutine(GameManager.Ui.ClosePopUpLocation());
+
+        GameManager.Cine.vCam2.gameObject.SetActive(false);
     }
 
     // 회상씬 비디오

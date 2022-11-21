@@ -66,7 +66,7 @@ public class PetController : MonoBehaviour
         _petStat = GetComponent<PetStat>();
 
         // 공격을 위한 딜레이
-        _attackDelay = 2.0f;
+        _attackDelay = 1.0f;
 
         _creatureState = CreatureState.Idle;
 
@@ -140,16 +140,17 @@ public class PetController : MonoBehaviour
         }
 
         // 플레이어와 거리가 5이하이고 몬스터와 거리가 3이상이면 적에게 움직임
-        if(GameManager.Obj._targetMonster != null && mondis > 3f && distance < 5f)
+        if(GameManager.Obj._targetMonster != null && mondis > 3f && distance < 6f)
         {
             // 대기
             _creatureState = CreatureState.Move;
         }
 
         // 몬스터와 거리가 2.5이하면 공격
-        if(GameManager.Obj._targetMonster != null && mondis <= 6.0f)
+        if(GameManager.Obj._targetMonster != null && mondis <= 10.0f)
         {
             // 공격
+            transform.LookAt(GameManager.Obj._targetMonster.transform);
             _creatureState = CreatureState.Attack;
         }
         // 몬스터가 없고 플레이어와 거리가 3이하이면 대기

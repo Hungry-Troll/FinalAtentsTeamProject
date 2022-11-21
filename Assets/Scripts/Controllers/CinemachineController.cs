@@ -13,6 +13,10 @@ public class CinemachineController : MonoBehaviour
         // 1. vCam1에다가 추적할 사용자를 지정해줘야 된다.
         //GameManager.Select._job;
 
+        vCam1 = GameManager.Cam._Vcam1;
+        vCam2 = GameManager.Cam._Vcam2;
+
+
         _player = GameObject.FindWithTag("Player");
 
         vCam1.Follow = _player.transform;

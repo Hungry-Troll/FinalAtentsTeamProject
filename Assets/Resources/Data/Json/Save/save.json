@@ -1,15 +1,15 @@
 {
     "_Name": "",
     "_Job": "Superhuman",
-    "_Pet": "Triceratops",
+    "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
     "_Item_List": [
         "sword1",
-        "sword3",
-        "potion1",
+        "gun3",
+        "gun1",
         "sword1",
-        "sword3",
-        "potion1"
+        "gun3",
+        "gun1"
     ],
-    "_Weapon": ""
+    "_Weapon": "sword3"
 }
