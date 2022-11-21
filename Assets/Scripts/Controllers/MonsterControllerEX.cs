@@ -290,6 +290,12 @@ public class MonsterControllerEX : MonoBehaviour
     {
         // 대미지 계산
         _monsterStat.Hp -= playerAtk - _monsterStat.Def;
+        // 대미지 텍스트 생성
+        GameObject tmp = GameManager.Create.CreateUi("UI_DamageText", gameObject);
+        tmp.transform.SetParent(this.gameObject.transform);
+        DamageTextEX damageText = tmp.GetComponent<DamageTextEX>();
+        damageText._damage = playerAtk;
+
         if (_monsterStat.Hp <= 0)
         {
             //MonsterManager를 게임매니저에 연결해서 사용. MonsterManager >> GameManager.Mob

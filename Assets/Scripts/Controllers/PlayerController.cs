@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour
     public PlayerStat _playerStat;
     bool KeyboardInputOnOff;
 
+    // 공격용 코루틴
     Coroutine _coAttack;
 
     // 공격속도 코루틴 대입용 
     float _attackDelay;
+
+    // 공격 이펙트용
+    TrailRenderer _swordEffect;
 
     // Start is called before the first frame update
     private void Start()
@@ -27,6 +31,9 @@ public class PlayerController : MonoBehaviour
         _autoMoveSpeed = _moveSpeed + 2.0f;
         _playerStat = GetComponent<PlayerStat>();
         _attackDelay = 1.0f;
+        // 공격이펙트 연결
+        Transform tmp = Util.FindChild("SwordEffect", transform);
+        _swordEffect = tmp.GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -226,7 +233,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 공격 딜레이 계산
+    // 공격 딜레이 계산 (애니메이션 딜레이만)
     IEnumerator CoAttackDelay(float _delay)
     {
         // 딜레이
@@ -235,16 +242,59 @@ public class PlayerController : MonoBehaviour
         // GameManager.Ui._targetMonsterStat.Hp -= _playerStat.Atk - GameManager.Ui._targetMonsterStat.Def;
         // 대미지 계산은 몬스터스크립트에서 처리 >> 플레이어 공격력만 넘겨줌
         // 널체크
-        if(GameManager.Obj._targetMonster == null)
+        if (GameManager.Obj._targetMonster == null)
         {
             yield break;
         }
+        // 코루틴 초기화
+        _coAttack = null;
+    }
+
+    // 공격 대미지 계산 + 사운드는 애니메이션 클립 Attack에서 이벤트로 처리
+    public void AttackEvent()
+    {
         // 대미지 계산
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk);
         // 사운드 추가
         GameManager.Sound.SFXPlay("Punch1");
-        // 코루틴 초기화
-        _coAttack = null;
+    }
+
+    // 기본공격 이펙트 애니메이션 클립 Attack에서 이벤트로 처리
+    public void SwordEffectOn()
+    {
+        _swordEffect.enabled = true;
+    }
+    public void SwordEffectOff()
+    {
+        _swordEffect.enabled = false;
+    }
+
+    public void Skill2()
+    {
+        // 타겟 널 판정
+        if (GameManager.Obj._targetMonster == null)
+        {
+            _creatureState = CreatureState.Idle;
+            return;
+        }
+
+        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
+        {
+            // 회전
+            Vector3 tempDir = GameManager.Obj._targetMonster.transform.position - transform.position;
+            tempDir = Vector3.RotateTowards(transform.forward, tempDir.normalized, Time.deltaTime * _moveSpeed, 0);
+            transform.rotation = Quaternion.LookRotation(tempDir.normalized);
+            // 코루틴을 이용한 공격딜레이 (대미지 계산)
+            if (_coAttack == null)
+            {
+                _coAttack = StartCoroutine(CoAttackDelay(_attackDelay));
+            }
+        }
+        // 공격 중 이동
+        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
+        {
+            _creatureState = CreatureState.Move;
+        }
     }
 
     private void Dead()
