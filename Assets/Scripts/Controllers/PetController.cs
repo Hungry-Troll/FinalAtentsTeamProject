@@ -153,7 +153,7 @@ public class PetController : MonoBehaviour
             _creatureState = CreatureState.Attack;
         }
         // 몬스터가 없고 플레이어와 거리가 3이하이면 대기
-        else if (/*GameManager.Obj._targetMonster != null &&*/ distance < 3f)
+        else if (distance < 3f)
         {
             _creatureState = CreatureState.Idle;
         }
