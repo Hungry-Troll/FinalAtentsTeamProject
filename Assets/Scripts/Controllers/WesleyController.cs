@@ -56,6 +56,7 @@ public class WesleyController : MonoBehaviour
                 {
                     WesleyAnimator.SetTrigger("MeetPlayer");
                     DialogsOfWesleyPanel[_dialogCount].SetActive(true);
+                    GameManager.Cine.vCam2.gameObject.SetActive(true);
                     StartCoroutine(WesleyDialog1Coroutine(ArrOfWesleyDialog1));
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
@@ -64,9 +65,8 @@ public class WesleyController : MonoBehaviour
                     GameManager.Ui.UISetActiveFalse();
                     // 추가 대화를 추후 만들어야 됨1
                     // 무전기 추가 필요
-
-                    GameManager.Cine.vCam2.gameObject.SetActive(true);
-                };
+                    //GameManager.Cine.vCam2.gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -85,7 +85,7 @@ public class WesleyController : MonoBehaviour
         // 팝업 close
         StartCoroutine(GameManager.Ui.ClosePopUpLocation());
 
-        GameManager.Cine.vCam2.gameObject.SetActive(false);
+        //GameManager.Cine.vCam2.gameObject.SetActive(false);
     }
 
     // 회상씬 비디오
@@ -111,10 +111,12 @@ public class WesleyController : MonoBehaviour
     IEnumerator WesleyDialog1Coroutine(char[] _Arr)
     {
         WesleyDialog1.text = string.Empty;
+        //GameManager.Cine.vCam2.gameObject.SetActive(true);
         for (int i = 0; i < _Arr.Length; i++)
         {
             WesleyDialog1.text += _Arr[i];
             yield return new WaitForSeconds(0.2f);
         }
+        GameManager.Cine.vCam2.gameObject.SetActive(false);
     }
 }

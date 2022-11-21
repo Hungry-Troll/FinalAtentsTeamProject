@@ -2,14 +2,13 @@
     "_Name": "",
     "_Job": "Superhuman",
     "_Pet": "Brachiosaurus",
-    "_Scene": "Village02",
+    "_Scene": "Tutorial",
     "_Item_List": [
         "sword1",
-        "gun3",
-        "gun1",
-        "sword1",
-        "gun3",
-        "gun1"
+        "sword3",
+        "potion1",
+        "sword2",
+        "sword1"
     ],
-    "_Weapon": "sword3"
+    "_Weapon": ""
 }
