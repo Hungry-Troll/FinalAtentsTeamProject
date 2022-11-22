@@ -266,10 +266,15 @@ public class MonsterControllerEX : MonoBehaviour
         {
             yield break;
         }
-        // 대미지 계산
-        _playerController.OnDamaged(_monsterStat.Atk);
-        // 사운드 적용
-        GameManager.Sound.SFXPlay("Dino-raptor");
+        // 플레이어가 살아있으면 
+        if(GameManager.Obj._playerController._creatureState != CreatureState.Dead)
+        {
+            // 대미지 계산
+            _playerController.OnDamaged(_monsterStat.Atk);
+            // 사운드 적용
+            GameManager.Sound.SFXPlay("Dino-raptor");
+        }
+
         // 코루틴 변수 초기화 
         _coAttack = null;
     }

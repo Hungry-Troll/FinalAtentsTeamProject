@@ -128,6 +128,11 @@ public class SoundManagerEX
         }
     }
 
+    public void BGMPlayStop()
+    {
+        _bgmAudioSource.clip = null;
+    }
+
     // SFX 재생 함수
     public void SFXPlay(string name)
     {        
@@ -147,6 +152,13 @@ public class SoundManagerEX
         _cnt++;
     }
 
+    public void SFXPlayOff()
+    {
+        for (int i = 0; i < _sfxAudioSource.Count; i++)
+        {
+            _sfxAudioSource[i].clip = null;
+        }
+    }
 
     // 재귀 함수
     public Transform FindSlider(string name, Transform _tr)
@@ -195,7 +207,4 @@ public class SoundManagerEX
             SaveSoundSetting();
         }
     }
-
-
-
 }

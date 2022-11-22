@@ -56,7 +56,8 @@ public class WesleyController : MonoBehaviour
                 {
                     WesleyAnimator.SetTrigger("MeetPlayer");
                     DialogsOfWesleyPanel[_dialogCount].SetActive(true);
-                    GameManager.Cine.vCam2.gameObject.SetActive(true);
+                    // 웨슬리 NPC 가상카메라 ON
+                    GameManager.Cam.WeleyCamOn();
                     StartCoroutine(WesleyDialog1Coroutine(ArrOfWesleyDialog1));
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
@@ -84,8 +85,6 @@ public class WesleyController : MonoBehaviour
         GameManager.Ui.PopUpLocation("본 아일랜드");
         // 팝업 close
         StartCoroutine(GameManager.Ui.ClosePopUpLocation());
-
-        //GameManager.Cine.vCam2.gameObject.SetActive(false);
     }
 
     // 회상씬 비디오
@@ -97,6 +96,9 @@ public class WesleyController : MonoBehaviour
         }
         capsuleCollider.enabled = true;
         GameManager.Create.CreateUi("UI_TutorialVideo", gameObject);
+
+        // 웨슬리 NPC 가상카메라 OFF
+        GameManager.Cam.WeleyCamOff();
     }
 
     IEnumerator WesleyDialog0Coroutine(char[] _Arr)
@@ -104,8 +106,9 @@ public class WesleyController : MonoBehaviour
         for (int i = 0; i < _Arr.Length; i++)
         {
             WesleyDialog0.text += _Arr[i];
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
+        StopCoroutine(WesleyDialog0Coroutine(_Arr));
     }
 
     IEnumerator WesleyDialog1Coroutine(char[] _Arr)
@@ -115,8 +118,8 @@ public class WesleyController : MonoBehaviour
         for (int i = 0; i < _Arr.Length; i++)
         {
             WesleyDialog1.text += _Arr[i];
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
-        GameManager.Cine.vCam2.gameObject.SetActive(false);
+        StopCoroutine(WesleyDialog1Coroutine(_Arr));
     }
 }

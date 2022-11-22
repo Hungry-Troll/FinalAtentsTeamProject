@@ -89,12 +89,11 @@ public class FieldManager : MonoBehaviour
         GameManager.Obj._petController = GameManager.Create.CreatePet(_startPos + temPos, GameManager.Select._pet.ToString());
 
         // 아이템 생성용 테스트 코드
-        // 추후 제거
-        for (int i = 0; i < GameManager.Resource._fieldItem.Count; i++)
-        {
-            Vector3 tempPos = new Vector3(Random.Range(i, i + 3), Random.Range(i, i + 3), Random.Range(i, i + 3));
-            GameManager.Create.CreateFieldItem(_startPos + tempPos, GameManager.Resource._fieldItem[i].name);
-        }
+        //for (int i = 0; i < GameManager.Resource._fieldItem.Count; i++)
+        //{
+        //    Vector3 tempPos = new Vector3(Random.Range(i, i + 3), Random.Range(i, i + 3), Random.Range(i, i + 3));
+        //    GameManager.Create.CreateFieldItem(_startPos + tempPos, GameManager.Resource._fieldItem[i].name);
+        //}
 
         // BGM 변경
         GameManager.Sound.BGMPlay("Sketch 3 - Against All Odds 1");
@@ -102,7 +101,6 @@ public class FieldManager : MonoBehaviour
 
     private void NextSceneAwake()
     {
-      
         // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
         GameManager.Obj.RemoveAllMobList();
         // Ui 불러옴

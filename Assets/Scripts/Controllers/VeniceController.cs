@@ -70,8 +70,9 @@ public class VeniceController : MonoBehaviour
         for (int i = 0; i < _Arr.Length; i++)
         {            
             VeniceDialog0.text += _Arr[i];
-            yield return new WaitForSeconds(0.2f);
-        }        
+            yield return new WaitForSeconds(0.1f);
+        }
+        StopCoroutine(VeniceDialog0Coroutine(_Arr));
     }
 
     IEnumerator VeniceDialog1Coroutine(char[] _Arr)
@@ -80,8 +81,9 @@ public class VeniceController : MonoBehaviour
         for (int i = 0; i < _Arr.Length; i++)
         {             
             VeniceDialog1.text += _Arr[i];
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
+        StopCoroutine(VeniceDialog1Coroutine(_Arr));
     }
 
     // 이 밑으로는 회의로 어떻게 만들 건지 결정해도 되는 부분

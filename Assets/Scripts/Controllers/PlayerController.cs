@@ -58,10 +58,10 @@ public class PlayerController : MonoBehaviour
                 Attack();
                 break;
             case CreatureState.Dead:
-                Dead();
+                
                 break;
             case CreatureState.Roll:
-                Dead();
+                
                 break;
             case CreatureState.None:
                 break;
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetInteger("playerStat", 3);
                 break;
             case CreatureState.Roll:
-                Dead();
+                
                 break;
             case CreatureState.None:
                 break;
@@ -303,6 +303,10 @@ public class PlayerController : MonoBehaviour
         GameManager.Ui.GameOverUI();
         // 모든 유아이 끔
         GameManager.Ui.UISetActiveFalse();
+        // 배경음 변경
+        GameManager.Sound.BGMPlay("31");
+        // 효과음 제거
+        GameManager.Sound.SFXPlayOff();
     }
 
     public void OnDamaged(int monsterAtk)
@@ -314,6 +318,7 @@ public class PlayerController : MonoBehaviour
             // HP가 -20,-40 이러면 이상하므로 고정
             _playerStat.Hp = 0;
             _creatureState = CreatureState.Dead;
+            Dead();
         }
     }
 }
