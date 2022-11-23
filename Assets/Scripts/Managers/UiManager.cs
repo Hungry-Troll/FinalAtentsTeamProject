@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using static Define;
 using static Util;
+using DG.Tweening;
 
 public class UiManager
 {

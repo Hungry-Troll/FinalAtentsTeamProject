@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandler
@@ -27,12 +28,20 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
     // 플레이어 장착 방어구 스텟
     public ItemStatEX _armourStat;
 
+    Text Text_Count;
+
     private void Start()
     {
         // 필요없을수도 있음
         _invenSlotCount = 0;
+        // 인벤토리 아이템 개수 Text UI 개수 표시
+        Transform Text_CountTr = Util.FindChild("Text_Count", gameObject.transform);
+        Text_Count = Text_CountTr.GetComponent<Text>();
     }
-
+    void Update()
+    {
+        Text_Count.text = _item.Count.ToString() + "/20";
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         // 드래그 시작
