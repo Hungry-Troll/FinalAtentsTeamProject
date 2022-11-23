@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Define;
 public class Ui_SceneAttackButton : MonoBehaviour
 {
     //버튼 확인용
     SceneAttackButton sceneAttackButton;
     public List<Ui_SceneSkillSlot> _skillSlots;
-    
+    Transform _findRollCoolTime;
+    Image _rollCoolTimeImage;
+    bool _rollCoolTimeCheck;
     public void Start()
     {
         _skillSlots = new List<Ui_SceneSkillSlot>();
@@ -21,6 +24,9 @@ public class Ui_SceneAttackButton : MonoBehaviour
         _skillSlots.Add(skillSolt1);
         _skillSlots.Add(skillSolt2);
         _skillSlots.Add(skillSolt3);
+        _findRollCoolTime = Util.FindChild("RollCooltime", gameObject.transform);
+        _rollCoolTimeImage = _findRollCoolTime.GetComponent<Image>();
+        _rollCoolTimeCheck = true;
     }
 
     public void AttackButton()
@@ -44,6 +50,25 @@ public class Ui_SceneAttackButton : MonoBehaviour
     }
     public void RollingButton()
     {
-        GameManager.Ui.RollingButton();
+        if (_rollCoolTimeCheck == true)
+        {
+            GameManager.Ui.RollingButton();
+            _rollCoolTimeCheck = false;
+            StartCoroutine(CoolTime(5f));
+        }
+    }
+    IEnumerator CoolTime(float coolTime)
+    {
+        while (coolTime > 0)
+        {
+            coolTime -= Time.deltaTime;
+            _rollCoolTimeImage.fillAmount = (1f / coolTime);
+            yield return new WaitForFixedUpdate();
+        }
+        _rollCoolTimeCheck = true;
     }
 }
+
+
+//https://codefinder.janndk.com/12
+//https://solution94.tistory.com/16

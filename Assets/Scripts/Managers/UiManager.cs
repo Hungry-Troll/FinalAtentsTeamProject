@@ -935,6 +935,6 @@ public class UiManager
 
     public void RollingButton()
     {
-        GameManager.Obj._playerController.KeyboardMove(true);
+        GameManager.Obj._playerController._creatureState = CreatureState.Roll;
     }
 }

@@ -6,12 +6,16 @@ using static Define;
 public class PlayerController : MonoBehaviour
 {
     Vector2 _inputDir;
+    Vector3 rollVecter;
+    Vector3 rollDir;
     public float _moveSpeed;
+    public float _rollSpeed;
     public float _autoMoveSpeed;
     public CreatureState _creatureState;
     public Animator _anim;
     public PlayerStat _playerStat;
     bool KeyboardInputOnOff;
+    bool isRoll;
 
     // 공격용 코루틴
     Coroutine _coAttack;
@@ -26,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _moveSpeed = 2.5f;
+        _rollSpeed = 5f;
         _creatureState = CreatureState.Idle;
         _anim = GetComponent<Animator>();
         _autoMoveSpeed = _moveSpeed + 2.0f;
@@ -33,13 +38,19 @@ public class PlayerController : MonoBehaviour
         _attackDelay = 1.0f;
         // 공격이펙트 연결
         Transform tmp = Util.FindChild("SwordEffect", transform);
-        _swordEffect = tmp.GetComponent<TrailRenderer>();
+        //_swordEffect = tmp.GetComponent<TrailRenderer>();
+        isRoll = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        KeyboardInput();
+        Debug.Log(_creatureState);
+        if (CreatureState.Roll != _creatureState)
+        {
+            KeyboardInput();
+        }
+
         switch (_creatureState)
         {
             case CreatureState.Idle:
@@ -58,10 +69,12 @@ public class PlayerController : MonoBehaviour
                 Attack();
                 break;
             case CreatureState.Dead:
-                
+                Dead();
                 break;
             case CreatureState.Roll:
-                
+                Debug.Log(100);
+                KeyboardMove(true);
+                StartCoroutine(Roll());
                 break;
             case CreatureState.None:
                 break;
@@ -92,7 +105,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetInteger("playerStat", 3);
                 break;
             case CreatureState.Roll:
-                
+                _anim.SetInteger("playerStat", 9);
                 break;
             case CreatureState.None:
                 break;
@@ -148,43 +161,63 @@ public class PlayerController : MonoBehaviour
     }
     public void KeyboardMove(bool rollSkill)
     {
-        float x = 0f;
-        float y = 0f;
-        if (Input.GetKey(KeyCode.W))
+        Debug.Log(101);
+        if (KeyboardInputOnOff == true || rollSkill == true)
         {
-            y += 1f;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            y -= 1f;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            x -= 1f;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            x += 1f;
-        }
-        Vector3 tempVector = new Vector3(x, 0, y);
-        tempVector = tempVector * Time.deltaTime * _moveSpeed;
-        transform.position += tempVector;
+            Debug.Log(102);
+            float x = 0f;
+            float y = 0f;
+            if (Input.GetKey(KeyCode.W))
+            {
+                y += 1f;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                y -= 1f;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                x -= 1f;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                x += 1f;
+            }
+            Vector3 tempVector = new Vector3(x, 0, y);
+            Vector3 tempDir = new Vector3(x, 0, y);
+            if (rollSkill == true)
+            {
+                Debug.Log(103);
+                if (isRoll == false)
+                {
+                    Debug.Log(104);
+                    rollVecter = tempVector.normalized;
+                    rollDir = tempDir.normalized;
+                    _moveSpeed = 5f;
+                    isRoll = true;
+                }
+                tempVector = rollVecter;
+                tempDir = rollDir;
+            }
+            tempVector = tempVector * Time.deltaTime * _moveSpeed;
+            transform.position += tempVector;
 
-        Vector3 tempDir = new Vector3(x, 0, y);
-        tempDir = Vector3.RotateTowards(transform.forward, tempDir, Time.deltaTime * _moveSpeed, 0);
-        transform.rotation = Quaternion.LookRotation(tempDir.normalized);
-        if (tempVector == Vector3.zero)
+            tempDir = Vector3.RotateTowards(transform.forward, tempDir, Time.deltaTime * _moveSpeed, 0);
+            transform.rotation = Quaternion.LookRotation(tempDir.normalized);
+        }
+        else if (KeyboardInputOnOff == false || rollSkill == false)
         {
             _creatureState = CreatureState.Idle;
         }
-        if (rollSkill == true)
-        {
 
-        }
     }
-    public void Roll()
+    IEnumerator Roll()
     {
-
+        Debug.Log(105);
+        yield return new WaitForSeconds(1f);
+        _moveSpeed = 2.5f;
+        isRoll = false;
+        _creatureState = CreatureState.Idle;
     }
     private void AutoMove()
     {
@@ -311,14 +344,20 @@ public class PlayerController : MonoBehaviour
 
     public void OnDamaged(int monsterAtk)
     {
-        // 대미지 받는 함수
-        _playerStat.Hp -= monsterAtk - _playerStat.Def;
-        if(_playerStat.Hp <= 0)
+        if (isRoll == true)
         {
-            // HP가 -20,-40 이러면 이상하므로 고정
-            _playerStat.Hp = 0;
-            _creatureState = CreatureState.Dead;
-            Dead();
+            _playerStat.Hp -= monsterAtk * 0;
+        }
+        else
+        {
+            // 대미지 받는 함수
+            _playerStat.Hp -= monsterAtk - _playerStat.Def;
+            if (_playerStat.Hp <= 0)
+            {
+                // HP가 -20,-40 이러면 이상하므로 고정
+                _playerStat.Hp = 0;
+                _creatureState = CreatureState.Dead;
+            }
         }
     }
 }

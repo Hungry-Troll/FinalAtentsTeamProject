@@ -123,7 +123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3813654247994746962}
         m_TargetAssemblyTypeName: Ui_SceneAttackButton, Assembly-CSharp
         m_MethodName: RollingButton
         m_Mode: 1
@@ -1290,7 +1290,7 @@ GameObject:
   - component: {fileID: 2133417309114422951}
   - component: {fileID: 6707618891507879968}
   m_Layer: 5
-  m_Name: Image
+  m_Name: RollCooltime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1345,7 +1345,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 62ce0e342e0ca7644931dfca0b6afa1f, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
