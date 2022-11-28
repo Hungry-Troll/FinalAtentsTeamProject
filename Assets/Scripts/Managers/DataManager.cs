@@ -33,6 +33,10 @@ public class PlayData
     [SerializeField]
     private string _Weapon;
 
+    // 갖고 있는 골드 수량
+    [SerializeField]
+    private int _Gold;
+
     public string Name
     {
         get { return _Name; }
@@ -62,6 +66,11 @@ public class PlayData
     {
         get { return _Weapon; }
         set { _Weapon = value; }
+    }
+    public int Gold
+    {
+        get { return _Gold; }
+        set { _Gold = value; }
     }
 }
 public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
@@ -154,6 +163,8 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             }
         }
 
+        // 현재 가진 골드 저장
+        playData.Gold = GameManager.Obj._playerStat.Gold;
 
 
         string json = JsonUtility.ToJson(playData, true);
@@ -183,6 +194,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         string pet = "None";
         string weapon = "None";
         List<string> itemList = new List<string>();
+        int gold = 0;
 
 
         // 파일 가져와서 읽는 코드
@@ -265,6 +277,9 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             }
             */
         }
+
+        // save에서 가져온 골드 넣어주기
+        gold = playData.Gold;
 
         //=========여기서 씬 전환==========
         if (_sceneLoad == true)

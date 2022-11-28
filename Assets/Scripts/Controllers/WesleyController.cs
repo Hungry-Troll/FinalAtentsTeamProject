@@ -64,6 +64,9 @@ public class WesleyController : MonoBehaviour
                     capsuleCollider.enabled = false;
                     // 모든 UI 끔
                     GameManager.Ui.UISetActiveFalse();
+                    // 방향 화살표 UI 끔
+                    // UISetActiveFalse() 에 포함시키지 않은 것은 별개로 작동해야 할 때가 있기 때문
+                    GameManager.Ui._directionArrowController.OffAllArrows();
                     // 추가 대화를 추후 만들어야 됨1
                     // 무전기 추가 필요
                     //GameManager.Cine.vCam2.gameObject.SetActive(true);
@@ -81,6 +84,8 @@ public class WesleyController : MonoBehaviour
         capsuleCollider.enabled = true;
         // 모든 UI 킴
         GameManager.Ui.UISetActiveTrue();
+        // 웨슬리 방향 화살표 UI 켬
+        GameManager.Ui._directionArrowController.OnArrow("ToWesley");
         // 장소 팝업
         GameManager.Ui.PopUpLocation("본 아일랜드");
         // 팝업 close
@@ -96,6 +101,12 @@ public class WesleyController : MonoBehaviour
         }
         capsuleCollider.enabled = true;
         GameManager.Create.CreateUi("UI_TutorialVideo", gameObject);
+
+        // 비디오 시작하면 상인쪽 NPC 로 안내하는 화살표 생성
+        GameManager.Ui._directionArrowController.OnArrow("ToVenice");
+        // 마을로 가는 포탈 방향 화살표 생성
+        // 일단 여기 만들지만 상인 퀘스트가 있다면 그쪽 이벤트에서 아래 코드 실행
+        GameManager.Ui._directionArrowController.OnArrow("TutorialToVillage");
 
         // 웨슬리 NPC 가상카메라 OFF
         GameManager.Cam.WeleyCamOff();

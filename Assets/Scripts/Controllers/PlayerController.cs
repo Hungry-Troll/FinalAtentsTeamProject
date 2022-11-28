@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStat _playerStat;
     bool KeyboardInputOnOff;
     bool isRoll;
+    public GoldController _goldController;
 
     // 공격용 코루틴
     Coroutine _coAttack;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         _autoMoveSpeed = _moveSpeed + 2.0f;
         _playerStat = GetComponent<PlayerStat>();
         _attackDelay = 1.0f;
+        _goldController = GetComponent<GoldController>();
         // 공격이펙트 연결
         Transform tmp = Util.FindChild("SwordEffect", transform);
         //_swordEffect = tmp.GetComponent<TrailRenderer>();

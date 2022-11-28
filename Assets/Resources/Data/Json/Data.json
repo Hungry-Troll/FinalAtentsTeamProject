@@ -238,7 +238,8 @@
       "_Name": "",
       "_Job": "Superhuman",
       "_Exp": 0,
-      "_Lv_Exp": 100
+      "_Lv_Exp": 100,
+      "_Gold": 0
     },
     {
       "_Hp": 150,
@@ -249,7 +250,8 @@
       "_Name": "",
       "_Job": "Superhuman",
       "_Exp": 0,
-      "_Lv_Exp": 300
+      "_Lv_Exp": 300,
+      "_Gold": 0
     },
     {
       "_Hp": 200,
@@ -260,7 +262,8 @@
       "_Name": "",
       "_Job": "Superhuman",
       "_Exp": 0,
-      "_Lv_Exp": 500
+      "_Lv_Exp": 500,
+      "_Gold": 0
     },
     {
       "_Hp": 250,
@@ -271,7 +274,8 @@
       "_Name": "",
       "_Job": "Superhuman",
       "_Exp": 0,
-      "_Lv_Exp": 0
+      "_Lv_Exp": 0,
+      "_Gold": 0
     },
     {
       "_Hp": 80,
@@ -282,7 +286,8 @@
       "_Name": "",
       "_Job": "Cyborg",
       "_Exp": 0,
-      "_Lv_Exp": 100
+      "_Lv_Exp": 100,
+      "_Gold": 0
     },
     {
       "_Hp": 120,
@@ -293,7 +298,8 @@
       "_Name": "",
       "_Job": "Cyborg",
       "_Exp": 0,
-      "_Lv_Exp": 300
+      "_Lv_Exp": 300,
+      "_Gold": 0
     },
     {
       "_Hp": 160,
@@ -304,7 +310,8 @@
       "_Name": "",
       "_Job": "Cyborg",
       "_Exp": 0,
-      "_Lv_Exp": 500
+      "_Lv_Exp": 500,
+      "_Gold": 0
     },
     {
       "_Hp": 200,
@@ -315,7 +322,8 @@
       "_Name": "",
       "_Job": "Cyborg",
       "_Exp": 0,
-      "_Lv_Exp": 0
+      "_Lv_Exp": 0,
+      "_Gold": 0
     },
     {
       "_Hp": 60,
@@ -326,7 +334,8 @@
       "_Name": "",
       "_Job": "Scientist",
       "_Exp": 0,
-      "_Lv_Exp": 100
+      "_Lv_Exp": 100,
+      "_Gold": 0
     },
     {
       "_Hp": 90,
@@ -337,7 +346,8 @@
       "_Name": "",
       "_Job": "Scientist",
       "_Exp": 0,
-      "_Lv_Exp": 300
+      "_Lv_Exp": 300,
+      "_Gold": 0
     },
     {
       "_Hp": 120,
@@ -348,7 +358,8 @@
       "_Name": "",
       "_Job": "Scientist",
       "_Exp": 0,
-      "_Lv_Exp": 500
+      "_Lv_Exp": 500,
+      "_Gold": 0
     },
     {
       "_Hp": 150,
@@ -359,7 +370,8 @@
       "_Name": "",
       "_Job": "Scientist",
       "_Exp": 0,
-      "_Lv_Exp": 0
+      "_Lv_Exp": 0,
+      "_Gold": 0
     }
   ],
   "Save": [
@@ -376,7 +388,9 @@
         "gun3",
         "sword2",
         "sword1"
-      ]
+      ],
+      "_Weapon": "",
+      "_Gold": 0
     }
   ]
 }

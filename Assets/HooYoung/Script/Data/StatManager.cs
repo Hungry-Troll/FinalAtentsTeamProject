@@ -153,6 +153,7 @@ public class StatManager
         GameManager.Obj._playerStat.Job = _tempStat.Job;
         GameManager.Obj._playerStat.Exp = _tempStat.Exp;
         GameManager.Obj._playerStat.Lv_Exp = _tempStat.Lv_Exp;
+        GameManager.Obj._playerStat.Gold = _tempStat.Gold;
 
         // µð¹ö±ë¿ë
         /*

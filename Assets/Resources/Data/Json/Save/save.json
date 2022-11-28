@@ -1,14 +1,18 @@
 {
-    "_Name": "",
+    "_Name": "dfsd",
     "_Job": "Superhuman",
-    "_Pet": "Brachiosaurus",
-    "_Scene": "Tutorial",
+    "_Pet": "Pachycephalosaurus",
+    "_Scene": "Village02",
     "_Item_List": [
+        "sword3",
+        "sword1",
+        "potion1",
         "sword1",
         "sword3",
+        "sword1",
         "potion1",
-        "sword2",
         "sword1"
     ],
-    "_Weapon": ""
+    "_Weapon": "sword2",
+    "_Gold": 9999
 }

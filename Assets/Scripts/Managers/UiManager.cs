@@ -24,9 +24,16 @@ public class UiManager
     public Image _portraitImage;
     public PortraitController _portraitController;
 
+    // 골드 표시 바
+    public GameObject _goldDisplay;
+
     // 장소 팝업
     public GameObject _locationPopUp;
     public Text _locationPopUpText;
+
+    // 방향 안내 화살표
+    public GameObject _directionArrow;
+    public DirectionArrowControlloer _directionArrowController;
 
     // 스킬상태창
     public SkillViewController _skillViewController;
@@ -138,6 +145,11 @@ public class UiManager
         _locationPopUpText = _locationPopUp.GetComponentInChildren<Text>();
         // 생성하자마자 애니메이션 실행되기 때문에 active false
         _locationPopUp.SetActive(false);
+
+        // 방향 안내 화살표 생성
+        _directionArrow = GameManager.Create.CreateUi("UI_WayHelper", go);
+        _directionArrowController = _directionArrow.GetComponent<DirectionArrowControlloer>();
+        _directionArrowController.Init();
 
         // 포트레이트와 연결할 스킬창 UI 생성
         GameObject skillView = GameManager.Create.CreateUi("Ui_Skill", go);
@@ -808,6 +820,13 @@ public class UiManager
         canvas.sortingOrder = -1;
     }
 
+    // 플레이어에게 골드 표시창 연결하는 함수
+    public void PlayerGoldDisplayCreate(GameObject player)
+    {
+        // 골드 표시 바 불러옴
+        _goldDisplay = GameManager.Create.CreateUi("UI_GoldDisplayBar", player);
+    }
+
     // 플레이어 포트레이트 만드는 함수
     public void PortraitCheck()
     {
@@ -834,7 +853,8 @@ public class UiManager
         if (GameManager.Effect._levelUpPar.gameObject.activeSelf == true)
         {
             GameManager.Effect.LevelUpPortraitEffectOff();
-        }   
+        }
+        _goldDisplay.SetActive(false);   
     }
 
     // 대화창 열릴 때 UI 껏던것 다시 킴
@@ -854,6 +874,7 @@ public class UiManager
         {
             GameManager.Effect.LevelUpPortraitEffectOn();
         }
+        _goldDisplay.SetActive(true);
     }
     // 구매하기 취소하기 버튼 함수(UI위치 때문에 Transform 정보를 가지고 와야됨)
     public void BuyCancelButtonOpen(Transform tr)

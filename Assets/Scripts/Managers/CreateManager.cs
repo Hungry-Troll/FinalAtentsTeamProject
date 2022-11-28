@@ -40,6 +40,10 @@ public class CreateManager
                 GameManager.Ui.InventoryStatUpdate();
                 // Hp 바 적용
                 GameManager.Ui.PlayerHpBarCreate(player);
+
+                // 골드 적용
+                GameManager.Obj._goldController = player.AddComponent<GoldController>();
+                GameManager.Ui.PlayerGoldDisplayCreate(player);
                 return _player;
             }
         }

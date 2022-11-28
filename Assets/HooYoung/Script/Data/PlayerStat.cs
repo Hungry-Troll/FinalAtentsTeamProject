@@ -46,6 +46,10 @@ public class PlayerStat : Stat
     [SerializeField]
     private int _Lv_Exp;
 
+    // º¸À¯ °ñµå
+    [SerializeField]
+    private int _Gold;
+
     public string Job
     {
         get { return _Job; }
@@ -62,6 +66,12 @@ public class PlayerStat : Stat
     {
         get { return _Lv_Exp; }
         set { _Lv_Exp = value; }
+    }
+
+    public int Gold
+    {
+        get { return _Gold; }
+        set { _Gold = value; }
     }
 }
 

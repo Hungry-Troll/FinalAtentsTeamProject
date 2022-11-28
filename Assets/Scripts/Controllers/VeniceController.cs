@@ -59,6 +59,8 @@ public class VeniceController : MonoBehaviour
                     VeniceAnimator.SetInteger("restoreInt", 1);
                     // 모든 UI 끔
                     GameManager.Ui.UISetActiveFalse();
+                    // 방향 안내 화살표 UI 끔
+                    GameManager.Ui._directionArrowController.OffArrow("ToVenice");
                 };
             }
         }

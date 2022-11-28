@@ -81,6 +81,7 @@ public class ParseManager
             data.Job = dataList[i]["_Job"].ToString();
             data.Exp = int.Parse(dataList[i]["_Exp"].ToString());
             data.Lv_Exp = int.Parse(dataList[i]["_Lv_Exp"].ToString());
+            data.Gold = int.Parse(dataList[i]["_Gold"].ToString());
 
             // 리스트에 원소 추가
             _playerList.Add(data);
@@ -164,6 +165,8 @@ public class ParseManager
         _save.Job = dataList[0]["_Job"].ToString(); ;
         _save.Pet = dataList[0]["_Pet"].ToString(); ;
         _save.Scene = dataList[0]["_Scene"].ToString();
+        _save.Weapon = dataList[0]["_Weapon"].ToString();
+        _save.Gold = int.Parse(dataList[0]["_Gold"].ToString());
         
         for(int i = 0; i < dataList[0]["_Item_List"].Count; i++)
         {
@@ -197,6 +200,7 @@ public class ParseManager
                     GameManager.Obj._playerStat.Job = one.Job;
                     GameManager.Obj._playerStat.Exp = one.Exp;
                     GameManager.Obj._playerStat.Lv_Exp = one.Lv_Exp;
+                    GameManager.Obj._playerStat.Gold = one.Gold;
 
                     // 다 넣었으면 탈출하기
                     break;

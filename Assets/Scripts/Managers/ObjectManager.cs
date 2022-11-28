@@ -15,6 +15,9 @@ public class ObjectManager
     public List<MonsterControllerEX> _monsterContList = new List<MonsterControllerEX>();
     public List<MonsterStat> _monsterStatList = new List<MonsterStat>();
 
+    // 골드 정보
+    public GoldController _goldController;
+
     // 공격 타겟 몬스터 // 찾은 몬스터
     public GameObject _targetMonster;
     public MonsterControllerEX _targetMonsterController;
