@@ -293,7 +293,7 @@ public class PetController : MonoBehaviour
         {
             yield break;
         }
-        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk);
+        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk,1);
         // 코루틴 초기화
         _coAttack = null;
     }
@@ -304,7 +304,7 @@ public class PetController : MonoBehaviour
         yield return new WaitForSeconds(_delay);
         // 대미지 계산은 몬스터스크립트에서 처리 >> 플레이어 공격력만 넘겨줌
         // 임시로 스킬대미지를 직접 구현
-        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk * 2);
+        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk * 2,1);
         // 코루틴 초기화
         _coSkill = null;
     }

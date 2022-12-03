@@ -37,6 +37,9 @@ public class UiManager
 
     // 스킬상태창
     public SkillViewController _skillViewController;
+    
+    //스킬 버튼
+    public Ui_SceneAttackButton _uiSceneAttackButton;
 
     // 씬 버튼
     public GameObject _sceneButton;
@@ -159,6 +162,7 @@ public class UiManager
 
         // 시작하면 Ui 버튼 불러옴
         _sceneButton = GameManager.Create.CreateUi("Ui_Scene_Button", go);
+        _uiSceneAttackButton = _sceneButton.GetComponent<Ui_SceneAttackButton>();
         // 시작하면 조이스틱 씬에 불러옴
         _joyStick = GameManager.Create.CreateUi("Ui_JoystickController", go);
         _joyStickController = _joyStick.GetComponentInChildren<JoyStickController>();
@@ -942,7 +946,7 @@ public class UiManager
 
     public void Skill1Button()
     {
-
+        GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
     }
     public void Skill2Button()
     {
@@ -951,11 +955,11 @@ public class UiManager
 
     public void Skill3Button()
     {
-
+        GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
     }
 
     public void RollingButton()
     {
-        GameManager.Obj._playerController._creatureState = CreatureState.Roll;
+        GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Rolling;
     }
 }

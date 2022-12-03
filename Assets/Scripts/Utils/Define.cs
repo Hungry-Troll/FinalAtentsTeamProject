@@ -66,12 +66,10 @@ public class Define
     {
         Idle,
         Move,
-        KeyboardMove,
         AutoMove,
         Skill,
         Attack,
         Dead,
-        Roll,
         None,
     }
     public enum JoystickState
@@ -87,6 +85,7 @@ public class Define
         Skill2,
         Skill3,
         Rolling,
+        None,
     }
 
     public enum Info

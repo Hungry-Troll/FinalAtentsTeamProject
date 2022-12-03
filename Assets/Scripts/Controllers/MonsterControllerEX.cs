@@ -291,15 +291,24 @@ public class MonsterControllerEX : MonoBehaviour
     }
 
     //몬스터 대미지 받는 함수
-    public void OnDamaged(int playerAtk)
+    public void OnDamaged(int playerAtk, int SkillDamagePercent)
     {
-        // 대미지 계산
-        _monsterStat.Hp -= playerAtk - _monsterStat.Def;
-        // 대미지 텍스트 생성
+        //대미지 텍스트 생성
         GameObject tmp = GameManager.Create.CreateUi("UI_DamageText", gameObject);
         tmp.transform.SetParent(this.gameObject.transform);
         DamageTextEX damageText = tmp.GetComponent<DamageTextEX>();
-        damageText._damage = playerAtk;
+
+        // 대미지 계산
+        if (playerAtk > _monsterStat.Def)
+        {
+            _monsterStat.Hp -= (playerAtk - _monsterStat.Def) / SkillDamagePercent;
+            damageText._damage = (playerAtk - _monsterStat.Def) / SkillDamagePercent;
+        }
+        else
+        {
+            _monsterStat.Hp -= 1;
+            damageText._damage = 1;
+        }
 
         if (_monsterStat.Hp <= 0)
         {
