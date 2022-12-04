@@ -14,6 +14,7 @@ public class ResourceManager
     public List<GameObject> _equipItem;
     public List<GameObject> _ui;
     public List<GameObject> _camera;
+    public List<GameObject> _door;
     public List<Sprite> _itemImage;
     public List<AudioClip> _audioClip;
     public List<AudioMixer> _audioMixer;
@@ -30,6 +31,7 @@ public class ResourceManager
         _equipItem = new List<GameObject>();
         _ui = new List<GameObject>();
         _camera = new List<GameObject>();
+        _door = new List<GameObject>();
         _itemImage = new List<Sprite>();
         _audioClip = new List<AudioClip>();
         _audioMixer = new List<AudioMixer>();
@@ -43,6 +45,7 @@ public class ResourceManager
         GameObject[] equipItem = Resources.LoadAll<GameObject>("Prefabs/Item_Prefab/EquipItem_Prefab/");
         GameObject[] ui = Resources.LoadAll<GameObject>("Prefabs/Ui_Prefab/");
         GameObject[] camera = Resources.LoadAll<GameObject>("Prefabs/Camera_Prefab/");
+        GameObject[] door = Resources.LoadAll<GameObject>("Prefabs/Map_Prefab/");
         Sprite[] itemImage = Resources.LoadAll<Sprite>("Resource/Image/ItemImage");
         AudioClip[] audioClip = Resources.LoadAll<AudioClip>("Resource/Sound");
         AudioMixer[] audioMixer = Resources.LoadAll<AudioMixer>("Resource/Sound");
@@ -56,6 +59,7 @@ public class ResourceManager
         ListAdd(_equipItem, equipItem);
         ListAdd(_ui, ui);
         ListAdd(_camera, camera);
+        ListAdd(_door, door);
         ListAddImage(_itemImage, itemImage);
         ListAddAudio(_audioClip, audioClip);
         ListAddAudioMixer(_audioMixer, audioMixer);
@@ -179,6 +183,17 @@ public class ResourceManager
         foreach (GameObject one in _camera)
         {
             if (one.name.Equals(cameraName))
+            {
+                return one;
+            }
+        }
+        return null;
+    }
+    public GameObject GetDoor(string doorName)
+    {
+        foreach (GameObject one in _door)
+        {
+            if (one.name.Equals(doorName))
             {
                 return one;
             }

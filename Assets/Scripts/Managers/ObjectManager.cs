@@ -54,7 +54,15 @@ public class ObjectManager
                 return;
             }
 
-            if(distance < targetDistance[i])
+            if (distance == 0)
+            {
+                distance = targetDistance[i];
+                _targetMonster = GameManager.Obj._monsterContList[i].gameObject;
+                //_targetMonsterStat = GameManager.Obj._monsterStatList[i];
+                _targetMonsterController = GameManager.Obj._monsterContList[i];
+            }
+
+            if (distance > targetDistance[i])
             {
                 distance = targetDistance[i];
                 _targetMonster = GameManager.Obj._monsterContList[i].gameObject;

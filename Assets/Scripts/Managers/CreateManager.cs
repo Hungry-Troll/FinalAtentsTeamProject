@@ -106,6 +106,7 @@ public class CreateManager
         return null;
     }
 
+    // 일반 몬스터 생성
     public MonsterControllerEX CreateMonster(Vector3 origin, string monsterName)
     {
         // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
@@ -131,6 +132,42 @@ public class CreateManager
             }
         }
         return null;
+    }
+
+    // 퀘스트 몬스터 생성
+    public MonsterControllerEX CreateQuestMonster(Vector3 origin, string monsterName)
+    {
+        // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
+        origin.y += 100f;
+        RaycastHit hit;
+        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            GameObject temMonsterName = GameManager.Resource.GetMonster(monsterName);
+            if (temMonsterName != null)
+            {
+                string tempName = temMonsterName.name;
+                GameObject monster = GameObject.Instantiate<GameObject>(temMonsterName, hit.point, Quaternion.identity);
+                _monster = monster.AddComponent<MonsterControllerEX>();
+                GameManager.Obj._monsterContList.Add(_monster);
+                _monsterStat = monster.AddComponent<MonsterStat>();
+                GameManager.Obj._monsterStatList.Add(_monsterStat);
+                // 스텟 스크립트에 json 파일 스텟 적용
+                GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                _monster.name = tempName;
+                // Hp 바 적용
+                GameManager.Ui.HpBarCreate(monster);
+                // 퀘스트 변수 적용
+                _monster._isQuest = true;
+                return _monster;
+            }
+        }
+        return null;
+    }
+    public GameObject CreateQuestDoor(Vector3 origin, string doorName)
+    {
+        GameObject door = GameManager.Resource.GetDoor(doorName);
+        GameObject questDoor = GameObject.Instantiate<GameObject>(door);
+        return questDoor;
     }
 
     // 인벤토리에 아이템 생성하는 함수

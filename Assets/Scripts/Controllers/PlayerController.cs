@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _moveSpeed = 2.5f;
+        _moveSpeed = 10.0f;
         _rotationSpeed = 10f;
         _rollSpeed = 5f;
         _creatureState = CreatureState.Idle;

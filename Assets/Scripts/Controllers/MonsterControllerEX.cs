@@ -47,6 +47,8 @@ public class MonsterControllerEX : MonoBehaviour
     private Canvas _uiCanvas;
     //HpBar 이미지 사용
     private Image _hpBarImage;
+    //퀘스트용 몬스터 전용 변수
+    public bool _isQuest;
 
     public int _mobNum
     {
@@ -222,6 +224,13 @@ public class MonsterControllerEX : MonoBehaviour
         // 죽는 시간을 주기위한 코루틴
         if (_coDead == null)
         {
+            // 몬스터가 퀘스트 몬스터인지 확인
+            if (_isQuest)
+            {
+                // 퀘스트 몬스터이면 퀘스트 진행변수를 증가
+                GameManager.Quest.QuestProgressValueAdd();
+                _isQuest = false;
+            }
             _coDead = StartCoroutine(DeadDelay(1.0f));
         }
     }

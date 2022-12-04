@@ -69,6 +69,9 @@ public class UiManager
     // 옵션 버튼
     public GameObject _OptionButton;
 
+    // 퀘스트 버튼
+    public GameObject _questButton;
+
     // 옵션 창(화면)
     public GameObject _Option;
 
@@ -202,6 +205,9 @@ public class UiManager
         _Option = GameObject.Instantiate<GameObject>(Option);
         _Option.SetActive(false);
 
+        // 시작하면 퀘스트 버튼 불러옴
+        _questButton = GameManager.Create.CreateUi("Ui_SceneQuestButton", go);
+
         // 아이템 스텟창 만드는 내용이 너무 길어서 함수 처리
         InitItemStatView();
         // 장착 아이템 스텟창 만드는 내용이 길어서 함수 처리
@@ -290,6 +296,12 @@ public class UiManager
         option.gameObject.SetActive(true);
     }
 
+    // 퀘스트 버튼 누르면 퀘스트 창 오픈
+    public void QuestOpen()
+    {
+        GameManager.Quest.QuestInfoActive(true);
+    }
+
     /// <summary>
     /// 아이템 상태창 관련
     /// </summary>
@@ -297,7 +309,7 @@ public class UiManager
     // 아이템 상태창 UI를 한개만 쓰고 이미지와 스텟은 불러오는 방식으로 구현함
     // 추후 스텟 비교 기능을 넣으면 좋음
 
-    
+
     public GameObject ItemStatViewOpen(GameObject SlotItem)
     {
         // 널 체크
@@ -854,6 +866,7 @@ public class UiManager
         _itemStatView.SetActive(false);
         _equipStatView.SetActive(false);
         _equipStatOpen = false;
+        _questButton.SetActive(false);
         if (GameManager.Effect._levelUpPar.gameObject.activeSelf == true)
         {
             GameManager.Effect.LevelUpPortraitEffectOff();
@@ -874,7 +887,8 @@ public class UiManager
         _miniMap.SetActive(true);
         //_itemStatView.SetActive(false);
         // 스킬 포인트가 0보다 클 경우에만 포트레이트 이펙트 온
-        if(_skillViewController._skillLevel.skillPoint > 0)
+        _questButton.SetActive(true);
+        if (_skillViewController._skillLevel.skillPoint > 0)
         {
             GameManager.Effect.LevelUpPortraitEffectOn();
         }

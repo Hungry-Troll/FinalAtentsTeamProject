@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     ItemManager _item = new ItemManager();
     EffectManagerEX _effect = new EffectManagerEX();
     SkillManager _skill = new SkillManager();
+    QuestDataManager _questData = new QuestDataManager();
+    QuestManagerEX _quest = new QuestManagerEX();
 
     public static ResourceManager Resource 
     { 
@@ -103,6 +105,14 @@ public class GameManager : MonoBehaviour
     {
         get { return _instance._skill; }
     }
+    public static QuestDataManager QuestData
+    {
+        get { return _instance._questData; }
+    }
+    public static QuestManagerEX Quest
+    {
+        get { return _instance._quest; }
+    }
 
 
     // Start is called before the first frame update
@@ -121,6 +131,10 @@ public class GameManager : MonoBehaviour
         // 게임매니저에서 리소스 매니저/사운드 매니저 Init(Awake 함수 대체)
         GameManager.Resource.Init();
         GameManager.Sound.Init();
+        // 퀘스트 데이터 불러옴
+        GameManager.QuestData.Init();
+        // 퀘스트매니저 Init() 함수 추가
+        GameManager.Quest.Init();
     }
 }
 
