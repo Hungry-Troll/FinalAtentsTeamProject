@@ -1,0 +1,23 @@
+{
+  "1": {
+    "_Level": 1,
+    "_MaxHp": 50,
+    "_Atk": 5,
+    "_Def": 5,
+    "_Duration": 15
+  },
+  "2": {
+    "_Level": 2,
+    "_MaxHp": 100,
+    "_Atk": 10,
+    "_Def": 10,
+    "_Duration": 15
+  },
+  "3": {
+    "_Level": 3,
+    "_MaxHp": 150,
+    "_Atk": 15,
+    "_Def": 15,
+    "_Duration": 15
+  }
+}

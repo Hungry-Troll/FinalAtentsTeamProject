@@ -486,6 +486,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillSlots: []
+  _rollCoolTimeImage: {fileID: 0}
+  _skill1CoolTimeImage: {fileID: 0}
+  _skill2CoolTimeImage: {fileID: 0}
+  _skill3CoolTimeImage: {fileID: 0}
+  _attackCoolTimeImage: {fileID: 0}
 --- !u!1 &4041131648186222246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,7 +1510,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3813654247994746962}
         m_TargetAssemblyTypeName: Ui_SceneAttackButton, Assembly-CSharp
         m_MethodName: Skill3Button
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

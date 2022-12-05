@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScene.unity
     guid: 54ab90946046f1541814e61c2451d7fe
   - enabled: 1
-    path: Assets/Scenes/DunGeon.unity
+    path: Assets/Scenes/DunGeon1.unity
     guid: eac256ae12e18744fb68186b62f37ae7
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity

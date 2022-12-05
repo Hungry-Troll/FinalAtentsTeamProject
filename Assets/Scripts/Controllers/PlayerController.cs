@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
+using SimpleJSON;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     bool _KeyboardInputOnOff;
     bool _isRoll;
     bool _isSkill1;
+    bool _isSkill3;
 
     // 공격용 코루틴
     Coroutine _coAttack;
@@ -32,17 +34,28 @@ public class PlayerController : MonoBehaviour
     TrailRenderer _swordEffect;
 
     //Skill1 파티클용
-    ParticleSystem _skill1BloodEffect1_1;
-    ParticleSystem _skill1BloodEffect1_2;
-    ParticleSystem _skill1SlashEffect1;
-    ParticleSystem _skill1SlashEffect2;
-    public ParticleSystem _skill1Test;
+    ParticleSystem _skill1SlashEffect1_1;
+    ParticleSystem _skill1SlashEffect1_2;
+    ParticleSystem _skill1SlashEffect1_3;
+    ParticleSystem _skill1SlashEffect1_4;
+    ParticleSystem _skill1SlashEffect1_5;
+    ParticleSystem _skill1SlashEffect2_1;
+    ParticleSystem _skill1SlashEffect2_2;
+    ParticleSystem _skill1SlashEffect2_3;
+    ParticleSystem _skill1SlashEffect2_4;
+    ParticleSystem _skill1SlashEffect2_5;
+    ParticleSystem _skill3GroundEffect;
+    ParticleSystem _skill3BoosterEffect;
+    //이펙트 변화용 변수
+    int effectChange;
 
     //Json 스킬정보
     TextAsset _skillInfoJson;
     //Skill3 정보 저장용
-    SkillStat _skill3Stat;
-
+    Skill3Info _skill3Stat;
+    public int skill3Level;
+    //Skill3 플레이어 크기 트렌스폼 찾는 변수(미니Hp바 때문에)
+    Transform _skill3PlayerScale;
     // Start is called before the first frame update
     private void Start()
     {
@@ -60,22 +73,46 @@ public class PlayerController : MonoBehaviour
         Transform tmp = Util.FindChild("SwordEffect", transform);
         _swordEffect = tmp.GetComponent<TrailRenderer>();
         // Skill1 파티클 연결
-        _skill1BloodEffect1_1 = Util.FindChild("Skill1BloodEffect1_1", transform).GetComponent<ParticleSystem>();
-        _skill1BloodEffect1_2 = Util.FindChild("Skill1BloodEffect1_2", transform).GetComponent<ParticleSystem>();
-        _skill1SlashEffect1 = Util.FindChild("Skill1SlashEffect1", transform).GetComponent<ParticleSystem>();
-        _skill1SlashEffect2 = Util.FindChild("Skill1SlashEffect2", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect1_1 = Util.FindChild("Skill1SlashEffect1_1", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect1_2 = Util.FindChild("Skill1SlashEffect1_2", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect1_3 = Util.FindChild("Skill1SlashEffect1_3", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect1_4 = Util.FindChild("Skill1SlashEffect1_4", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect1_5 = Util.FindChild("Skill1SlashEffect1_5", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect2_1 = Util.FindChild("Skill1SlashEffect2_1", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect2_2 = Util.FindChild("Skill1SlashEffect2_2", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect2_3 = Util.FindChild("Skill1SlashEffect2_3", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect2_4 = Util.FindChild("Skill1SlashEffect2_4", transform).GetComponent<ParticleSystem>();
+        _skill1SlashEffect2_5 = Util.FindChild("Skill1SlashEffect2_5", transform).GetComponent<ParticleSystem>();
+        // Skill3 파티클 연결
+        _skill3GroundEffect = Util.FindChild("Skill3GroundEffect", transform).GetComponent<ParticleSystem>();
+        _skill3BoosterEffect = Util.FindChild("Skill3BoosterEffect", transform).GetComponent<ParticleSystem>();
         //파티클 실행 안되게
-        _skill1BloodEffect1_1.Stop();
-        _skill1BloodEffect1_2.Stop();
-        _skill1SlashEffect1.Stop();
-        _skill1SlashEffect2.Stop();
+        _skill1SlashEffect1_1.Stop();
+        _skill1SlashEffect1_2.Stop();
+        _skill1SlashEffect1_3.Stop();
+        _skill1SlashEffect1_4.Stop();
+        _skill1SlashEffect1_5.Stop();
+        _skill1SlashEffect2_1.Stop();
+        _skill1SlashEffect2_2.Stop();
+        _skill1SlashEffect2_3.Stop();
+        _skill1SlashEffect2_4.Stop();
+        _skill1SlashEffect2_5.Stop();
+        _skill3GroundEffect.Stop();
+        _skill3BoosterEffect.Stop();
+        //스킬 이펙트 변화용 변수
+        effectChange = 0;
         //스킬 사용유무
         _isRoll = false;
         _isSkill1 = false;
+        _isSkill3 = false;
         //스킬정보 제이슨으로 불러오기
         _skillInfoJson = Resources.Load<TextAsset>("Data/Json/Skill/Skills");
-
-        _skill3Stat = null;
+        //skill3 객체 생성
+        _skill3Stat = new Skill3Info();
+        //스킬레벨 넣는 변수
+        skill3Level = 1;
+        //Skill3 플레이어 크기 트렌스폼 찾는 변수(미니Hp바 때문에)
+        _skill3PlayerScale = Util.FindChild("Armature", transform).GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -334,53 +371,85 @@ public class PlayerController : MonoBehaviour
     }
     public void Skill1Event1()
     {
-        //skill1BloodEffect1_1.Play();
-        //skill1Test.Play();
+        switch (effectChange)
+        {
+            case 0:
+                _skill1SlashEffect2_1.Play();
+                break;
+            case 1:
+                _skill1SlashEffect2_2.Play();
+                break;
+            case 2:
+                _skill1SlashEffect2_3.Play();
+                break;
+            case 3:
+                _skill1SlashEffect2_4.Play();
+                break;
+
+        }
+        effectChange++;
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 2);
     }
     public void Skill1Event2()
     {
-        //skill1BloodEffect1_2.Play();
-        //skill1Test.Play();
+        _skill1SlashEffect2_5.Play();
+        effectChange = 0;
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 1);
     }
     public void Skill3()
     {
         _creatureState = CreatureState.None;
-        if (_isSkill1 != true)
+        if (_isSkill1 == false && _isSkill3 == false)
         {
-            Debug.Log(_skill3Stat);
-            if (_skill3Stat == null)
+            if (_skill3Stat.Skill3Level != skill3Level)
             {
-                //Skill3DataLoad();
+                Skill3DataLoad();
             }
-            Debug.Log(_skill3Stat);
-            //_playerStat.Max_Hp += 100;
-            //_playerStat.Hp += 100;
-            //_playerStat.Atk += 20;
-            //_playerStat.Def += 5;
-            //제이슨을 통하여 데이터 불러와서 스텟 넣어보기
+            StartCoroutine(CoSkill3());
+            _sceneAttackButton = SceneAttackButton.None;
         }
     }
-   /* public void Skill3DataLoad()
+    IEnumerator CoSkill3()
     {
-        TextAsset _skill3Info = Resources.Load<TextAsset>("Data/Json/Skill/Skills");
-        JSONNode _root = JSON.Parse(_skill3Info.text);
-        for (int i = 0; i < _root.Count; i++)
+        _anim.SetInteger("playerStat", 7);
+        _skill3PlayerScale.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        _playerStat.Max_Hp += _skill3Stat.Skill3StatMaxHp;
+        _playerStat.Hp += _skill3Stat.Skill3StatHp;
+        _playerStat.Atk += _skill3Stat.Skill3StatAtk;
+        _playerStat.Def += _skill3Stat.Skill3StatDef;
+        _skill3GroundEffect.Play();
+        _skill3BoosterEffect.Play();
+        _isSkill3 = true;
+        GameManager.Ui._uiSceneAttackButton.Skill3Button(1);
+        yield return new WaitForSeconds(_skill3Stat.Duration);
+        _playerStat.Max_Hp -= _skill3Stat.Skill3StatMaxHp;
+        if (_playerStat.Max_Hp < _playerStat.Hp)
         {
-            Debug.Log(_root["_Id"].Value);
-            if (_root["_Id"].Value == "Skill3")
-            {
-                JSONNode _skillInfo = _root["_SkillInfo"];
-                _skill3Stat = new SkillStat();
-                _skill3Stat.Skill3StatMaxHp = int.Parse(_skillInfo["_HP"].Value);
-                _skill3Stat.Skill3StatHp = int.Parse(_skillInfo["_HP"].Value);
-                _skill3Stat.Skill3StatAtk = int.Parse(_skillInfo["_Atk"].Value);
-                _skill3Stat.Skill3StatDef = int.Parse(_skillInfo["_Def"].Value);
-                _skill3Stat.Duration = float.Parse(_skillInfo["_duration"].Value);
-            }
+            _playerStat.Hp = _playerStat.Max_Hp;
         }
-    }*/
+        _playerStat.Atk -= _skill3Stat.Skill3StatAtk;
+        _playerStat.Def -= _skill3Stat.Skill3StatDef;
+        _skill3BoosterEffect.Stop();
+        _skill3PlayerScale.transform.localScale = new Vector3(1f, 1f, 1f);
+        _isSkill3 = false;
+        GameManager.Ui._uiSceneAttackButton.Skill3Button(2);
+    }
+    public void Skill3DataLoad()
+    {
+        TextAsset _skill3Info = Resources.Load<TextAsset>("Data/Json/Skill/Skill3Info");
+        JSONNode _root = JSON.Parse(_skill3Info.text);
+        JSONNode _skillInfo = _root[skill3Level - 1];
+        if (_skillInfo == null)
+        {
+            return;
+        }
+        _skill3Stat.Skill3Level = int.Parse(_skillInfo["_Level"].Value);
+        _skill3Stat.Skill3StatMaxHp = int.Parse(_skillInfo["_MaxHp"].Value);
+        _skill3Stat.Skill3StatHp = int.Parse(_skillInfo["_MaxHp"].Value);
+        _skill3Stat.Skill3StatAtk = int.Parse(_skillInfo["_Atk"].Value);
+        _skill3Stat.Skill3StatDef = int.Parse(_skillInfo["_Def"].Value);
+        _skill3Stat.Duration = float.Parse(_skillInfo["_Duration"].Value);
+    }
     private void AutoMove()
     {
         // 거리
