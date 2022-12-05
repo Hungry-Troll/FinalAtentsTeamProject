@@ -206,15 +206,15 @@ public class QuestManagerEX
 
     // 퀘스트 대화 함수
     public void QuestConversationText(int conversationCount)
-    {
-        // 플레이어나 NPC 이름 / 플레이어의 이름(홀수) >> 보상열 추가로 인해서 
+    {   
+        // NPC 이름을 넣어줌
+        _conversationCharacterNameText.text = _questStroy[conversationCount];
+        // 플레이어의 이름(홀수)로 변경 >> 보상열 추가로 인해서 
         // _questStroy[_conversationCount] 이 "Player"이면 캐릭터 이름을 넣어줌
-        if(_questStroy[conversationCount] == "Player")
+        if (_questStroy[conversationCount] == "Player")
         {
             _conversationCharacterNameText.text = GameManager.Select._playerName;
         }
-        // 아니면 NPC 이름을 넣어줌
-        _conversationCharacterNameText.text = _questStroy[conversationCount];
 
         // 퀘스트 내용(짝수)은 코루틴을 이용해야되기 때문에 모노비헤비어를 상속받는 웨슬리 컨트롤러에서 직접 실행
         _wesleyController.WeleyDialogStart(_questStroy[conversationCount + 1]);

@@ -13,7 +13,10 @@ public class WesleyController : MonoBehaviour
     public GameObject DialogsOfWesleyPanel;
     CapsuleCollider capsuleCollider;
 
+    // 대화창용 변수
     public Text WesleyDialog0;
+    // 대화용 코루틴 변수 (버그제거용)
+    public Coroutine _coTalk;
 
     void Awake()
     {
@@ -21,6 +24,7 @@ public class WesleyController : MonoBehaviour
         capsuleCollider = gameObject.GetComponentInChildren<CapsuleCollider>();
         // 퀘스트 매니저에서 웨슬리 컨트롤러를 들고있음
         GameManager.Quest._wesleyController = GetComponent<WesleyController>();
+        _coTalk = null;
     }
 
     private void Start()
@@ -118,10 +122,14 @@ public class WesleyController : MonoBehaviour
     {
         // 이전 텍스트 초기화
         WesleyDialog0.text = string.Empty;
+        if(_coTalk != null)
+        {
+            StopCoroutine(_coTalk);
+        }
         // 텍스트 변환
         char[] ArrOfWesleyDialog0 = conversationText.ToCharArray();
         // 코루틴실행
-        StartCoroutine(WesleyDialog0Coroutine(ArrOfWesleyDialog0));
+        _coTalk = StartCoroutine(WesleyDialog0Coroutine(ArrOfWesleyDialog0));
     }
 
     // 듀토리얼맵 퀘스트

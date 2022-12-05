@@ -306,6 +306,9 @@ public class MonsterControllerEX : MonoBehaviour
         GameObject tmp = GameManager.Create.CreateUi("UI_DamageText", gameObject);
         tmp.transform.SetParent(this.gameObject.transform);
         DamageTextEX damageText = tmp.GetComponent<DamageTextEX>();
+        //널 체크
+        if (damageText == null)
+            return;
 
         // 대미지 계산
         if (playerAtk > _monsterStat.Def)

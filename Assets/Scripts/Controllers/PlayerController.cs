@@ -81,8 +81,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log(_creatureState);
-        Debug.Log(_sceneAttackButton);
+        //Debug.Log(_creatureState);
+        //Debug.Log(_sceneAttackButton);
         if (_sceneAttackButton == SceneAttackButton.None)
         {
             KeyboardInput();
@@ -406,6 +406,8 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Obj._targetMonster == null)
         {
             _creatureState = CreatureState.Idle;
+            // 공격상태인대 타겟이 없을 경우 소드 이펙트를 제거
+            SwordEffectOff();
             return;
         }
         if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
@@ -438,6 +440,8 @@ public class PlayerController : MonoBehaviour
         // 널체크
         if (GameManager.Obj._targetMonster == null)
         {
+            // 공격상태인대 타겟이 없을 경우 소드 이펙트를 제거
+            SwordEffectOff();
             yield break;
         }
         // 코루틴 초기화

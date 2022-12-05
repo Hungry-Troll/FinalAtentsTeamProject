@@ -19,12 +19,17 @@ public class DamageTextEX : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 부모 오브젝트가 없으면 리턴처리 (버그 제거용)
+        if(transform.parent.gameObject == null)
+        {
+            return;
+        }
         _text = GetComponent<Text>();
         _canvas = GetComponentInParent<Canvas>();
         _rectText = GetComponent<RectTransform>();
         _canvas.renderMode = RenderMode.WorldSpace;
         _canvas.worldCamera = Camera.main;
-
+        
         // 데미지 숫자를 문자로 변환
         _text.text = _damage.ToString();
 
@@ -45,7 +50,7 @@ public class DamageTextEX : MonoBehaviour
         Vector3 endPos = transform.position + new Vector3(0, _y, 0);
         endPos.x += (Random.insideUnitCircle * power).x;
         // 글씨 점프 효과
-        transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() => { Destroy(gameObject); });
+        transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() => { gameObject.SetActive(false)/*Destroy(gameObject)*/; });
     }
 
     // Update is called once per frame
