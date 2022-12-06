@@ -24,12 +24,22 @@ public class UI_BuyCancelButton : MonoBehaviour
     // 구매하기
     public void BuyButtonClick()
     {
-        // 인벤토리에 아이템 넣음
-        GameManager.Item.InventoryItemAdd(_shopSelectItem, false);
-        // 상점에서 아이템도 제거 해야됨 어떻게??
-        GameManager.Item.ShopSlotRemove(_shopSelectItem);
-        // 구매 후 UI 꺼야 됨 안그러면 버그 있음
-        CancelButtonClick();
+        GameObject potion = GameManager.Resource.GetfieldItem("potion1");
+
+        if (_shopSelectItem.name == "potion1")
+        {
+            GameManager.Item.InventoryItemAdd(_shopSelectItem, false);
+            CancelButtonClick();
+        }
+        else
+        {
+            // 인벤토리에 아이템 넣음
+            GameManager.Item.InventoryItemAdd(_shopSelectItem, false);
+            // 상점에서 아이템도 제거 해야됨 어떻게??
+            GameManager.Item.ShopSlotRemove(_shopSelectItem);
+            // 구매 후 UI 꺼야 됨 안그러면 버그 있음
+            CancelButtonClick();
+        }
     }
     // 취소하기
     public void CancelButtonClick()

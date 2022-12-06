@@ -701,54 +701,77 @@ public class UiManager
         InventoryImageArray();
     }
 
-    // 아이템 버리는 함수
+    // 아이템 버리는 함수	
     public void ItemStatViewWeaponDrop()
     {
-        // 인벤토리의 아이템을 버리는 경우
-        // 인벤토리 아이템 숫자만큼 루프
-        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        // 인벤토리의 아이템을 버리는 경우	
+        // 인벤토리 아이템 숫자만큼 루프	
+        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
         {
-            // 인벤토리 아이템하고 이미지가 동일하면
-            if(_itemStatViewController._sprite.name == GameManager.Ui._inventoryController._item[i].name)
+            if (_itemStatViewController._sprite.name == "potion1")
             {
-                // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
-                GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-                GameManager.Ui._inventoryController._item.RemoveAt(i);
-                _slotImage[i].sprite = null;
-                _slotImage[i].gameObject.SetActive(false);
-                break;
+                //int slotNum = 0;	
+                if (GameManager.Ui._inventoryController._item[i].name == "potion1")
+                {
+                    int slotNum = 0;
+                    slotNum = i;
+                    GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub();
+                    if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
+                    {
+                        GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                        GameManager.Ui._inventoryController._item.RemoveAt(i);
+                        _slotImage[i].sprite = null;
+                        _slotImage[i].gameObject.SetActive(false);
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                // 인벤토리 아이템하고 이미지가 동일하면	
+                if (_itemStatViewController._sprite.name == GameManager.Ui._inventoryController._item[i].name)
+                {
+                    // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 	
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                    GameManager.Ui._inventoryController._item.RemoveAt(i);
+                    _slotImage[i].sprite = null;
+                    _slotImage[i].gameObject.SetActive(false);
+                    break;
+                }
             }
         }
-        // 아이템 상태창 닫기
+        // 아이템 상태창 닫기	
         ItemStatViewClose();
-
-        // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수
+        // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수	
         InventoryImageArray();
     }
 
-    // 인벤토리 이미지 정렬 함수 (랜더링)
-    // 아이템 장착 시 해제 시 사용
+    // 인벤토리 이미지 정렬 함수 (랜더링)	
+    // 아이템 장착 시 해제 시 사용	
     void InventoryImageArray()
     {
-        for(int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
         {
-            // 인벤토리 아이템 이름
+            // 인벤토리 보관하고 있는 아이템 이름	
             string tmpName = GameManager.Ui._inventoryController._item[i].name;
-            // 이름을 이용한 이미지 찾기
+            // 이름을 이용한 이미지 찾기	
             Sprite tmpSprite = GameManager.Resource.GetImage(tmpName);
-            // 찾은 이미지를 각 슬롯 이미지에 넣음
+            // 찾은 이미지를 각 슬롯 이미지에 넣음	
             _slotImage[i].sprite = tmpSprite;
-            // 활성화
+            // 활성화	
             _slotImage[i].gameObject.SetActive(true);
-            // 동일한 이름의 게임오브젝트를 동일한 슬롯에 넣음
-            GameObject tmpGameObject = GameManager.Resource.GetfieldItem(tmpName);
-            GameObject go = Util.Instantiate(tmpGameObject);
+            // 동일한 이름의 게임오브젝트를 동일한 슬롯에 넣음	
+            GameObject tmpGameObject = GameManager.Resource.GetfieldItem(tmpName);  // 필드에 있는 아이템을 각각 비교해서, 지금 이름의 아이템 오브젝트를 반환	
+            GameObject go = Util.Instantiate(tmpGameObject);    // 해당 아이템을 생성 (리스트에 추가하기 위해 생성한것임)	
             GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
-            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(go);
+            GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Add(go);    // 새로 생성한 아이템은 리스트에 추가함(언제든지 삭제하기 위함)	
+            //슬롯번호 세팅	
+            //GameManager.Ui._inventoryController._invenSlotList[i].SetSlotNumber();	
         }
-        for(int i = 19; i > GameManager.Ui._inventoryController._item.Count -1; i--)
+        for (int i = 19; i > GameManager.Ui._inventoryController._item.Count - 1; i--)
         {
-            // 나머지 슬롯 이미지 전부 삭제 비활성화
+            // 나머지 슬롯 이미지 전부 삭제 비활성화	
             _slotImage[i].sprite = null;
             _slotImage[i].gameObject.SetActive(false);
             GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();

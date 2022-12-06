@@ -54,6 +54,7 @@ public class VeniceController : MonoBehaviour
                     // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
                     // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
                     DialogOfVenicePanels[0].SetActive(true);
+                    GameManager.Cam.VeniceCamOn();
                     StartCoroutine(VeniceDialog0Coroutine(ArrOfStrVeniceDialog0));
                     capsuleCollider.enabled = false;
                     VeniceAnimator.SetInteger("restoreInt", 1);
@@ -118,6 +119,7 @@ public class VeniceController : MonoBehaviour
     {
         DialogOfVenicePanels[0].SetActive(false);
         capsuleCollider.enabled = true;
+        GameManager.Cam.VeniceCamOff();
 
         // 모든 UI 킴
         GameManager.Ui.UISetActiveTrue();

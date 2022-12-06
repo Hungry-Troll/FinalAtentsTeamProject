@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 using SimpleJSON;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -604,6 +605,27 @@ public class PlayerController : MonoBehaviour
                 _playerStat.Hp = 0;
                 _creatureState = CreatureState.Dead;
             }
+            StartCoroutine(ShakeCam());
         }
     }
+    //Vector3 beforePosition;
+    private float currentTime = 0;
+    private float ShakeRange = 0.5f;
+    private float ShakeTime = 0.4f;
+
+    IEnumerator ShakeCam()
+    {
+        GameManager.Cam._Vcam1.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1.5f;
+        yield return new WaitForSeconds(0.3f);
+        GameManager.Cam._Vcam1.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+
+    }
+
+    public void ShakeCam(float a, float b)
+    {
+        CinemachineBasicMultiChannelPerlin perlin =
+        GameManager.Cam._Vcam1.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        perlin.m_AmplitudeGain = a;
+    }
+
 }

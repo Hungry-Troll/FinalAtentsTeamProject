@@ -19,8 +19,13 @@ public class CameraManager
     public GameObject _vam1;
     // 웨슬리 카메라
     public GameObject _vam2;
+    // 베니스 카메라
+    public GameObject _vam3;
+
+
     public CinemachineVirtualCamera _Vcam1;
     public CinemachineVirtualCamera _Vcam2;
+    public CinemachineVirtualCamera _Vcam3;
 
     public MainCameraController _mainCameraController;
     public StateCameraController _stateCameraController;
@@ -70,6 +75,13 @@ public class CameraManager
         _vam2.transform.SetParent(go.transform);
         _vam2.SetActive(false);
 
+        // v3 카메라 불러오기
+        GameObject v3 = GameManager.Resource.GetCamera("CM vcam3");
+        _vam3 = GameObject.Instantiate<GameObject>(v3);
+        _Vcam3 = _vam3.GetComponent<CinemachineVirtualCamera>();
+        _vam3.transform.SetParent(go.transform);
+        _vam3.SetActive(false);
+
         // UI 파티클용 카메라 불러오기
         GameObject uiParticleCamera = GameManager.Resource.GetCamera("UIParticleCamera");
         _uiParticleCamera = GameObject.Instantiate<GameObject>(uiParticleCamera);
@@ -85,6 +97,16 @@ public class CameraManager
     public void WeleyCamOff()
     {
         _vam2.SetActive(false);
+    }
+
+    public void VeniceCamOn()
+    {
+        _vam3.SetActive(true);
+    }
+
+    public void VeniceCamOff()
+    {
+        _vam3.SetActive(false);
     }
 }
 
