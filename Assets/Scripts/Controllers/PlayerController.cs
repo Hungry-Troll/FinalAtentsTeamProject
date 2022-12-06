@@ -118,8 +118,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //Debug.Log(_creatureState);
-        //Debug.Log(_sceneAttackButton);
+        Debug.Log("키보드 onoff"+_KeyboardInputOnOff);
+        Debug.Log("일반행동" +_creatureState);
+        Debug.Log("스킬행동" +_sceneAttackButton);
+        Debug.Log("조이스틱"+GameManager.Ui._joyStickController._joystickState);
         if (_sceneAttackButton == SceneAttackButton.None)
         {
             KeyboardInput();
@@ -368,6 +370,7 @@ public class PlayerController : MonoBehaviour
         _isSkill1 = false;
         _coAttack = null;
         _sceneAttackButton = SceneAttackButton.None;
+        _creatureState = CreatureState.Attack;
     }
     public void Skill1Event1()
     {
@@ -407,6 +410,7 @@ public class PlayerController : MonoBehaviour
             }
             StartCoroutine(CoSkill3());
             _sceneAttackButton = SceneAttackButton.None;
+            _creatureState = CreatureState.Idle;
         }
     }
     IEnumerator CoSkill3()
