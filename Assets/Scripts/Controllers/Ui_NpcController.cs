@@ -39,8 +39,11 @@ public class Ui_NpcController : MonoBehaviour
         // 조건
         // 만약 다른 _conversationCount 이 남아있으면 계속 대화를 해야되고
         // _conversationCount이 없으면 대화를 그만 하고 UI를 켜야됨
+        // 대화 종료 되었는지 확인할 변수
+        bool isConversationEnd = false;
         if (GameManager.Quest._questStroy.Count <= GameManager.Quest._conversationCount)
         {
+            isConversationEnd = true;
             GameManager.Quest.QuestConversationEnd();
         }
         // 조건 동영상 재생을 위한 레벨은? 2레벨
@@ -54,8 +57,16 @@ public class Ui_NpcController : MonoBehaviour
             case 3 :
                 break;
             case 4 :
+                if(isConversationEnd)
+                {
+                    GameManager.Ui.PopUpLocation("도망자들의 마을");
+                }
                 break;
             case 5 :
+                if(isConversationEnd)
+                {
+                    GameManager.Ui.PopUpLocation("트라이 산맥");
+                }
                 break;
             case 6:
                 break;

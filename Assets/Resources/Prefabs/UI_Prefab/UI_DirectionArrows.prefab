@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2738729554759280592}
   - component: {fileID: 2738729554759280597}
   - component: {fileID: 2738729554759280594}
-  - component: {fileID: 2738729554759280595}
   - component: {fileID: 2738729554759280596}
   m_Layer: 5
   m_Name: DirectionArrow_1
@@ -78,21 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2738729554759280595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2738729554759280593}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0426c9cf5ebeebf488e2ed2d0a6e3172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Arrow_1: {fileID: 0}
-  _Arrow_2: {fileID: 0}
-  _Arrow_3: {fileID: 0}
 --- !u!95 &2738729554759280596
 Animator:
   serializedVersion: 4
@@ -124,7 +108,6 @@ GameObject:
   - component: {fileID: 2738729554839209378}
   - component: {fileID: 2738729554839209383}
   - component: {fileID: 2738729554839209380}
-  - component: {fileID: 2738729554839209381}
   - component: {fileID: 2738729554839209382}
   m_Layer: 5
   m_Name: DirectionArrow_2
@@ -191,21 +174,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2738729554839209381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2738729554839209379}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0426c9cf5ebeebf488e2ed2d0a6e3172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Arrow_1: {fileID: 0}
-  _Arrow_2: {fileID: 0}
-  _Arrow_3: {fileID: 0}
 --- !u!95 &2738729554839209382
 Animator:
   serializedVersion: 4
@@ -340,7 +308,6 @@ GameObject:
   - component: {fileID: 2738729556638473808}
   - component: {fileID: 2738729556638473813}
   - component: {fileID: 2738729556638473810}
-  - component: {fileID: 2738729556638473811}
   - component: {fileID: 2738729556638473812}
   m_Layer: 5
   m_Name: DirectionArrow_3
@@ -407,21 +374,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2738729556638473811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2738729556638473809}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0426c9cf5ebeebf488e2ed2d0a6e3172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Arrow_1: {fileID: 0}
-  _Arrow_2: {fileID: 0}
-  _Arrow_3: {fileID: 0}
 --- !u!95 &2738729556638473812
 Animator:
   serializedVersion: 4

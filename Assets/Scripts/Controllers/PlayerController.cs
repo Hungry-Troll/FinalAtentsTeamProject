@@ -7,11 +7,11 @@ using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 _inputDir;
-    Vector3 _tempVector;
-    Vector3 _tempDir;
-    Vector3 _rollVecter;
-    Vector3 _rollDir;
+    protected Vector2 _inputDir;
+    protected Vector3 _tempVector;
+    protected Vector3 _tempDir;
+    protected Vector3 _rollVecter;
+    protected Vector3 _rollDir;
     public float _moveSpeed;
     public float _rotationSpeed;
     public float _rollSpeed;
@@ -20,45 +20,47 @@ public class PlayerController : MonoBehaviour
     public SceneAttackButton _sceneAttackButton;
     public Animator _anim;
     public PlayerStat _playerStat;
-    bool _KeyboardInputOnOff;
-    bool _isRoll;
-    bool _isSkill1;
-    bool _isSkill3;
+    protected bool _KeyboardInputOnOff;
+    protected bool _isRoll;
+    protected bool _isSkill1;
+    protected bool _isSkill3;
+    public GoldController _goldController;
+    protected Define.Job _playerJob;
 
     // 공격용 코루틴
-    Coroutine _coAttack;
+    protected Coroutine _coAttack;
 
     // 공격속도 코루틴 대입용 
-    float _attackDelay;
+    protected float _attackDelay;
 
     // 공격 이펙트용
-    TrailRenderer _swordEffect;
+    protected TrailRenderer _swordEffect;
 
     //Skill1 파티클용
-    ParticleSystem _skill1SlashEffect1_1;
-    ParticleSystem _skill1SlashEffect1_2;
-    ParticleSystem _skill1SlashEffect1_3;
-    ParticleSystem _skill1SlashEffect1_4;
-    ParticleSystem _skill1SlashEffect1_5;
-    ParticleSystem _skill1SlashEffect2_1;
-    ParticleSystem _skill1SlashEffect2_2;
-    ParticleSystem _skill1SlashEffect2_3;
-    ParticleSystem _skill1SlashEffect2_4;
-    ParticleSystem _skill1SlashEffect2_5;
-    ParticleSystem _skill3GroundEffect;
-    ParticleSystem _skill3BoosterEffect;
+    protected ParticleSystem _skill1SlashEffect1_1;
+    protected ParticleSystem _skill1SlashEffect1_2;
+    protected ParticleSystem _skill1SlashEffect1_3;
+    protected ParticleSystem _skill1SlashEffect1_4;
+    protected ParticleSystem _skill1SlashEffect1_5;
+    protected ParticleSystem _skill1SlashEffect2_1;
+    protected ParticleSystem _skill1SlashEffect2_2;
+    protected ParticleSystem _skill1SlashEffect2_3;
+    protected ParticleSystem _skill1SlashEffect2_4;
+    protected ParticleSystem _skill1SlashEffect2_5;
+    protected ParticleSystem _skill3GroundEffect;
+    protected ParticleSystem _skill3BoosterEffect;
     //이펙트 변화용 변수
     int effectChange;
 
     //Json 스킬정보
-    TextAsset _skillInfoJson;
+    protected TextAsset _skillInfoJson;
     //Skill3 정보 저장용
-    Skill3Info _skill3Stat;
+    protected Skill3Info _skill3Stat;
     public int skill3Level;
     //Skill3 플레이어 크기 트렌스폼 찾는 변수(미니Hp바 때문에)
-    Transform _skill3PlayerScale;
+    protected Transform _skill3PlayerScale;
     // Start is called before the first frame update
-    private void Start()
+    protected void Start()
     {
         _moveSpeed = 10.0f;
         _rotationSpeed = 10f;
@@ -70,6 +72,9 @@ public class PlayerController : MonoBehaviour
         _autoMoveSpeed = _moveSpeed + 2.0f;
         _playerStat = GetComponent<PlayerStat>();
         _attackDelay = 1.0f;
+        _goldController = GetComponent<GoldController>();
+        _playerJob = GameManager.Select._job;
+
         // 공격이펙트 연결
         Transform tmp = Util.FindChild("SwordEffect", transform);
         _swordEffect = tmp.GetComponent<TrailRenderer>();
@@ -117,7 +122,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    protected void Update()
     {
         Debug.Log("키보드 onoff"+_KeyboardInputOnOff);
         Debug.Log("일반행동" +_creatureState);
@@ -171,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
     }
     // 애니메이션을 따로 관리
-    private void UpdateAnimation()
+    protected void UpdateAnimation()
     {
         switch (_creatureState)
         {
@@ -194,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    private void SkillAnimation()
+    protected void SkillAnimation()
     {
         switch (_sceneAttackButton)
         {
@@ -212,7 +217,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Idle()
+    protected void Idle()
     {
         // 대기 중 이동
         if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
@@ -221,7 +226,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Move()
+    protected void Move()
     {
         if (_KeyboardInputOnOff == true)
         {
@@ -315,7 +320,7 @@ public class PlayerController : MonoBehaviour
         transform.position += _tempVector;
         StartCoroutine(CoRoll());
     }
-    IEnumerator CoRoll()
+    protected IEnumerator CoRoll()
     {
         yield return new WaitForSeconds(1f);
         _isRoll = false;
@@ -357,7 +362,7 @@ public class PlayerController : MonoBehaviour
             _creatureState = CreatureState.Move;
         }
     }
-    IEnumerator CoSkill1()
+    protected IEnumerator CoSkill1()
     {
         _swordEffect.enabled = true;
         _anim.SetInteger("playerStat", 5);
@@ -414,7 +419,7 @@ public class PlayerController : MonoBehaviour
             _creatureState = CreatureState.Idle;
         }
     }
-    IEnumerator CoSkill3()
+    protected IEnumerator CoSkill3()
     {
         _anim.SetInteger("playerStat", 7);
         _skill3PlayerScale.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
@@ -455,7 +460,7 @@ public class PlayerController : MonoBehaviour
         _skill3Stat.Skill3StatDef = int.Parse(_skillInfo["_Def"].Value);
         _skill3Stat.Duration = float.Parse(_skillInfo["_Duration"].Value);
     }
-    private void AutoMove()
+    protected void AutoMove()
     {
         // 거리
         float distance = Vector3.Distance(GameManager.Obj._targetMonster.transform.position, transform.position);
@@ -468,13 +473,30 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(tempDir.normalized);
 
         // 일정거리이상 가까워지면 공격
-        if (distance < 2.0f)
+        // 플레이어 스탯에 기본 사정거리 추가? 팀과 상의 후 결정
+        float defaultDistance = 0;
+        switch(_playerJob)
+        {
+            case Define.Job.Superhuman:
+                defaultDistance = 2.0f;
+                break;
+            case Define.Job.Cyborg:
+                defaultDistance = 10.0f;
+                break;
+            case Define.Job.Scientist:
+                defaultDistance = 5.0f;
+                break;
+            default:
+                defaultDistance = 2.0f;
+                break;
+        }
+        if(distance < defaultDistance)
         {
             _creatureState = CreatureState.Attack;
         }
     }
 
-    private void Attack()
+    protected void Attack()
     {
         // 타겟 널 판정
         if (GameManager.Obj._targetMonster == null)
@@ -504,7 +526,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 공격 딜레이 계산 (애니메이션 딜레이만)
-    IEnumerator CoAttackDelay(float _delay)
+    protected IEnumerator CoAttackDelay(float _delay)
     {
         // 딜레이
         yield return new WaitForSeconds(_delay);
@@ -569,7 +591,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Dead()
+    protected void Dead()
     {
         // 플레이어가 죽으면 유다이 같은 것을 띄울 것
         GameManager.Ui.GameOverUI();
@@ -609,11 +631,11 @@ public class PlayerController : MonoBehaviour
         }
     }
     //Vector3 beforePosition;
-    private float currentTime = 0;
-    private float ShakeRange = 0.5f;
-    private float ShakeTime = 0.4f;
+    protected float currentTime = 0;
+    protected float ShakeRange = 0.5f;
+    protected float ShakeTime = 0.4f;
 
-    IEnumerator ShakeCam()
+    protected IEnumerator ShakeCam()
     {
         GameManager.Cam._Vcam1.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1.5f;
         yield return new WaitForSeconds(0.3f);

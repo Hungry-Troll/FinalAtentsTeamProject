@@ -30,8 +30,25 @@ public class CreateManager
             {
                 // 생성
                 GameObject player = GameObject.Instantiate<GameObject>(temPlayerChar, hit.point, Quaternion.identity);
-                // 컴포넌트 부착
-                _player = player.AddComponent<PlayerController>();
+                
+                // 직업별 컴포넌트 부착
+                _select_Job = Util.SortJob(playerName);
+                switch(_select_Job)
+                {
+                    case Define.Job.Superhuman:
+                        _player = player.AddComponent<SuperhumanController>();
+                        break;
+                    case Define.Job.Cyborg:
+                        _player = player.AddComponent<CyborgController>();
+                        break;
+                    case Define.Job.Scientist:
+                        _player = player.AddComponent<ScientistController>();
+                        break;
+                    default:
+                        _player = player.AddComponent<PlayerController>();
+                        break;
+                }
+                
                 // Obj 매니저에서 PlayerStat 관리
                 GameManager.Obj._playerStat = player.AddComponent<PlayerStat>();
                 // 스텟 적용

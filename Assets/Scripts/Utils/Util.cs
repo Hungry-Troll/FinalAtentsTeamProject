@@ -27,4 +27,50 @@ public class Util
         GameObj.name = go.name;
         return GameObj;
     }
+
+    // Define.Job 타입으로 직업 받으면 string으로 반환
+    // 오버로딩(1/2)
+    public static string SortJob(Define.Job jobEnum)
+    {
+        // 리턴할 값 초기화
+        string jobString = "None";
+        switch(jobEnum)
+        {
+            case Define.Job.Superhuman:
+                jobString = Define.Job.Superhuman.ToString();
+                break;
+            case Define.Job.Cyborg:
+                jobString = Define.Job.Cyborg.ToString();
+                break;
+            case Define.Job.Scientist:
+                jobString = Define.Job.Scientist.ToString();
+                break;
+            default:
+                break;
+        }
+        return jobString;
+    }
+
+    // string 타입으로 직업 받으면 Define.Job으로 반환
+    // 오버로딩(2/2)
+    public static Define.Job SortJob(string jobString)
+    {
+        // 리턴할 값 초기화
+        Define.Job jobEnum = Define.Job.None;
+        switch(jobString)
+        {
+            case "Superhuman":
+                jobEnum = Define.Job.Superhuman;
+                break;
+            case "Cyborg":
+                jobEnum = Define.Job.Cyborg;
+                break;
+            case "Scientist":
+                jobEnum = Define.Job.Scientist;
+                break;
+            default:
+                break;
+        }
+        return jobEnum;
+    }
 }
