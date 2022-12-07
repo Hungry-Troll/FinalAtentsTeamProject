@@ -125,6 +125,12 @@ public class UiManager
     public MonsterController _targetMonsterController; 
     public MonsterStat _targetMonsterStat;
 
+    // 터치 잠금 스크린
+    public GameObject _lockScreen;
+    // 스킵 버튼
+    public Button _skipButton;
+    public UI_SkipButton _skipButtonController;
+
     
 
 
@@ -217,6 +223,14 @@ public class UiManager
         _buyCancel = GameManager.Create.CreateUi("UI_BuyCancel", go);
         _buyCancelScript = _buyCancel.AddComponent<UI_BuyCancelButton>();
         _buyCancel.SetActive(false);
+
+        // 터치 잠금 스크린 생성 후 비활성화
+        _lockScreen = GameManager.Create.CreateUi("UI_LockScreen", go);
+        // 스킵 버튼 생성
+        _skipButton = _lockScreen.GetComponentInChildren<Button>();
+        _skipButtonController = _skipButton.AddComponent<UI_SkipButton>();
+        _skipButton.onClick.AddListener(_skipButtonController.SkipTutorialVideo);
+        _lockScreen.SetActive(false);
     }
     
     // 아이템 스텟창 함수 Init
@@ -1058,5 +1072,11 @@ public class UiManager
     public void RollingButton()
     {
         GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Rolling;
+    }
+
+    // 터치 잠금 스크린 On/Off 함수
+    public void ScreenLock(bool state)
+    {
+        _lockScreen.SetActive(state);
     }
 }

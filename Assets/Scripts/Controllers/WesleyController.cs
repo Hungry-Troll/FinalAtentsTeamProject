@@ -102,7 +102,9 @@ public class WesleyController : MonoBehaviour
     public void OpeningVideoPlay()
     {
         capsuleCollider.enabled = true;
-        GameManager.Create.CreateUi("UI_TutorialVideo", gameObject);
+        GameObject tutorialVideo = GameManager.Create.CreateUi("UI_TutorialVideo", gameObject);
+        // 스킵 버튼에 비디오 오브젝트 넘겨주기
+        GameManager.Ui._skipButtonController.UI_TutorialVideo = tutorialVideo;
 
         // 웨슬리 NPC 가상카메라 OFF
         GameManager.Cam.WeleyCamOff();
