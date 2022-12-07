@@ -75,9 +75,24 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
                 Debug.Log("방어구클릭");
                 break;
         }
+    }
+    public void UsePotionExternal(PlayerStat ob, int max)
+    {
+        if (ob.Hp <= max)
+        {
+            ob.Hp += 50;
+            Debug.Log(ob.Hp);
+            if (ob.Hp >= max)
+            {
+                ob.Hp = max;
+            }
+            //아이템 개수가 남아있으면 갯수만 줄이고
+            //아이템 개수가 0개가 되면 사라지게 함
+            GameManager.Ui.ItemStatViewUsePotion();
+        }
+    }
 
 
-    } 
     void DropItem()
     {
         GameManager.Ui.ItemStatViewWeaponDrop();

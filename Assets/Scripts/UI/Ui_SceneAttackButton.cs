@@ -9,6 +9,10 @@ public class Ui_SceneAttackButton : MonoBehaviour
     SceneAttackButton sceneAttackButton;
     public List<Ui_SceneSkillSlot> _skillSlots;
     Transform _findRollCoolTime;
+
+    public int potionCnt;   // 포션갯수 지정	
+    public Text potionCntTxt;
+
     public Image _rollCoolTimeImage;
     public Image _skill1CoolTimeImage;
     public Image _skill2CoolTimeImage;
@@ -47,6 +51,13 @@ public class Ui_SceneAttackButton : MonoBehaviour
         newColor = new Color(0, 1f, 0);
         newColor.a = 0.5f;
         originalColor = _skill3CoolTimeImage.color;
+
+        // 포션용	
+        potionCntTxt = Util.FindChild("UI_PotionButton", transform).GetChild(0).GetComponent<Text>();
+        potionCnt = 0;
+        potionCntTxt.text = "";
+
+
     }
 
     public void AttackButton()
@@ -142,6 +153,33 @@ public class Ui_SceneAttackButton : MonoBehaviour
         }
         _rollCoolTimeCheck = false;
     }
+
+    // 물약 먹는 버튼	
+    public void UsePotion()
+    {
+        // 포션이 1개라도 있어야지 사용 할 수 있다.	
+        if (potionCnt >= 1)
+        {
+            PlayerStat ob = GameManager.Obj._playerStat;
+            int max = GameManager.Obj._playerStat.Max_Hp;
+            GameManager.Ui._itemStatViewController.UsePotionExternal(ob, max);
+            potionCnt--;
+            if (potionCnt == 0)
+            {
+                potionCntTxt.text = " ";
+            }
+            else
+            {
+                potionCntTxt.text = potionCnt.ToString();
+            }
+        }
+    }
+    public void GetPotion()
+    {
+        potionCnt++;
+        potionCntTxt.text = potionCnt.ToString();
+    }
+
 }
 
 

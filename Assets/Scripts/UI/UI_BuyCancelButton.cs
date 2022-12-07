@@ -29,6 +29,9 @@ public class UI_BuyCancelButton : MonoBehaviour
         if (_shopSelectItem.name == "potion1")
         {
             GameManager.Item.InventoryItemAdd(_shopSelectItem, false);
+            // 외부UI에도 포션 아이템이 증가해야 한다.
+            Ui_SceneAttackButton tmp = GameManager.Ui._sceneButton.GetComponent<Ui_SceneAttackButton>();
+            tmp.GetPotion();
             CancelButtonClick();
         }
         else

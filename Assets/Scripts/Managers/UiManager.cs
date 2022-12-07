@@ -626,7 +626,8 @@ public class UiManager
                     ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
                     // 플레이어 스크립트에 스텟 더해줌
                     GameManager.Obj._playerStat.Atk += tmpStatEx.Skill;
-
+                    // i번째 이후부터 검색해서 물약 한칸 앞으로 당기기	
+                    SetPotionPullForwardOneSpace(i);
                     // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 
                     GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
                     GameManager.Ui._inventoryController._item.RemoveAt(i);
@@ -673,6 +674,9 @@ public class UiManager
                     // 플레이어 스크립트에 스텟 더해줌
                     GameManager.Obj._playerStat.Def += tmpStatEx.Skill;
 
+                    // i번째 이후부터 검색해서 물약 한칸 앞으로 당기기
+                    SetPotionPullForwardOneSpace(i);
+
                     // 인벤에서 방어구 제거 >> 게임오브젝트 제거, 이미지 제거 
                     GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
                     GameManager.Ui._inventoryController._item.RemoveAt(i);
@@ -702,6 +706,7 @@ public class UiManager
     }
 
     // 아이템 버리는 함수	
+
     public void ItemStatViewWeaponDrop()
     {
         // 인벤토리의 아이템을 버리는 경우	
@@ -716,6 +721,7 @@ public class UiManager
                     int slotNum = 0;
                     slotNum = i;
                     GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub();
+                    // 만약 줄어든 뒤 갯수가 0개라면, 해당 인벤토리칸 지우기
                     if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
                     {
                         GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
@@ -732,6 +738,9 @@ public class UiManager
                 // 인벤토리 아이템하고 이미지가 동일하면	
                 if (_itemStatViewController._sprite.name == GameManager.Ui._inventoryController._item[i].name)
                 {
+                    // i번째 이후부터 검색해서 물약 한칸 앞으로 당기기
+                    SetPotionPullForwardOneSpace(i);
+
                     // 인벤에서 무기 제거 >> 게임오브젝트 제거, 이미지 제거 	
                     GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
                     GameManager.Ui._inventoryController._item.RemoveAt(i);
@@ -746,6 +755,33 @@ public class UiManager
         // 인벤토리에 들어있는 게임오브젝트의 이름을 이미지 이름과 비교해서 동일한 이미지를 넣는 함수	
         InventoryImageArray();
     }
+
+    // 외부에서 물약 사용시 처리하기(sprite없기때문에 기존 방법 안됨)
+    public void ItemStatViewUsePotion()
+    {
+        for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
+        {
+            if (GameManager.Ui._inventoryController._item[i].name == "potion1")
+            {
+                int slotNum = 0;
+                slotNum = i;
+                GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub(); // 물약을 사용했으니, 갯수가 하나 줄어듬
+
+                // 만약 줄어든 뒤 갯수가 0개라면, 해당 인벤토리칸 지우기
+                if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
+                {
+                    GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+                    GameManager.Ui._inventoryController._item.RemoveAt(i);
+                    _slotImage[i].sprite = null;
+                    _slotImage[i].gameObject.SetActive(false);
+                    break;
+                }
+            }
+        }
+
+        InventoryImageArray();
+    }
+
 
     // 인벤토리 이미지 정렬 함수 (랜더링)	
     // 아이템 장착 시 해제 시 사용	
@@ -775,6 +811,30 @@ public class UiManager
             _slotImage[i].sprite = null;
             _slotImage[i].gameObject.SetActive(false);
             GameManager.Ui._inventoryController._invenSlotList[i]._SlotItem.Clear();
+
+            GameManager.Ui._inventoryController._invenSlotList[i].itemCntText.text = " ";
+        }
+    }
+    /// <summary>
+    /// 포션 아이템을 한칸 앞으로 당기는 함수
+    /// </summary>
+    /// <param name="_i">인벤토리 아이템에서 해당 번호 이후부터 검색하는 용도</param>
+    public void SetPotionPullForwardOneSpace(int i)
+    {
+        // 여기에서 사라지는 아이템의 이후index에서 물약칸은 해당 한칸 앞으로 이동해야된다. (아이템이 remove되기전에 text부터 움직임.
+        for (int j = i; j < GameManager.Ui._inventoryController._item.Count; j++)
+        {
+            if (GameManager.Ui._inventoryController._item[j].name == "potion1")
+            {
+                Debug.Log("사라지는 아이템의 인덱스 : " + j);
+                // 앞으로 한칸 움직이기(아이템 수량을)
+                GameManager.Ui._inventoryController._invenSlotList[j - 1]._invenItemCount = GameManager.Ui._inventoryController._invenSlotList[j]._invenItemCount;
+                GameManager.Ui._inventoryController._invenSlotList[j]._invenItemCount = 0;
+
+                // 해당 수량을 text로 표시하기
+                GameManager.Ui._inventoryController._invenSlotList[j - 1].SetItemCntText();
+                GameManager.Ui._inventoryController._invenSlotList[j].SetItemCntText();
+            }
         }
     }
 
