@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     static GameManager _instance;
     public static GameManager Instance 
     { 
-        get{ return _instance; } 
+        get { return _instance; }
     }
     /// 매니저 생성
     ResourceManager _resource = new ResourceManager();

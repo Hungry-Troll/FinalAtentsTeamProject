@@ -43,14 +43,29 @@ public class DamageTextEX : MonoBehaviour
         float power = 1.0f;
         _text.color = _damage > 30 ? Color.red : Color.white;
         _text.text = _damage.ToString();
-        // 점점 없어지는...
-        _text.DOFade(0f, 1.0f);
-        // 글씨 크기 증가
-        transform.DOPunchScale(Vector3.one * 0.03f, 0.2f,1,0);
+        
+        // null 체크
+        if(_text != null)
+        {
+            // 점점 없어지는...
+            _text.DOFade(0f, 1.0f);
+        }
+        
+        // null 체크
+        if(transform != null)
+        {
+            // 글씨 크기 증가
+            transform.DOPunchScale(Vector3.one * 0.03f, 0.2f, 1, 0);
+        }
         Vector3 endPos = transform.position + new Vector3(0, _y, 0);
         endPos.x += (Random.insideUnitCircle * power).x;
-        // 글씨 점프 효과
-        transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() => { gameObject.SetActive(false)/*Destroy(gameObject)*/; });
+        
+        // null 체크
+        if(transform != null)
+        {
+            // 글씨 점프 효과
+            transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() => { gameObject.SetActive(false)/*Destroy(gameObject)*/; });
+        }
     }
 
     // Update is called once per frame
