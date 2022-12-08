@@ -26,6 +26,9 @@ public class Util
         // 오브젝트매니저 _objPool 에서 동일한 아이템을 가지고 있으면
         for (int i = 0; i < GameManager.Obj._objPool.Count; i++)
         {
+            // 널이면 스킵
+            if (GameManager.Obj._objPool[i] == null)
+                continue;
             if (go.name == GameManager.Obj._objPool[i].name)
             {
                 //새로 만들지 않고 기존에 가지고 있는 객체로 대체
