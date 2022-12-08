@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,12 +30,14 @@ public class Title : MonoBehaviour
     public void OptionOn()
     {
         Option.SetActive(true);
+        Option.transform.DOMoveY(550, 1f).SetEase(Ease.OutBounce).SetUpdate(true);
         Time.timeScale = 0f;
     }
 
     public void OptionOff()
     {
-        Option.SetActive(false);
+        // Option.SetActive(false);
+        Option.transform.DOMoveY(2000, 1f).SetEase(Ease.InBounce).SetUpdate(true);
         Time.timeScale = 1f;
     }
 
