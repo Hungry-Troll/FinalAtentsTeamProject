@@ -50,6 +50,9 @@ public class MonsterControllerEX : MonoBehaviour
     //퀘스트용 몬스터 전용 변수
     public bool _isQuest;
 
+    // 범위 공격 피격용 박스콜라이더
+    public BoxCollider _mobBoxCollider;
+
     public int _mobNum
     {
         get;
@@ -79,6 +82,8 @@ public class MonsterControllerEX : MonoBehaviour
         _PlayerPos = GameManager.Obj._playerController.transform;
         // 게임매니저에서 플레이어 스크립트 가지고 옴
         _playerController = GameManager.Obj._playerController;
+        // 몬스터 피격용 박스콜라이더 (광역 스킬 피격용)
+        _mobBoxCollider = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame

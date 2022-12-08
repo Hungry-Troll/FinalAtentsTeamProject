@@ -74,7 +74,7 @@ public class Ui_SceneAttackButton : MonoBehaviour
         }
         if (_skill1CoolTimeCheck == false)
         {
-            GameManager.Ui.Skill1Button();
+            GameManager.Ui.Skill1Button(_skill1CoolTimeImage.sprite.name);
         }
     }
     IEnumerator Skill1CoolTime(float coolTime)
@@ -90,7 +90,7 @@ public class Ui_SceneAttackButton : MonoBehaviour
 
     public void Skill2Button()
     {
-        GameManager.Ui.Skill2Button();
+        GameManager.Ui.Skill2Button(_skill2CoolTimeImage.sprite.name);
     }
 
     public void Skill3Button(int isSkill3)
@@ -106,7 +106,7 @@ public class Ui_SceneAttackButton : MonoBehaviour
         }
         if (_skill3CoolTimeCheck == false)
         {
-            GameManager.Ui.Skill3Button();
+            GameManager.Ui.Skill3Button(_skill3CoolTimeImage.sprite.name);
         }
     }
     IEnumerator Skill3CoolTime(float coolTime)

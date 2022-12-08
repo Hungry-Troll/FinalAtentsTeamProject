@@ -453,6 +453,13 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
             // 내려놓는곳에 로드 후 추가
             sceneSkillSlot[tmpSelectedIcon]._uiImage.gameObject.SetActive(true);
             sceneSkillSlot[tmpSelectedIcon]._uiImage.sprite = GameManager.Resource.GetImage(_selectedIcon.sprite.name);
+            // 스킬을 넣으면 스킬 이미지가 잘보이게 색상을 조금 수정함
+            Color tmpColor;
+            tmpColor.a = 0.7f;
+            tmpColor.r = 1.0f;
+            tmpColor.g = 1.0f;
+            tmpColor.b = 1.0f;
+            sceneSkillSlot[tmpSelectedIcon]._uiImage.color = tmpColor;
             Debug.Log(sceneSkillSlot[tmpSelectedIcon]._uiImage.sprite.name);
             // 드래그용 임시 이미지 해제
             _selectedIcon.sprite = null;
@@ -472,6 +479,13 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
             sceneSkillSlot[tmpSelectedIcon]._uiImage.sprite = null;
             sceneSkillSlot[tmpSelectedIcon]._uiImage.gameObject.SetActive(true);
             sceneSkillSlot[tmpSelectedIcon]._uiImage.sprite = GameManager.Resource.GetImage(_selectedIcon.sprite.name);
+            // 스킬을 넣으면 스킬 이미지가 잘보이게 색상을 조금 수정함
+            Color tmpColor;
+            tmpColor.a = 0.7f;
+            tmpColor.r = 1.0f;
+            tmpColor.g = 1.0f;
+            tmpColor.b = 1.0f;
+            sceneSkillSlot[tmpSelectedIcon]._uiImage.color = tmpColor;
             Debug.Log(_slotList[_selectedSlot]._uiImage.sprite.name);
             // 드래그용 임시 이미지 해제
             _selectedIcon.sprite = null;

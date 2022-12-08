@@ -49,6 +49,11 @@ public class PlayerController : MonoBehaviour
     protected ParticleSystem _skill1SlashEffect2_5;
     protected ParticleSystem _skill3GroundEffect;
     protected ParticleSystem _skill3BoosterEffect;
+    //Skill2 파티클용
+    protected ParticleSystem _skill2WheelWindEffect;
+    //Skill2 공격범위 설정용
+    public BoxCollider _skill2BoxCollider;
+
     //이펙트 변화용 변수
     int effectChange;
 
@@ -89,6 +94,13 @@ public class PlayerController : MonoBehaviour
         _skill1SlashEffect2_3 = Util.FindChild("Skill1SlashEffect2_3", transform).GetComponent<ParticleSystem>();
         _skill1SlashEffect2_4 = Util.FindChild("Skill1SlashEffect2_4", transform).GetComponent<ParticleSystem>();
         _skill1SlashEffect2_5 = Util.FindChild("Skill1SlashEffect2_5", transform).GetComponent<ParticleSystem>();
+        // Skill2 파티클 연결
+        Transform skill2Tr = Util.FindChild("Skill2WheelWindEffect", transform);
+        _skill2WheelWindEffect = skill2Tr.GetComponent<ParticleSystem>();
+        // Skill2 파티클 Stop;
+        Skill2WheelWindOff();
+        // Skill2 공격범위용 콜라이더
+        _skill2BoxCollider = skill2Tr.GetComponent<BoxCollider>();
         // Skill3 파티클 연결
         _skill3GroundEffect = Util.FindChild("Skill3GroundEffect", transform).GetComponent<ParticleSystem>();
         _skill3BoosterEffect = Util.FindChild("Skill3BoosterEffect", transform).GetComponent<ParticleSystem>();
@@ -164,6 +176,7 @@ public class PlayerController : MonoBehaviour
                     Skill1();
                     break;
                 case SceneAttackButton.Skill2:
+                    Skill2();
                     break;
                 case SceneAttackButton.Skill3:
                     Skill3();
@@ -209,6 +222,7 @@ public class PlayerController : MonoBehaviour
             case SceneAttackButton.Skill1:
                 break;
             case SceneAttackButton.Skill2:
+                _anim.SetInteger("playerStat", 6);
                 break;
             case SceneAttackButton.Skill3:
                 break;
@@ -565,29 +579,70 @@ public class PlayerController : MonoBehaviour
 
     public void Skill2()
     {
-        // 타겟 널 판정
-        if (GameManager.Obj._targetMonster == null)
+        _creatureState = CreatureState.None;
+        float skillDelay = 1.0f;
+        float skillSpeed = 10.0f;
+        //보고 있는 방향을 저장한다.
+        Vector3 skillDir;
+        skillDir = _tempDir.normalized;
+        _tempVector = skillDir;
+        _tempVector = _tempVector * Time.deltaTime * skillSpeed;
+        transform.position += _tempVector;
+
+        if (_coAttack == null)
         {
-            _creatureState = CreatureState.Idle;
+            _coAttack = StartCoroutine(CoSkill2(skillDelay));
+        }
+    }
+
+    protected IEnumerator CoSkill2(float _delay)
+    {
+        // 딜레이
+        yield return new WaitForSeconds(_delay);
+
+        _coAttack = null;
+        _sceneAttackButton = SceneAttackButton.None;
+        _creatureState = CreatureState.Idle;
+    }
+    // Skill2 애니메이션 클립에서 관리
+    // 스킬 이펙트 온
+    public void Skill2WheelWindOn()
+    {
+        _skill2WheelWindEffect.Play();
+        GameManager.Sound.SFXPlay("Skill2");
+    }
+    // Skill2 애니메이션 클립에서 관리
+    // 스킬 이펙트 오프
+    public void Skill2WheelWindOff()
+    {
+        _skill2WheelWindEffect.Stop();
+        // 오브젝트 매니저에있는 스킬공격대상 리스트를 초기화함 >> 다음 스킬에 다시 계산 후 적용
+        GameManager.Obj._targetMonstersControllerList = null;
+    }
+    // Skill2 애니메이션 클립에서 관리
+    // 대미지 계산
+    public void Skill2Event()
+    {
+        // 공격 대상을 찾음
+        List<MonsterControllerEX> targetList = GameManager.Obj.FindMobListTargets();
+
+        // 광역 스킬에 맞을 대상이 없으면 리턴
+        if (targetList == null)
+        {
             return;
         }
-
-        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
+        else if (targetList.Count < 0)
         {
-            // 회전
-            Vector3 tempDir = GameManager.Obj._targetMonster.transform.position - transform.position;
-            tempDir = Vector3.RotateTowards(transform.forward, tempDir.normalized, Time.deltaTime * _moveSpeed, 0);
-            transform.rotation = Quaternion.LookRotation(tempDir.normalized);
-            // 코루틴을 이용한 공격딜레이 (대미지 계산)
-            if (_coAttack == null)
-            {
-                _coAttack = StartCoroutine(CoAttackDelay(_attackDelay));
-            }
+            return;
         }
-        // 공격 중 이동
-        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
+        // 대상이 있으면
+        else
         {
-            _creatureState = CreatureState.Move;
+            // 대미지 계산
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                targetList[i].OnDamaged(_playerStat.Atk, 1);
+            }
         }
     }
 

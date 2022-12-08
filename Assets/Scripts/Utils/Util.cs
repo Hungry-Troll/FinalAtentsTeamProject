@@ -23,8 +23,21 @@ public class Util
     // 이니시에잇 할때마다 이름 바꾸기 귀찮아서 만든 함수
     public static GameObject Instantiate(GameObject go)
     {
+        // 오브젝트매니저 _objPool 에서 동일한 아이템을 가지고 있으면
+        for (int i = 0; i < GameManager.Obj._objPool.Count; i++)
+        {
+            if (go.name == GameManager.Obj._objPool[i].name)
+            {
+                //새로 만들지 않고 기존에 가지고 있는 객체로 대체
+                return GameManager.Obj._objPool[i];
+            }
+        }
+        // 없을 경우에만 새로 만듬
         GameObject GameObj = GameObject.Instantiate<GameObject>(go);
         GameObj.name = go.name;
+        //만든 객체를 오브젝트 매니저에서 관리
+        GameObj.transform.SetParent(GameManager.Obj._go.transform);
+        GameManager.Obj._objPool.Add(GameObj);
         return GameObj;
     }
 

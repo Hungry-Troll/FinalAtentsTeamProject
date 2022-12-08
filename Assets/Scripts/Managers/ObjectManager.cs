@@ -18,15 +18,29 @@ public class ObjectManager
     // 골드 정보
     public GoldController _goldController;
 
-    // 공격 타겟 몬스터 // 찾은 몬스터
+    // 공격 타겟 몬스터 // 찾은 몬스터 // 단일 공격용
     public GameObject _targetMonster;
     public MonsterControllerEX _targetMonsterController;
     public MonsterStat _targetMonsterStat;
 
+    // 공격 타겟 몬스터 // 광역 공격용
+    public List<MonsterControllerEX> _targetMonstersControllerList;
 
-    // 아이템 정보
+    // 필드 아이템 정보
     public List<ItemController> _itemContList = new List<ItemController>();
     public List<ItemStatEX> _itemStatList = new List<ItemStatEX>();
+
+    // 인벤토리 아이템을 오브젝트 풀링 방식으로 관리 >> Util.Instaiate에서 사용하는 모든 대상 오브젝트 풀 관리
+    // 하이어라키창 정리용 빈 게임오브젝트
+    public GameObject _go;
+    // Util.Instantiate에서 사용하는 변수
+    public List<GameObject> _objPool = new List<GameObject>();
+
+    public void Init()
+    {
+        _go = new GameObject();
+        _go.name = "@ObjPool_Root";
+    }
 
     // 몬스터 정보에서 타겟 몬스터를 찾는 함수 길찾기 x
     public void FindMobListTarget()
@@ -71,6 +85,34 @@ public class ObjectManager
             }
         }
     }
+    // 몬스터 정보에서 타겟 몬스터를 찾는 함수 길찾기 x (여러 몬스터 찾기)
+    public List<MonsterControllerEX> FindMobListTargets()
+    {
+        // 단일 타겟처럼 대상을 바로 오브젝트매니저에 접근해서 처리하려니까 버그가 발생해서
+        // 지역변수 리스트를 선언하고 대상을 리스트로 넘겨줌
+        List<MonsterControllerEX> targetMonstersControllerList = new List<MonsterControllerEX>();
+        // 널체크
+        if (GameManager.Obj._monsterContList.Count <= 0 || GameManager.Obj._monsterContList == null)
+        {
+            return null;
+        }
+        for (int i = 0; i < GameManager.Obj._monsterContList.Count; i++)
+        {
+            // 플레이어 콜라이더와 몬스터 콜라이더를 바운즈로 확인
+            if (GameManager.Obj._playerController._skill2BoxCollider.bounds.Intersects(GameManager.Obj._monsterContList[i]._mobBoxCollider.bounds))
+            {
+                targetMonstersControllerList.Add(GameManager.Obj._monsterContList[i]);
+            }
+        }
+        // 타겟 대상들이 없을 경우
+        if(targetMonstersControllerList.Count <= 0 || targetMonstersControllerList == null)
+        {
+            return null;
+        }
+        // 있을 경우
+        return targetMonstersControllerList;
+    }
+
     // 몬스터 정보에서 타겟 몬스터를 제거하는 함수
     public void RemoveMobListTraget(string MobName)
     {

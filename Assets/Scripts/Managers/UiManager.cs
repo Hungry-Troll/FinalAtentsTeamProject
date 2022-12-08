@@ -614,6 +614,9 @@ public class UiManager
         {
             // 임시 무기 변수
             GameObject tmpWeapon = null;
+            // 임시 카운트 변수
+            // 동일한 아이템이 일을 경우 아이템 장착을 하면 동일한 모든 아이템이 장착 아이템 하고 교체되는 버그 해결용
+            int count = 0;
             // 인벤토리에서 웨폰이 널이 아니라면 (기존 무기 착용을 했다면)
             if (_inventoryController._weapon != null)
             {
@@ -623,8 +626,9 @@ public class UiManager
             // 인벤토리 아이템 숫자만큼 루프
             for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
             {
-                // 인벤토리 아이템하고 이미지가 동일하면
-                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
+                // 인벤토리 아이템하고 이미지가 동일하고 임시 카운트 변수가 0 일경우
+                // 아이템을 장착하면 임시 카운트 변수를 증가 시킴으로 더이상 동일한 아이템이 모두 교체되지 않는다.
+                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name && count == 0)
                 {
                     // 무기 장착 (인벤토리상 들고있는 무기 / 인벤토리에서 들고있음)
                     _inventoryController._weapon = GameManager.Ui._inventoryController._item[i];
@@ -660,6 +664,8 @@ public class UiManager
                     }
                     // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
                     InventoryStatUpdate();
+                    // 임시 카운트 변수 증가
+                    count++;
                 }
             }
         }
@@ -667,6 +673,8 @@ public class UiManager
         {
             // 임시 방어구 변수
             GameObject tmpArmour = null;
+            // 동일한 아이템이 일을 경우 아이템 장착을 하면 동일한 모든 아이템이 장착 아이템 하고 교체되는 버그 해결용
+            int count = 0;
             // 인벤토리에서 아머가 널이 아니라면 (기존 무기 착용을 했다면)
             if (_inventoryController._armour != null)
             {
@@ -676,8 +684,9 @@ public class UiManager
             // 인벤토리 아이템 숫자만큼 루프
             for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
             {
-                // 인벤토리 아이템하고 이미지가 동일하면
-                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name)
+                // 인벤토리 아이템하고 이미지가 동일하고 임시 카운트 변수가 0 일경우
+                // 아이템을 장착하면 임시 카운트 변수를 증가 시킴으로 더이상 동일한 아이템이 모두 교체되지 않는다.
+                if (findImage.sprite.name == GameManager.Ui._inventoryController._item[i].name && count == 0)
                 {
                     // 방어구 장착 (인벤토리상 들고있는 방어구 / 인벤토리에서 들고있음)
                     _inventoryController._armour = GameManager.Ui._inventoryController._item[i];
@@ -709,6 +718,8 @@ public class UiManager
                     }
                     // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
                     InventoryStatUpdate();
+                    // 임시 카운트 변수 증가
+                    count++;
                 }
             }
         }
@@ -1055,18 +1066,52 @@ public class UiManager
         _locationPopUp.SetActive(false);
     }
 
-    public void Skill1Button()
+    public void Skill1Button(string imageName)
     {
-        GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+        SkillCheck(imageName);
     }
-    public void Skill2Button()
+    public void Skill2Button(string imageName)
     {
-
+        SkillCheck(imageName);
+    }
+    public void Skill3Button(string imageName)
+    {
+        SkillCheck(imageName);
     }
 
-    public void Skill3Button()
+    // 스킬 이미지를 확인해서 각 버튼에 스킬을 연결
+    public void SkillCheck(string imageName)
     {
-        GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+        switch (imageName)
+        {
+            case "skill1":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+                break;
+            case "skill2":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill2;
+                break;
+            case "skill3":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+                break;
+            case "skill4":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+                break;
+            case "skill5":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill2;
+                break;
+            case "skill6":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+                break;
+            case "skill7":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+                break;
+            case "skill8":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill2;
+                break;
+            case "skill9":
+                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+                break;
+        }
     }
 
     public void RollingButton()

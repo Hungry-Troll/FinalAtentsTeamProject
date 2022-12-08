@@ -59,6 +59,8 @@ public class FieldManager : MonoBehaviour
     private void TutorialAwake()
     {
         // 게임매니저에서 Ui매니저 Init(Awake 함수 대체)
+        // 오브젝트 매니저 Init();
+        GameManager.Obj.Init();
         // Ui 불러옴
         GameManager.Ui.Init();
         // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
@@ -87,10 +89,12 @@ public class FieldManager : MonoBehaviour
         // 몬스터 시작 위치
         _startPosMob[0] = _startPosMonster[0].transform.position;
         // 몬스터 생성 코드
-        for (int i = 0; i < GameManager.Resource._monster.Count - 1; i++)
+        for (int i = 0; i < 1 ; i++)
         {
             // 퀘스트 몬스터 생성
-            MonsterControllerEX monster = GameManager.Create.CreateQuestMonster(_startPosMob[0], GameManager.Resource._monster[i].name);
+            MonsterControllerEX monster = GameManager.Create.CreateQuestMonster(_startPosMob[0], "Velociraptor");
+            // 생성시 숫자를 넘어줌 (몬스터 삭제용)
+            monster.gameObject.name = monster.gameObject.name + i+1;
         }
 
         // 퀘스트 진행용 도어 생성
@@ -113,6 +117,8 @@ public class FieldManager : MonoBehaviour
 
     private void NextSceneAwake()
     {
+        // 오브젝트 매니저 Init();
+        GameManager.Obj.Init();
         // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
         GameManager.Obj.RemoveAllMobList();
         // Ui 불러옴
@@ -144,6 +150,8 @@ public class FieldManager : MonoBehaviour
 
     private void DungeonSceneAwake()
     {
+        // 오브젝트 매니저 Init();
+        GameManager.Obj.Init();
         // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
         GameManager.Obj.RemoveAllMobList();
         // Ui 불러옴
@@ -180,7 +188,7 @@ public class FieldManager : MonoBehaviour
             // 퀘스트 몬스터 생성(임시)
             MonsterControllerEX monster = GameManager.Create.CreateQuestMonster(_startPosMob[i], "Velociraptor");
             // 생성시 숫자를 넘어줌 (몬스터 삭제용)
-            monster.gameObject.name = monster.gameObject.name + i;
+            monster.gameObject.name = monster.gameObject.name + i+1;
         }
     }
 }

@@ -2036,6 +2036,7 @@ GameObject:
   - component: {fileID: 7849014359447024360}
   - component: {fileID: 7903527019718776812}
   - component: {fileID: -1197828656884701881}
+  - component: {fileID: 5088850211012646748}
   m_Layer: 8
   m_Name: Velociraptor
   m_TagString: Monster
@@ -2103,6 +2104,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &5088850211012646748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853137108724993014}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7853140246399344442
 GameObject:
   m_ObjectHideFlags: 0
