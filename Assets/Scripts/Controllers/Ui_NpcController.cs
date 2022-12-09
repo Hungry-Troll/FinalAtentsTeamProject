@@ -57,15 +57,19 @@ public class Ui_NpcController : MonoBehaviour
             case 3 :
                 break;
             case 4 :
+                // 장소 이름 팝업(마을)
                 if(isConversationEnd)
                 {
                     GameManager.Ui.PopUpLocation("도망자들의 마을");
+                    StartCoroutine(GameManager.Ui.ClosePopUpLocation());
                 }
                 break;
             case 5 :
+                // 장소 이름 팝업(던전)
                 if(isConversationEnd)
                 {
                     GameManager.Ui.PopUpLocation("트라이 산맥");
+                    StartCoroutine(GameManager.Ui.ClosePopUpLocation());
                 }
                 break;
             case 6:

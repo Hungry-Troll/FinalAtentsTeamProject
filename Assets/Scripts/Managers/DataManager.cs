@@ -111,7 +111,6 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     // 저장 : PlayData 타입으로 저장 후 json 파일 생성
     public void SaveData()
     {
-        // path 인식을 못해서 여기 일단 넣어줌...
         path = Application.dataPath + "/Resources/Data/Json/Save/" + filename + ".json";
 
         // 플레이어 이름 SelectManager에서 가져와서 저장
@@ -320,6 +319,10 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     // 추후 수정
     public void EquipWeaponLoad()
     {
+        // 무기 없으면 탈출
+        if(playData.Weapon.Trim().Equals(""))
+            return;
+        
         string tempName = playData.Weapon;
         // UI매니저 인벤토리컨트롤러에서 WeaponImage 게임오브젝트를 재귀함수로 찾음 
         Transform findTr = Util.FindChild("WeaponImage", GameManager.Ui._inventoryController.transform);
