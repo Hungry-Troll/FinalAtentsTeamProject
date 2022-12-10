@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3403639446689196297}
   - component: {fileID: 8280440384918659577}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: MiniVelo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2424,10 +2424,10 @@ GameObject:
   - component: {fileID: 4797142810712862417}
   - component: {fileID: 2714313636503771269}
   - component: {fileID: 1595802066}
-  - component: {fileID: 3996297020611642427}
+  - component: {fileID: 6245207918203893567}
   m_Layer: 0
-  m_Name: Velociraptor
-  m_TagString: Monster
+  m_Name: BossVelo
+  m_TagString: MonsterBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2506,7 +2506,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3996297020611642427
+--- !u!114 &6245207918203893567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2515,7 +2515,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4884112687873405643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72f5b808c89ef2b4b9f0cf5709fe846b, type: 3}
+  m_Script: {fileID: 11500000, guid: 06e04dca4482c3848883347af343bc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0

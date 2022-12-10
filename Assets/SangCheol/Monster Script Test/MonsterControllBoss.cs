@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class MonsterControllerTest : BaseController
+public class MonsterControllBoss : BaseController
 {
     void Awake()
     {
+        EffectManager.Instance.MonsterEffect(this.transform.position, Vector3.zero, this.gameObject.transform, EffectType.Summon);
         //몬스터 위 HpBar 위치
         _hpBarOffset = new Vector3(0, 6f, 0);
         //Resources 폴더 안에 있는 HpBar 프리팹 불러오기
         _hpBarPrefab = Resources.Load<GameObject>("HpBar");
         _damageTextOffset = new Vector3(0, 8f, 0);
         hudDamageText = Resources.Load<GameObject>("DamageText");
-        _distance = 15.0f;
+        _distance = 9000f;
         _rotateSpeed = 90f;
         _attack = 3.0f;
         _mobNum = 0;
@@ -49,15 +50,50 @@ public class MonsterControllerTest : BaseController
     {
         base.UpdateState();
     }
-    
+
     public override void UpdateIdle()
     {
         base.UpdateIdle();
     }
-    
+
     public override void UpdateMoving()
     {
-        base.UpdateMoving();
+        _speed = 7.0f;
+        if (_PosToPos <= _distance && _PosToPos > _attack)
+        {
+            Vector3 targetPos = new Vector3(2.5f, 0, 0);
+
+            transform.position = Vector3.MoveTowards(transform.position, (_PlayerPos.transform.position - targetPos), _speed * Time.deltaTime);
+            Vector3 _lookRotation = _PlayerPos.transform.position - this.transform.position;
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(_lookRotation), Time.deltaTime * _rotateSpeed);
+
+        }
+        // 공격
+        else if (_PosToPos <= _attack)
+        {
+            _ani.SetInteger("state", 0);
+            _time += Time.deltaTime;
+            if (_time > 3f)
+            {
+                _skillPersent = Random.Range(0, 99);
+                Debug.Log(_skillPersent);
+                if (_skillPersent > 90)
+                {
+                    Property_state = CreatureState.Skill;
+                }
+                else if (_skillPersent <= 90)
+                {
+                    Property_state = CreatureState.Attack;
+                }
+                _time = 0;
+            }
+        }
+        //대기
+        else if (_PosToPos > _distance)
+        {
+             Property_state = CreatureState.Idle;
+             return;
+        }
     }
 
     public override void UpdateAttack()
