@@ -42,7 +42,7 @@ public class Define
     public enum Monster
     {
         Parasaurolophus,
-        Pteranodon,
+        Iguanodon,
         Velociraptor,
         None,
     }
@@ -68,6 +68,7 @@ public class Define
         Move,
         AutoMove,
         Skill,
+        Skill2,
         Attack,
         Dead,
         None,
@@ -99,8 +100,10 @@ public class Define
         Miss,
         Normal,
         Critical,
+        Hit,
         Roar,
-        Scratch,
-        Bite
+        Bite,
+        Summon,
+        Smoke
     }
 }
