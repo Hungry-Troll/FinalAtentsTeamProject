@@ -25,7 +25,7 @@ public class QuestManagerEX
     //퀘스트 목표이름
     string _questObjectiveName;
     //퀘스트 목표치
-    int _questObjectiveScore;
+    public int _questObjectiveScore;
     //퀘스트 보상
     int _reward;
     [HideInInspector]
@@ -184,23 +184,40 @@ public class QuestManagerEX
     {
         // 퀘스트 목표 이름
         _questObjectivesText.text = _questObjectiveName + " " + Property_QuestProgressValue + " / <color=red>" + _questObjectiveScore + "</color>";
+        // 퀘스트 타이틀
+        _questTitleText.text = _questTile;
 
-        // 조건1 던전맵부터
-        // 조건2 퀘스트 목표가 달성되면 퀘스트 대화를 하도록
-        if (GameManager.Scene._sceneNameEnum == Define.SceneName.DunGeon)
+        //  퀘스트 스코어가 목표치가 진행상황보다 작거나 같으면
+        switch (GameManager.Scene._sceneNameEnum)
         {
-            // 퀘스트 레벨이 4이면
-            if(_questProgressValue >=_questObjectiveScore && GameManager.QuestData._questLevel == 5)
-            {
-                _wesleyController.RadioQuest();
-                DungeonDoor1Open();
-            }
-            // 퀘스트 레벨이 5이면
-            else if(_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 6)
-            {
-                _wesleyController.RadioQuest();
-                DungeonDoor2Open();
-            }
+            // 듀토리얼씬
+            case Define.SceneName.Tutorial:
+                // 퀘스트 목표치 달성
+                if (_questProgressValue >= _questObjectiveScore)
+                {
+
+                }
+                break;
+            case Define.SceneName.Village02:
+                if (_questProgressValue >= _questObjectiveScore)
+                {
+
+                }
+                break;
+            case Define.SceneName.DunGeon:
+                // 퀘스트 레벨이 5이면
+                if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 5)
+                {
+                    _wesleyController.RadioQuest();
+                    DungeonDoor1Open();
+                }
+                // 퀘스트 레벨이 6이면
+                else if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 6)
+                {
+                    _wesleyController.RadioQuest();
+                    DungeonDoor2Open();
+                }
+                break;
         }
     }
 
@@ -233,7 +250,7 @@ public class QuestManagerEX
         //퀘스트창은 활성화 >> 버튼에 이펙트를 넣는 방식으로 해서 직접 누르게 유도
         // _questInfo.SetActive(true);
         //퀘스트 타이틀 텍스트에 타이틀의 넣어준다
-        _questTitleText.text = _questTile;
+        //_questTitleText.text = _questTile;
 
         _wesleyController.EndToTalkWithWesley();
     }
@@ -241,6 +258,8 @@ public class QuestManagerEX
     // 퀘스트 완료 함수
     public void QuestCompletion()
     {
+        // 퀘스트 보상
+        QuestReward();
         //퀘스트 완료 리스트에 현재 퀘스트의 객체를 추가
         _questCompletionList.Add(_questData);
         //퀘스트 레벨에 맞는 문이 비활성화 되어 다음 단계로 넘어갈수 있음
@@ -288,6 +307,18 @@ public class QuestManagerEX
         _boxCollider[1].gameObject.SetActive(false);
         _navMeshObstacle[1].gameObject.SetActive(false);
     }
+
+    //퀘스트 보상함수
+    public void QuestReward()
+    {
+        // 오브젝트매니저 골드컨트롤러에 접근해서 리워드를 처리
+        GameManager.Obj._goldController.GetGold(_reward);
+        // 리워드용 UI 생성
+        GameManager.Ui.QuestRewardOnOff(true);
+        // 리워드용 골드 텍스트 수정
+        GameManager.Ui._uiQuestReward._rewardText.text = _reward.ToString() + " G";
+    }
+
 
     //위 내용 다 구현 후 정리
     /*

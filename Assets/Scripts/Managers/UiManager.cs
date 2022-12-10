@@ -131,7 +131,12 @@ public class UiManager
     public Button _skipButton;
     public UI_SkipButton _skipButtonController;
 
-    
+    // 퀘스트 보상창
+    public GameObject _questRewardUI;
+    public Ui_QuestReward _uiQuestReward;
+
+    // 골드가 부족합니다UI
+    public GameObject _dontBuy;
 
 
     //Ui 관리는 여기에서 처리
@@ -231,6 +236,15 @@ public class UiManager
         _skipButtonController = _skipButton.AddComponent<UI_SkipButton>();
         _skipButton.onClick.AddListener(_skipButtonController.SkipTutorialVideo);
         _lockScreen.SetActive(false);
+
+        // 퀘스트 리워드 UI
+        _questRewardUI = GameManager.Create.CreateUi("Ui_QuestReward", GameManager.Ui.go);
+        _uiQuestReward = _questRewardUI.GetComponent<Ui_QuestReward>();
+        _questRewardUI.SetActive(false);
+
+        // 골드가 부족합니다 UI
+        _dontBuy = GameManager.Create.CreateUi("Ui_DontBuy", GameManager.Ui.go);
+        _dontBuy.SetActive(false);
     }
     
     // 아이템 스텟창 함수 Init
@@ -975,6 +989,7 @@ public class UiManager
         _equipStatView.SetActive(false);
         _equipStatOpen = false;
         _questButton.SetActive(false);
+        //_questRewardUI.SetActive(false); 퀘스트 리워드는 스스로 꺼지니까 냅둠
         if (GameManager.Effect._levelUpPar.gameObject.activeSelf == true)
         {
             GameManager.Effect.LevelUpPortraitEffectOff();
@@ -1024,6 +1039,16 @@ public class UiManager
     public void GameOverUI()
     {
         GameManager.Create.CreateUi("UI_GameOver", go);
+    }
+    // 퀘스트 보상창 OnOFF
+    public void QuestRewardOnOff(bool value)
+    {
+        _questRewardUI.SetActive(value);
+    }
+    // 골드가 부족합니다 UI
+    public void DontBuyOnOff(bool value)
+    {
+        _dontBuy.SetActive(value);
     }
 
     /// <summary>

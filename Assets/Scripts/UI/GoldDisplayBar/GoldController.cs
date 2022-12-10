@@ -8,38 +8,50 @@ using UnityEngine;
 public class GoldController : MonoBehaviour
 {
     // 현재 골드 보유량
-    private int _goldAmount;
+    //[SerializeField]
+    //private int _goldAmount;
+    // 현재 골드 보유량을 플레이어 스텟에 직접 연결함
 
     public int GoldAmount
     {
-        get { return _goldAmount; }
-        set { _goldAmount = value; }
+        get
+        {
+            //return _goldAmount; 
+            return GameManager.Obj._playerStat.Gold;
+        }
+        set
+        {
+            //_goldAmount = value;
+            GameManager.Obj._playerStat.Gold = value;
+        }
     }
 
     // 기본 생성자
-    public GoldController() {}
+    public GoldController() { }
 
     // 골드량 초기값 있는 생성자
     public GoldController(int goldAmount)
     {
-        _goldAmount = goldAmount;
+        //_goldAmount = goldAmount;
+        GoldAmount = goldAmount;
     }
 
     // 골드 획득 함수(+)
     public void GetGold(int plusAmount)
     {
         // 획득량 더해주기
-        _goldAmount += plusAmount;
+        //_goldAmount += plusAmount;
+        GoldAmount += plusAmount;
     }
 
     // 골드 소비 함수(-)
     public bool SpendGold(int minusAmount)
     {
         // 보유 금액보다 소비액이 크다면 막아줘야함
-        if(_goldAmount >= minusAmount)
+        if (GoldAmount >= minusAmount)
         {
             // 소비량만큼 차감
-            _goldAmount -= minusAmount;
+            GoldAmount -= minusAmount;
             // 제대로 처리 됐으면 true return
             return true;
         }

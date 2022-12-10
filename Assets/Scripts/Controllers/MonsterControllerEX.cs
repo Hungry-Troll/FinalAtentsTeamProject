@@ -307,8 +307,14 @@ public class MonsterControllerEX : MonoBehaviour
     //몬스터 대미지 받는 함수
     public void OnDamaged(int playerAtk, int SkillDamagePercent)
     {
+        //널 체크
+        if (this.gameObject == null)
+        {
+            return;
+        }
         //대미지 텍스트 생성
         GameObject tmp = GameManager.Create.CreateUi("UI_DamageText", gameObject);
+
         tmp.transform.SetParent(this.gameObject.transform);
         DamageTextEX damageText = null;
         //널 체크

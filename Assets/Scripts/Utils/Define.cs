@@ -104,6 +104,7 @@ public class Define
         Roar,
         Bite,
         Summon,
-        Smoke
+        Smoke,
+        Scratch
     }
 }

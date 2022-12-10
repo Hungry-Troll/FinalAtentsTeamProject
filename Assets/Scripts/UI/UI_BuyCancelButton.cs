@@ -24,10 +24,23 @@ public class UI_BuyCancelButton : MonoBehaviour
     // 구매하기
     public void BuyButtonClick()
     {
-        GameObject potion = GameManager.Resource.GetfieldItem("potion1");
+        // 안쓰는 코드 아닌가용?
+        //GameObject potion = GameManager.Resource.GetfieldItem("potion1");
+
+        // 선택한 아이템의 객체 정보를 오브젝트 풀링방식으로 가지고 옴
+        GameObject tmpItem = Util.Instantiate(_shopSelectItem);
+        // 가지고온 정보에서 가격정보만 빼옴
+        int tmpGetPrice = tmpItem.GetComponent<ItemStatEX>().Get_Price;
 
         if (_shopSelectItem.name == "potion1")
         {
+            // 아이템 구매 시 골드 소모
+            bool buyBool = GameManager.Obj._goldController.SpendGold(tmpGetPrice);
+            if (buyBool == false)
+            {
+                GameManager.Ui._dontBuy.SetActive(true);
+                return;
+            }
             GameManager.Item.InventoryItemAdd(_shopSelectItem, false);
             // 외부UI에도 포션 아이템이 증가해야 한다.
             Ui_SceneAttackButton tmp = GameManager.Ui._sceneButton.GetComponent<Ui_SceneAttackButton>();
@@ -36,6 +49,13 @@ public class UI_BuyCancelButton : MonoBehaviour
         }
         else
         {
+            // 아이템 구매 시 골드 소모
+            bool buyBool = GameManager.Obj._goldController.SpendGold(tmpGetPrice);
+            if (buyBool == false)
+            {
+                GameManager.Ui._dontBuy.SetActive(true);
+                return;
+            }
             // 인벤토리에 아이템 넣음
             GameManager.Item.InventoryItemAdd(_shopSelectItem, false);
             // 상점에서 아이템도 제거 해야됨 어떻게??

@@ -57,7 +57,8 @@ public class WesleyController : MonoBehaviour
             RaycastHit RayStruct;
             if (Physics.Raycast(ray, out RayStruct, Mathf.Infinity))
             {
-                if (RayStruct.collider.tag == "Wesley")
+                // 타겟이 웨슬리이고 , 퀘스트 목표치를 달성했을 경우
+                if (RayStruct.collider.tag == "Wesley" && GameManager.Quest._questProgressValue >= GameManager.Quest._questObjectiveScore)
                 {
                     // 퀘스트 레벨에 따른 행동 분류
                     switch (GameManager.QuestData._questLevel)
@@ -147,6 +148,11 @@ public class WesleyController : MonoBehaviour
         // 콜라이더를 비활성화하는 이유는 이 줄을 지우고
         // 첫 번째 대화창이 있는 상태에서 상인을 클릭해보면 알 수 있음.                   
         capsuleCollider.enabled = false;
+        // 듀토리얼 2레벨 퀘스트 진행을 위한 임시 코드
+        if (GameManager.QuestData._questLevel == 2)
+        {
+            GameManager.Quest.Property_QuestProgressValue++;
+        }
     }
 
     // 무전기 퀘스트
