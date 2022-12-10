@@ -25,10 +25,6 @@ public class MovePlayer2 : MonoBehaviour
         tmp.x += x * Time.deltaTime * moveSpeed;
         tmp.z += z * Time.deltaTime * moveSpeed;
         transform.position = tmp;
-        if ((tmp.x != 0) || (tmp.z != 0))
-        {
-            manAnimator.SetInteger("Moving", 1);
-        }
     }
 }
 

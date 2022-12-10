@@ -2496,6 +2496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vCam1: {fileID: 0}
   vCam2: {fileID: 0}
+  vCam3: {fileID: 0}
   _player: {fileID: 0}
 --- !u!4 &375224455
 Transform:
@@ -7735,6 +7736,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: cc22c318cc7774545a4f05c4ec45a039, type: 3}
+    - target: {fileID: 342842643397043611, guid: 19f1b2e4cf925404ca2d219c2bfaa999, type: 3}
+      propertyPath: Cam
+      value: 
+      objectReference: {fileID: 5270095756848607235, guid: c0565b6ab70282a478c06d32b337a229, type: 3}
+    - target: {fileID: 342842643397043613, guid: 19f1b2e4cf925404ca2d219c2bfaa999, type: 3}
+      propertyPath: m_Name
+      value: Name
+      objectReference: {fileID: 0}
     - target: {fileID: 342842643800927752, guid: 19f1b2e4cf925404ca2d219c2bfaa999, type: 3}
       propertyPath: DialogsOfWesleyPanel.Array.data[0]
       value: 
@@ -10629,6 +10638,24 @@ MonoBehaviour:
   - {fileID: 2047538153483001331}
   VeniceDialog0: {fileID: 2412317243191850292}
   VeniceDialog1: {fileID: 5955990839613557324}
+--- !u!1 &1634843669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2093159149265126465, guid: 399ebb678591bb341950de7fd6324c8d, type: 3}
+  m_PrefabInstance: {fileID: 1634843666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1634843670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634843669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d542a8f5227b03547895d93ec9bd1df5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cam: {fileID: 5270095756848607235, guid: c0565b6ab70282a478c06d32b337a229, type: 3}
 --- !u!4 &1641582122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4696600790055844, guid: ef9ce9e71f9c842deb423b67ce619bac, type: 3}

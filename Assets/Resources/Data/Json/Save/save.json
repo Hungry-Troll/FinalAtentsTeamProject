@@ -1,20 +1,12 @@
 {
-    "_Name": "1234",
-    "_Job": "Superhuman",
+    "_Name": "",
+    "_Job": "Cyborg",
     "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
     "_Item_List": [
         "sword1",
-        "sword2",
-        "armour1",
-        "potion1",
-        "sword1",
-        "sword1",
-        "sword2",
-        "armour1",
-        "potion1",
         "sword1"
     ],
-    "_Weapon": "sword3",
+    "_Weapon": "gun3",
     "_Gold": 0
 }
