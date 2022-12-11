@@ -36,6 +36,9 @@ public class VeniceController : MonoBehaviour
         StrVeniceDialog1 = "주변에 위험한 동물이 많아요. 조심하세요.";
         ArrOfStrVeniceDialog0 = StrVeniceDialog0.ToCharArray();
         ArrOfStrVeniceDialog1 = StrVeniceDialog1.ToCharArray();
+        // 베니스 컨트롤러 오브젝트 매니저에서 관리 >> shop 연결을 위해
+        // 연결된 shop은 아이템 판매시 버튼 텍스트 변경용도로 사용
+        GameManager.Obj._veniceController = GetComponent<VeniceController>();
     }
 
     // Update is called once per frame
@@ -107,12 +110,16 @@ public class VeniceController : MonoBehaviour
     public void OpenShop()
     {
         Shop.SetActive(true);
+        // 상점 골드 창 킴
+        GameManager.Ui.goldDisplayShopOnOff(true);
         // 인벤토리 킴
         GameManager.Ui.InventoryOpen();
     }
     public void CloseShop()
     {
         Shop.SetActive(false);
+        // 상점 골드 창 끔
+        GameManager.Ui.goldDisplayShopOnOff(false);
         GameManager.Ui.InventoryClose();
     }
     public void EndToTalkWithVenice()

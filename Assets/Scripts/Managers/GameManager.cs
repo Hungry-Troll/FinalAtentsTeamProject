@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
     SkillManager _skill = new SkillManager();
     QuestDataManager _questData = new QuestDataManager();
     QuestManagerEX _quest = new QuestManagerEX();
+    DamageTextManager _damText = new DamageTextManager();
+
 
     public static ResourceManager Resource 
     { 
@@ -113,7 +115,10 @@ public class GameManager : MonoBehaviour
     {
         get { return _instance._quest; }
     }
-
+    public static DamageTextManager DamText
+    {
+        get { return _instance._damText; }
+    }
 
     // Start is called before the first frame update
     private void Awake()

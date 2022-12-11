@@ -11,14 +11,6 @@ public class WeaponManager
     // 두 변수를 통합할지는 추후 고민
     public GameObject _weapon = null;
 
-    // 무기 위치 찾는 함수 >> 정상작동됨
-    public Transform FindWeaponPos(Transform playerTransform)
-    {
-        // 이전에 유틸에서 만들어놓은 파인드 차일드 재귀함수를 이용해서 쉽게 위치를 찾음
-       Transform findPos = Util.FindChild("WeaponPos", playerTransform);
-        return findPos;
-    }
-
     // 무기 착용 함수 // 무기 방향이 돌아가는 버그가 있음 추후 해결
 /*    public void EquipWeapon(string weaponName, Transform equipWeaponPos)
     {
@@ -100,6 +92,21 @@ public class WeaponManager
             findTemp.gameObject.SetActive(true);
             _weapon = findPos.gameObject;
         }
+    }
+
+    // 무기 해제 함수
+    public void TempUnEquipWeapon(string weaponName, Transform playerTransform)
+    {
+        // 무기 위치 찾고
+        Transform findPos = Util.FindChild(weaponName, playerTransform);
+        // 캐릭터 상태창 무기 위치 찾기
+        Transform findTemp = Util.FindChild(weaponName, GameManager.Ui._statePlayerObj.transform);
+
+        // 무기 비활성화
+        findPos.gameObject.SetActive(false);
+        // 캐릭터 상태창 무기 비활성화
+        findTemp.gameObject.SetActive(false);
+        _weapon = null;
     }
 }
 

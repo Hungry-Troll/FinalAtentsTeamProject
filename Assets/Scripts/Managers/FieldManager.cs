@@ -58,6 +58,8 @@ public class FieldManager : MonoBehaviour
 
     private void TutorialAwake()
     {
+        // 대미지 텍스트 매니저
+        GameManager.DamText.Init();
         // 게임매니저에서 Ui매니저 Init(Awake 함수 대체)
         // 오브젝트 매니저 Init();
         GameManager.Obj.Init();
@@ -117,6 +119,8 @@ public class FieldManager : MonoBehaviour
 
     private void NextSceneAwake()
     {
+        // 대미지 텍스트 매니저
+        GameManager.DamText.Init();
         // 오브젝트 매니저 Init();
         GameManager.Obj.Init();
         // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
@@ -150,6 +154,8 @@ public class FieldManager : MonoBehaviour
 
     private void DungeonSceneAwake()
     {
+        // 대미지 텍스트 매니저
+        GameManager.DamText.Init();
         // 오브젝트 매니저 Init();
         GameManager.Obj.Init();
         // 오브젝트 매니저에서 기존 몬스터 리스트 초기화

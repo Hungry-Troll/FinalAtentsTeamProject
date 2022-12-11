@@ -16,10 +16,6 @@ public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHan
     public Define.ItemName _itemName;
     public Text _text;
 
-    void Start()
-    {
-        
-    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         // 드래그 시작

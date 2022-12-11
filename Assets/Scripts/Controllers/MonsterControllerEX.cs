@@ -299,31 +299,26 @@ public class MonsterControllerEX : MonoBehaviour
     {
         yield return new WaitForSeconds(_delay);
         // 오브젝트 풀링 추후 구현
-        //gameObject.SetActive(false);
-        Destroy(gameObject);
-        _coDead = null;
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
+        //_coDead = null;
     }
 
     //몬스터 대미지 받는 함수
     public void OnDamaged(int playerAtk, int SkillDamagePercent)
     {
-        //널 체크
-        if (this.gameObject == null)
-        {
-            return;
-        }
         //대미지 텍스트 생성
-        GameObject tmp = GameManager.Create.CreateUi("UI_DamageText", gameObject);
-
+        GameObject tmp = GameManager.DamText.DamageTextStart();
         tmp.transform.SetParent(this.gameObject.transform);
         DamageTextEX damageText = null;
+        // 몬스터를 파괴해서 생기는 버그였음 >> 몬스터 사망시 파괴하지않고 비활성화로 변경
         //널 체크
-        if (tmp != null) 
-            damageText = tmp.GetComponent<DamageTextEX>();
-        
+        //if (tmp != null) 
+        damageText = tmp.GetComponent<DamageTextEX>();
+
         //널 체크
-        if (damageText == null)
-            return;
+        //if (damageText == null)
+        //return;
 
         // 대미지 계산
         if (playerAtk > _monsterStat.Def)

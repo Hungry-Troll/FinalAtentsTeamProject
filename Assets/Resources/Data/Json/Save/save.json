@@ -4,13 +4,9 @@
     "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
     "_Item_List": [
-        "sword1",
-        "armour1",
         "potion1",
-        "sword1",
-        "armour1",
         "potion1"
     ],
-    "_Weapon": "sword1",
+    "_Weapon": "sword2",
     "_Gold": 300
 }

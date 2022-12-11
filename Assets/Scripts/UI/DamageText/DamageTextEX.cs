@@ -20,7 +20,7 @@ public class DamageTextEX : MonoBehaviour
     void Start()
     {
         // 부모 오브젝트가 없으면 리턴처리 (버그 제거용)
-        if(transform.parent.gameObject == null)
+        if (transform.parent.gameObject == null)
         {
             return;
         }
@@ -29,7 +29,7 @@ public class DamageTextEX : MonoBehaviour
         _rectText = GetComponent<RectTransform>();
         _canvas.renderMode = RenderMode.WorldSpace;
         _canvas.worldCamera = Camera.main;
-        
+
         // 데미지 숫자를 문자로 변환
         _text.text = _damage.ToString();
 
@@ -43,34 +43,32 @@ public class DamageTextEX : MonoBehaviour
         float power = 1.0f;
         _text.color = _damage > 30 ? Color.red : Color.white;
         _text.text = _damage.ToString();
-        
-        // null 체크
-        if(_text != null)
-        {
-            // 점점 없어지는...
-            _text.DOFade(0f, 1.0f);
-        }
-        
-        // null 체크
-        if(transform != null)
-        {
-            // 글씨 크기 증가
-            transform.DOPunchScale(Vector3.one * 0.03f, 0.2f, 1, 0);
-        }
+
+        // 점점 없어지는...
+        _text.DOFade(0f, 1.0f);
+
+        // 글씨 크기 증가
+        transform.DOPunchScale(Vector3.one * 0.03f, 0.2f, 1, 0);
+
         Vector3 endPos = transform.position + new Vector3(0, _y, 0);
         endPos.x += (Random.insideUnitCircle * power).x;
-        
-        // null 체크
-        if(transform != null)
+
+
+        // 글씨 점프 효과
+        transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() =>
+        // 글씨 점프가 끝나면 비활성화하고 대미지텍스트풀에 다시 넣음
         {
-            // 글씨 점프 효과
-            transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() => { gameObject.SetActive(false)/*Destroy(gameObject)*/; });
-        }
+            gameObject.SetActive(false);
+            gameObject.transform.SetParent(GameManager.DamText._damageTextPool.transform);
+            GameManager.DamText._damageTextList.Add(this.gameObject);
+        });
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 카메라 방향으로 회전
         transform.rotation = Camera.main.transform.rotation;
     }
 }

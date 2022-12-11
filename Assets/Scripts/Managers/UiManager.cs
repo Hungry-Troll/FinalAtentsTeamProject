@@ -26,6 +26,8 @@ public class UiManager
 
     // 골드 표시 바
     public GameObject _goldDisplay;
+    // 골드 표시 바 상점
+    public GameObject _goldDisplayShop;
 
     // 장소 팝업
     public GameObject _locationPopUp;
@@ -62,6 +64,9 @@ public class UiManager
     Text defText;
     // 인벤 슬롯 이미지 // GetComponent 사용을 줄이기 위해 미리 선언해서 데이터를 들고 있을 예정
     public List<Image> _slotImage;
+    // 인벤 장착 슬롯 이미지
+    public Image _weaponImage;
+    public Image _armourImage;
 
     // 인벤 버튼 (가방아이콘)
     public GameObject _invenButton;
@@ -194,6 +199,9 @@ public class UiManager
         Transform findDefText = Util.FindChild("DefText", _inventoryController.transform);
         atkText = findAtkText.GetComponent<Text>();
         defText = findDefText.GetComponent<Text>();
+        // 인벤토리 장착아이템 이미지 넣을 위치 확인용
+        _weaponImage = Util.FindChild("WeaponImage", _inventoryController.gameObject.transform).GetComponent<Image>();
+        _armourImage = Util.FindChild("ArmourImage", _inventoryController.gameObject.transform).GetComponent<Image>();
 
         // 아이템 교체용 인벤토리 이미지를 미리 UI 매니지에서 들고있음 // GetComponent 줄이는 용도
         _slotImage = new List<Image>();
@@ -245,6 +253,10 @@ public class UiManager
         // 골드가 부족합니다 UI
         _dontBuy = GameManager.Create.CreateUi("Ui_DontBuy", GameManager.Ui.go);
         _dontBuy.SetActive(false);
+
+        // 골드 표시 바 상점
+        _goldDisplayShop = GameManager.Create.CreateUi("UI_GoldDisplayBarShop", GameManager.Ui.go);
+        _goldDisplayShop.SetActive(false);
     }
     
     // 아이템 스텟창 함수 Init
@@ -340,6 +352,17 @@ public class UiManager
 
     public GameObject ItemStatViewOpen(GameObject SlotItem)
     {
+        // 상점 활성화 비활성화 여부에 따라서 버튼 텍스트가 버리기 / 판매하기로 변경
+        // Shop을 드래그드롭으로 연결하고 그걸 다시 오브젝트매니저로 연결했기 때문에
+        // 베니스 프리팹이 씬에 있어야 버그가 안생김 그래서 베니스가 등장하지 않는 씬에도 넣어놓음
+        if (GameManager.Obj._veniceController.Shop.activeSelf == true)
+        {
+            _dropText.text = "판매하기";
+        }
+        else
+        {
+            _dropText.text = "버리기";
+        }
         // 널 체크
         if (SlotItem == null)
         {
@@ -489,6 +512,7 @@ public class UiManager
         _equipStatView.SetActive(false);
     }
 
+    // 장착 아이템 스텟창 오픈
     public GameObject EquipStatViewOpen(GameObject SlotItem)
     {
         // 널 체크
@@ -496,6 +520,19 @@ public class UiManager
         {
             return null;
         }
+
+        // 상점 활성화 비활성화 여부에 따라서 버튼 텍스트가 버리기 / 판매하기로 변경
+        // Shop을 드래그드롭으로 연결하고 그걸 다시 오브젝트매니저로 연결했기 때문에
+        // 베니스 프리팹이 씬에 있어야 버그가 안생김 그래서 베니스가 등장하지 않는 씬에도 넣어놓음
+        if (GameManager.Obj._veniceController.Shop.activeSelf == true)
+        {
+            _equipDropText.text = "판매하기";
+        }
+        else
+        {
+            _equipDropText.text = "버리기";
+        }
+
         // 넣을 이미지를 찾음
         Sprite _sprite = GameManager.Resource.GetImage(SlotItem.name);
 
@@ -562,6 +599,84 @@ public class UiManager
         // 아이템 설명
         _equipItemIntroduce.text = tmpStat.Info;
         //_dropText >> 거의 쓸일이 없을것으로 추정
+    }
+    // 장착아이템 버리는 함수 + 판매하는 기능 추가
+    public void EquipItemDropOrSell()
+    {
+        // 판매를 위한 임시 string
+        string spriteName = null;
+        // 인벤토리에서 장착 아이템 제거
+        // 장착 아이템 타입이 웨폰
+        if (GameManager.Ui._equipStatViewController._itemType == ItemType.Weapon)
+        {
+            // 판매를 위한 임시 대입
+            spriteName = _weaponImage.sprite.name;
+            // 스텟 계산
+            ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
+            GameManager.Obj._playerStat.Atk -= tmpStatEx.Skill;
+            // 상태창 무기 착용해제
+            GameManager.Weapon.TempUnEquipWeapon(spriteName, GameManager.Obj._playerController.transform);
+            // 무기 제거
+            GameManager.Ui._inventoryController._weapon = null;
+            _weaponImage.sprite = null;
+            _weaponImage.gameObject.SetActive(false);
+        }
+        else if (GameManager.Ui._equipStatViewController._itemType == ItemType.Armour)
+        {
+            // 판매를 위한 임시 대입
+            spriteName = _armourImage.sprite.name;
+            // 스텟 계산
+            ItemStatEX tmpStatEx = _inventoryController._armour.GetComponent<ItemStatEX>();
+            GameManager.Obj._playerStat.Def -= tmpStatEx.Skill;
+            // 방어구 제거
+            GameManager.Ui._inventoryController._armour = null;
+            _armourImage.sprite = null;
+            _armourImage.gameObject.SetActive(false);
+        }
+        // 장착 아이템창 닫기
+        EquipStatViewClose();
+        // 만약 상점이 열려있으면 아이템을 버리지 않고 판매한다 (골드 상승)
+        if (GameManager.Obj._veniceController.Shop.activeSelf == true)
+        {
+            ItemSell(spriteName);
+        }
+        // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+        InventoryStatUpdate();
+    }
+    // 장착아이템 해제하는 함수
+    public void UnEquipItem()
+    {
+        // 장착 아이템 타입이 웨폰
+        if (GameManager.Ui._equipStatViewController._itemType == ItemType.Weapon)
+        {
+            // 인벤토리에 다시 넣어야됨
+            GameManager.Item.InventoryItemAdd(GameManager.Ui._inventoryController._weapon, false);
+            // 스텟 계산
+            ItemStatEX tmpStatEx = _inventoryController._weapon.GetComponent<ItemStatEX>();
+            GameManager.Obj._playerStat.Atk -= tmpStatEx.Skill;
+            // 상태창 무기 착용해제
+            GameManager.Weapon.TempUnEquipWeapon(_weaponImage.sprite.name, GameManager.Obj._playerController.transform);
+            // 무기 제거
+            GameManager.Ui._inventoryController._weapon = null;
+            _weaponImage.sprite = null;
+            _weaponImage.gameObject.SetActive(false);
+        }
+        else if (GameManager.Ui._equipStatViewController._itemType == ItemType.Armour)
+        {
+            // 인벤토리에 다시 넣어야됨
+            GameManager.Item.InventoryItemAdd(GameManager.Ui._inventoryController._armour, false);
+            // 스텟 계산
+            ItemStatEX tmpStatEx = _inventoryController._armour.GetComponent<ItemStatEX>();
+            GameManager.Obj._playerStat.Def -= tmpStatEx.Skill;
+            // 방어구 제거
+            GameManager.Ui._inventoryController._armour = null;
+            _armourImage.sprite = null;
+            _armourImage.gameObject.SetActive(false);
+        }
+        EquipStatViewClose();
+
+        // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+        InventoryStatUpdate();
     }
     // 장착 아이템창 닫는 함수
     public void EquipStatViewClose()
@@ -744,10 +859,11 @@ public class UiManager
         InventoryImageArray();
     }
 
-    // 아이템 버리는 함수	
-
+    // 아이템 버리는 함수 + 판매하는 기능 추가
     public void ItemStatViewWeaponDrop()
     {
+        // 판매를 위한 임시 string
+        string spriteName = null;
         // 인벤토리의 아이템을 버리는 경우	
         // 인벤토리 아이템 숫자만큼 루프	
         for (int i = 0; i < GameManager.Ui._inventoryController._item.Count; i++)
@@ -757,10 +873,12 @@ public class UiManager
                 //int slotNum = 0;	
                 if (GameManager.Ui._inventoryController._item[i].name == "potion1")
                 {
+                    // 판매를 위한 임시 string 저장
+                    spriteName = "potion1";
+
                     int slotNum = 0;
                     slotNum = i;
                     GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub();
-                    GameManager.Ui._sceneButton.GetComponent<Ui_SceneAttackButton>().PotionCountMinusOne();
                     // 만약 줄어든 뒤 갯수가 0개라면, 해당 인벤토리칸 지우기
                     if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
                     {
@@ -778,6 +896,9 @@ public class UiManager
                 // 인벤토리 아이템하고 이미지가 동일하면	
                 if (_itemStatViewController._sprite.name == GameManager.Ui._inventoryController._item[i].name)
                 {
+                    // 판매를 위한 임시 string 저장
+                    spriteName = _itemStatViewController._sprite.name;
+
                     // i번째 이후부터 검색해서 물약 한칸 앞으로 당기기
                     SetPotionPullForwardOneSpace(i);
 
@@ -789,6 +910,11 @@ public class UiManager
                     break;
                 }
             }
+        }
+        // 만약 상점이 열려있으면 아이템을 버리지 않고 판매한다 (골드 상승)
+        if (GameManager.Obj._veniceController.Shop.activeSelf == true)
+        {
+            ItemSell(spriteName);
         }
         // 아이템 상태창 닫기	
         ItemStatViewClose();
@@ -822,7 +948,27 @@ public class UiManager
         InventoryImageArray();
     }
 
+    // 상점이 열려있을 경우 버리기 대신 판매하는 함수 / 판매할 이미지 이름으로 처리
+    public void ItemSell(string spriteName)
+    {
+        if (spriteName == null)
+        {
+            return;
+        }
 
+        // 오브젝트 풀에서는 인벤토리 아이템을 들고 있음
+        for (int i = 0; i < GameManager.Obj._objPool.Count; i++)
+        {
+            // 가지고온 이름 과 오프벡트 풀 이름이 같으면
+            // 이 아이템은 상점이 열려있으므로 판매할 아이템임
+            if (GameManager.Obj._objPool[i].name == spriteName)
+            {
+                // 아이템 스텟에서 가격을 대입해서 플레이어에게 넣어줌
+                GameManager.Obj._playerController._goldController.GoldAmount +=
+                    GameManager.Obj._objPool[i].GetComponent<ItemStatEX>().Sale_Price;
+            }
+        }
+    }
     // 인벤토리 이미지 정렬 함수 (랜더링)	
     // 아이템 장착 시 해제 시 사용	
     void InventoryImageArray()
@@ -1051,7 +1197,11 @@ public class UiManager
     {
         _dontBuy.SetActive(value);
     }
-
+    // 상점 골드 창
+    public void goldDisplayShopOnOff(bool value)
+    {
+        _goldDisplayShop.SetActive(value);
+    }
     /// <summary>
     /// 이하 씬 Attack버튼 관련
     /// 추후 코드 수정 필요 

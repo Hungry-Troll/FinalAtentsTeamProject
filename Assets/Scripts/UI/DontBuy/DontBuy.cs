@@ -19,7 +19,7 @@ public class DontBuy : MonoBehaviour
         _time += Time.deltaTime;
         if (_time > 3.0f)
         {
-            // 5초가 지나면 스스로 꺼짐
+            // 3초가 지나면 스스로 꺼짐
             GameManager.Ui.DontBuyOnOff(false);
             _time -= _time;
         }
