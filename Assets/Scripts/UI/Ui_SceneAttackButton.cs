@@ -163,17 +163,22 @@ public class Ui_SceneAttackButton : MonoBehaviour
             PlayerStat ob = GameManager.Obj._playerStat;
             int max = GameManager.Obj._playerStat.Max_Hp;
             GameManager.Ui._itemStatViewController.UsePotionExternal(ob, max);
-            potionCnt--;
-            if (potionCnt == 0)
-            {
-                potionCntTxt.text = " ";
-            }
-            else
-            {
-                potionCntTxt.text = potionCnt.ToString();
-            }
+            PotionCountMinusOne();
         }
     }
+    public void PotionCountMinusOne()
+    {
+        potionCnt--;
+        if (potionCnt == 0)
+        {
+            potionCntTxt.text = "";
+        }
+        else
+        {
+            potionCntTxt.text = potionCnt.ToString();
+        }
+    }
+
     public void GetPotion()
     {
         potionCnt++;
