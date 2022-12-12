@@ -17,7 +17,10 @@ public class GoldDisplayController : MonoBehaviour
     void Start()
     {
         // 부모(캐릭터 오브젝트)에서 스탯 가져오기
-        _stat = transform.parent.GetComponent<PlayerStat>();
+        //_stat = transform.parent.GetComponent<PlayerStat>();
+        
+        // 플레이어 오브젝트에서 스탯 가져오기
+        _stat = GameManager.Obj._playerStat;
         // 스탯의 골드 값으로 초기화
         _goldAmount = _stat.Gold;
         // 텍스트 가져오기
@@ -31,7 +34,7 @@ public class GoldDisplayController : MonoBehaviour
 
     private void GoldDisplaySystem()
     {
-        _goldAmount = _stat.Gold;
+        _goldAmount = GameManager.Obj._goldController.GoldAmount;
         _goldAmountText.text = _goldAmount.ToString();
     }
 }

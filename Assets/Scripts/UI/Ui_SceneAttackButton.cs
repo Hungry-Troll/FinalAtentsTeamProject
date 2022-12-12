@@ -185,6 +185,25 @@ public class Ui_SceneAttackButton : MonoBehaviour
         potionCntTxt.text = potionCnt.ToString();
     }
 
+
+    // UI 버튼 중 스킬 버튼들 가져와서 리스트 만들고 리턴하는 함수
+    public List<Ui_SceneSkillSlot> LoadSceneSkillSlots()
+    {
+        List<Ui_SceneSkillSlot> _sceneSkillSlot = new List<Ui_SceneSkillSlot>();
+
+        Transform sk1 = Util.FindChild("Ui_Skill1_Button", transform);
+        Transform sk2 = Util.FindChild("Ui_Skill2_Button", transform);
+        Transform sk3 = Util.FindChild("Ui_Skill3_Button", transform);
+        Ui_SceneSkillSlot skillSolt1 = sk1.GetComponent<Ui_SceneSkillSlot>();
+        Ui_SceneSkillSlot skillSolt2 = sk2.GetComponent<Ui_SceneSkillSlot>();
+        Ui_SceneSkillSlot skillSolt3 = sk3.GetComponent<Ui_SceneSkillSlot>();
+        _sceneSkillSlot.Add(skillSolt1);
+        _sceneSkillSlot.Add(skillSolt2);
+        _sceneSkillSlot.Add(skillSolt3);
+
+        return _sceneSkillSlot;
+    }
+
 }
 
 

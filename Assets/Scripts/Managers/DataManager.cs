@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using System.Text;
 using UnityEngine.UI;
+using LitJson;
 
 [System.Serializable]
 public class PlayData
@@ -36,6 +37,11 @@ public class PlayData
     // 갖고 있는 골드 수량
     [SerializeField]
     private int _Gold;
+
+    // 플레이어 보유 스킬 목록
+    // SkillStat과 동일하지만 MonoBehaviour 상속 받지 않은 클래스
+    [SerializeField]
+    private List<TempSkillStat> _Skill_Info = new List<TempSkillStat>();
 
     public string Name
     {
@@ -72,7 +78,13 @@ public class PlayData
         get { return _Gold; }
         set { _Gold = value; }
     }
+    public List<TempSkillStat> SkillInfo
+    {
+        get { return _Skill_Info; }
+        set { _Skill_Info = value; }
+    }
 }
+
 public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
 {
     //public static DataManager instance;
@@ -82,6 +94,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     public int selectedSlot;
     // 씬을 이동할때는 씬 로드가 필요 없으므로 bool 변수 하나를 추가하고 LoadData() 함수 매개변수로 사용
     bool _sceneLoad;
+    private List<TempSkillStat> _skillInfo;
 
     // Start is called before the first frame update
     void Awake()
@@ -163,11 +176,64 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         }
 
         // 현재 가진 골드 저장
-        playData.Gold = GameManager.Obj._playerStat.Gold;
+        playData.Gold = GameManager.Obj._goldController.GoldAmount;
+
+        // 스킬 목록 저장
+        // 컨트롤러부터 null 체크
+        if(GameManager.Ui._skillViewController != null)
+        {
+            // _skillStat 변수 null 체크
+            if(GameManager.Ui._skillViewController._playerSkillList != null)
+            {
+                // 저장
+                foreach(TempSkillStat one in GameManager.Ui._skillViewController._playerSkillList)
+                {
+                    // 기존의 저장한 내용 없으면
+                    if(_skillInfo == null)
+                    {
+                        // 그냥 저장하면 됨
+                        playData.SkillInfo.Add(one);
+                    }
+                    else
+                    {
+                        // 중복 체크 변수
+                        bool isDuplicate = false;
+                        // 저장된 TempSkillStat 객체 만큼
+                        for (int i = 0; i < _skillInfo.Count; i++)
+                        {
+                            // 중복되나요?
+                            isDuplicate = GameManager.Skill.CompareSkillStat(_skillInfo[i], one);
+                            if (isDuplicate)
+                            {
+                                // 네
+                                // -> 다음 반복으로 넘어가세요(foreach문)
+                                break;
+                            }
+                            // 아니요
+                            // -> 일단 다음 반복으로 넘어가세요(for문)
+                        }
+                        // for문을 다 돌았는데도 isDuplicate 가 false -> 중복 개체가 발견되지 않음
+                        if(!isDuplicate)
+                        {
+                            // 그럼 저장
+                            playData.SkillInfo.Add(one);
+                        }
+                    }
+                }
+            }
+            // 테스트용
+            else
+            {
+                TempSkillStat tmpStat = new TempSkillStat();
+                playData.SkillInfo.Add(tmpStat);
+            }
+        }
 
 
         string json = JsonUtility.ToJson(playData, true);
-        //File.WriteAllText(path + filename + selectedSlot.ToString(), data);
+        //JsonData jsonData = JsonMapper.ToJson(playData);
+        //File.WriteAllText(path, jsonData.ToString());
+
 
         FileStream fileStream = new FileStream(path, FileMode.Create);
         byte[] data = Encoding.UTF8.GetBytes(json);
@@ -194,6 +260,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         string weapon = "None";
         List<string> itemList = new List<string>();
         int gold = 0;
+        List<TempSkillStat> skillInfo = new List<TempSkillStat>();
 
 
         // 파일 가져와서 읽는 코드
@@ -277,8 +344,85 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             */
         }
 
+        // 무기 착용 여기서
+        // 함수 안에 널체크 있지만 한 번 더
+        if(playData.Weapon != null && !playData.Weapon.Trim().Equals(""))
+        {
+            EquipWeaponLoad();
+        }
+
         // save에서 가져온 골드 넣어주기
         gold = playData.Gold;
+        if(GameManager.Obj._playerStat != null)
+        {
+            GameManager.Obj._playerStat.Gold = gold;
+        }
+
+        // 스킬 목록 가져오기
+        // 널 체크
+        if(playData.SkillInfo != null)
+        {
+            skillInfo = playData.SkillInfo;
+            // DataManager의 멤버, save 할 때 리스트 대조해야해서 필요함 
+            _skillInfo = playData.SkillInfo;
+            // 사용할 곳 있을 것 같아서... 일단 뷰 컨트롤러에도 넣어두기
+            GameManager.Ui._skillViewController._playerSkillList = skillInfo;
+            // 스킬 슬롯 담길 리스트
+            List<Ui_SceneSkillSlot> _sceneSkillSlot = new List<Ui_SceneSkillSlot>();
+            // 리스트에 로드
+            _sceneSkillSlot = GameManager.Ui._sceneButton.GetComponent<Ui_SceneAttackButton>().LoadSceneSkillSlots();
+
+            for (int i = 0; i < skillInfo.Count; i++)
+            {
+                if(skillInfo[i].SkillSlotNumber != -1)
+                {
+                    Image skillImage = GameManager.Ui._skillViewController._skill1Image;
+                    Color tmpColor;
+                    tmpColor.a = 0.7f;
+                    tmpColor.r = 1.0f;
+                    tmpColor.g = 1.0f;
+                    tmpColor.b = 1.0f;
+
+                    switch (skillInfo[i].SkillSlotNumber)
+                    {
+                        // 스킬뷰 
+                        // 스킬 레벨 적용 후 여기에 추가
+                        case -1:
+                            break;
+                        // 스킬 버튼 1
+                        case 0:
+                            //skillImage = GameManager.Ui._skillViewController._skillSlotButton1.GetComponent<Image>();
+                            //skillImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
+                            _sceneSkillSlot[0]._uiImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
+                            _sceneSkillSlot[0]._skillText.gameObject.SetActive(false);
+                            _sceneSkillSlot[0]._uiImage.color = tmpColor;
+                            
+                            Debug.Log("button 1 : " + GameManager.Ui._skillViewController._skillSlotButton1.GetComponent<Image>().sprite.name);
+                            break;
+                        // 스킬 버튼 2
+                        case 1:
+                            skillImage = GameManager.Ui._skillViewController._skillSlotButton2.GetComponent<Image>();
+                            skillImage.sprite = null;
+                            skillImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
+                            _sceneSkillSlot[1]._uiImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
+                            _sceneSkillSlot[1]._skillText.gameObject.SetActive(false);
+                            _sceneSkillSlot[1]._uiImage.color = tmpColor;
+                            Debug.Log("button 2 : " + GameManager.Ui._skillViewController._skillSlotButton2.GetComponent<Image>().sprite.name);
+                            break;
+                        // 스킬 버튼 3
+                        case 2:
+                            skillImage = GameManager.Ui._skillViewController._skillSlotButton3.GetComponent<Image>();
+                            skillImage.sprite = null;
+                            skillImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
+                            _sceneSkillSlot[2]._uiImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
+                            _sceneSkillSlot[2]._skillText.gameObject.SetActive(false);
+                            _sceneSkillSlot[2]._uiImage.color = tmpColor;
+                            Debug.Log("button 3 : " + GameManager.Ui._skillViewController._skillSlotButton3.GetComponent<Image>().sprite.name);
+                            break;
+                    }
+                }
+            }
+        }
 
         //=========여기서 씬 전환==========
         if (_sceneLoad == true)
@@ -320,7 +464,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     public void EquipWeaponLoad()
     {
         // 무기 없으면 탈출
-        if(playData.Weapon.Trim().Equals(""))
+        if(playData.Weapon == null || playData.Weapon.Trim().Equals(""))
             return;
         
         string tempName = playData.Weapon;

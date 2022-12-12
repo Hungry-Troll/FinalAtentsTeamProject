@@ -128,7 +128,7 @@ public class FieldManager : MonoBehaviour
         // Ui 불러옴
         GameManager.Ui.Init();
         // 데이터 로드
-        GameManager.Data.LoadData(false);
+        //GameManager.Data.LoadData(false);
         // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
         GameManager.Select.Init();
         // 스텟 매니저에서 스텟 데이터 불러옴
@@ -144,6 +144,8 @@ public class FieldManager : MonoBehaviour
         _startPos = _startPosObject.transform.position;
         //플레이어 제작
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
+        // 데이터 로드
+        GameManager.Data.LoadData(false);
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
 
@@ -163,7 +165,7 @@ public class FieldManager : MonoBehaviour
         // Ui 불러옴
         GameManager.Ui.Init();
         // 데이터 로드
-        GameManager.Data.LoadData(false);
+        //GameManager.Data.LoadData(false);
         // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
         GameManager.Select.Init();
         // 스텟 매니저에서 스텟 데이터 불러옴
@@ -179,6 +181,8 @@ public class FieldManager : MonoBehaviour
         _startPos = _startPosObject.transform.position;
         //플레이어 제작
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
+        // 데이터 로드
+        GameManager.Data.LoadData(false);
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
 

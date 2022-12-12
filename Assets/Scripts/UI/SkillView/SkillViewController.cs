@@ -61,6 +61,9 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
 
     // 스킬 스텟 관련
     public SkillStat _skillStat;
+    // 스킬 스텟 담은 리스트
+    //public List<SkillStat> _playerSkillList;
+    public List<TempSkillStat> _playerSkillList;
 
 
     /// <summary>
@@ -132,6 +135,12 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         SkillImageCheck();
         // 스킬 스텟 스크립트 대입(빈 껍대기)
         _skillStat = GetComponent<SkillStat>();
+        
+        // 리스트 초기화
+        // SkillStat은 MonoBehaviour를 상속받기 때문에 new가 적용되지 않음
+        // -> GetCompnent 같이 하나의 스크립트를 공유하게 되어서 Temp타입으로 생성
+        // --> 이미 존재하는 인스턴스의 주소값만 전달해주는 방식인 것 같다.
+        _playerSkillList = new List<TempSkillStat>();
     }
 
     // 레벨업시 사용
@@ -207,6 +216,10 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         ButtonInteractableFalse();
         // 스킬레벨에 따라서 스킬 이미지 활성화
         SkillLevelCheck();
+        // 스킬 업데이트
+        SkillTextPanelOpen(0, false);
+        // 스킬 업데이트해서 리스트에 담기
+        GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
     }
 
     private void SkillUpButton2()
@@ -227,6 +240,10 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         ButtonInteractableFalse();
         // 스킬레벨에 따라서 스킬 이미지 활성화
         SkillLevelCheck();
+        // 스킬 업데이트
+        SkillTextPanelOpen(1, false);
+        // 스킬 업데이트해서 리스트에 담기
+        GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
     }
 
     private void SkillUpButton3()
@@ -247,6 +264,10 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         ButtonInteractableFalse();
         // 스킬레벨에 따라서 스킬 이미지 활성화
         SkillLevelCheck();
+        // 스킬 업데이트
+        SkillTextPanelOpen(2, false);
+        // 스킬 업데이트해서 리스트에 담기
+        GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
     }
 
     // 스킬 텍스트 로드
@@ -254,6 +275,43 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
     {
         // 스킬 설명 창 UI
         _skillTextPanel.SetActive(true);
+
+        // 직업별 스킬 텍스트 로드
+        switch (GameManager.Select._job)
+        {
+            case Define.Job.Superhuman:
+                {
+                    // 이 함수가 실행되면 _skillStat에 스텟 저장 됨
+                    GameManager.Skill.SkillStatLoadJson("Skill" + (skillNumber + 1).ToString(), _skillStat);
+                }
+                break;
+            case Define.Job.Cyborg:
+                {
+                    GameManager.Skill.SkillStatLoadJson("Skill" + (skillNumber + 4).ToString(), _skillStat);
+                }
+                break;
+            case Define.Job.Scientist:
+                {
+                    GameManager.Skill.SkillStatLoadJson("Skill" + (skillNumber + 7).ToString(), _skillStat);
+                }
+                break;
+            case Define.Job.None:
+                break;
+        }
+
+        // 스킬 이름
+        _skillNameText.text = _skillStat.SkillName;
+        // 스킬 설명
+        _skillContentText.text = _skillStat.SkillContent;
+        // 스킬 효과
+        _skillEffectText.text = _skillStat.SkillEffect;
+    }
+    // 스킬 텍스트 로드 : 설명 창 UI 오픈 유무 결정하는 매개변수 추가
+    // 오버로딩 2 / 2
+    private void SkillTextPanelOpen(int skillNumber, bool openPanel)
+    {
+        // 스킬 설명 창 UI
+        _skillTextPanel.SetActive(openPanel);
 
         // 직업별 스킬 텍스트 로드
         switch (GameManager.Select._job)
@@ -487,6 +545,15 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
             tmpColor.b = 1.0f;
             sceneSkillSlot[tmpSelectedIcon]._uiImage.color = tmpColor;
             Debug.Log(_slotList[_selectedSlot]._uiImage.sprite.name);
+            
+            // 플레이어 스킬 목록 업데이트
+            // 드래그한 스킬 아이디
+            //string skillId = _slotList[_selectedSlot]._uiImage.sprite.name.Replace("s", "S").Trim();
+            // 업데이트
+            // _skillStat 은 view목록의 활성화된 스킬을 클릭할 때마다 해당 스탯으로 변경되므로 따로 넣어줄 필요 없음
+            _skillStat.SkillSlotNumber = tmpSelectedIcon;
+            GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
+            
             // 드래그용 임시 이미지 해제
             _selectedIcon.sprite = null;
             _selectedIcon.gameObject.SetActive(false);

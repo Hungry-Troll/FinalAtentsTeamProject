@@ -9,7 +9,7 @@ public class GoldController : MonoBehaviour
 {
     // 현재 골드 보유량
     //[SerializeField]
-    //private int _goldAmount;
+    private int _goldAmount;
     // 현재 골드 보유량을 플레이어 스텟에 직접 연결함
 
     public int GoldAmount
@@ -26,6 +26,7 @@ public class GoldController : MonoBehaviour
         }
     }
 
+    // 생성자는 MonoBehaviour 없으면 이용, 사용한다면 추후에 삭제
     // 기본 생성자
     public GoldController() { }
 
@@ -34,6 +35,35 @@ public class GoldController : MonoBehaviour
     {
         //_goldAmount = goldAmount;
         GoldAmount = goldAmount;
+    }
+
+    private void Start()
+    {
+        //
+    }
+
+    private void Update() 
+    {
+        // 골드량 계속 업데이트 해주기
+        if(GameManager.Obj != null || GameManager.Obj._playerStat != null)
+        {
+            GoldAmount = GameManager.Obj._playerStat.Gold;
+            // 플레이어 스탯 없어졌을 때를 대비해서 저장해두기
+            _goldAmount = GoldAmount;
+            //_goldAmount = GameManager.Obj._playerStat.Gold;
+        }
+        else
+        {
+            // 기존 스탯 없으면 골드는 0
+            GoldAmount = _goldAmount;
+        }
+
+        // 플레이어 오브젝트 있으면 여기서 업데이트
+        if(GameManager.Obj._playerStat != null)
+        {
+            GameManager.Obj._playerStat.Gold = GoldAmount;
+            //GameManager.Obj._playerStat.Gold = _goldAmount;
+        }
     }
 
     // 골드 획득 함수(+)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class SkillStat : MonoBehaviour
 {
     // 코드
@@ -23,6 +24,10 @@ public class SkillStat : MonoBehaviour
     // 공격력
     [SerializeField]
     private int _SkillAtk;
+
+    // 슬롯 번호
+    [SerializeField]
+    private int _SkillSlotNumber = -1;
 
     public string Id
     {
@@ -52,5 +57,11 @@ public class SkillStat : MonoBehaviour
     {
         get { return _SkillAtk; }
         set { _SkillAtk = value; }
+    }
+
+    public int SkillSlotNumber
+    {
+        get { return _SkillSlotNumber; }
+        set { _SkillSlotNumber = value; }
     }
 }

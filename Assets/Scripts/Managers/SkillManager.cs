@@ -67,6 +67,7 @@ public class SkillManager
         skillStat.SkillContent = tempStat.SkillContent;
         skillStat.SkillEffect = tempStat.SkillEffect;
         skillStat.SkillAtk = tempStat.SkillAtk;
+        skillStat.SkillSlotNumber = tempStat.SkillSlotNumber;
     }
 
     // 리스트에서 찾는 함수
@@ -80,6 +81,108 @@ public class SkillManager
             }
         }
         return null;
+    }
+
+
+    // 플레이어별 스킬 리스트에 스킬 추가하는 함수
+    // AddSkillToPlayerSkillList(저장할 스킬 리스트, 저장할 스킬)
+    // -> 스킬 리스트에 추가하려는 스킬이 존재하는지 검사하고 없으면 추가, 있으면 업데이트
+    public void UpdatePlayerSkillList(List<TempSkillStat> playerSkillList, SkillStat playerSkill)
+    {
+        // 널이면 초기화
+        if(playerSkillList == null)
+            playerSkillList = new List<TempSkillStat>();
+
+        // 반복문 실행중에 직접 추가하면 반복 횟수 증가하므로 임시로 추가된 값 가지고 있을 변수
+        TempSkillStat tmpBox = null;
+        // 스킬 목록 수정 했는지 확인용 변수
+        bool hadUpdate = false;
+
+        // 목록에 스킬이 하나라도 있는 경우
+        // 이름 겹치는 스킬 있는지 목록에서 검사
+        for(int i = 0; i < playerSkillList.Count; i++)
+        {
+            // 겹치는 스킬 이름 있다면 이미 그 스킬이 목록에 있다는 것, 슬롯 중복 체크
+            if(playerSkillList[i].SkillName.Equals(playerSkill.SkillName) &&
+                    playerSkillList[i].SkillSlotNumber == playerSkill.SkillSlotNumber)
+            {
+                // 새롭게 추가하는 스킬로 변경
+                // Skill -> Temp로 타입 변경, MonoBehaviour 간섭 없애기 위함
+                playerSkillList[i] = MigrationSkillToTempStat(playerSkill, playerSkillList[i]);
+                hadUpdate = true;
+                break;
+            }
+            else
+            {
+                // 겹치지 않으니 추가 / 여러개의 슬롯에 등록 가능하기 때문
+                // TempSkillStat 타입으로 변환해서 리턴된 값을 리스트에 추가
+                TempSkillStat tempSkill = MigrationSkillToTempStat(playerSkill, new TempSkillStat());
+                //playerSkillList.Add(tempSkill);
+                tmpBox = tempSkill;
+            }
+        }
+
+        // 리스트에 하나라도 추가되어있고 리스트에 추가된 흔적 없으면 추가
+        if(tmpBox != null && !hadUpdate)
+        {
+            playerSkillList.Add(tmpBox);
+        }
+
+        // 목록에 하나도 없거나 중복 없다면
+        if(playerSkillList.Count == 0)
+        {
+            // TempSkillStat 타입으로 변환해서 리턴된 값을 리스트에 추가
+            TempSkillStat tempSkill = MigrationSkillToTempStat(playerSkill, new TempSkillStat());
+            playerSkillList.Add(tempSkill);
+        }
+    }
+
+    // 일일이 타입 옮기는거 귀찮아서 만든 함수(원본 데이터, 새로 담을 변수)
+    // SkillStat 타입 -> TempSkillStat 타입
+    public TempSkillStat MigrationSkillToTempStat(SkillStat originSkillData, TempSkillStat tempData)
+    {
+        tempData.Id = originSkillData.Id;
+        tempData.SkillName = originSkillData.SkillName;
+        tempData.SkillContent = originSkillData.SkillContent;
+        tempData.SkillEffect = originSkillData.SkillEffect;
+        tempData.SkillAtk = originSkillData.SkillAtk;
+        tempData.SkillSlotNumber = originSkillData.SkillSlotNumber;
+
+        return tempData;
+    }
+
+    // 일일이 타입 옮기는거 귀찮아서 만든 함수2
+    // TempSkillStat 타입 -> SkillStat 타입
+    public SkillStat MigrationTempToSkillStat(TempSkillStat originTempData, SkillStat skillData)
+    {
+        skillData.Id = originTempData.Id;
+        skillData.SkillName = originTempData.SkillName;
+        skillData.SkillContent = originTempData.SkillContent;
+        skillData.SkillEffect = originTempData.SkillEffect;
+        skillData.SkillAtk = originTempData.SkillAtk;
+        skillData.SkillSlotNumber = originTempData.SkillSlotNumber;
+
+        return skillData;
+    }
+
+    // 두 TempSkillStat 객체의 각 멤버의 값이 일치하는지 검사하는 함수
+    // 필요하다면 오버로딩 할 예정
+    public bool CompareSkillStat(TempSkillStat tempSkill, TempSkillStat originSkill)
+    {
+        if(tempSkill.Id != originSkill.Id)
+            return false;
+        if(!tempSkill.SkillName.Equals(originSkill.SkillName))
+            return false;
+        if(!tempSkill.SkillContent.Equals(originSkill.SkillContent))
+            return false;
+        if(!tempSkill.SkillEffect.Equals(originSkill.SkillEffect))
+            return false;
+        if(tempSkill.SkillAtk != originSkill.SkillAtk)
+            return false;
+        if(tempSkill.SkillSlotNumber != originSkill.SkillSlotNumber)
+            return false;
+        // 모두 통과했으면 true 리턴
+        return true;
     }
 }
 
@@ -107,6 +210,10 @@ public class TempSkillStat
     // 공격력
     [SerializeField]
     private int _SkillAtk;
+
+    // 슬롯 번호
+    [SerializeField]
+    private int _SkillSlotNumber = -1;
 
     public string Id
     {
@@ -136,5 +243,11 @@ public class TempSkillStat
     {
         get { return _SkillAtk; }
         set { _SkillAtk = value; }
+    }
+
+    public int SkillSlotNumber
+    {
+        get { return _SkillSlotNumber; }
+        set { _SkillSlotNumber = value; }
     }
 }
