@@ -14,7 +14,7 @@ public class ParseManager
 
     // ===Data json 파일에서 가져올 리스트===
     // 플레이어 리스트
-    public List<PlayerStat> _playerList = new List<PlayerStat>();
+    public List<TempStatEX> _playerList = new List<TempStatEX>();
     // 펫 리스트
     public List<PetStat> _petList = new List<PetStat>();
     // 몬스터 리스트
@@ -24,7 +24,10 @@ public class ParseManager
     // 세이브 파일, 하나라 리스트 아님
     public PlayData _save = new PlayData();
 
-
+    public void Init()
+    {
+        LoadJson();
+    }
     // Data json 파일 로드해서 각 리스트로 넘겨주는 함수
     public void LoadJson()
     {
@@ -69,7 +72,7 @@ public class ParseManager
         for(int i = 0; i < dataList.Count; i++)
         {
             // 리스트 원소 생성
-            PlayerStat data = new PlayerStat();
+            TempStatEX data = new TempStatEX();
 
             data.Hp = int.Parse(dataList[i]["_Hp"].ToString());
             data.Atk = int.Parse(dataList[i]["_Atk"].ToString());
@@ -180,17 +183,25 @@ public class ParseManager
     // 원하는 플레이어 데이터 검색해서 GameManager로 넘겨주는 함수
     public void FindPlayerObjData(int Lv, Define.Job Job)
     {
-        foreach(PlayerStat one in _playerList)
+        foreach (TempStatEX one in _playerList)
         {
             // 직업 일치하면
-            if(one.Job.Equals(Job.ToString()))
+            if (one.Job.Equals(Job.ToString()))
             {
                 // 레벨 일치하면
-                if(one.Lv == Lv)
+                if (one.Lv == Lv)
                 {
                     // 게임메니저에 저장하기
                     GameManager.Obj._playerStat.Hp = one.Hp;
-                    GameManager.Obj._playerStat.Atk = one.Atk;
+                    // 무기가 있으면 무시 수치를 가지고 와서 계산
+                    if (GameManager.Ui._inventoryController._weapon != null)
+                    {
+                        GameManager.Obj._playerStat.Atk = one.Atk + GameManager.Ui._inventoryController._weaponStat.GetComponent<ItemStatEX>().Skill;
+                    }
+                    else
+                    {
+                        GameManager.Obj._playerStat.Atk = one.Atk;
+                    }
                     GameManager.Obj._playerStat.Def = one.Def;
                     GameManager.Obj._playerStat.Lv = one.Lv;
                     GameManager.Obj._playerStat.Max_Hp = one.Max_Hp;
@@ -207,6 +218,41 @@ public class ParseManager
                 }
             }
         }
+    }
+
+
+    public TempStatEX FindPlayerObjData2(int Lv, Define.Job Job)
+    {
+        TempStatEX tmp = new TempStatEX();
+        foreach (TempStatEX one in _playerList)
+        {
+            // 직업 일치하면
+            if (one.Job.Equals(Job.ToString()))
+            {
+                // 레벨 일치하면
+                if (one.Lv == Lv)
+                {
+                    // 게임메니저에 저장하기
+                    tmp.Hp = one.Hp;
+                    tmp.Atk = one.Atk;
+                    tmp.Def = one.Def;
+                    tmp.Lv = one.Lv;
+                    tmp.Max_Hp = one.Max_Hp;
+                    // 플레이어 이름은 캐릭터 선택 시 정하기 때문에 그 정보를 게임매니저에 저장하고
+                    // 거기서 이름을 가지고 옴
+                    GameManager.Obj._playerStat.Name = GameManager.Select._playerName;
+                    tmp.Job = one.Job;
+                    tmp.Exp = one.Exp;
+                    tmp.Lv_Exp = one.Lv_Exp;
+                    tmp.Gold = one.Gold;
+
+                    return tmp;
+                    // 다 넣었으면 탈출하기;
+                }
+            }
+            return null;
+        }
+        return null;
     }
 
     // 원하는 펫 데이터 검색해서 GameManager로 넘겨주는 함수

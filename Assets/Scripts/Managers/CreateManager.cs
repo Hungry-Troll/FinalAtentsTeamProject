@@ -61,6 +61,8 @@ public class CreateManager
                 // 골드 적용
                 GameManager.Obj._goldController = player.AddComponent<GoldController>();
                 GameManager.Ui.PlayerGoldDisplayCreate(player);
+                // 레벨업컨트롤러
+                player.AddComponent<LevelUpController>();
                 return _player;
             }
         }

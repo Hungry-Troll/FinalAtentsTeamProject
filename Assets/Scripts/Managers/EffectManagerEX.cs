@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
+// 이펙트매니저는 현재 UI쪽 이펙트에서 사용됨.
+// 이미 스킬 이펙트를 각각 구현했기 때문에 그걸 다시 여기로 붙이기 힘들다면 이대로 사용
 public class EffectManagerEX
 {
     // 레벨업 파티클

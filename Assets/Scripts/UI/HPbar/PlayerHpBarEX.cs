@@ -16,8 +16,8 @@ public class PlayerHpBarEX : MonoBehaviour
     Text _name;
     // HP 숫자용
     Text _hpText;
-    // HP 레벨용 >> 아직 미구현 던전 구현하면 같이
-    Text _Lv;
+    // HP 레벨용
+    public Text _Lv;
     private void Start()
     {
         // 스텟 정보 가지고 옴
@@ -37,6 +37,9 @@ public class PlayerHpBarEX : MonoBehaviour
         Transform NameTr = Util.FindChild("NameText", transform);
         _name = NameTr.GetComponent<Text>();
         _name.text = GameManager.Select._playerName;
+        // 레벨 연결
+        Transform LevelTr = Util.FindChild("LvText", transform);
+        _Lv = LevelTr.GetComponent<Text>();
     }
     //Update is called once per frame
 
@@ -56,10 +59,5 @@ public class PlayerHpBarEX : MonoBehaviour
         _hpBarImage.fillAmount = _currentHp / _maxHp;
         // HP 바 숫자
         _hpText.text = _stat.Hp.ToString() + "/" + _stat.Max_Hp.ToString();
-
-        
-
     }
-
-
 }

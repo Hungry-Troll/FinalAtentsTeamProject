@@ -18,6 +18,7 @@ public class UiManager
 
     // 플레이어 Hp바
     public GameObject _playerHpBar;
+    public PlayerHpBarEX _playerHpBarController;
 
     // 포트레이트
     public GameObject _portrait;
@@ -143,6 +144,10 @@ public class UiManager
     // 골드가 부족합니다UI
     public GameObject _dontBuy;
 
+    // 레벨업 UI 스크립트
+    public GameObject _uiLevelUpObj;
+    public UI_LevelUp _uiLevelUp;
+
 
     //Ui 관리는 여기에서 처리
     //현재 UI 이름 개판 Ui // UI ... 추후 정리...
@@ -257,6 +262,13 @@ public class UiManager
         // 골드 표시 바 상점
         _goldDisplayShop = GameManager.Create.CreateUi("UI_GoldDisplayBarShop", GameManager.Ui.go);
         _goldDisplayShop.SetActive(false);
+
+        // 레벨업 UI 스크립트
+        _uiLevelUpObj = GameManager.Create.CreateUi("Ui_LevelUp", GameManager.Ui.go);
+        _uiLevelUp = _uiLevelUpObj.GetComponent<UI_LevelUp>();
+        _uiLevelUpObj.gameObject.SetActive(false);
+        // 레벨업 UI 텍스트 연결
+        _uiLevelUp.Init();
     }
     
     // 아이템 스텟창 함수 Init
@@ -1092,6 +1104,7 @@ public class UiManager
     public void PlayerHpBarCreate(GameObject player)
     {
         _playerHpBar = GameManager.Create.CreateUi("Ui_PlayerHpBar", player);
+        _playerHpBarController = _playerHpBar.GetComponent<PlayerHpBarEX>();
         // 파티클 설정을 위한 카메라 모드 변경 코드
         // 캔버스를 가지고 와서
         // 캔버스 모드 스크린스페이트카메라로 변경후

@@ -302,6 +302,8 @@ public class MonsterControllerEX : MonoBehaviour
         gameObject.SetActive(false);
         //Destroy(gameObject);
         //_coDead = null;
+        // 죽으면 경험치를 플레이어에게 전달
+        GameManager.Obj._playerController.ExpAdd(_monsterStat.Exp);
     }
 
     //몬스터 대미지 받는 함수

@@ -75,6 +75,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Cam.Init();
         // 파티클 생성
         GameManager.Effect.Init();
+        // Parse 매니저
+        GameManager.Parse.Init();
 
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
@@ -139,6 +141,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Cam.Init();
         // 파티클 생성
         GameManager.Effect.Init();
+        // Parse 매니저
+        GameManager.Parse.Init();
 
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
@@ -176,6 +180,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Cam.Init();
         // 파티클 생성
         GameManager.Effect.Init();
+        // Parse 매니저
+        GameManager.Parse.Init();
 
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;

@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
     protected bool _isSkill3;
     public GoldController _goldController;
     protected Define.Job _playerJob;
-
+    // 레벨업 컨트롤러
+    public LevelUpController _leveUpController;
     // 공격용 코루틴
     protected Coroutine _coAttack;
 
@@ -79,7 +80,8 @@ public class PlayerController : MonoBehaviour
         _attackDelay = 1.0f;
         _goldController = GetComponent<GoldController>();
         _playerJob = GameManager.Select._job;
-
+        // 레벨업 컨트롤러 연결
+        _leveUpController = GetComponent<LevelUpController>();
         // 공격이펙트 연결
         Transform tmp = Util.FindChild("SwordEffect", transform);
         _swordEffect = tmp.GetComponent<TrailRenderer>();
@@ -684,6 +686,12 @@ public class PlayerController : MonoBehaviour
             }
             StartCoroutine(ShakeCam());
         }
+    }
+    // 경험치 증가 함수
+    public void ExpAdd(int MonsterExp)
+    {
+        // 경험치를 레벨업컨트롤러에서 관리
+        _leveUpController.ExpAmount = MonsterExp;
     }
     //Vector3 beforePosition;
     protected float currentTime = 0;
