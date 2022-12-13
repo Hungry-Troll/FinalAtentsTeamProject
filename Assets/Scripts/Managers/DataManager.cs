@@ -346,10 +346,10 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
 
         // 무기 착용 여기서
         // 함수 안에 널체크 있지만 한 번 더
-        if(playData.Weapon != null && !playData.Weapon.Trim().Equals(""))
-        {
-            EquipWeaponLoad();
-        }
+        //if(playData.Weapon != null && !playData.Weapon.Trim().Equals(""))
+        //{
+        //    EquipWeaponLoad();
+        //}
 
         // save에서 가져온 골드 넣어주기
         gold = playData.Gold;
