@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/1.Sujong/EndingScene.unity
+    guid: f362c336e4a9c514987e5037d480ee9d
   m_configObjects: {}

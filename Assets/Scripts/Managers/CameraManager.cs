@@ -14,7 +14,7 @@ public class CameraManager
     public GameObject _miniMapCamera;
     public GameObject _uiParticleCamera;
     public Camera _uiParticleCam;
-
+    public GameObject NameCam;
     // 메인 카메라 대용
     public GameObject _vam1;
     // 웨슬리 카메라
@@ -45,7 +45,8 @@ public class CameraManager
         GameObject mainCamera = GameManager.Resource.GetCamera("Tutorial Main Camera");
         _mainCamera = GameObject.Instantiate<GameObject>(mainCamera);
         //_mainCameraController = _mainCamera.AddComponent<MainCameraController>();
-        _mainCamera.transform.SetParent(go.transform);
+        _mainCamera.transform.SetParent(go.transform);               
+        
 
         // 상태창 카메라 불러오기
         GameObject stateCamera = GameManager.Resource.GetCamera("stateCamera");
