@@ -68,6 +68,7 @@ public class SkillManager
         skillStat.SkillEffect = tempStat.SkillEffect;
         skillStat.SkillAtk = tempStat.SkillAtk;
         skillStat.SkillSlotNumber = tempStat.SkillSlotNumber;
+        skillStat.SkillLevel = tempStat.SkillLevel;
     }
 
     // 리스트에서 찾는 함수
@@ -102,6 +103,23 @@ public class SkillManager
         // 이름 겹치는 스킬 있는지 목록에서 검사
         for(int i = 0; i < playerSkillList.Count; i++)
         {
+            // 일단 스킬 레벨 업데이트
+            if(playerSkillList[i].SkillName.Equals(playerSkill.SkillName))
+            {
+                // 기존 리스트에 있던 레벨이 더 높거나 같으면 true, 넘어온 스탯 레벨이 더 높으면 false
+                bool isHigherBeforeOne = playerSkillList[i].SkillLevel >= playerSkill.SkillLevel ? true : false;
+                if(isHigherBeforeOne)
+                {
+                    // 기존에 있던 스킬레벨로 업데이트
+                    playerSkill.SkillLevel = playerSkillList[i].SkillLevel;
+                }
+                else
+                {
+                    // 새로 들어온 스킬레벨로 업데이트
+                    playerSkillList[i].SkillLevel = playerSkill.SkillLevel;
+                }
+            }
+
             // 겹치는 스킬 이름 있다면 이미 그 스킬이 목록에 있다는 것, 슬롯 중복 체크
             if(playerSkillList[i].SkillName.Equals(playerSkill.SkillName) &&
                     playerSkillList[i].SkillSlotNumber == playerSkill.SkillSlotNumber)
@@ -114,6 +132,9 @@ public class SkillManager
             }
             else
             {
+                // 이름, 슬롯 전부 일치하지 않는 경우
+                // 이름만 일치하지 않는 경우
+                // 슬롯만 일치하지 않는 경우
                 // 겹치지 않으니 추가 / 여러개의 슬롯에 등록 가능하기 때문
                 // TempSkillStat 타입으로 변환해서 리턴된 값을 리스트에 추가
                 TempSkillStat tempSkill = MigrationSkillToTempStat(playerSkill, new TempSkillStat());
@@ -147,6 +168,7 @@ public class SkillManager
         tempData.SkillEffect = originSkillData.SkillEffect;
         tempData.SkillAtk = originSkillData.SkillAtk;
         tempData.SkillSlotNumber = originSkillData.SkillSlotNumber;
+        tempData.SkillLevel = originSkillData.SkillLevel;
 
         return tempData;
     }
@@ -161,6 +183,7 @@ public class SkillManager
         skillData.SkillEffect = originTempData.SkillEffect;
         skillData.SkillAtk = originTempData.SkillAtk;
         skillData.SkillSlotNumber = originTempData.SkillSlotNumber;
+        skillData.SkillLevel = originTempData.SkillLevel;
 
         return skillData;
     }
@@ -180,6 +203,8 @@ public class SkillManager
         if(tempSkill.SkillAtk != originSkill.SkillAtk)
             return false;
         if(tempSkill.SkillSlotNumber != originSkill.SkillSlotNumber)
+            return false;
+        if(tempSkill.SkillLevel != originSkill.SkillLevel)
             return false;
         // 모두 통과했으면 true 리턴
         return true;
@@ -215,6 +240,10 @@ public class TempSkillStat
     [SerializeField]
     private int _SkillSlotNumber = -1;
 
+    // 레벨
+    [SerializeField]
+    private int _SkillLevel;
+
     public string Id
     {
         get { return _Id; }
@@ -249,5 +278,11 @@ public class TempSkillStat
     {
         get { return _SkillSlotNumber; }
         set { _SkillSlotNumber = value; }
+    }
+
+    public int SkillLevel
+    {
+        get { return _SkillLevel; }
+        set { _SkillLevel = value; }
     }
 }

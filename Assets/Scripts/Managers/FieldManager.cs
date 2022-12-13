@@ -155,6 +155,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
         // 데이터 로드
         //GameManager.Data.LoadData(false);
+        // 플레이어 스탯 로드
+        GameManager.Data.UpdatePlayerStat();
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
 
@@ -196,6 +198,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
         // 데이터 로드
         //GameManager.Data.LoadData(false);
+        // 플레이어 스탯 로드
+        GameManager.Data.UpdatePlayerStat();
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
 

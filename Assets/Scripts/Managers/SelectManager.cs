@@ -15,6 +15,8 @@ public class SelectManager
     // 그에 맞게 사용할 디파인 변수
     public Define.Job _job;
     public Define.Pet _pet;
+    // 스킬 포인트 변수
+    public int _skillPoint;
 
     // string으로 안하고 굳이 디파인으로 하는 이유는 오타를 줄이기 위함
     // 추후 게임 시작시 셀렉매니저에서 아래 함수들을 돌려서 어떤 캐릭터와 펫을 선택했는지 체크 가능

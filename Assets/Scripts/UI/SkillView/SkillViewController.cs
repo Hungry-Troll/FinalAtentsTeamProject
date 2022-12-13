@@ -95,15 +95,28 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
     void Start()
     {
         // 스킬 레벨 숫자 0으로 초기화
-        _skillLevel.skill1 = 0;
-        _skillLevel.skill2 = 0;
-        _skillLevel.skill3 = 0;
+        // 만약 기존 스킬레벨 있다면 초기화하지 않기
+        if(_skillLevel.skill1 <= 0)
+        {
+            _skillLevel.skill1 = 0;
+        }
+        if (_skillLevel.skill2 <= 0)
+        {
+            _skillLevel.skill2 = 0;
+        }
+        if (_skillLevel.skill3 <= 0)
+        {
+            _skillLevel.skill3 = 0;
+        }
         //_skillPoint = 0;
 
         // 스킬 레벨 숫자를 텍스트에 대입함
         _skill1LevelText.text = _skillLevel.skill1.ToString();
         _skill2LevelText.text = _skillLevel.skill2.ToString();
         _skill3LevelText.text = _skillLevel.skill3.ToString();
+
+        // 스킬 포인트 숫자 텍스트에 대입
+        _skillPointText.text = _skillLevel.skillPoint.ToString();
 
         // 각각 버튼 함수로 연결
         _closeButton.onClick.AddListener(CloseButton);
@@ -162,6 +175,7 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
     }
 
     // 스킬 레벨업 버튼 활성화 함수 >> 레벨업시에만 활성화
+    // 오버로딩(1 / 2)
     public void ButtonInteractableTrue()
     {
         _skillUpButton1.interactable = true;
@@ -178,6 +192,35 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         // 스킬포인트 증가
         _skillLevel.skillPoint++;
         _skillPointText.text = _skillLevel.skillPoint.ToString();
+        // 변경된 스킬포인트 저장
+        GameManager.Select._skillPoint = _skillLevel.skillPoint;
+    }
+
+    // 스킬 레벨업 버튼 활성화 함수(스킬 포인트 증가 없음) / 오버로딩을 위한 매개변수로 실질적 역할 없음
+    // 오버로딩(2 / 2)
+    public void ButtonInteractableTrue(bool isLevelUp)
+    {
+        // 스킬 포인트 없다면 아래 실행하지 않고 리턴
+        if(_skillLevel.skillPoint <= 0)
+        {
+            return;
+        }
+        _skillUpButton1.interactable = true;
+        _skillUpButton2.interactable = true;
+
+        // 스킬레벨 총합이 3이상일때만 3번 슬롯 스킬 오픈
+        if (_skillLevel.skill1 + _skillLevel.skill2 + _skillLevel.skill3 >= 2)
+        {
+            _skillUpButton3.interactable = true;
+        }
+        // 스킬레벨이 부족할경우 스킬 오픈x
+        _skillUpButton3.interactable = false;
+
+        // 스킬포인트 증가하지 않음
+        //_skillLevel.skillPoint++;
+        _skillPointText.text = _skillLevel.skillPoint.ToString();
+        // 변경된 스킬포인트 저장
+        GameManager.Select._skillPoint = _skillLevel.skillPoint;
     }
 
     // 스킬 레벨업 버튼 비활성화 함수
@@ -218,8 +261,12 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         SkillLevelCheck();
         // 스킬 업데이트
         SkillTextPanelOpen(0, false);
+        // 스킬 레벨 업데이트
+        _skillStat.SkillLevel = _skillLevel.skill1;
         // 스킬 업데이트해서 리스트에 담기
         GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
+        // 변경된 스킬포인트 저장
+        GameManager.Select._skillPoint = _skillLevel.skillPoint;
     }
 
     private void SkillUpButton2()
@@ -242,8 +289,12 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         SkillLevelCheck();
         // 스킬 업데이트
         SkillTextPanelOpen(1, false);
+        // 스킬 레벨 업데이트
+        _skillStat.SkillLevel = _skillLevel.skill2;
         // 스킬 업데이트해서 리스트에 담기
         GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
+        // 변경된 스킬포인트 저장
+        GameManager.Select._skillPoint = _skillLevel.skillPoint;
     }
 
     private void SkillUpButton3()
@@ -266,8 +317,12 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         SkillLevelCheck();
         // 스킬 업데이트
         SkillTextPanelOpen(2, false);
+        // 스킬 레벨 업데이트
+        _skillStat.SkillLevel = _skillLevel.skill3;
         // 스킬 업데이트해서 리스트에 담기
         GameManager.Skill.UpdatePlayerSkillList(_playerSkillList, _skillStat);
+        // 변경된 스킬포인트 저장
+        GameManager.Select._skillPoint = _skillLevel.skillPoint;
     }
 
     // 스킬 텍스트 로드
@@ -305,6 +360,23 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         _skillContentText.text = _skillStat.SkillContent;
         // 스킬 효과
         _skillEffectText.text = _skillStat.SkillEffect;
+        // 스킬 레벨 업데이트 필요
+        // 클릭할 때마다 _skillStat에 기본 데이터 로드되기 때문
+        switch(skillNumber + 1)
+        {
+            // 스킬뷰 슬롯 1
+            case 1:
+                _skillStat.SkillLevel = _skillLevel.skill1;
+                break;
+            // 스킬뷰 슬롯 2
+            case 2:
+                _skillStat.SkillLevel = _skillLevel.skill2;
+                break;
+            // 스킬뷰 슬롯 3
+            case 3:
+                _skillStat.SkillLevel = _skillLevel.skill3;
+                break;
+        }
     }
     // 스킬 텍스트 로드 : 설명 창 UI 오픈 유무 결정하는 매개변수 추가
     // 오버로딩 2 / 2
@@ -342,6 +414,23 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         _skillContentText.text = _skillStat.SkillContent;
         // 스킬 효과
         _skillEffectText.text = _skillStat.SkillEffect;
+        // 스킬 레벨 업데이트 필요
+        // 클릭할 때마다 _skillStat에 기본 데이터 로드되기 때문
+        switch (skillNumber + 1)
+        {
+            // 스킬뷰 슬롯 1
+            case 1:
+                _skillStat.SkillLevel = _skillLevel.skill1;
+                break;
+            // 스킬뷰 슬롯 2
+            case 2:
+                _skillStat.SkillLevel = _skillLevel.skill2;
+                break;
+            // 스킬뷰 슬롯 3
+            case 3:
+                _skillStat.SkillLevel = _skillLevel.skill3;
+                break;
+        }
     }
     // 직업별 스킬 이미지 아이콘 변경 함수
     private void SkillImageCheck()
@@ -393,6 +482,7 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
     // raycastTarget 을 이용해서 드래그 드롭 안되게
     public void SkillLevelCheck()
     {
+        // todo
         if (_skillLevel.skill1 > 0)
         {
             _skill1Image.gameObject.SetActive(true);

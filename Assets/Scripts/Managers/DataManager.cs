@@ -10,7 +10,11 @@ using LitJson;
 public class PlayData
 {
     //저장할 내용은 고른 캐릭터, 저장 당시 위치, 소지품, 레벨, 진행 중인 퀘스트
-    
+
+    // 플레이어 객체
+    [SerializeField]
+    private TempPlayerStat _Player;
+
     // 플레이어 이름
     [SerializeField]
     private string _Name;
@@ -41,7 +45,17 @@ public class PlayData
     // 플레이어 보유 스킬 목록
     // SkillStat과 동일하지만 MonoBehaviour 상속 받지 않은 클래스
     [SerializeField]
-    private List<TempSkillStat> _Skill_Info = new List<TempSkillStat>();
+    private List<TempSkillStat> _SkillInfo = new List<TempSkillStat>();
+
+    // 보유 스킬 포인트
+    [SerializeField]
+    private int _SkillPoint;
+
+    public TempPlayerStat Player
+    {
+        get { return _Player; }
+        set { _Player = value; }
+    }
 
     public string Name
     {
@@ -80,8 +94,13 @@ public class PlayData
     }
     public List<TempSkillStat> SkillInfo
     {
-        get { return _Skill_Info; }
-        set { _Skill_Info = value; }
+        get { return _SkillInfo; }
+        set { _SkillInfo = value; }
+    }
+    public int SkillPoint
+    {
+        get { return _SkillPoint; }
+        set { _SkillPoint = value; }
     }
 }
 
@@ -125,6 +144,14 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     public void SaveData()
     {
         path = Application.dataPath + "/Resources/Data/Json/Save/" + filename + ".json";
+
+        // 플레이어 객체 ObjectManager에서 가져와서 저장
+        if(GameManager.Obj._playerStat != null)
+        {
+            // 타입만 TempPlayerStat 으로 바꿔서 저장(MonoBehaviour 상속받지 않은 스탯)
+            playData.Player 
+                = GameManager.Parse.SwitchPlayerStatType(GameManager.Obj._playerStat, new TempPlayerStat());
+        }
 
         // 플레이어 이름 SelectManager에서 가져와서 저장
         if(GameManager.Select._playerName != null)
@@ -229,6 +256,9 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             }
         }
 
+        // 보유 스킬 포인트 저장
+        playData.SkillPoint = GameManager.Select._skillPoint;
+
 
         string json = JsonUtility.ToJson(playData, true);
         //JsonData jsonData = JsonMapper.ToJson(playData);
@@ -253,14 +283,18 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
 
         // save 에서 가져올 씬 이름 없으면 Title 로 가도록
         // 임시 변수들
+        TempPlayerStat player = null;
         string scene = "Title";
         string name = "None";
         string job = "None";
+        // 스킬 뷰 슬롯 위치 확인할 때 사용할 직업별 Enum 값, 없다면 default는 강화인간
+        Define.Job jobCode = 0;
         string pet = "None";
         string weapon = "None";
         List<string> itemList = new List<string>();
         int gold = 0;
         List<TempSkillStat> skillInfo = new List<TempSkillStat>();
+        int skillPoint = 0;
 
 
         // 파일 가져와서 읽는 코드
@@ -279,8 +313,17 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             scene = playData.Scene;
         }
 
+        // save 파일에서 가져온 플레이어 객체(TempPlayerStat)
+        if(playData.Player != null)
+        {
+            player = playData.Player;
+            // 플레이어 생성되는 시기가 데이터 로드보다 뒤에 있으므로 FieldManager에서 개별 실행
+            // 타입변경해서 ObjectManager의 _playerStat에 넣어주기(TempPlayerStat -> PlayerStat)
+            GameManager.Parse.SwitchPlayerStatType(player, GameManager.Obj._playerStat);
+        }
+
         // save 파일에서 가져온 플레이어 이름
-        if (playData.Name != null)
+        if(playData.Name != null)
         {
             // null 아닐 때만 넣어주기
             name = playData.Name;
@@ -292,6 +335,8 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         {
             // null 아닐 때만 넣어주기
             job = playData.Job;
+            // 스킬 로드할 때 사용할 변수
+            jobCode = Util.SortJob(job);
             //GameManager.Select._jobName = playData.Job;
         }
 
@@ -372,56 +417,78 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             // 리스트에 로드
             _sceneSkillSlot = GameManager.Ui._sceneButton.GetComponent<Ui_SceneAttackButton>().LoadSceneSkillSlots();
 
-            for (int i = 0; i < skillInfo.Count; i++)
+            for(int i = 0; i < skillInfo.Count; i++)
             {
-                if(skillInfo[i].SkillSlotNumber != -1)
-                {
-                    Image skillImage = GameManager.Ui._skillViewController._skill1Image;
-                    Color tmpColor;
-                    tmpColor.a = 0.7f;
-                    tmpColor.r = 1.0f;
-                    tmpColor.g = 1.0f;
-                    tmpColor.b = 1.0f;
+                // 스킬 이미지 이름(skill1, skill2, ... skill9) / SkillId의 이름에서 첫 글자만 소문자
+                string skillImageName = skillInfo[i].Id.Replace('S', 's');
+                // 스킬 목록 창에서 위치 확인할 때 사용할 SkillId의 숫자(ex) Skill4 -> 4로 변환)
+                int skillIdNumber = int.Parse(skillInfo[i].Id.Replace("Skill", ""));
+                // 슬롯 컬러 고정값
+                Color tmpColor;
+                tmpColor.a = 0.7f;
+                tmpColor.r = 1.0f;
+                tmpColor.g = 1.0f;
+                tmpColor.b = 1.0f;
 
-                    switch (skillInfo[i].SkillSlotNumber)
-                    {
-                        // 스킬뷰 
-                        // 스킬 레벨 적용 후 여기에 추가
-                        case -1:
-                            break;
-                        // 스킬 버튼 1
-                        case 0:
-                            //skillImage = GameManager.Ui._skillViewController._skillSlotButton1.GetComponent<Image>();
-                            //skillImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
-                            _sceneSkillSlot[0]._uiImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
-                            _sceneSkillSlot[0]._skillText.gameObject.SetActive(false);
-                            _sceneSkillSlot[0]._uiImage.color = tmpColor;
-                            
-                            Debug.Log("button 1 : " + GameManager.Ui._skillViewController._skillSlotButton1.GetComponent<Image>().sprite.name);
-                            break;
-                        // 스킬 버튼 2
-                        case 1:
-                            skillImage = GameManager.Ui._skillViewController._skillSlotButton2.GetComponent<Image>();
-                            skillImage.sprite = null;
-                            skillImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
-                            _sceneSkillSlot[1]._uiImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
-                            _sceneSkillSlot[1]._skillText.gameObject.SetActive(false);
-                            _sceneSkillSlot[1]._uiImage.color = tmpColor;
-                            Debug.Log("button 2 : " + GameManager.Ui._skillViewController._skillSlotButton2.GetComponent<Image>().sprite.name);
-                            break;
-                        // 스킬 버튼 3
-                        case 2:
-                            skillImage = GameManager.Ui._skillViewController._skillSlotButton3.GetComponent<Image>();
-                            skillImage.sprite = null;
-                            skillImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
-                            _sceneSkillSlot[2]._uiImage.sprite = GameManager.Resource.GetImage(skillInfo[i].Id.Replace('S', 's'));
-                            _sceneSkillSlot[2]._skillText.gameObject.SetActive(false);
-                            _sceneSkillSlot[2]._uiImage.color = tmpColor;
-                            Debug.Log("button 3 : " + GameManager.Ui._skillViewController._skillSlotButton3.GetComponent<Image>().sprite.name);
-                            break;
-                    }
+                switch(skillInfo[i].SkillSlotNumber)
+                {
+                    // 스킬뷰(스킬 목록 창)
+                    case -1:
+                        // 스킬뷰의 몇 번째 슬롯인지 판별
+                        int skillViewSlotNumber = skillIdNumber - ((int)jobCode);
+                        switch(skillViewSlotNumber)
+                        {
+                            // 첫 번째 슬롯
+                            case 1:
+                                GameManager.Ui._skillViewController._skillLevel.skill1 = skillInfo[i].SkillLevel;
+                                GameManager.Ui._skillViewController._skill1LevelText.text = skillInfo[i].SkillLevel.ToString();
+                                break;
+                            // 두 번째 슬롯
+                            case 2:
+                                GameManager.Ui._skillViewController._skillLevel.skill2 = skillInfo[i].SkillLevel;
+                                GameManager.Ui._skillViewController._skill2LevelText.text = skillInfo[i].SkillLevel.ToString();
+                                break;
+                            // 세 번째 슬롯
+                            case 3:
+                                GameManager.Ui._skillViewController._skillLevel.skill3 = skillInfo[i].SkillLevel;
+                                GameManager.Ui._skillViewController._skill3LevelText.text = skillInfo[i].SkillLevel.ToString();
+                                break;
+                        }
+                        break;
+                    
+                    // 스킬 버튼 1(공격버튼)
+                    case 0:
+                        _sceneSkillSlot[0]._uiImage.sprite = GameManager.Resource.GetImage(skillImageName);
+                        _sceneSkillSlot[0]._skillText.gameObject.SetActive(false);
+                        _sceneSkillSlot[0]._uiImage.color = tmpColor;
+                        break;
+                    // 스킬 버튼 2(공격버튼)
+                    case 1:
+                        _sceneSkillSlot[1]._uiImage.sprite = GameManager.Resource.GetImage(skillImageName);
+                        _sceneSkillSlot[1]._skillText.gameObject.SetActive(false);
+                        _sceneSkillSlot[1]._uiImage.color = tmpColor;
+                        break;
+                    // 스킬 버튼 3(공격버튼)
+                    case 2:
+                        _sceneSkillSlot[2]._uiImage.sprite = GameManager.Resource.GetImage(skillImageName);
+                        _sceneSkillSlot[2]._skillText.gameObject.SetActive(false);
+                        _sceneSkillSlot[2]._uiImage.color = tmpColor;
+                        break;
                 }
             }
+        }
+
+        // save 파일에서 가져온 스킬 포인트
+        skillPoint = playData.SkillPoint;
+        // skillViewController 널 체크
+        if(GameManager.Ui._skillViewController != null)
+        {
+            // 넣어주기
+            GameManager.Ui._skillViewController._skillLevel.skillPoint = skillPoint;
+            // 스킬 레벨별 이미지 활성화
+            GameManager.Ui._skillViewController.SkillLevelCheck();
+            // 스킬 포인트 있다면 레벨업 버튼 활성화 시켜줌
+            GameManager.Ui._skillViewController.ButtonInteractableTrue(true);
         }
 
         //=========여기서 씬 전환==========
@@ -497,5 +564,11 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         GameManager.Obj._playerStat.Atk += itemStatEX.Skill;
         // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
         GameManager.Ui.InventoryStatUpdate();
+    }
+
+    // 플레이어 스탯 업데이트 해주는 함수
+    public void UpdatePlayerStat()
+    {
+        GameManager.Parse.SwitchPlayerStatType(playData.Player, GameManager.Obj._playerStat);
     }
 }

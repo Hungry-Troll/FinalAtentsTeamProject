@@ -5,6 +5,15 @@ using System.IO;
 using System.Text;
 using LitJson;
 
+//                                       * 참고
+// <    MonoBehaviour 상속        -          상속 받지 않은 일반 클래스    >
+//
+// <    PlayerStat                      -           TempStatEx                      >
+// <    PetStat                          -           TempPetStat                      >
+// <    MonsterStat                   -           TempMonsterStat               >
+// <    ItemStatEx                    -           TempItemStat, ItemStat     >
+// <    SkillStat                        -           TempSkillStat                      >
+
 public class ParseManager
 {
     // 파일 이름 변수
@@ -16,11 +25,11 @@ public class ParseManager
     // 플레이어 리스트
     public List<TempStatEX> _playerList = new List<TempStatEX>();
     // 펫 리스트
-    public List<PetStat> _petList = new List<PetStat>();
+    public List<TempPetStat> _petList = new List<TempPetStat>();
     // 몬스터 리스트
-    public List<MonsterStat> _monsterList = new List<MonsterStat>();
+    public List<TempMonsterStat> _monsterList = new List<TempMonsterStat>();
     // 아이템 리스트
-    public List<ItemStatEX> _itemList = new List<ItemStatEX>();
+    public List<TempItemStat> _itemList = new List<TempItemStat>();
     // 세이브 파일, 하나라 리스트 아님
     public PlayData _save = new PlayData();
 
@@ -98,7 +107,7 @@ public class ParseManager
         for (int i = 0; i < dataList.Count; i++)
         {
             // 리스트 원소 생성
-            PetStat data = new PetStat();
+            TempPetStat data = new TempPetStat();
 
             data.Name = dataList[i]["_Name"].ToString();
             data.Hp = int.Parse(dataList[i]["_Hp"].ToString());
@@ -121,7 +130,7 @@ public class ParseManager
         for (int i = 0; i < dataList.Count; i++)
         {
             // 리스트 원소 생성
-            MonsterStat data = new MonsterStat();
+            TempMonsterStat data = new TempMonsterStat();
 
             data.Hp = int.Parse(dataList[i]["_Hp"].ToString());
             data.Atk = int.Parse(dataList[i]["_Atk"].ToString());
@@ -145,7 +154,7 @@ public class ParseManager
         for (int i = 0; i < dataList.Count; i++)
         {
             // 리스트 원소 생성
-            ItemStatEX data = new ItemStatEX();
+            TempItemStat data = new TempItemStat();
 
             data.Id = dataList[i]["_Id"].ToString();
             data.Name = dataList[i]["_Name"].ToString();
@@ -250,7 +259,7 @@ public class ParseManager
                     // 다 넣었으면 탈출하기;
                 }
             }
-            return null;
+            //return null;
         }
         return null;
     }
@@ -258,7 +267,7 @@ public class ParseManager
     // 원하는 펫 데이터 검색해서 GameManager로 넘겨주는 함수
     public void FindPetObjData(Define.Pet PetName)
     {
-        foreach (PetStat one in _petList)
+        foreach (TempPetStat one in _petList)
         {
             // 이름 일치하면
             if (one.Name.Equals(PetName.ToString()))
@@ -281,7 +290,7 @@ public class ParseManager
     // 원하는 몬스터 데이터 검색해서 스탯 붙여주는 함수
     public void FindMonsterObjData(Define.Monster MonsterName, MonsterStat monsterStat)
     {
-        foreach (MonsterStat one in _monsterList)
+        foreach (TempMonsterStat one in _monsterList)
         {
             // 이름 일치하면
             if (one.Name.Equals(MonsterName.ToString()))
@@ -305,9 +314,9 @@ public class ParseManager
 
     // 아이템 검색해서 넘겨줌
     // 현재 사용중인 방식대로 작성했지만 그냥 이름만 검색해서 반환하는 방법도 있음
-    public void FindItemObjData(string itemName ,ItemStatEX itemStatEX)
+    public void FindItemObjData(string itemName , TempItemStat itemStatEX)
     {
-        foreach(ItemStatEX one in _itemList)
+        foreach(TempItemStat one in _itemList)
         {
             // 이름으로 검색
             if(one.Id.Equals(itemName))
@@ -326,5 +335,50 @@ public class ParseManager
                 break;
             }
         }
+    }
+
+    //======================================
+    // 여기서부터 타입 변경 함수(Temp <-> Stat)
+
+    // 플레이어 스탯 PlayerStat -> TempPlayerStat 으로 변경하는 함수
+    // 오버로딩(1 / 2)
+    public TempPlayerStat SwitchPlayerStatType(PlayerStat originStat, TempPlayerStat tempStat)
+    {
+        // null check
+        if(originStat != null)
+        {
+            tempStat.Name = originStat.Name;
+            tempStat.Hp = originStat.Hp;
+            tempStat.Atk = originStat.Atk;
+            tempStat.Def = originStat.Def;
+            tempStat.Lv = originStat.Lv;
+            tempStat.Max_Hp = originStat.Max_Hp;
+            tempStat.Job = originStat.Job;
+            tempStat.Exp = originStat.Exp;
+            tempStat.Lv_Exp = originStat.Lv_Exp;
+            tempStat.Gold = originStat.Gold;
+        }
+        return tempStat;
+    }
+
+    // 플레이어 스탯 TempPlayerStat -> PlayerStat 으로 변경하는 함수
+    // 오버로딩(2 / 2)
+    public PlayerStat SwitchPlayerStatType(TempPlayerStat tempStat, PlayerStat originStat)
+    {
+        // null check
+        if (originStat != null)
+        {
+            originStat.Name = tempStat.Name;
+            originStat.Hp = tempStat.Hp;
+            originStat.Atk = tempStat.Atk;
+            originStat.Def = tempStat.Def;
+            originStat.Lv = tempStat.Lv;
+            originStat.Max_Hp = tempStat.Max_Hp;
+            originStat.Job = tempStat.Job;
+            originStat.Exp = tempStat.Exp;
+            originStat.Lv_Exp = tempStat.Lv_Exp;
+            originStat.Gold = tempStat.Gold;
+        }
+        return originStat;
     }
 }

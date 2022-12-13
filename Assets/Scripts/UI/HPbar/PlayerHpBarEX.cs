@@ -49,6 +49,8 @@ public class PlayerHpBarEX : MonoBehaviour
         transform.rotation = Camera.main.transform.rotation;
         // 추후 업데이트 말고 한번씩만 구현되게 수정 필요
         HpBarSystem();
+        // LV 변화 감지하고 수정하기
+        UpdateLvDisplay();
     }
 
     // HP 계산 함수
@@ -59,5 +61,11 @@ public class PlayerHpBarEX : MonoBehaviour
         _hpBarImage.fillAmount = _currentHp / _maxHp;
         // HP 바 숫자
         _hpText.text = _stat.Hp.ToString() + "/" + _stat.Max_Hp.ToString();
+    }
+
+    // LV 디스플레이 업데이트 함수
+    public void UpdateLvDisplay()
+    {
+        _Lv.text = "Lv " + _stat.Lv.ToString();
     }
 }

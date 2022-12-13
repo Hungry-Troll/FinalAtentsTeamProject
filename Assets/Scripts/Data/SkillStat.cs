@@ -29,6 +29,10 @@ public class SkillStat : MonoBehaviour
     [SerializeField]
     private int _SkillSlotNumber = -1;
 
+    // ·¹º§
+    [SerializeField]
+    private int _SkillLevel;
+
     public string Id
     {
         get { return _Id; }
@@ -63,5 +67,11 @@ public class SkillStat : MonoBehaviour
     {
         get { return _SkillSlotNumber; }
         set { _SkillSlotNumber = value; }
+    }
+
+    public int SkillLevel
+    {
+        get { return _SkillLevel; }
+        set { _SkillLevel = value; }
     }
 }

@@ -8,6 +8,15 @@ using System.Text;
 
 // TestMain클래스를 데이타 매니저로 변경
 // 모든 데이터는 여기를 통해서 로드
+
+//                                       * 참고
+// <    MonoBehaviour 상속        -          상속 받지 않은 일반 클래스    >
+//
+// <    PlayerStat                      -           TempStatEx                      >
+// <    PetStat                          -           TempPetStat                      >
+// <    MonsterStat                   -           TempMonsterStat               >
+// <    ItemStatEx                    -           TempItemStat, ItemStat     >
+// <    SkillStat                        -           TempSkillStat                      >
 public class StatManager
 {
     // 싱글톤 객체 가져오기

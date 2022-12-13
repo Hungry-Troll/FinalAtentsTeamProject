@@ -117,3 +117,107 @@ public class ItemStat
         set { _Count = value; }
     }
 }
+
+
+// 위의 ItemStat 과 완전히 동일하지만 프로젝트 내부 규칙에 따라 클래스 이름 혼동을 막기 위해 생성
+// <    MonoBehaviour 상속        -          상속 받지 않은 일반 클래스    >
+// <    PlayerStat                      -           TempStatEx                      >
+// <    PetStat                          -           TempPetStat                      >
+// <    MonsterStat                   -           TempMonsterStat               >
+// <    ItemStatEx                    -           TempItemStat, ItemStat     >
+// <    SkillStat                        -           TempSkillStat                      >
+[System.Serializable]
+public class TempItemStat
+{
+    public TempItemStat() { }
+    public TempItemStat(string id, string name, string type, int skill, string info, int get_price, int sale_price)
+    {
+        _Id = id;
+        _Name = name;
+        _Type = type;
+        _Skill = skill;
+        _Info = info;
+        _Get_Price = get_price;
+        _Sale_Price = sale_price;
+    }
+
+    // 코드
+    [SerializeField]
+    private string _Id;
+
+    // 이름
+    [SerializeField]
+    private string _Name;
+
+    // 타입
+    [SerializeField]
+    private string _Type;
+
+    // 효과
+    [SerializeField]
+    private int _Skill;
+
+    // 상세 설명
+    [SerializeField]
+    private string _Info;
+
+    // 구매비용
+    [SerializeField]
+    private int _Get_Price;
+
+    // 판매비용
+    [SerializeField]
+    private int _Sale_Price;
+
+    // 보유 개수
+    [SerializeField]
+    private int _Count;
+
+    public string Id
+    {
+        get { return _Id; }
+        set { _Id = value; }
+    }
+
+    public string Name
+    {
+        get { return _Name; }
+        set { _Name = value; }
+    }
+
+    public string Type
+    {
+        get { return _Type; }
+        set { _Type = value; }
+    }
+
+    public int Skill
+    {
+        get { return _Skill; }
+        set { _Skill = value; }
+    }
+
+    public string Info
+    {
+        get { return _Info; }
+        set { _Info = value; }
+    }
+
+    public int Get_Price
+    {
+        get { return _Get_Price; }
+        set { _Get_Price = value; }
+    }
+
+    public int Sale_Price
+    {
+        get { return _Sale_Price; }
+        set { _Sale_Price = value; }
+    }
+
+    public int Count
+    {
+        get { return _Count; }
+        set { _Count = value; }
+    }
+}
