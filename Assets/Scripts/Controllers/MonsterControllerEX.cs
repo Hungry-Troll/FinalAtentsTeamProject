@@ -53,6 +53,10 @@ public class MonsterControllerEX : MonoBehaviour
     // 범위 공격 피격용 박스콜라이더
     public BoxCollider _mobBoxCollider;
 
+    // 몬스터 받는 대미지
+    public int _damage;
+   
+
     public int _mobNum
     {
         get;
@@ -309,30 +313,20 @@ public class MonsterControllerEX : MonoBehaviour
     //몬스터 대미지 받는 함수
     public void OnDamaged(int playerAtk, int SkillDamagePercent)
     {
-        //대미지 텍스트 생성
-        GameObject tmp = GameManager.DamText.DamageTextStart();
-        tmp.transform.SetParent(this.gameObject.transform);
-        DamageTextEX damageText = null;
-        // 몬스터를 파괴해서 생기는 버그였음 >> 몬스터 사망시 파괴하지않고 비활성화로 변경
-        //널 체크
-        //if (tmp != null) 
-        damageText = tmp.GetComponent<DamageTextEX>();
-
-        //널 체크
-        //if (damageText == null)
-        //return;
-
+        _damage = 0;
         // 대미지 계산
         if (playerAtk > _monsterStat.Def)
         {
             _monsterStat.Hp -= (playerAtk - _monsterStat.Def) / SkillDamagePercent;
-            damageText._damage = (playerAtk - _monsterStat.Def) / SkillDamagePercent;
+            _damage = (playerAtk - _monsterStat.Def) / SkillDamagePercent;
         }
         else
         {
             _monsterStat.Hp -= 1;
-            damageText._damage = 1;
+            _damage = 1;
         }
+        //대미지 텍스트 생성 // 부모를 지금 게임오브젝트로
+        GameObject tmp = GameManager.DamText.DamageTextStart(this.gameObject, _damage);
 
         if (_monsterStat.Hp <= 0)
         {

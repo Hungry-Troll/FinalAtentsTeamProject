@@ -23,6 +23,10 @@ public class FieldManager : MonoBehaviour
     public GameObject[] _startPosMonster;
     public Vector3[] _startPosMob;
 
+    // 펫 위치 설정용 / 비어있는 게임오브젝트에 플레이어 위치 대입
+    public GameObject _startPosPetObj;
+    public Vector3 _startPosPet;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -104,9 +108,10 @@ public class FieldManager : MonoBehaviour
         // 퀘스트 진행용 도어 생성
         GameManager.Create.CreateQuestDoor(transform.position, "TutorialDoor");
 
+        // 펫 시작 위치
+        _startPosPet = _startPosPetObj.transform.position;
         // 펫 생성 코드
-        Vector3 temPos = new Vector3(Random.Range(3, 5), Random.Range(3, 5), Random.Range(3, 5));
-        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPos + temPos, GameManager.Select._pet.ToString());
+        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPosPet, GameManager.Select._pet.ToString());
 
         // 아이템 생성용 테스트 코드
         //for (int i = 0; i < GameManager.Resource._fieldItem.Count; i++)
@@ -153,9 +158,11 @@ public class FieldManager : MonoBehaviour
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
 
+        // 펫 시작 위치
+        _startPosPet = _startPosPetObj.transform.position;
         // 펫 생성 코드
-        Vector3 temPos = new Vector3(Random.Range(3, 5), Random.Range(3, 5), Random.Range(3, 5));
-        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPos + temPos, GameManager.Select._pet.ToString());
+        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPosPet, GameManager.Select._pet.ToString());
+
     }
 
     private void DungeonSceneAwake()
@@ -192,9 +199,10 @@ public class FieldManager : MonoBehaviour
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
 
+        // 펫 시작 위치
+        _startPosPet = _startPosPetObj.transform.position;
         // 펫 생성 코드
-        Vector3 temPos = new Vector3(Random.Range(3, 5), Random.Range(3, 5), Random.Range(3, 5));
-        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPos + temPos, GameManager.Select._pet.ToString());
+        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPosPet, GameManager.Select._pet.ToString());
 
         // 몬스터 7마리 생성
         for (int i = 0; i < 7; i++)

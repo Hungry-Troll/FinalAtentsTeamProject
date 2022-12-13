@@ -16,25 +16,30 @@ public class DamageTextEX : MonoBehaviour
     private RectTransform _rectText;
     float _y;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        // 부모 오브젝트가 없으면 리턴처리 (버그 제거용)
-        if (transform.parent.gameObject == null)
-        {
-            return;
-        }
+        DamageLog();
+    }
+
+    public void DamageLog()
+    {
         _text = GetComponent<Text>();
         _canvas = GetComponentInParent<Canvas>();
         _rectText = GetComponent<RectTransform>();
         _canvas.renderMode = RenderMode.WorldSpace;
         _canvas.worldCamera = Camera.main;
 
+        // 재사용하기위해 초기화
+        // 페이트 초기화
+        _text.DOFade(1f, 0.0f);
+        // 위치 초기화
+        Vector3 offset = new Vector3(0, 0, 0);
+
         // 데미지 숫자를 문자로 변환
         _text.text = _damage.ToString();
 
         // 데미지 뜰 위치 y 값
-        Vector3 offset = gameObject.transform.position + Vector3.up * (gameObject.GetComponentInParent<NavMeshAgent>().height);
+        offset = Vector3.up * (gameObject.GetComponentInParent<NavMeshAgent>().height);
         _y = offset.y;
         // 데미지 뜰 위치 (로컬좌표)
         _rectText.localPosition = new Vector3(0, _y, 0);
@@ -55,14 +60,13 @@ public class DamageTextEX : MonoBehaviour
 
 
         // 글씨 점프 효과
-        transform.DOJump(endPos, power, 1, 1.0f).OnComplete(() =>
+        transform.DOJump(endPos, power, 1, 1.5f).OnComplete(() =>
         // 글씨 점프가 끝나면 비활성화하고 대미지텍스트풀에 다시 넣음
         {
             gameObject.SetActive(false);
             gameObject.transform.SetParent(GameManager.DamText._damageTextPool.transform);
             GameManager.DamText._damageTextList.Add(this.gameObject);
         });
-
     }
 
     // Update is called once per frame

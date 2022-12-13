@@ -27,12 +27,18 @@ public class DamageTextManager
     }
 
     // 대미지 텍스트를 넘겨주는 함수
-    public GameObject DamageTextStart()
+    public GameObject DamageTextStart(GameObject target, int damage)
     {
         for (int i = 0; i < _damageTextList.Count; i++)
         {
             if(_damageTextList[i].activeSelf == false)
             {
+                // 타겟을 받아와서 먼저 부모로 설정해줌
+                _damageTextList[i].transform.SetParent(target.transform);
+                // 스크립트로 접근
+                DamageTextEX dm = _damageTextList[i].GetComponent<DamageTextEX>();
+                // 대미지에 대입
+                dm._damage = damage;
                 _damageTextList[i].SetActive(true);
                 GameObject tmp = _damageTextList[i];
                 _damageTextList.RemoveAt(i);

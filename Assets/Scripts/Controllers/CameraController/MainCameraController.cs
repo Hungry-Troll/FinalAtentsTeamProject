@@ -8,7 +8,11 @@ public class MainCameraController : MonoBehaviour
     Vector3 _oldPos;
     Vector3 _cameraPos;
     Quaternion _cameraRot;
-    // Start is called before the first frame update
+
+    // 알파값 조절용 변수들
+    Vector3 Direcction;
+    Renderer ObstacleRenderer;
+
     void Start()
     {
         SceneCheck();
@@ -17,10 +21,8 @@ public class MainCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 플레이어 따라가는 카메라
-        Vector3 delta = _player.transform.position - _oldPos;
-        transform.position = transform.position + delta;
-        _oldPos = _player.transform.position;
+        FollowPlayer();
+        ObjectAlbedo();
     }
 
     private void SceneCheck()
@@ -70,5 +72,43 @@ public class MainCameraController : MonoBehaviour
     {
         // 카메라 벡터 계산해서 카메라매니저에 넣어둠
         GameManager.Cam._mainCameraPos = _cameraPos - _player.transform.position;
+    }
+    // 플레이어 따라가는 카메라
+    void FollowPlayer()
+    {
+        Vector3 delta = _player.transform.position - _oldPos;
+        transform.position = transform.position + delta;
+        _oldPos = _player.transform.position;
+    }
+
+    // 장애물 알파값 조절
+    void ObjectAlbedo()
+    {
+        RaycastHit hitInfo;
+        Direcction = (_player.transform.position - transform.position).normalized;
+        if (Physics.Raycast(transform.position, Direcction, out hitInfo, Mathf.Infinity))
+        {
+            if (hitInfo.collider.CompareTag("MapObject"))
+            {
+                ObstacleRenderer = hitInfo.collider.gameObject.GetComponent<Renderer>();
+                if (ObstacleRenderer != null)
+                {
+                    Material Mat = ObstacleRenderer.material;
+                    Color matColor = Mat.color;
+                    matColor.a = 0.2f;
+                    Mat.color = matColor;
+                }
+            }
+            else
+            {
+                if (ObstacleRenderer != null)
+                {
+                    Material Mat = ObstacleRenderer.material;
+                    Color matColor = Mat.color;
+                    matColor.a = 1f;
+                    Mat.color = matColor;
+                }
+            }
+        }
     }
 }
