@@ -891,6 +891,7 @@ public class UiManager
                     int slotNum = 0;
                     slotNum = i;
                     GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub();
+                    GameManager.Ui._uiSceneAttackButton.PotionCountMinusOne();
                     // 만약 줄어든 뒤 갯수가 0개라면, 해당 인벤토리칸 지우기
                     if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
                     {
