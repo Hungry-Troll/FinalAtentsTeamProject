@@ -50,31 +50,77 @@ public class Ui_NpcController : MonoBehaviour
         switch(GameManager.QuestData._questLevel)
         {
             case 1 :
+                // 화살표 끄기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 대화 종료 후 
+                if(isConversationEnd)
+                {
+                    // 방향 화살표 생성(웨슬리로 향하는 화살표)
+                    GameManager.Ui._directionArrowController.OnArrow("ToWesley");
+                }
                 break;
             case 2 :
+                // 화살표 끄기... 사실 WesleyController 에서 이미 꺼놨을 것. 삭제해도 되는 코드.
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 비디오 재생
                 GameManager.Quest._wesleyController.OpeningVideoPlay();
                 break;
             case 3 :
-                break;
-            case 4 :
-                // 장소 이름 팝업(마을)
+                // 화살표 끄기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 대화 종료 후 
                 if(isConversationEnd)
                 {
+                    // 방향 화살표 생성(마을 맵 포탈로 향하는 화살표)
+                    GameManager.Ui._directionArrowController.OnArrow("ToVenice");
+                    GameManager.Ui._directionArrowController.OnArrow("TutorialToVillage");
+                }
+                break;
+            case 4 :
+                // 화살표 끄기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 대화 종료 후
+                if(isConversationEnd)
+                {
+                    // 방향 화살표 생성(던전 맵 포탈로 향하는 화살표)
+                    GameManager.Ui._directionArrowController.OnArrow("VillageToDungeon");
+                    // 장소 이름 팝업(마을)
                     GameManager.Ui.PopUpLocation("도망자들의 마을");
                     StartCoroutine(GameManager.Ui.ClosePopUpLocation());
                 }
                 break;
             case 5 :
-                // 장소 이름 팝업(던전)
+                // 화살표 끄기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 대화 종료 후
                 if(isConversationEnd)
                 {
+                    // 방향 화살표 생성(설원 맵 몬스터들로 향하는 화살표)
+                    GameManager.Ui._directionArrowController.OnArrow("ToIceField");
+                    // 장소 이름 팝업(던전)
                     GameManager.Ui.PopUpLocation("트라이 산맥");
                     StartCoroutine(GameManager.Ui.ClosePopUpLocation());
                 }
                 break;
             case 6:
+                // 화살표 끄기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 대화 종료 후
+                if (isConversationEnd)
+                {
+                    // 방향 화살표 생성(초원 맵 몬스터들로 향하는 화살표)
+                    GameManager.Ui._directionArrowController.OnArrow("ToGreenField");
+                }
                 break;
             case 7:
+                // 화살표 끄기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                // 대화 종료 후
+                if (isConversationEnd)
+                {
+                    // 방향 화살표 생성(화산지대 보스몬스터로 향하는 화살표)
+                    GameManager.Ui._directionArrowController.OnArrow("ToVolcanicField");
+                }
                 break;
         }
 

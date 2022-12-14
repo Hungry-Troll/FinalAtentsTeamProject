@@ -194,8 +194,10 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             // null 아닐때만 저장
             if(GameManager.Ui._inventoryController._item != null)
             {
+                playData.ItemList = new List<string>();
                 foreach(GameObject one in GameManager.Ui._inventoryController._item)
                 {
+                    // 기존의 목록 있으면 리셋, 아니면 중복되어서 저장됨. 배로 늘어나는 물건들...
                     // 인벤토리 아이템 이름으로 저장
                     playData.ItemList.Add(one.name);
                 }

@@ -45,17 +45,15 @@ public class FieldManager : MonoBehaviour
                 break;
             case Define.SceneName.Village02:
                 NextSceneAwake();
-                // 마을 안내 화살표 생성 / 임시 위치, 후에 튜토리얼 관리 클래스에서 처리
-                // 켜져있는 화살표 있을 시를 대비, 먼저 꺼주기
-                GameManager.Ui._directionArrowController.OffAllArrows();
-                GameManager.Ui._directionArrowController.OnArrow("VillageToDungeon");
+                // 기존 방향 안내 UI 코드를 Ui_NpcController에서 처리
+                //GameManager.Ui._directionArrowController.OffAllArrows();
+                //GameManager.Ui._directionArrowController.OnArrow("VillageToDungeon");
                 break;
             case Define.SceneName.DunGeon:
                 DungeonSceneAwake();
-                // 던전 방향 안내 화살표 켜주기 / 설원 -> 초원 -> 화산
-                // 켜져있는 화살표 있을 시를 대비, 먼저 꺼주기
-                GameManager.Ui._directionArrowController.OffAllArrows();
-                GameManager.Ui._directionArrowController.OnArrow("DungeonCourse");
+                // 기존 방향 안내 UI 코드를 Ui_NpcController에서 처리
+                //GameManager.Ui._directionArrowController.OffAllArrows();
+                //GameManager.Ui._directionArrowController.OnArrow("DungeonCourse");
                 break;
         }
     }

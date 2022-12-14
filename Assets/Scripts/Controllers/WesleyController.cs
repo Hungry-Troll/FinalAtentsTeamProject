@@ -67,6 +67,8 @@ public class WesleyController : MonoBehaviour
                         case 1:
                             TutorialQuest();
                             // 함수 끝나면 퀘스트 레벨2
+                            // 첫 번째 몬스터 죽이고 웨슬리 클릭했을 때 웨슬리 방향 화살표 꺼주기
+                            GameManager.Ui._directionArrowController.OffAllArrows();
                             break;
                         case 2:
                             TutorialQuest();
