@@ -147,7 +147,7 @@ public class PetController : MonoBehaviour
             // 공격
             transform.LookAt(GameManager.Obj._targetMonster.transform);
 
-            if (_rnd >= 8)
+            if (_rnd >= 6)
             {
                 _creatureState = CreatureState.Skill;
             }
@@ -352,7 +352,7 @@ public class PetController : MonoBehaviour
         GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk, 1);
         transform.LookAt(_target);
     }
-    public void PetSkill3()//Pachy : 공격속도 2배 (스킬 애니메이션이 2번 빠르게 작동함)
+    public void PetSkill3() //Pachy : 공격속도 2배 (스킬 애니메이션이 2번 빠르게 작동함)
     {
         GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk, 1);
         transform.LookAt(_target);

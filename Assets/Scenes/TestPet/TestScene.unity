@@ -399,6 +399,124 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1588100497681552330
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 266154037553876777, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_Name
+      value: Pachycephalosaurus
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232155726718935608, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 44abe16a8061da94ca2e65a7cdf3886f, type: 3}
+--- !u!1001 &1881197542066153010
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5598207643524009984, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_Name
+      value: Triceratops
+      objectReference: {fileID: 0}
+    - target: {fileID: 5598207643524009984, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887454573808386055, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 37c53692f67f59e40b6bada6139c64e6, type: 3}
 --- !u!1001 &2148862520956920612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -453,6 +571,10 @@ PrefabInstance:
     - target: {fileID: 4045923161622159345, guid: 94f41cfd0e0604c419491d0c58d514a7, type: 3}
       propertyPath: m_Name
       value: Brachiosaurus
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045923161622159345, guid: 94f41cfd0e0604c419491d0c58d514a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94f41cfd0e0604c419491d0c58d514a7, type: 3}
