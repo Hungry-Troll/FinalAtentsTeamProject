@@ -16,6 +16,8 @@ public class PetController : MonoBehaviour
     ParticleSystem _particleSystem;
     CreatureState _creatureState;
 
+
+
     // 타겟 확인용
     float distance;
     float mondis;
@@ -64,6 +66,9 @@ public class PetController : MonoBehaviour
         _creatureState = CreatureState.Idle;
 
         _rnd = Random.Range(0, 9);
+
+
+
     }
 
     void Update()
@@ -341,18 +346,21 @@ public class PetController : MonoBehaviour
         transform.LookAt(_target);
     }
 
-    public void PetSkill1() //Bra : 데미지가 2배로 들어감
+    public void PetSkill1() //Bra : 데미지가 2배로 들어감 (완)
     {
         GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk * 2, 1);
         transform.LookAt(_target);
     }
 
-    public void PetSkill2() //Tri : 도발을 시전함
+    public void PetSkill2() //Tri : 도발을 시전함 : 플레이어가 받는 데미지가 0 이 됨(완)
     {
-        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk, 1);
         transform.LookAt(_target);
+        PlayerController _playerController = GameManager.Obj._playerController;
+        MonsterControllerEX _monsterController = GameManager.Obj._targetMonsterController;
+        _playerController.OnDamaged(0);
+
     }
-    public void PetSkill3() //Pachy : 공격속도 2배 (스킬 애니메이션이 2번 빠르게 작동함)
+    public void PetSkill3() //Pachy : 공격속도 2배 (스킬 애니메이션이 2번 빠르게 작동함) (완)
     {
         GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk, 1);
         transform.LookAt(_target);
@@ -370,6 +378,11 @@ public class PetController : MonoBehaviour
     }
 
     #endregion
+
+
+
+
+
 
 
 

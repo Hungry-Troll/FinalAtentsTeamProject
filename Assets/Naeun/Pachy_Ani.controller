@@ -43,16 +43,16 @@ AnimatorStateMachine:
     m_Position: {x: 260, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6583956496835767151}
-    m_Position: {x: 550, y: -10, z: 0}
+    m_Position: {x: 600, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -782362780789209538}
-    m_Position: {x: 560, y: 270, z: 0}
+    m_Position: {x: 590, y: 500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1796093661353393725}
     m_Position: {x: 357.80072, y: -126.28174, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 493976133570518461}
-    m_Position: {x: 320, y: 510, z: 0}
+    m_Position: {x: 260, y: 510, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 1146368617187185926}
@@ -226,7 +226,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack
-  m_Speed: 1
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5480686034525185528}
@@ -339,7 +339,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Skill
-  m_Speed: 2
+  m_Speed: 1.3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6228602315813180410}
@@ -354,7 +354,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400016, guid: 17e1b8721cbf645458a2141fe3bbe35a, type: 3}
+  m_Motion: {fileID: 9147994691136716239, guid: 17e1b8721cbf645458a2141fe3bbe35a, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
