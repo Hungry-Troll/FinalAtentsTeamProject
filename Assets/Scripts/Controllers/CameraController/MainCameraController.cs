@@ -36,7 +36,7 @@ public class MainCameraController : MonoBehaviour
                 NextSceneStart();
                 break;
             case Define.SceneName.DunGeon:
-                NextSceneStart();
+                NextSceneStart1();
                 break;
         }
     }
@@ -44,8 +44,10 @@ public class MainCameraController : MonoBehaviour
     private void TutorialStart()
     {
         // 듀토리얼맵 카메라 시작 위치
-        _cameraPos = new Vector3(-65f, 13f, -63f);
-        _cameraRot = Quaternion.Euler(57f, 0f, 0f);
+        //_cameraPos = new Vector3(-65f, 13f, -63f);
+        //_cameraRot = Quaternion.Euler(57f, 0f, 0f);
+        _cameraPos = new Vector3(-65f, 7.5f, -64f);
+        _cameraRot = Quaternion.Euler(10f, 0f, 0f);
         transform.position = _cameraPos;
         transform.rotation = _cameraRot;
 
@@ -59,10 +61,26 @@ public class MainCameraController : MonoBehaviour
         // 마을맵 카메라 시작 위치
         _player = GameObject.FindWithTag("Player");
         _oldPos = _player.transform.position;
-        
+
         // 카메라 매니저에서 기존 카메라 위치 정보를 가지고 옴 // 추후 카메라 시점 변경시 코드 수정 필요
-        _cameraPos = GameManager.Cam._mainCameraPos + _oldPos;
-        _cameraRot = Quaternion.Euler(57f, 0f, 0f);
+        //_cameraPos = GameManager.Cam._mainCameraPos + _oldPos;
+        //_cameraRot = Quaternion.Euler(57f, 0f, 0f);
+        _cameraPos = new Vector3(-70f, 3f, -99f);
+        _cameraRot = Quaternion.Euler(10f, 0f, 0f);
+
+        transform.position = _cameraPos;
+        transform.rotation = _cameraRot;
+    }
+    private void NextSceneStart1()
+    {
+        // 마을맵 카메라 시작 위치
+        _player = GameObject.FindWithTag("Player");
+        _oldPos = _player.transform.position;
+
+        // 카메라 매니저에서 기존 카메라 위치 정보를 가지고 옴 // 추후 카메라 시점 변경시 코드 수정 필요
+        //_cameraPos = GameManager.Cam._mainCameraPos + _oldPos;
+        _cameraPos = new Vector3(101f, 14f, 267f);
+        _cameraRot = Quaternion.Euler(15f, -94f, -0.2f);
         transform.position = _cameraPos;
         transform.rotation = _cameraRot;
     }
