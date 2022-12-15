@@ -894,6 +894,10 @@ public class UiManager
                     slotNum = i;
                     GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub();
                     GameManager.Ui._uiSceneAttackButton.PotionCountMinusOne();
+                    // 변경된 포션 수량
+                    int potionCnt = GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount;
+                    // 딕셔너리에 수량 저장
+                    GameManager.Ui._inventoryController.SetItemCountDictionary(spriteName, potionCnt);
                     // 만약 줄어든 뒤 갯수가 0개라면, 해당 인벤토리칸 지우기
                     if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
                     {
@@ -922,6 +926,10 @@ public class UiManager
                     GameManager.Ui._inventoryController._item.RemoveAt(i);
                     _slotImage[i].sprite = null;
                     _slotImage[i].gameObject.SetActive(false);
+
+                    // 수량 업데이트
+                    // 임시코드, 일단 수량 0으로 맞추지만 추후에 포션 이외 수량설정 가능한 아이템이 나오면 수정
+                    GameManager.Ui._inventoryController.SetItemCountDictionary(spriteName, 0);
                     break;
                 }
             }
@@ -930,6 +938,9 @@ public class UiManager
         if (GameManager.Obj._veniceController.Shop.activeSelf == true)
         {
             ItemSell(spriteName);
+            // 수량 업데이트(save 용)
+            // 임시코드, 일단 수량 0으로 맞추지만 추후에 포션 이외 수량설정 가능한 아이템이 나오면 수정
+            GameManager.Ui._inventoryController.SetItemCountDictionary(spriteName, 0);
         }
         // 아이템 상태창 닫기	
         ItemStatViewClose();
@@ -948,6 +959,11 @@ public class UiManager
                 slotNum = i;
                 GameManager.Ui._inventoryController._invenSlotList[slotNum].SetOverlapItemCntSub(); // 물약을 사용했으니, 갯수가 하나 줄어듬
 
+                // 변경된 포션 수량
+                int potionCnt = GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount;
+                // 딕셔너리에 수량 저장
+                GameManager.Ui._inventoryController.SetItemCountDictionary("potion1", potionCnt);
+                
                 // 만약 줄어든 뒤 갯수가 0개라면, 해당 인벤토리칸 지우기
                 if (GameManager.Ui._inventoryController._invenSlotList[slotNum]._invenItemCount == 0)
                 {

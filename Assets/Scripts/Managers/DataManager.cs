@@ -35,6 +35,10 @@ public class PlayData
     [SerializeField]
     private List<string> _Item_List = new List<string>();
 
+    // 인벤토리 담았던 아이템 수량 딕셔너리<이름, 수량>
+    [SerializeField]
+    private List<int> _Item_Count_List = new List<int>();
+
     [SerializeField]
     private string _Weapon;
 
@@ -81,6 +85,11 @@ public class PlayData
     {
         get { return _Item_List; }
         set { _Item_List = value; }
+    }
+    public List<int> ItemCountList
+    {
+        get { return _Item_Count_List; }
+        set { _Item_Count_List = value; }
     }
     public string Weapon
     {
@@ -194,12 +203,31 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             // null 아닐때만 저장
             if(GameManager.Ui._inventoryController._item != null)
             {
+                // 아이템 이름 리스트 초기화
                 playData.ItemList = new List<string>();
-                foreach(GameObject one in GameManager.Ui._inventoryController._item)
+                // 아이템 수량 리스트 초기화
+                playData.ItemCountList = new List<int>();
+                foreach (GameObject one in GameManager.Ui._inventoryController._item)
                 {
                     // 기존의 목록 있으면 리셋, 아니면 중복되어서 저장됨. 배로 늘어나는 물건들...
                     // 인벤토리 아이템 이름으로 저장
                     playData.ItemList.Add(one.name);
+                    
+                    // 수량 저장, 수량 보관한 딕셔너리가 null 아니면
+                    if(GameManager.Ui._inventoryController.ItemCountDictionary.Keys != null)
+                    {
+                        // 갖고 있는 아이템 이름 집합
+                        foreach (string keyName in GameManager.Ui._inventoryController.ItemCountDictionary.Keys)
+                        {
+                            // 이름 일치하면
+                            if(keyName.Equals(one.name))
+                            {
+                                // 수량 리스트에 추가
+                                playData.ItemCountList.Add(GameManager.Ui._inventoryController.ItemCountDictionary[keyName]);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -524,8 +552,14 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
                 GameManager.Stat.ItemStatLoadJson(Item.name, _itemStatEX);
                 // 인벤토리에 넣기
                 GameManager.Item.InventoryItemAdd(Item, false);
+
+                // 수량 딕셔너리 초기화
+                // playData.ItemList와 쌍으로 저장되었기 때문에 그 순서대로 Set 하면 된다.
+                GameManager.Ui._inventoryController.SetItemCountDictionary(temp, playData.ItemCountList[i]);
             }
         }
+        // 슬롯컨트롤러내 수량도 초기화
+        GameManager.Ui._inventoryController.SetInvenSlotItemsCount(playData.ItemCountList);
     }
 
     // playData에서 장착아이템 가지고 오는 함수 LoaData()에 넣고 싶은대 플레이어 정보를 LoadData보다 늦게 불러와서 따로 불러와야됨 (필드매니저에서 사용)

@@ -36,6 +36,10 @@ public class ItemManager
             IsOverlapItemContains(item))
         {
             GameManager.Ui._inventoryController._invenSlotList[potionIndex].SetOverlapItemCntAdd();
+            // 이미 갖고 있는 포션의 개수
+            int potionCnt = GameManager.Ui._inventoryController._invenSlotList[potionIndex]._invenItemCount;
+            // potion1의 개수 update(딕셔너리(InvenSlotController._itemCountDictionary))
+            GameManager.Ui._inventoryController.SetItemCountDictionary("potion1", potionCnt);
         }
         else
         //처음 생성될 떄	
@@ -51,6 +55,8 @@ public class ItemManager
                 //처음 먹었을떄부터 1 시작 두번ㅉㅐ 먹으면 +2됨	
                 GameManager.Ui._inventoryController._invenSlotList[count - 1].SetOverlapItemCntAdd();
             }
+            // 딕셔너리에 아이템 수량 1로 저장, 딕셔너리<인벤토리 아이템, 수량>
+            GameManager.Ui._inventoryController.SetItemCountDictionary(item.name, 1);
             // 아이템 이미지 로드	
             Sprite ItemSprite = GameManager.Resource.GetImage(item.name);
             // 겟차일드로 이미지 넣을 대상(슬롯이미지) 찾음	

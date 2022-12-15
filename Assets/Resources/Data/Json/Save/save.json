@@ -9,7 +9,7 @@
         "_Job": "Superhuman",
         "_Exp": 0,
         "_Lv_Exp": 300,
-        "_Gold": 430
+        "_Gold": 8520
     },
     "_Name": "",
     "_Job": "Superhuman",
@@ -17,11 +17,22 @@
     "_Scene": "Village02",
     "_Item_List": [
         "sword1",
+        "sword3",
         "potion1",
-        "armour1"
+        "armour1",
+        "sword2",
+        "sword1"
+    ],
+    "_Item_Count_List": [
+        1,
+        1,
+        6,
+        1,
+        1,
+        1
     ],
     "_Weapon": "",
-    "_Gold": 430,
+    "_Gold": 8520,
     "_SkillInfo": [],
     "_SkillPoint": 2
 }

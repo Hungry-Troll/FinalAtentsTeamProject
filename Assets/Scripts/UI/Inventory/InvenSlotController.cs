@@ -27,7 +27,16 @@ public class InvenSlotController : MonoBehaviour
 
     void Update()
     {
-        
+        // 해당 슬롯이 비어있지 않다면
+        if(_SlotItem.Count > 0)
+        {
+            // 일단은 포션만 체크
+            if (_SlotItem[0].name.Equals("potion1"))
+            {
+                // 수량 표시
+                itemCntText.text = _invenItemCount.ToString();
+            }
+        }
     }
 
     public void OnButtonClick()

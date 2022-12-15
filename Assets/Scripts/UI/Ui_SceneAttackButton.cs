@@ -57,6 +57,25 @@ public class Ui_SceneAttackButton : MonoBehaviour
         potionCnt = 0;
         potionCntTxt.text = "";
 
+        // 기존 포션 있다면 포션 개수 텍스트 업데이트
+        if(GameManager.Ui._inventoryController._item != null)
+        {
+            // 아이템 목록 널 아니라면 불러오기
+            List<GameObject> itemList = GameManager.Ui._inventoryController._item;
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                // 그 중에 포션 있으면
+                if(itemList[i].name.Equals("potion1"))
+                {
+                    // 그 수량 담아서
+                    int tempPotionCnt = GameManager.Ui._inventoryController._invenSlotList[i]._invenItemCount;
+                    // 텍스트에 Set
+                    potionCnt = tempPotionCnt;
+                    potionCntTxt.text = tempPotionCnt.ToString();
+                }
+            }
+        }
+
 
     }
 
