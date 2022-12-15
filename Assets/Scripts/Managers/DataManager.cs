@@ -571,6 +571,12 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
     // 플레이어 스탯 업데이트 해주는 함수
     public void UpdatePlayerStat()
     {
-        GameManager.Parse.SwitchPlayerStatType(playData.Player, GameManager.Obj._playerStat);
+        if(GameManager.Parse != null)
+        {
+            if(playData.Player != null && GameManager.Obj._playerStat != null)
+            {
+                GameManager.Parse.SwitchPlayerStatType(playData.Player, GameManager.Obj._playerStat);
+            }
+        }
     }
 }
