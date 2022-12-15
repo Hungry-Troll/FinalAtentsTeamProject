@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class TurnOnTheStage_Pet : MonoBehaviour
 {
     // pet 애니메이션 담을 List
-    //private List<Animator> _animatorList;
+    //private List<Animator> _animatorList1;
     private Animator[] _animatorList;
 
     // 각 펫 애니메이션
@@ -23,7 +23,7 @@ public class TurnOnTheStage_Pet : MonoBehaviour
     private bool _bTurnLeft = false;
     private bool _bTurnRight = false;
     private Quaternion _turn = Quaternion.identity;
-    
+
     // 정의
     public static int _characterNum = 0;
     int _value = 0;
@@ -31,7 +31,7 @@ public class TurnOnTheStage_Pet : MonoBehaviour
     private void Awake()
     {
         // 애니메이터 리스트, 애니메이터 초기화
-        //_animatorList = new List<Animator>();
+        //_animatorList1 = new List<Animator>();
         _animatorList = new Animator[3];
 
         // 애니메이터 리스트에 펫 애니메이터 각각 추가
@@ -39,7 +39,7 @@ public class TurnOnTheStage_Pet : MonoBehaviour
         _animatorList[1] = _pet2Ani;
         _animatorList[2] = _pet3Ani;
 
-        //_petInfoArr = GameObject.FindGameObjectsWithTag("Pet_Info");
+        _petInfoArr = GameObject.FindGameObjectsWithTag("Pet_Info");
     }
 
     private void Start()
@@ -51,13 +51,13 @@ public class TurnOnTheStage_Pet : MonoBehaviour
 
     private void Update()
     {
-        if(_bTurnLeft)
+        if (_bTurnLeft)
         {
             Debug.Log("Left");
             _characterNum++;
 
             // 수정 4 -> 3
-            if(_characterNum == 3)
+            if (_characterNum == 3)
             {
                 _characterNum = 0;
             }
@@ -70,17 +70,17 @@ public class TurnOnTheStage_Pet : MonoBehaviour
             _bTurnLeft = false;
         }
 
-        if(_bTurnRight)
+        if (_bTurnRight)
         {
             Debug.Log("Right");
             _characterNum--;
 
-            if(_characterNum == -1)
+            if (_characterNum == -1)
             {
                 // 수정 3 -> 2
                 _characterNum = 2;
             }
-            
+
             // 수정 -> 120
             // 각도를 90도 더합니다.
             _value += 120;
@@ -88,10 +88,10 @@ public class TurnOnTheStage_Pet : MonoBehaviour
             // 부울 변수를 취소합니다.
             _bTurnRight = false;
         }
-        
+
         // 각도를 잽니다.
         _turn.eulerAngles = new Vector3(0, _value, 0);
-        
+
         // 돌립니다.
         transform.rotation = Quaternion.Slerp(transform.rotation, _turn, Time.deltaTime * 5.0f);
 
@@ -99,13 +99,6 @@ public class TurnOnTheStage_Pet : MonoBehaviour
         // 선택한 펫 정보만 나오도록 SetActive
         for (int i = 0; i < 3; i++)
         {
-            // 선택 x 펫들은 active false
-
-            //_petInfoArr[i].SetActive(false);
-
-            // 선택 x 펫들 애니메이션 x
-            _animatorList[i].SetInteger("state", 0);
-
             if (i == _characterNum)
             {
                 Debug.Log(_animatorList[i].name);
@@ -114,11 +107,21 @@ public class TurnOnTheStage_Pet : MonoBehaviour
                 GameManager.Select._petName = _animatorList[i].name;
 
                 // 선택된 펫은 active true
-                //_petInfoArr[i].SetActive(true);
+                _petInfoArr[i].SetActive(true);
 
                 // 선택된 펫 애니메이션 Idle 상태로 전환
                 _animatorList[i].SetInteger("state", 1);
             }
+            else
+            {
+                // 선택 x 펫들은 active false
+                _petInfoArr[i].SetActive(false);
+
+                // 선택 x 펫들 애니메이션 x
+                _animatorList[i].SetInteger("state", 0);
+
+            }
+
         }
     }
 
