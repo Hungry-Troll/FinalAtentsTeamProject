@@ -10,8 +10,10 @@ public class CreateManager
     PetController _pet;
     ItemController _item;
     ItemStatEX _itemStatEX;
-    MonsterControllerEX _monster;
     MonsterStat _monsterStat;
+    MonsterControllerEX _monster;
+    BossChangeEX _bossHuman;
+    BossMonsterControllerEX _boss;
 
     // 플레이어 직업 확인용
     public Define.Job _select_Job;
@@ -178,6 +180,57 @@ public class CreateManager
                 // 퀘스트 변수 적용
                 _monster._isQuest = true;
                 return _monster;
+            }
+        }
+        return null;
+    }
+    // 퀘스트 보스 인간형 생성
+    public BossChangeEX CreateHumanBoss(Vector3 origin, string monsterName)
+    {
+        // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
+        origin.y += 100f;
+        RaycastHit hit;
+        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            GameObject temMonsterName = GameManager.Resource.GetMonster(monsterName);
+            if (temMonsterName != null)
+            {
+                string tempName = temMonsterName.name;
+                GameObject monster = GameObject.Instantiate<GameObject>(temMonsterName, hit.point, Quaternion.identity);
+                _bossHuman = monster.AddComponent<BossChangeEX>();
+                _bossHuman.name = tempName;
+                return _bossHuman;
+            }
+        }
+        return null;
+    }
+
+    // 퀘스트 보스몬스터 생성
+    public BossMonsterControllerEX CreateBoss(Vector3 origin, string monsterName)
+    {
+        // 위에서 레이를 쏴서 지형 높이에 따른 캐릭터 생성 코드
+        origin.y += 100f;
+        RaycastHit hit;
+        if (Physics.Raycast(origin, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            GameObject temMonsterName = GameManager.Resource.GetMonster(monsterName);
+            if (temMonsterName != null)
+            {
+                string tempName = temMonsterName.name;
+                GameObject monster = GameObject.Instantiate<GameObject>(temMonsterName, hit.point, Quaternion.identity);
+                _boss = monster.AddComponent<BossMonsterControllerEX>();
+                GameManager.Obj._monsterContList.Add(_boss);
+                _monsterStat = monster.AddComponent<MonsterStat>();
+                GameManager.Obj._bossStat = _monsterStat;
+                GameManager.Obj._boss = _boss;
+                // 스텟 스크립트에 json 파일 스텟 적용
+                GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                _boss.name = tempName;
+                // Hp 바 적용
+                GameManager.Create.CreateUi("UI_BossHpBar", _boss.gameObject);
+                // 퀘스트 변수 적용
+                _boss._isQuest = true;
+                return _boss;
             }
         }
         return null;

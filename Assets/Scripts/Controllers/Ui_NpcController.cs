@@ -122,6 +122,17 @@ public class Ui_NpcController : MonoBehaviour
                     GameManager.Ui._directionArrowController.OnArrow("ToVolcanicField");
                 }
                 break;
+            case 9:
+                if( isConversationEnd)
+                {
+                    // ui ²ô±â
+                    GameManager.Ui.UISetActiveFalse();
+                    // Äù½ºÆ® Ã¢ ´Ý±â
+                    GameManager.Quest.QuestInfoActive(false);
+                    // ¿£µù
+                    GameManager.Quest.Ending();
+                }
+                break;
         }
 
         GameManager.Quest.QuestConversationText(GameManager.Quest._conversationCount);

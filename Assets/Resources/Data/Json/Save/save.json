@@ -1,25 +1,25 @@
 {
     "_Player": {
-        "_Name": "",
-        "_Hp": 150,
-        "_Atk": 9000,
-        "_Def": 9000,
-        "_Lv": 2,
-        "_Max_Hp": 150,
+        "_Name": "1234",
+        "_Hp": 100,
+        "_Atk": 25,
+        "_Def": 10,
+        "_Lv": 1,
+        "_Max_Hp": 100,
         "_Job": "Superhuman",
         "_Exp": 0,
-        "_Lv_Exp": 300,
-        "_Gold": 500
+        "_Lv_Exp": 100,
+        "_Gold": 300
     },
-    "_Name": "",
+    "_Name": "1234",
     "_Job": "Superhuman",
-    "_Pet": "Brachiosaurus",
+    "_Pet": "Triceratops",
     "_Scene": "Village02",
     "_Item_List": [
-        "sword1"
+        "sword3"
     ],
-    "_Weapon": "",
-    "_Gold": 500,
+    "_Weapon": "sword1",
+    "_Gold": 300,
     "_SkillInfo": [],
     "_SkillPoint": 2
 }

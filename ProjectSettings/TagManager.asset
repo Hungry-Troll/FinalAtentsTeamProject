@@ -9,6 +9,10 @@ TagManager:
   - Pet_Info
   - Pet
   - Item
+  - Canvas
+  - Merchant
+  - Wesley
+  - MapObject
   layers:
   - Default
   - TransparentFX
@@ -18,7 +22,7 @@ TagManager:
   - UI
   - Unwalkable
   - Terrain
-  - 
+  - MiniMap
   - 
   - 
   - 

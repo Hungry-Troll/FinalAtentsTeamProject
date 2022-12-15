@@ -208,14 +208,34 @@ public class QuestManagerEX
                 // 퀘스트 레벨이 5이면
                 if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 5)
                 {
+                    QuestJoystickStop();
                     _wesleyController.RadioQuest();
                     DungeonDoor1Open();
                 }
                 // 퀘스트 레벨이 6이면
                 else if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 6)
                 {
+                    QuestJoystickStop();
                     _wesleyController.RadioQuest();
                     DungeonDoor2Open();
+                }
+                // 퀘스트 레벨이 7이면
+                else if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 7)
+                {
+                    QuestJoystickStop();
+                    _wesleyController.RadioQuest();
+                }
+                // 퀘스트 레벨이 8이면
+                else if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 8)
+                {
+                    QuestJoystickStop();
+                    _wesleyController.RadioQuest();
+                }
+                // 퀘스트 레벨이 9이면 엔딩
+                else if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 9)
+                {
+                    QuestJoystickStop();
+                    _wesleyController.RadioQuest();
                 }
                 break;
         }
@@ -318,7 +338,20 @@ public class QuestManagerEX
         // 리워드용 골드 텍스트 수정
         GameManager.Ui._uiQuestReward._rewardText.text = _reward.ToString() + " G";
     }
+    // 엔딩
+    public void Ending()
+    {
+        // 엔딩ui
+        GameManager.Create.CreateUi("UI_Ending", GameManager.Ui.go);
+    }
 
+    public void QuestJoystickStop()
+    {
+        // 조이스틱 이동 펄스
+        GameManager.Ui._joyStickController._joystickState = Define.JoystickState.InputFalse;
+        // 플레이어 상태를 대기로
+        GameManager.Obj._playerController._creatureState = Define.CreatureState.Idle;
+    }
 
     //위 내용 다 구현 후 정리
     /*

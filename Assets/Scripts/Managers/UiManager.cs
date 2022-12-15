@@ -148,6 +148,8 @@ public class UiManager
     public GameObject _uiLevelUpObj;
     public UI_LevelUp _uiLevelUp;
 
+    // 보스 HP바
+    public GameObject _bossHpbar;
 
     //Ui 관리는 여기에서 처리
     //현재 UI 이름 개판 Ui // UI ... 추후 정리...

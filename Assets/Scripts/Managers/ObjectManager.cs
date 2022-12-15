@@ -14,6 +14,9 @@ public class ObjectManager
     // 몬스터 정보
     public List<MonsterControllerEX> _monsterContList = new List<MonsterControllerEX>();
     public List<MonsterStat> _monsterStatList = new List<MonsterStat>();
+    // 보스 정보
+    public BossMonsterControllerEX _boss;
+    public MonsterStat _bossStat;
 
     // 베니스(상인) 정보
     public VeniceController _veniceController;

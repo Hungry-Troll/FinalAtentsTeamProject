@@ -4,49 +4,39 @@ using UnityEngine;
 using static Define;
 //50번쨰 줄 Image 사용하려면 UnityEngine.UI; 필요함
 using UnityEngine.UI;
+using System;
 
 public class MonsterControllerEX : MonoBehaviour
 {
     //Define 열거체 참조
-    CreatureState _state = CreatureState.Idle;
+    public CreatureState _state = CreatureState.Idle;
     //플레이어 타겟
-    Transform _PlayerPos;
+    public Transform _PlayerPos;
     //몬스터 오브젝트 좌표
     public Vector3 _mobpos;
     //몬스터 이동속도
-    [SerializeField] float _speed = 2.0f;
+    public float _speed = 2.0f;
     //몬스터 회전속도
-    float _rotateSpeed;
+    public float _rotateSpeed;
     //몬스터 공격반경
-    float _attack;
+    public float _attack;
     //애니메이터
-    Animator _ani;
+    public Animator _ani;
 
-    //몬스터 죽는거 테스트
-    //float _damage = 5.0f;
-    //float _hp = 10.0f;
     //몬스터 스텟
-    MonsterStat _monsterStat;
+    public MonsterStat _monsterStat;
 
     //몬스터 추적 범위
-    float _distance;
+    public float _distance;
     //플레이어 캐릭터 위치와 몬스터 위치 사이의 거리를 계산
-    float _PosToPos;
+    public float _PosToPos;
     //플레이어 스크립트
-    PlayerController _playerController;
+    public PlayerController _playerController;
     //몬스터 기본공격용 코루틴 변수
-    Coroutine _coAttack;
+    public Coroutine _coAttack;
     //몬스터 사망용 코루틴 변수
-    Coroutine _coDead;
+    public Coroutine _coDead;
 
-    //HpBar 프리팹 생성
-    public GameObject _hpBarPrefab;
-    //몬스터 위에 HpBar 프리팹이 생성될 위치 -> 62번째 코드
-    Vector3 _hpBarOffset;
-    //Canvas
-    private Canvas _uiCanvas;
-    //HpBar 이미지 사용
-    private Image _hpBarImage;
     //퀘스트용 몬스터 전용 변수
     public bool _isQuest;
 
@@ -55,7 +45,11 @@ public class MonsterControllerEX : MonoBehaviour
 
     // 몬스터 받는 대미지
     public int _damage;
-   
+
+    //몬스터 공격/스킬 쿨타임 및 확률
+    public float _time;
+    public int _skillPersent;
+    public int _attackCount;
 
     public int _mobNum
     {
@@ -63,19 +57,15 @@ public class MonsterControllerEX : MonoBehaviour
         set;
     } = 0;
 
-    void Awake()
+    public virtual void Awake()
     {
-        //몬스터 위 HpBar 위치
-        _hpBarOffset = new Vector3(0, 6f, 0);
-        //Resources 폴더 안에 있는 HpBar 프리팹 불러오기
-        _hpBarPrefab = Resources.Load<GameObject>("HpBar");
         _distance = 15.0f;
         _rotateSpeed = 90f;
         _attack = 3.0f;
         _mobNum = 0;
     }
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         // 아래 정보들은 Awake에서 가지고 올 경우 에러 발생 가능성 존재
         //몬스터 스텟 정보 가지고 옴
@@ -91,21 +81,21 @@ public class MonsterControllerEX : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         //업데이트에서 플레이어저 정보 가지고오는 것을 Start()에서 한번만 가지고오게 변경
         _PosToPos = Vector3.Distance(_PlayerPos.position, transform.position);
         UpdateState();
     }
 
-    public CreatureState Property_state
+    public virtual CreatureState Property_state
     {
         get
-        { 
+        {
             return _state;
         }
         set
-        { 
+        {
             _state = value;
             //상태가 바뀔때마다 GetComponent호출하는것을 Start()함수에서 한번 호출로 변경
             //Animator ani = GetComponent<Animator>();
@@ -130,7 +120,7 @@ public class MonsterControllerEX : MonoBehaviour
         }
     }
 
-    public void UpdateState()
+    public virtual void UpdateState()
     {
         //플레이어를 계속 찾는 것 수정
         //_PlayerPos = GameObject.FindGameObjectWithTag("Player").transform;
@@ -153,8 +143,8 @@ public class MonsterControllerEX : MonoBehaviour
                 break;
         }
     }
-    
-    public void UpdateIdle()
+
+    public virtual void UpdateIdle()
     {
         if (_PosToPos <= _distance)
         {
@@ -167,50 +157,50 @@ public class MonsterControllerEX : MonoBehaviour
             return;
         }
     }
-    
-    public void UpdateMoving()
+
+    public virtual void UpdateMoving()
     {
         _speed = 2.0f;
-        if(_PosToPos <= _distance && _PosToPos > _attack)
+        if (_PosToPos <= _distance && _PosToPos > _attack)
         {
             Vector3 targetPos = new Vector3(2.5f, 0, 0);
 
             transform.position = Vector3.MoveTowards(transform.position, (_PlayerPos.transform.position - targetPos), _speed * Time.deltaTime);
             Vector3 _lookRotation = _PlayerPos.transform.position - this.transform.position;
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(_lookRotation), Time.deltaTime * _rotateSpeed);
-            
+
         }
         // 공격
-        else if(_PosToPos <= _attack)
+        else if (_PosToPos <= _attack)
         {
             Property_state = CreatureState.Attack;
             return;
         }
         // 대기
-        else if(_PosToPos > _distance)
+        else if (_PosToPos > _distance)
         {
             //this.gameObject.transform.position = MonsterManager.instance._mobPosList[_mobNum];
             //MonsterManager를 게임매니저에 연결해서 사용. MonsterManager >> GameManager.Mob
             // GameManager.Mob._mobPosList[_mobNum] 이부분은 추후 수정 몬스터매니저EX를 당장은 사용하지 않기 때문에... 
             // 오브젝트 풀링 구현시 사용
-            this.transform.position = Vector3.MoveTowards(transform.position, GameManager.Mob._mobPosList[_mobNum], _speed * Time.deltaTime);
-            Vector3 _lookRotation = GameManager.Mob._mobPosList[_mobNum] - this.transform.position;
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(_lookRotation), Time.deltaTime * _rotateSpeed);
+            //this.transform.position = Vector3.MoveTowards(transform.position, GameManager.Mob._mobPosList[_mobNum], _speed * Time.deltaTime);
+            //Vector3 _lookRotation = GameManager.Mob._mobPosList[_mobNum] - this.transform.position;
+            //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(_lookRotation), Time.deltaTime * _rotateSpeed);
 
-            if(this.transform.position == GameManager.Mob._mobPosList[_mobNum])
-            {
-                Property_state=CreatureState.Idle;
-                return;
-            }
+            //if(this.transform.position == GameManager.Mob._mobPosList[_mobNum])
+            //{
+            Property_state = CreatureState.Idle;
+            return;
+            //}
         }
     }
 
-    private void UpdateAttack()
+    public virtual void UpdateAttack()
     {
-        if(_PosToPos <= _attack)
+        if (_PosToPos <= _attack)
         {
             // 코루틴이 널이 아니면
-            if(_coAttack == null)
+            if (_coAttack == null)
             {
                 // 코루틴함수 시작하고 코루틴 변수에 대입
                 _coAttack = StartCoroutine(AttackDelay(2.0f));
@@ -225,7 +215,7 @@ public class MonsterControllerEX : MonoBehaviour
         }
     }
 
-    private void UpdateDead()
+    public virtual void UpdateDead()
     {
         // 이름으로 오브젝트매니저에서 찾아서 제거
         GameManager.Obj.RemoveMobListTraget(gameObject.name);
@@ -244,15 +234,20 @@ public class MonsterControllerEX : MonoBehaviour
         }
     }
 
-    private void UpdateSkill()
+    public virtual void UpdateSkill()
     {
 
     }
 
-    private void OnDisable()
+    public virtual void UpdateSkill2()
     {
-        Property_state = CreatureState.Idle;
+
     }
+
+    /*    public virtual void OnDisable()
+        {
+            Property_state = CreatureState.Idle;
+        }*/
 
     //private void OnTriggerEnter(Collider other)
     //{
@@ -273,7 +268,7 @@ public class MonsterControllerEX : MonoBehaviour
     //    }
     //}
 
-    IEnumerator AttackDelay(float _delay)
+    public virtual IEnumerator AttackDelay(float _delay)
     {
         _speed = 0;
         Property_state = CreatureState.Attack;
@@ -285,7 +280,7 @@ public class MonsterControllerEX : MonoBehaviour
             yield break;
         }
         // 플레이어가 살아있으면 
-        if(GameManager.Obj._playerController._creatureState != CreatureState.Dead)
+        if (GameManager.Obj._playerController._creatureState != CreatureState.Dead)
         {
             // 대미지 계산
             _playerController.OnDamaged(_monsterStat.Atk);
@@ -297,9 +292,8 @@ public class MonsterControllerEX : MonoBehaviour
         _coAttack = null;
     }
 
-
     // 사망 딜레이 때문에 생기는 경고메세지 제거용
-    IEnumerator DeadDelay(float _delay)
+    public virtual IEnumerator DeadDelay(float _delay)
     {
         yield return new WaitForSeconds(_delay);
         // 오브젝트 풀링 추후 구현
@@ -310,8 +304,20 @@ public class MonsterControllerEX : MonoBehaviour
         GameManager.Obj._playerController.ExpAdd(_monsterStat.Exp);
     }
 
+    public virtual IEnumerator CoolTime(float _coolTime)
+    {
+        Debug.Log("쿨타임!!");
+
+        while (_coolTime > 2.0f)
+        {
+            _coolTime -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        Debug.Log("쿨타임 끝!!");
+    }
+
     //몬스터 대미지 받는 함수
-    public void OnDamaged(int playerAtk, int SkillDamagePercent)
+    public virtual void OnDamaged(int playerAtk, int SkillDamagePercent)
     {
         _damage = 0;
         // 대미지 계산

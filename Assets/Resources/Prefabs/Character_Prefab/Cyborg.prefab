@@ -44,7 +44,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2942093290186265178}
   - component: {fileID: 1630814054189946761}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: miniMapPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

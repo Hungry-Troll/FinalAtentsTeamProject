@@ -45,71 +45,55 @@ public class FieldManager : MonoBehaviour
                 break;
             case Define.SceneName.Village02:
                 NextSceneAwake();
-                // 기존 방향 안내 UI 코드를 Ui_NpcController에서 처리
-                //GameManager.Ui._directionArrowController.OffAllArrows();
-                //GameManager.Ui._directionArrowController.OnArrow("VillageToDungeon");
+                // 마을 안내 화살표 생성 / 임시 위치, 후에 튜토리얼 관리 클래스에서 처리
+                // 켜져있는 화살표 있을 시를 대비, 먼저 꺼주기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                GameManager.Ui._directionArrowController.OnArrow("VillageToDungeon");
                 break;
             case Define.SceneName.DunGeon:
                 DungeonSceneAwake();
-                // 기존 방향 안내 UI 코드를 Ui_NpcController에서 처리
-                //GameManager.Ui._directionArrowController.OffAllArrows();
-                //GameManager.Ui._directionArrowController.OnArrow("DungeonCourse");
+                // 던전 방향 안내 화살표 켜주기 / 설원 -> 초원 -> 화산
+                // 켜져있는 화살표 있을 시를 대비, 먼저 꺼주기
+                GameManager.Ui._directionArrowController.OffAllArrows();
+                GameManager.Ui._directionArrowController.OnArrow("DungeonCourse");
                 break;
         }
     }
 
     private void TutorialAwake()
     {
-        // 대미지 텍스트 매니저
-        GameManager.DamText.Init();
-        // 게임매니저에서 Ui매니저 Init(Awake 함수 대체)
-        // 오브젝트 매니저 Init();
-        GameManager.Obj.Init();
-        // Ui 불러옴
-        GameManager.Ui.Init();
-        // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
-        GameManager.Select.Init();
-        // 스텟 매니저에서 스텟 데이터 불러옴
-        GameManager.Stat.Init();
-        // 스킬 매니저에서 스킬 데이터 불러옴
-        GameManager.Skill.Init();
-        // 카메라 생성
-        GameManager.Cam.Init();
-        // 파티클 생성
-        GameManager.Effect.Init();
-        // Parse 매니저
-        GameManager.Parse.Init();
+        // 중복 제거 
+        ManagerInit();
 
-        // 시작위치는 맵마다 다르게 해야 됨
-        _startPos = _startPosObject.transform.position;
-
-        //플레이어 제작
-        GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
+        // 플레이어 제작
+        CreatePlayer();
 
         // 리소스매니저에서 찾아서 플레이어 아이템 인벤토리에 한개 넣어줌
-        GameManager.Create.CreateInventoryItem("sword1");
+        switch(GameManager.Select._job)
+        {
+            case Job.Superhuman:
+                GameManager.Create.CreateInventoryItem("sword1");
+                break;
+            case Job.Cyborg:
+                GameManager.Create.CreateInventoryItem("gun1");
+                break;
+            case Job.Scientist:
+                GameManager.Create.CreateInventoryItem("book1");
+                break;
+        }
 
         // 레벨업 이펙트 생성
         GameManager.Ui._skillViewController.LevelUp();
 
-        // 몬스터 시작 위치
-        _startPosMob[0] = _startPosMonster[0].transform.position;
-        // 몬스터 생성 코드
-        for (int i = 0; i < 1 ; i++)
-        {
-            // 퀘스트 몬스터 생성
-            MonsterControllerEX monster = GameManager.Create.CreateQuestMonster(_startPosMob[0], "Velociraptor");
-            // 생성시 숫자를 넘어줌 (몬스터 삭제용)
-            monster.gameObject.name = monster.gameObject.name + i+1;
-        }
+        // 몬스터 제작
+        int questMonsterCnt = 1;
+        CreateQuestMonster("Velociraptor", questMonsterCnt);
 
         // 퀘스트 진행용 도어 생성
         GameManager.Create.CreateQuestDoor(transform.position, "TutorialDoor");
 
-        // 펫 시작 위치
-        _startPosPet = _startPosPetObj.transform.position;
-        // 펫 생성 코드
-        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPosPet, GameManager.Select._pet.ToString());
+        // 펫 제작
+        CreatePet();
 
         // 아이템 생성용 테스트 코드
         //for (int i = 0; i < GameManager.Resource._fieldItem.Count; i++)
@@ -124,48 +108,40 @@ public class FieldManager : MonoBehaviour
 
     private void NextSceneAwake()
     {
-        // 대미지 텍스트 매니저
-        GameManager.DamText.Init();
-        // 오브젝트 매니저 Init();
-        GameManager.Obj.Init();
-        // 오브젝트 매니저에서 기존 몬스터 리스트 초기화
-        GameManager.Obj.RemoveAllMobList();
-        // Ui 불러옴
-        GameManager.Ui.Init();
-        // 데이터 로드
-        GameManager.Data.LoadData(false);
-        // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
-        GameManager.Select.Init();
-        // 스텟 매니저에서 스텟 데이터 불러옴
-        GameManager.Stat.Init();
-        // 스킬 매니저에서 스킬 데이터 불러옴
-        GameManager.Skill.Init();
-        // 카메라 생성
-        GameManager.Cam.Init();
-        // 파티클 생성
-        GameManager.Effect.Init();
-        // Parse 매니저
-        GameManager.Parse.Init();
+        // 중복 제거 
+        ManagerInit();
 
-        // 시작위치는 맵마다 다르게 해야 됨
-        _startPos = _startPosObject.transform.position;
-        //플레이어 제작
-        GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
+        CreatePlayer();
+
         // 데이터 로드
         //GameManager.Data.LoadData(false);
-        // 플레이어 스탯 로드
-        GameManager.Data.UpdatePlayerStat();
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
-
-        // 펫 시작 위치
-        _startPosPet = _startPosPetObj.transform.position;
-        // 펫 생성 코드
-        GameManager.Obj._petController = GameManager.Create.CreatePet(_startPosPet, GameManager.Select._pet.ToString());
-
+        // 펫 제작
+        CreatePet();
     }
 
     private void DungeonSceneAwake()
+    {
+        // 중복 제거
+        ManagerInit();
+
+        CreatePlayer();
+
+        // 무기 착용
+        GameManager.Data.EquipWeaponLoad();
+
+        // 펫 제작
+        CreatePet();
+
+        int quest1MonsterCnt = 7;
+        // 퀘스트 몬스터 7마리 생성
+        CreateQuestMonster("Velociraptor", quest1MonsterCnt);
+
+    }
+
+    // 중복 코드 재거용
+    public void ManagerInit()
     {
         // 대미지 텍스트 매니저
         GameManager.DamText.Init();
@@ -175,8 +151,13 @@ public class FieldManager : MonoBehaviour
         GameManager.Obj.RemoveAllMobList();
         // Ui 불러옴
         GameManager.Ui.Init();
-        // 데이터 로드
-        GameManager.Data.LoadData(false);
+        // 듀토리얼씬이 아니면 데이터 로드
+        if (GameManager.Scene._sceneNameEnum != SceneName.Tutorial)
+        {
+            // 데이터 로드
+            GameManager.Data.LoadData(false);
+        }
+
         // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
         GameManager.Select.Init();
         // 스텟 매니저에서 스텟 데이터 불러옴
@@ -189,32 +170,39 @@ public class FieldManager : MonoBehaviour
         GameManager.Effect.Init();
         // Parse 매니저
         GameManager.Parse.Init();
+    }
 
+    public void CreatePlayer()
+    {
         // 시작위치는 맵마다 다르게 해야 됨
         _startPos = _startPosObject.transform.position;
         //플레이어 제작
         GameManager.Obj._playerController = GameManager.Create.CreatePlayerCharacter(_startPos, GameManager.Select._job.ToString());
         // 데이터 로드
         //GameManager.Data.LoadData(false);
-        // 플레이어 스탯 로드
-        GameManager.Data.UpdatePlayerStat();
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
+    }
 
+    public void CreateQuestMonster(string name, int count)
+    {
+        // 몬스터 생성 코드
+        for (int i = 0; i < count; i++)
+        {
+            // 몬스터 시작 위치
+            _startPosMob[i] = _startPosMonster[i].transform.position;
+            // 퀘스트 몬스터 생성
+            MonsterControllerEX monster = GameManager.Create.CreateQuestMonster(_startPosMob[i], name);
+            // 생성시 숫자를 넘어줌 (몬스터 삭제용)
+            monster.gameObject.name = monster.gameObject.name + "_" + i;
+        }
+    }
+
+    public void CreatePet()
+    {
         // 펫 시작 위치
         _startPosPet = _startPosPetObj.transform.position;
         // 펫 생성 코드
         GameManager.Obj._petController = GameManager.Create.CreatePet(_startPosPet, GameManager.Select._pet.ToString());
-
-        // 몬스터 7마리 생성
-        for (int i = 0; i < 7; i++)
-        {
-            // 몬스터 시작 위치
-            _startPosMob[i] = _startPosMonster[i].transform.position;
-            // 퀘스트 몬스터 생성(임시)
-            MonsterControllerEX monster = GameManager.Create.CreateQuestMonster(_startPosMob[i], "Velociraptor");
-            // 생성시 숫자를 넘어줌 (몬스터 삭제용)
-            monster.gameObject.name = monster.gameObject.name + i+1;
-        }
     }
 }
