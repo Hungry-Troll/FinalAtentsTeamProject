@@ -356,13 +356,13 @@ public class PetController : MonoBehaviour
     {
         transform.LookAt(_target);
         PlayerController _playerController = GameManager.Obj._playerController;
-        MonsterControllerEX _monsterController = GameManager.Obj._targetMonsterController;
+        //MonsterControllerEX _monsterController = GameManager.Obj._targetMonsterController;
         _playerController.OnDamaged(0);
 
     }
     public void PetSkill3() //Pachy : 공격속도 2배 (스킬 애니메이션이 2번 빠르게 작동함) (완)
     {
-        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk, 1);
+        GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk/2, 1);
         transform.LookAt(_target);
     }
 

@@ -15,17 +15,29 @@ public class CameraManager
     public GameObject _uiParticleCamera;
     public Camera _uiParticleCam;
     public GameObject NameCam;
+
     // 메인 카메라 대용
     public GameObject _vam1;
     // 웨슬리 카메라
     public GameObject _vam2;
     // 베니스 카메라
     public GameObject _vam3;
+    //============================던전용
+    // 던전 플레이어
+    public GameObject _vam4;
+    // 던전 작은보스
+    public GameObject _vam5;
+    // 던전 큰보스
+    public GameObject _vam6;
 
 
     public CinemachineVirtualCamera _Vcam1;
     public CinemachineVirtualCamera _Vcam2;
     public CinemachineVirtualCamera _Vcam3;
+    //===던전용 카메라
+    public CinemachineVirtualCamera _Vcam4;
+    public CinemachineVirtualCamera _Vcam5;
+    public CinemachineVirtualCamera _Vcam6;
 
     public MainCameraController _mainCameraController;
     public StateCameraController _stateCameraController;
@@ -67,7 +79,6 @@ public class CameraManager
         _vam1.transform.SetParent(go.transform);
         // 메인카메라 역활을 v1이 대신 함
         _vam1.AddComponent<MainCameraController>();
-        
 
         // v2 카메라 불러오기
         GameObject v2 = GameManager.Resource.GetCamera("CM vcam2");
@@ -82,6 +93,29 @@ public class CameraManager
         _Vcam3 = _vam3.GetComponent<CinemachineVirtualCamera>();
         _vam3.transform.SetParent(go.transform);
         _vam3.SetActive(false);
+
+        ///=====================================던전에서 쓸 시네머신들
+        
+        // v4 카메라 불러오기
+        GameObject v4 = GameManager.Resource.GetCamera("CM vcam4");
+        _vam4 = GameObject.Instantiate<GameObject>(v4);
+        _Vcam4 = _vam4.GetComponent<CinemachineVirtualCamera>();
+        _vam4.transform.SetParent(go.transform);
+        _vam4.SetActive(false);
+
+        // v5 카메라 불러오기
+        GameObject v5 = GameManager.Resource.GetCamera("CM vcam5");
+        _vam5 = GameObject.Instantiate<GameObject>(v5);
+        _Vcam5 = _vam5.GetComponent<CinemachineVirtualCamera>();
+        _vam5.transform.SetParent(go.transform);
+        _vam5.SetActive(false);
+
+        // v6 카메라 불러오기
+        GameObject v6 = GameManager.Resource.GetCamera("CM vcam6");
+        _vam6 = GameObject.Instantiate<GameObject>(v6);
+        _Vcam6 = _vam6.GetComponent<CinemachineVirtualCamera>();
+        _vam6.transform.SetParent(go.transform);
+        _vam6.SetActive(false);
 
         // UI 파티클용 카메라 불러오기
         GameObject uiParticleCamera = GameManager.Resource.GetCamera("UIParticleCamera");
@@ -109,6 +143,34 @@ public class CameraManager
     {
         _vam3.SetActive(false);
     }
+
+    public void BossCamOn1()
+    {
+        _vam4.SetActive(true);
+    }
+    public void BossCamOff1()
+    {
+        _vam4.SetActive(false);
+    }
+    public void BossCamOn2()
+    {
+        _vam5.SetActive(true);
+    }
+
+    public void BossCamOff2()
+    {
+        _vam5.SetActive(false);
+    }
+
+    public void BossCamOn3()
+    {
+        _vam6.SetActive(true);
+    }
+    public void BossCamOff3()
+    {
+        _vam6.SetActive(false);
+    }
+
 }
 
 
