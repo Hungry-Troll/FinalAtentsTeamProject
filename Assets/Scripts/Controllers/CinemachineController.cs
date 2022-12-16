@@ -8,6 +8,9 @@ public class CinemachineController : MonoBehaviour
     public CinemachineVirtualCamera vCam1;  // 최초에 계속 따라가는 카메라
     public CinemachineVirtualCamera vCam2;  // 웨슬리를 클릭할 때 변경되는 카메라 위치
     public CinemachineVirtualCamera vCam3;  // 베니스를 클릭할 떄 변경되는 카메라 위치
+    public CinemachineVirtualCamera vCam4;  // 베니스를 클릭할 떄 변경되는 카메라 위치
+    public CinemachineVirtualCamera vCam5;  // 베니스를 클릭할 떄 변경되는 카메라 위치
+    public CinemachineVirtualCamera vCam6;  // 베니스를 클릭할 떄 변경되는 카메라 위치
     public GameObject _player;
     void Start()
     {
@@ -17,6 +20,8 @@ public class CinemachineController : MonoBehaviour
         vCam1 = GameManager.Cam._Vcam1;
         vCam2 = GameManager.Cam._Vcam2;
         vCam3 = GameManager.Cam._Vcam3;
+        vCam4 = GameManager.Cam._Vcam4;
+        vCam5 = GameManager.Cam._Vcam5;
 
 
         _player = GameObject.FindWithTag("Player");

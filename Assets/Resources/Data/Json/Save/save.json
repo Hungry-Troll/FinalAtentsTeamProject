@@ -9,20 +9,16 @@
         "_Job": "Superhuman",
         "_Exp": 0,
         "_Lv_Exp": 300,
-        "_Gold": 300
+        "_Gold": 500
     },
     "_Name": "",
     "_Job": "Superhuman",
     "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
-    "_Item_List": [
-        "sword3"
-    ],
-    "_Item_Count_List": [
-        1
-    ],
+    "_Item_List": [],
+    "_Item_Count_List": [],
     "_Weapon": "sword1",
-    "_Gold": 300,
+    "_Gold": 500,
     "_SkillInfo": [],
     "_SkillPoint": 2
 }
