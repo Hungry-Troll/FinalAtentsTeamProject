@@ -1168,7 +1168,11 @@ public class UiManager
         _equipStatView.SetActive(false);
         _equipStatOpen = false;
         _questButton.SetActive(false);
-        _bossHpbar.SetActive(false);
+        // 보스 hp바가 있으면 꺼지게
+        if(_bossHpbar != null)
+        {
+            _bossHpbar.SetActive(false);
+        }
         //_questRewardUI.SetActive(false); 퀘스트 리워드는 스스로 꺼지니까 냅둠
         if (GameManager.Effect._levelUpPar.gameObject.activeSelf == true)
         {

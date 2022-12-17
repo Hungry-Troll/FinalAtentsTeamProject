@@ -122,6 +122,8 @@ public class FieldManager : MonoBehaviour
         //GameManager.Data.LoadData(false);
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
+        // 방어구 착용
+        GameManager.Data.EquipArmourLoad();
         // 펫 제작
         CreatePet();
     }
@@ -135,13 +137,17 @@ public class FieldManager : MonoBehaviour
 
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
-
+        // 방어구 착용
+        GameManager.Data.EquipArmourLoad();
         // 펫 제작
         CreatePet();
 
         int quest1MonsterCnt = 7;
         // 퀘스트 몬스터 7마리 생성
         CreateQuestMonster("Velociraptor", quest1MonsterCnt);
+
+        // BGM 변경
+        GameManager.Sound.BGMPlay("Sketch 3 - Against All Odds 1");
 
     }
 
@@ -189,6 +195,8 @@ public class FieldManager : MonoBehaviour
         GameManager.Data.UpdatePlayerStat();
         // 무기 착용
         GameManager.Data.EquipWeaponLoad();
+        // 방어구 착용
+        GameManager.Data.EquipArmourLoad();
     }
 
     public void CreateQuestMonster(string name, int count)

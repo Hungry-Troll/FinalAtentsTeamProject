@@ -42,6 +42,9 @@ public class PlayData
     [SerializeField]
     private string _Weapon;
 
+    [SerializeField]
+    private string _Armour;
+
     // 갖고 있는 골드 수량
     [SerializeField]
     private int _Gold;
@@ -95,6 +98,11 @@ public class PlayData
     {
         get { return _Weapon; }
         set { _Weapon = value; }
+    }
+    public string Armour
+    {
+        get { return _Armour; }
+        set { _Armour = value; }
     }
     public int Gold
     {
@@ -195,6 +203,12 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
             // null 아닐 때만 담기
             playData.Weapon = GameManager.Ui._inventoryController._weapon.name;
         }
+        if (GameManager.Ui._inventoryController._armour != null)
+        {
+            // null 아닐 때만 담기
+            playData.Armour = GameManager.Ui._inventoryController._armour.name;
+        }
+
 
         // UiManager 에서 가져온 아이템 리스트
         // 인벤토리 컨트롤러부터 널검사
@@ -597,9 +611,50 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
         // 무기 착용 (실제 캐릭터가 들고있는 것)
         GameManager.Weapon.TempEquipWeapon(tempName, GameManager.Obj._playerController.transform);
         // 플레이어 스크립트에 스텟 더함
+        GameManager.Obj._playerStat.Atk = 0;
         GameManager.Obj._playerStat.Atk += itemStatEX.Skill;
+        TempStatEX tmpStat = GameManager.Parse.FindPlayerObjData2(GameManager.Obj._playerStat.Lv, GameManager.Select._job);
+        GameManager.Obj._playerStat.Atk += tmpStat.Atk;
         // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
         GameManager.Ui.InventoryStatUpdate();
+    }
+
+    public void EquipArmourLoad()
+    {
+        // 무기 없으면 탈출
+        if (playData.Armour == null || playData.Armour.Trim().Equals(""))
+            return;
+        string tempName = playData.Armour;
+        // UI매니저 인벤토리컨트롤러에서 WeaponImage 게임오브젝트를 재귀함수로 찾음 
+        Transform findTr = Util.FindChild("ArmourImage", GameManager.Ui._inventoryController.transform);
+        // 찾은 게임오브젝트에서 이미지컴포넌트를 빼옴
+        Image findImage = findTr.GetComponent<Image>();
+        // 리소스매니저에서 이미지 찾음
+        Sprite armourImage = GameManager.Resource.GetImage(tempName);
+        // 찾은 이미지 넣어줌
+        findImage.sprite = armourImage;
+        // 이미지 활성화
+        findImage.gameObject.SetActive(true);
+
+        // 방어구를 찾음 
+        GameObject armourTemp = GameManager.Resource.GetEquipItem(tempName);
+        GameObject armour = Util.Instantiate(armourTemp);
+        // 무기 장착 (인벤토리에서 들고있는 무기 / 계산용 / 실제로 캐릭터가 들고잇지 않음)
+        GameManager.Ui._inventoryController._armour = armour;
+        // 스텟 스크립트를 넣고
+        ItemStatEX itemStatEX = armour.AddComponent<ItemStatEX>();
+        // 스텟 스크립트에 json 파일 스텟 적용
+        GameManager.Stat.ItemStatLoadJson(tempName, itemStatEX);
+        // UI 매니저에 장착 무기 스텟도 넣어 놓음
+        GameManager.Ui._inventoryController._armourStat = itemStatEX;
+        // 플레이어 스크립트에 스텟 더함
+        GameManager.Obj._playerStat.Def = 0;
+        GameManager.Obj._playerStat.Def += itemStatEX.Skill;
+        TempStatEX tmpStat = GameManager.Parse.FindPlayerObjData2(GameManager.Obj._playerStat.Lv, GameManager.Select._job);
+        GameManager.Obj._playerStat.Def += tmpStat.Def;
+        // 플레이어 스크립트를 이용해서 인벤토리에 있는 캐릭터창에 공격력 방어력을 보여줌
+        GameManager.Ui.InventoryStatUpdate();
+
     }
 
     // 플레이어 스탯 업데이트 해주는 함수
