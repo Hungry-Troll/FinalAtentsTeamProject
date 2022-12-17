@@ -227,7 +227,7 @@ public class CreateManager
                 GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
                 _boss.name = tempName;
                 // Hp 바 적용
-                GameManager.Create.CreateUi("UI_BossHpBar", _boss.gameObject);
+                GameManager.Ui._bossHpbar = GameManager.Create.CreateUi("UI_BossHpBar", _boss.gameObject);
                 // 퀘스트 변수 적용
                 _boss._isQuest = true;
                 return _boss;

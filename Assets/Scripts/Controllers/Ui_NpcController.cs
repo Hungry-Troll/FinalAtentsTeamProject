@@ -60,10 +60,17 @@ public class Ui_NpcController : MonoBehaviour
                 }
                 break;
             case 2 :
+                // 하트 이펙트 끄기
+                GameManager.Quest._wesleyController.QuestHeartOff();
                 // 화살표 끄기... 사실 WesleyController 에서 이미 꺼놨을 것. 삭제해도 되는 코드.
                 GameManager.Ui._directionArrowController.OffAllArrows();
                 // 비디오 재생
                 GameManager.Quest._wesleyController.OpeningVideoPlay();
+                if (isConversationEnd)
+                {
+                    // 하트 이펙트온
+                    GameManager.Quest._wesleyController.QuestHeartOn();
+                }
                 break;
             case 3 :
                 // 화살표 끄기
@@ -71,6 +78,8 @@ public class Ui_NpcController : MonoBehaviour
                 // 대화 종료 후 
                 if(isConversationEnd)
                 {
+                    // 하트 이펙트 끄기
+                    GameManager.Quest._wesleyController.QuestHeartOff();
                     // 방향 화살표 생성(마을 맵 포탈로 향하는 화살표)
                     GameManager.Ui._directionArrowController.OnArrow("ToVenice");
                     GameManager.Ui._directionArrowController.OnArrow("TutorialToVillage");

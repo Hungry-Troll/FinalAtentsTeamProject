@@ -27,10 +27,15 @@ public class FieldManager : MonoBehaviour
     public GameObject _startPosPetObj;
     public Vector3 _startPosPet;
 
+    // 보스 소환몬스터 위치 설정용
+    public GameObject[] _startPosSumBossMonster;
+    public Vector3[] _startPosSumBossMob;
 
     // Start is called before the first frame update
     void Awake()
     {
+        // 필드매니저 정보를 오브젝트매니저에서 관리
+        GameManager.Obj._fieldManager = GetComponent<FieldManager>();
         // 각 씬에 맞는 Awake 함수 호출
         SceneCheck();
     }
@@ -46,12 +51,14 @@ public class FieldManager : MonoBehaviour
             case Define.SceneName.Village02:
                 NextSceneAwake();
                 // 기존 방향 안내 UI 코드를 Ui_NpcController에서 처리
+                //
                 //GameManager.Ui._directionArrowController.OffAllArrows();
                 //GameManager.Ui._directionArrowController.OnArrow("VillageToDungeon");
                 break;
             case Define.SceneName.DunGeon:
                 DungeonSceneAwake();
                 // 기존 방향 안내 UI 코드를 Ui_NpcController에서 처리
+                //
                 //GameManager.Ui._directionArrowController.OffAllArrows();
                 //GameManager.Ui._directionArrowController.OnArrow("DungeonCourse");
                 break;

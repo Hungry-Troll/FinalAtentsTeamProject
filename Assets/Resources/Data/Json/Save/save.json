@@ -1,6 +1,6 @@
 {
     "_Player": {
-        "_Name": "",
+        "_Name": "1234",
         "_Hp": 150,
         "_Atk": 40,
         "_Def": 10,
@@ -9,16 +9,39 @@
         "_Job": "Superhuman",
         "_Exp": 0,
         "_Lv_Exp": 300,
-        "_Gold": 500
+        "_Gold": 300
     },
-    "_Name": "",
+    "_Name": "1234",
     "_Job": "Superhuman",
     "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
-    "_Item_List": [],
-    "_Item_Count_List": [],
+    "_Item_List": [
+        "sword2"
+    ],
+    "_Item_Count_List": [
+        1
+    ],
     "_Weapon": "sword1",
-    "_Gold": 500,
-    "_SkillInfo": [],
-    "_SkillPoint": 2
+    "_Gold": 300,
+    "_SkillInfo": [
+        {
+            "_Id": "Skill1",
+            "_SkillName": "집중공격",
+            "_SkillContent": "순간적으로 10번 찌르는 공격을 합니다.",
+            "_SkillEffect": "1번 공격 20%,(총 공격력 200%)",
+            "_SkillAtk": 200,
+            "_SkillSlotNumber": -1,
+            "_SkillLevel": 1
+        },
+        {
+            "_Id": "Skill1",
+            "_SkillName": "집중공격",
+            "_SkillContent": "순간적으로 10번 찌르는 공격을 합니다.",
+            "_SkillEffect": "1번 공격 20%,(총 공격력 200%)",
+            "_SkillAtk": 200,
+            "_SkillSlotNumber": 1,
+            "_SkillLevel": 1
+        }
+    ],
+    "_SkillPoint": 1
 }

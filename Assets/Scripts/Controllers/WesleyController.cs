@@ -18,6 +18,8 @@ public class WesleyController : MonoBehaviour
     // 대화용 코루틴 변수 (버그제거용)
     public Coroutine _coTalk;
 
+    ParticleSystem _heart;
+
     void Awake()
     {
         WesleyAnimator = WesleyPrefab.GetComponent<Animator>();
@@ -25,6 +27,10 @@ public class WesleyController : MonoBehaviour
         // 퀘스트 매니저에서 웨슬리 컨트롤러를 들고있음
         GameManager.Quest._wesleyController = GetComponent<WesleyController>();
         _coTalk = null;
+        // 퀘스트 하트 연결
+        _heart = Util.FindChild("QuestHeart", transform).GetComponent<ParticleSystem>();
+        // 퀘스트 하트 끔
+        QuestHeartOff();
     }
 
     private void Start()
@@ -164,5 +170,15 @@ public class WesleyController : MonoBehaviour
         GameManager.Quest.QuestCompletion();
         // 새로운 퀘스트 시작
         GameManager.Quest.QuestStart(GameManager.QuestData._questLevel);
+    }
+
+    public void QuestHeartOn()
+    {
+        _heart.Play();
+    }
+
+    public void QuestHeartOff()
+    {
+        _heart.Stop();
     }
 }

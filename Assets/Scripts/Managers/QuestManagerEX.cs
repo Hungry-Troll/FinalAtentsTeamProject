@@ -179,7 +179,7 @@ public class QuestManagerEX
         Property_QuestProgressValue++;
     }
 
-    // 퀘스트 목표량 함수
+    // 퀘스트 목표량 함수 >> 목표치 달성하면 실행
     public void QuestInfoText()
     {
         // 퀘스트 목표 이름
@@ -192,8 +192,13 @@ public class QuestManagerEX
         {
             // 듀토리얼씬
             case Define.SceneName.Tutorial:
-                // 퀘스트 목표치 달성
-                if (_questProgressValue >= _questObjectiveScore)
+                // // 퀘스트 레벨이 1이면
+                if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 1)
+                {
+                    // 하트 이펙트온
+                    GameManager.Quest._wesleyController.QuestHeartOn();
+                }
+                else if (_questProgressValue >= _questObjectiveScore && GameManager.QuestData._questLevel == 2)
                 {
 
                 }

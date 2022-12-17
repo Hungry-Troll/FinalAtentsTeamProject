@@ -1168,6 +1168,7 @@ public class UiManager
         _equipStatView.SetActive(false);
         _equipStatOpen = false;
         _questButton.SetActive(false);
+        _bossHpbar.SetActive(false);
         //_questRewardUI.SetActive(false); Äù½ºÆ® ¸®¿öµå´Â ½º½º·Î ²¨Áö´Ï±î ³ÀµÒ
         if (GameManager.Effect._levelUpPar.gameObject.activeSelf == true)
         {

@@ -5,6 +5,9 @@ using UnityEngine;
 public class ObjectManager
 {
     // 게임 오브젝트의 정보를 가지고 있는 매니저
+    // 필드 매니저 정보
+    public FieldManager _fieldManager;
+
     // 플레이어 정보
     public PlayerController _playerController;
     public PlayerStat _playerStat;
@@ -140,6 +143,4 @@ public class ObjectManager
         _monsterContList.Clear();
         _monsterStatList.Clear();
     }
-
-
 }

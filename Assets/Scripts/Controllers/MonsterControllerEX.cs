@@ -42,6 +42,9 @@ public class MonsterControllerEX : MonoBehaviour
 
     // 범위 공격 피격용 박스콜라이더
     public BoxCollider _mobBoxCollider;
+    // 피격 상태용
+    public Material _material;
+
 
     // 몬스터 받는 대미지
     public int _damage;
@@ -50,6 +53,10 @@ public class MonsterControllerEX : MonoBehaviour
     public float _time;
     public int _skillPersent;
     public int _attackCount;
+
+    // 몬스터 스킬용 코루틴
+    public Coroutine _coSkill1;
+    public Coroutine _coSkill2;
 
     public int _mobNum
     {
@@ -78,8 +85,18 @@ public class MonsterControllerEX : MonoBehaviour
         _playerController = GameManager.Obj._playerController;
         // 몬스터 피격용 박스콜라이더 (광역 스킬 피격용)
         _mobBoxCollider = GetComponent<BoxCollider>();
+        // 피격상태용 매테리얼 찾기
+        FindMaterial();
+        // 스킬 초기화
+        _coSkill1 = null;
+        _coSkill2 = null;
     }
 
+    public virtual void FindMaterial()
+    {
+        Transform tmpTr = Util.FindChild("velociraptor", transform);
+        _material = tmpTr.GetComponent<SkinnedMeshRenderer>().material;
+    }
     // Update is called once per frame
     public virtual void Update()
     {
@@ -151,11 +168,11 @@ public class MonsterControllerEX : MonoBehaviour
             Property_state = CreatureState.Move;
             return;
         }
-        else
-        {
-            Property_state = CreatureState.Idle;
-            return;
-        }
+        /* else
+         {
+             Property_state = CreatureState.Idle;
+             return;
+         }*/
     }
 
     public virtual void UpdateMoving()
@@ -279,7 +296,13 @@ public class MonsterControllerEX : MonoBehaviour
         {
             yield break;
         }
-        // 플레이어가 살아있으면 
+        // 코루틴 변수 초기화 
+        _coAttack = null;
+    }
+
+    // 애니메이션 클립에서 대미지 계산
+    public virtual void AttackEvent()
+    {
         if (GameManager.Obj._playerController._creatureState != CreatureState.Dead)
         {
             // 대미지 계산
@@ -287,9 +310,6 @@ public class MonsterControllerEX : MonoBehaviour
             // 사운드 적용
             GameManager.Sound.SFXPlay("Dino-raptor");
         }
-
-        // 코루틴 변수 초기화 
-        _coAttack = null;
     }
 
     // 사망 딜레이 때문에 생기는 경고메세지 제거용
@@ -319,6 +339,9 @@ public class MonsterControllerEX : MonoBehaviour
     //몬스터 대미지 받는 함수
     public virtual void OnDamaged(int playerAtk, int SkillDamagePercent)
     {
+        // 피격시 생상 변경
+        StartCoroutine(OnDamagedColor());
+
         _damage = 0;
         // 대미지 계산
         if (playerAtk > _monsterStat.Def)
@@ -341,6 +364,32 @@ public class MonsterControllerEX : MonoBehaviour
             Property_state = CreatureState.Dead;
             //_hp = 10.0f; // 말해준거 같은대 까먹음... 오브젝트 풀링용도면 추후 사용
             return;
+        }
+    }
+
+    IEnumerator OnDamagedColor()
+    {
+        float time = 0;
+        Color tmpColor;
+        tmpColor.r = 1;
+        tmpColor.g = 0.5f;
+        tmpColor.b = 0.5f;
+        tmpColor.a = 1;
+        _material.color = tmpColor;
+
+        while (true)
+        {
+            time += Time.deltaTime;
+            if (time > 0.2)
+            {
+                tmpColor.r = 1;
+                tmpColor.g = 1f;
+                tmpColor.b = 1f;
+                tmpColor.a = 1;
+                _material.color = tmpColor;
+                yield break;
+            }
+            yield return null;
         }
     }
 }
