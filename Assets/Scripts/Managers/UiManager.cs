@@ -151,6 +151,8 @@ public class UiManager
     // 보스 HP바
     public GameObject _bossHpbar;
 
+    // 대미지 받을 때 Ui
+    public GameObject _uiOnDamaged;
     //Ui 관리는 여기에서 처리
     //현재 UI 이름 개판 Ui // UI ... 추후 정리...
     public void Init()
@@ -271,6 +273,11 @@ public class UiManager
         _uiLevelUpObj.gameObject.SetActive(false);
         // 레벨업 UI 텍스트 연결
         _uiLevelUp.Init();
+
+        //대미지 받을 때 사용할 Ui
+        _uiOnDamaged = GameManager.Create.CreateUi("UI_OnDamaged", GameManager.Ui.go);
+        // 꺼놓고 시작
+        OnDamagedUI(false);
     }
     
     // 아이템 스텟창 함수 Init
@@ -1239,6 +1246,12 @@ public class UiManager
     {
         _goldDisplayShop.SetActive(value);
     }
+    // 대미지 받을 때 Ui
+    public void OnDamagedUI(bool value)
+    {
+        _uiOnDamaged.SetActive(value);
+    }
+
     /// <summary>
     /// 이하 씬 Attack버튼 관련
     /// 추후 코드 수정 필요 

@@ -798,6 +798,7 @@ public class PlayerController : MonoBehaviour
         // 경험치를 레벨업컨트롤러에서 관리
         _leveUpController.ExpAmount = MonsterExp;
     }
+
     //Vector3 beforePosition;
     protected float currentTime = 0;
     protected float ShakeRange = 0.5f;
@@ -805,10 +806,12 @@ public class PlayerController : MonoBehaviour
 
     protected IEnumerator ShakeCam()
     {
+        // 카메라 흔들리면서 화면 색상까지 변경하는 코드 
+        GameManager.Ui.OnDamagedUI(true);
         GameManager.Cam._Vcam1.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 3f;
         yield return new WaitForSeconds(0.3f);
+        GameManager.Ui.OnDamagedUI(false);
         GameManager.Cam._Vcam1.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-
     }
 
     public void ShakeCam(float a, float b)

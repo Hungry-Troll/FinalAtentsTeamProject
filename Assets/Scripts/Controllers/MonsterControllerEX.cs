@@ -68,7 +68,7 @@ public class MonsterControllerEX : MonoBehaviour
     {
         _distance = 15.0f;
         _rotateSpeed = 90f;
-        _attack = 3.0f;
+        _attack = 2.0f;
         _mobNum = 0;
     }
     // Start is called before the first frame update

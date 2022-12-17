@@ -18,8 +18,6 @@ public class BossMonsterControllerEX : MonsterControllerEX
     public Transform[] _sumMonsterPos;
     // 소환하는 숫자 확인용
     List<MonsterControllerEX> _sumList;
-    // 소환 시간 확인 변수
-    float time;
 
     public override void Awake()
     {
@@ -37,9 +35,6 @@ public class BossMonsterControllerEX : MonsterControllerEX
         _sumEffect[0] = Util.FindChild("SumEffect1", transform).GetComponent<ParticleSystem>();
         _sumEffect[1] = Util.FindChild("SumEffect2", transform).GetComponent<ParticleSystem>();
         _sumEffect[2] = Util.FindChild("SumEffect3", transform).GetComponent<ParticleSystem>();
-
-        time = 0;
-
 
         // 스킬 1 파티클 연결
         _skill1 = Util.FindChild("BossSkill1", transform).GetComponent<ParticleSystem>();
@@ -267,24 +262,16 @@ public class BossMonsterControllerEX : MonsterControllerEX
 
     public IEnumerator coBossSkill1(float delay)
     {
-        while (true)
-        {
-            time += Time.deltaTime;
-            if (time > delay)
-            {
-                Property_state = CreatureState.Move;
-                _coBossSkill1 = null;
-                _coBossSkill2 = null;
+        yield return new WaitForSeconds(delay);
 
-                // 스킬 이펙트 오프
-                Skill1EffectOff();
-                // 시간 초기화
-                time -= time;
-                // 코루틴 정지
-                yield break;
-            }
-            yield return null;
-        }
+        Property_state = CreatureState.Move;
+        _coBossSkill1 = null;
+        _coBossSkill2 = null;
+
+        // 스킬 이펙트 오프
+        Skill1EffectOff();
+        // 코루틴 정지
+        yield break;
     }
 
     public override IEnumerator AttackDelay(float _delay)
