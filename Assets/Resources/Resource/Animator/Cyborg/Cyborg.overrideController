@@ -7,7 +7,7 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Cyborg
-  m_Controller: {fileID: 9100000, guid: 8b1b4739ce8b8d34883671801e4919fd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7ebd626035ecbc14088aad58671a0c56, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 5128cff875be6a44f9920563f4682725, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 3db9173a4c1e3ba4f93d858037369282, type: 2}
@@ -21,3 +21,9 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: 4a96fc20eadfd614d89ddeaaefd91e1e, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 571aa8ebdead8a94099629bd5f5fb356, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 571aa8ebdead8a94099629bd5f5fb356, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5201811ddd0d97b4a8d94600cdcab57e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 54676370472797943ad2dfdfd9d3921e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b6ee7830f61f9c8479279a93973a6654, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 480449d48a0bcea4ebf7b4f32ea545fa, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e0e670bcc4abdbf4ea5eb74628e778f5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: af87f3a31d587c044b9332d3ab690e35, type: 2}

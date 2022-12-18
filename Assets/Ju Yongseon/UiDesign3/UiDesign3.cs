@@ -15,12 +15,9 @@ public class UiDesign3 : MonoBehaviour
 
     public Image SkillInfo;
 
-    public Image skill_1;
-    public Image skill_2;
-    public Image skill_3;
 
     Animator ani;
-
+    
     GameObject job;
     GameObject playerObject;
     GameObject nicknameObject;
@@ -30,13 +27,10 @@ public class UiDesign3 : MonoBehaviour
     bool SButtom = false;
 
     int pickNumber;
-    Image[] images;
+
+
     void Start()
     {
-        skill_1.GetComponent<Image>();
-        skill_2.GetComponent<Image>();
-        skill_3.GetComponent<Image>();
-
         pickNumber = 0;
         nicknameObject = GameObject.Find("Canvas/NicknameObject");
         Debug.Log(nicknameObject);
@@ -48,63 +42,35 @@ public class UiDesign3 : MonoBehaviour
     //소슽트리 확인용
     void Update()
     {
-        if (WButtom)
+        if(WButtom)
         {
             pickNumber = 1;
             jobName.text = "강화인간";
             jobInformation.text = "근접전투 스타일에 밸런스형이 특징";
             characterGeneration("SuperhumanCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
-
-            wSkill.text = "집중공격";
-            aSkill.text = "소용돌이";
-            sSkill.text = "강화약물";
-
-            skill_1.sprite =
-                Resources.Load("Skills/집중공격", typeof(Sprite)) as Sprite;
-
-            skill_2.sprite =
-                Resources.Load("Skills/소용돌이", typeof(Sprite)) as Sprite;
-
-            skill_3.sprite =
-                Resources.Load("Skills/강화약물", typeof(Sprite)) as Sprite;
-
+            wSkill.text = "설명";
             //SkillInfo.sprite = wSkill;
             WButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Superhuman";
         }
 
-        if (AButtom)
+        if(AButtom)
         {
             pickNumber = 2;
             jobName.text = "사이보그";
             jobInformation.text = "원거리전투 스타일에 폭발적인 데미지가 특징";
             characterGeneration("CyborgCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
-            wSkill.text = "화염방사";
-            aSkill.text = "유탄발사";
-            sSkill.text = "공중폭격";
-
-
-
-
-            skill_1.sprite =
-                 Resources.Load("Skills/화염방사", typeof(Sprite)) as Sprite;
-
-            skill_2.sprite =
-                Resources.Load("Skills/유탄발사", typeof(Sprite)) as Sprite;
-
-            skill_3.sprite =
-                Resources.Load("Skills/공중폭격", typeof(Sprite)) as Sprite;
-
+            aSkill.text = "설명";
             //SkillInfo.sprite = aSkill;
             AButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Cyborg";
         }
 
-        if (SButtom)
+        if(SButtom)
         {
             pickNumber = 3;
             jobName.text = "과학자";
@@ -112,20 +78,7 @@ public class UiDesign3 : MonoBehaviour
             characterGeneration("ScientistCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
             //SkillInfo.sprite = sSkill;
-            wSkill.text = "독 구름";
-            aSkill.text = "익스플로전";
-            sSkill.text = "번개";
-
-            skill_1.sprite =
-                Resources.Load("Skills/독구름", typeof(Sprite)) as Sprite;
-
-            skill_2.sprite =
-                Resources.Load("Skills/익스플로전", typeof(Sprite)) as Sprite;
-
-            skill_3.sprite =
-                Resources.Load("Skills/번개1", typeof(Sprite)) as Sprite;
-
-
+            sSkill.text = "설명";
             SButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Scientist";
@@ -133,7 +86,7 @@ public class UiDesign3 : MonoBehaviour
 
 
     }
-
+    
     //캐릭터를 리소스로 불러오는 코드
     void characterGeneration(string _name)
     {
@@ -174,14 +127,14 @@ public class UiDesign3 : MonoBehaviour
     //start버튼에 마우스올리면 애니메이션이 행동
     public void StartPointerEnter()
     {
-        if (ani != null)
+        if(ani != null)
         {
-            ani.SetInteger("Index", 2);
+            ani.SetInteger("Index",2);
         }
     }
     public void StartPointerExit()
     {
-        if (ani != null)
+        if(ani != null)
         {
             ani.SetInteger("Index", 0);
         }
@@ -189,9 +142,9 @@ public class UiDesign3 : MonoBehaviour
     //다른 캐릭터를 누르면 애니메이션이 서운하게 행동
     public void PickPointerEnter(int _number)
     {
-        if (ani != null)
+        if(ani != null)
         {
-            if (pickNumber != _number)
+            if(pickNumber != _number)
             {
                 ani.SetInteger("Index", 3);
             }
@@ -202,7 +155,7 @@ public class UiDesign3 : MonoBehaviour
         Debug.Log("0");
         if (ani != null)
         {
-
+            
             ani.SetInteger("Index", 0);
         }
     }
@@ -213,7 +166,7 @@ public class UiDesign3 : MonoBehaviour
         {
             SkillInfo.gameObject.SetActive(true);
         }
-
+        
     }
     public void SkillCheckPointerExit()
     {
@@ -222,7 +175,7 @@ public class UiDesign3 : MonoBehaviour
     //캐릭터를 선택하고 시작버튼을 누르면 닉네임창이 뜨게 설정
     public void StartButton()
     {
-        if (pickNumber != 0)
+        if(pickNumber !=0)
         {
             nicknameObject.gameObject.SetActive(true);
         }

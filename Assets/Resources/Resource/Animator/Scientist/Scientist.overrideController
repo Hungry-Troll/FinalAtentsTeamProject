@@ -7,7 +7,7 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Scientist
-  m_Controller: {fileID: 9100000, guid: 8b1b4739ce8b8d34883671801e4919fd, type: 2}
+  m_Controller: {fileID: 9100000, guid: b9a4a41913c969d4b99807a17e5e7b8a, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 5128cff875be6a44f9920563f4682725, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: d53b999282eda844ba2d1a6d5ed2fcf8, type: 2}
@@ -21,3 +21,9 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: 2eef9e13254f54f4db9d0352e15abd10, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 571aa8ebdead8a94099629bd5f5fb356, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 571aa8ebdead8a94099629bd5f5fb356, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5201811ddd0d97b4a8d94600cdcab57e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fd9faeccf662e654eb595b83ab731c3c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b6ee7830f61f9c8479279a93973a6654, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e6e6999753b11994daf5eda998eef8b0, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e0e670bcc4abdbf4ea5eb74628e778f5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 09e2a56d5b8b5024289c760928709ad0, type: 2}
