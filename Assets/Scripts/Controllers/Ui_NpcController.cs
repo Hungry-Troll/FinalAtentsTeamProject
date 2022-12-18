@@ -135,6 +135,14 @@ public class Ui_NpcController : MonoBehaviour
                     GameManager.Ui._directionArrowController.OnArrow("ToVolcanicField");
                 }
                 break;
+            case 8:
+                // 대화 종료 후
+                if (isConversationEnd)
+                {
+                    // 보스전 BGM
+                    GameManager.Sound.BGMPlay("01");
+                }
+                break;
             case 9:
                 if( isConversationEnd)
                 {
@@ -144,6 +152,8 @@ public class Ui_NpcController : MonoBehaviour
                     GameManager.Quest.QuestInfoActive(false);
                     // 엔딩
                     GameManager.Quest.Ending();
+                    // 엔딩 노래
+                    GameManager.Sound.BGMPlay("29");
                 }
                 break;
         }

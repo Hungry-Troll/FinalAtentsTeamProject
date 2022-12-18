@@ -37,7 +37,7 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
     }
 
     Text Text_Count;
-    
+    public Text _level_Count;
     private void Start()
     {
         // 필요없을수도 있음
@@ -45,6 +45,8 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
         // 인벤토리 아이템 개수 Text UI 개수 표시
         Transform Text_CountTr = Util.FindChild("Text_Count", gameObject.transform);
         Text_Count = Text_CountTr.GetComponent<Text>();
+        // 레벨 표시
+        _level_Count = Util.FindChild("Level_Count", gameObject.transform).GetComponent<Text>();
     }
     void Update()
     {

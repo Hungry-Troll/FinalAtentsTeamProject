@@ -52813,6 +52813,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8575077703976715510, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575077703976715510, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
@@ -52828,13 +52832,21 @@ PrefabInstance:
       propertyPath: m_ReflectionProbeUsage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8575077703976715510, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 145001441222fdd46b234dbd8f282412, type: 2}
     - target: {fileID: 8598198932468926202, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
       propertyPath: m_Name
       value: tree_white (21)
       objectReference: {fileID: 0}
     - target: {fileID: 8598198932468926202, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
+      propertyPath: m_TagString
+      value: MapObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 8598198932468926202, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8601673126538441250, guid: 4b47638075de6c94f80c43332b74bd93, type: 3}
       propertyPath: m_RootOrder

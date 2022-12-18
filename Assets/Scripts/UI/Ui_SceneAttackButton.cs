@@ -53,7 +53,7 @@ public class Ui_SceneAttackButton : MonoBehaviour
         originalColor = _skill3CoolTimeImage.color;
 
         // Æ÷¼Ç¿ë	
-        potionCntTxt = Util.FindChild("UI_PotionButton", transform).GetChild(0).GetComponent<Text>();
+        potionCntTxt = Util.FindChild("UI_PotionButton", transform).GetComponentInChildren<Text>();
         potionCnt = 0;
         potionCntTxt.text = "";
 
