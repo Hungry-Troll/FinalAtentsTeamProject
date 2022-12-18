@@ -76,7 +76,6 @@ public class LevelUpController : MonoBehaviour
         GameManager.Ui._skillViewController.LevelUp();
         // 포트레이트 HP바 레벨 증가
         GameManager.Ui._playerHpBarController._Lv.text = "Lv " + Lv.ToString();
-        GameManager.Ui._inventoryController._level_Count.text = Lv.ToString();
     }
     // 레벨업 이펙트 끄고 키기
     public void LeveUpEffectOnOff(bool value)

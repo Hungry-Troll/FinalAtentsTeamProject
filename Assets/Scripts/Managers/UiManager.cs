@@ -1316,38 +1316,38 @@ public class UiManager
         switch (imageName)
         {
             case "skill1":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill;
                 break;
             case "skill2":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill2;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill2;
                 break;
             case "skill3":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill3;
                 break;
             case "skill4":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill;
                 break;
             case "skill5":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill2;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill2;
                 break;
             case "skill6":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill3;
                 break;
             case "skill7":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill1;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill;
                 break;
             case "skill8":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill2;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill2;
                 break;
             case "skill9":
-                GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Skill3;
+                GameManager.Obj._playerController._creatureState = CreatureState.Skill3;
                 break;
         }
     }
 
     public void RollingButton()
     {
-        GameManager.Obj._playerController._sceneAttackButton = SceneAttackButton.Rolling;
+        GameManager.Obj._playerController._creatureState = CreatureState.Rolling;
     }
 
     // 터치 잠금 스크린 On/Off 함수

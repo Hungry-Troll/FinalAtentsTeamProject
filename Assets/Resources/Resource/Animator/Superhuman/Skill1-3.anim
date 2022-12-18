@@ -71162,7 +71162,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.7666667
-    functionName: Skill1Event2
+    functionName: Skill1Event1
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

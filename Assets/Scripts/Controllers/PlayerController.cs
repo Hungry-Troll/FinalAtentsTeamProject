@@ -13,15 +13,14 @@ public class PlayerController : MonoBehaviour
     protected Vector3 _rollVecter;
     protected Vector3 _rollDir;
     protected Vector3 _scientistSkill2Point;
-    Vector3 checkPoint;
-    Vector3 _bombPosition;
-    Vector3 _portionPosition;
+    protected Vector3 checkPoint;
+    protected Vector3 _bombPosition;
+    protected Vector3 _portionPosition;
     public float _moveSpeed;
     public float _rotationSpeed;
     public float _rollSpeed;
     public float _autoMoveSpeed;
-    //폭탄이 레이캐스트 도착지점 계산값
-    float bombDistance;
+
     //포션이 레이캐스트 도착지점 계산값
     float _portionDistance;
 
@@ -29,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public SceneAttackButton _sceneAttackButton;
     public Animator _anim;
     public PlayerStat _playerStat;
-    protected bool _KeyboardInputOnOff;
+
     protected bool _isRoll;
     protected bool _isSkill1;
     protected bool _isSkill2;
@@ -40,12 +39,16 @@ public class PlayerController : MonoBehaviour
     public LevelUpController _leveUpController;
     // 공격용 코루틴
     protected Coroutine _coAttack;
+    protected Coroutine _coSkill1;
+    protected Coroutine _coSkill2;
+    protected Coroutine _coSkill3;
+    protected Coroutine _coRoll;
 
     // 공격속도 코루틴 대입용 
     protected float _attackDelay;
 
-    // 공격 이펙트용
-    protected TrailRenderer _swordEffect;
+    //Skill2 공격범위 설정용
+    public BoxCollider _skill2BoxCollider;
 
     //Skill1 파티클용
     protected ParticleSystem _skill1SlashEffect2_1;
@@ -57,37 +60,35 @@ public class PlayerController : MonoBehaviour
     protected ParticleSystem _skill3BoosterEffect;
     //Skill2 파티클용
     protected ParticleSystem _skill2WheelWindEffect;
-    //Skill2 공격범위 설정용
-    public BoxCollider _skill2BoxCollider;
 
     //사이보그용 Skill1 파티클용
-    ParticleSystem _skill1FlamethrowerEffect;
+    protected ParticleSystem _skill1FlamethrowerEffect;
     //사이보그용 Skill2 파티클용
     public GameObject _cyborgSkill2;
     public ParticleSystem _skill2FireExplosionEffect;
     public ParticleSystem _skill2FireBigEffect;
     //사이보그용 Skill2 폭탄 오브젝트
-    Transform _bomb;
+    protected Transform _bomb;
     //사이보그용 Skill3 파티클용
     public GameObject _cyborgSkill3;
-    ParticleSystem _skill3Explosion1Effect;
-    ParticleSystem _skill3Explosion2Effect;
-    ParticleSystem _skill3Explosion3Effect;
-    ParticleSystem _skill3Explosion4Effect;
+    protected ParticleSystem _skill3Explosion1Effect;
+    protected ParticleSystem _skill3Explosion2Effect;
+    protected ParticleSystem _skill3Explosion3Effect;
+    protected ParticleSystem _skill3Explosion4Effect;
     //과학자 리소스로 불러올 스킬 오브젝트
     public GameObject _scientistSkill1;
-    ParticleSystem _poison;
-    ParticleSystem _explosion;
+    protected ParticleSystem _poison;
+    protected ParticleSystem _explosion;
     public GameObject _scientistSkill2;
-    ParticleSystem _powerDraw;
-    ParticleSystem _electricity;
+    protected ParticleSystem _powerDraw;
+    protected ParticleSystem _electricity;
     public GameObject _scientistSkill3;
-    ParticleSystem _powerBeam;
+    protected ParticleSystem _powerBeam;
     //과학자 스킬1 포션 오브젝트
-    Transform _poisonPortion;
+    protected Transform _poisonPortion;
 
     //이펙트 변화용 변수
-    int effectChange;
+    protected int effectChange;
 
     //Json 스킬정보
     protected TextAsset _skillInfoJson;
@@ -97,18 +98,25 @@ public class PlayerController : MonoBehaviour
     //Skill3 플레이어 크기 트렌스폼 찾는 변수(미니Hp바 때문에)
     protected Transform _skill3PlayerScale;
     //플레이어 직업 구분용
-    PlayerStat playerStat;
+    protected PlayerStat playerStat;
     Job playerJob;
-    // 사이보그 논타겟 필드
-    GameObject _skillGround;
+
     // Start is called before the first frame update
     protected void Start()
+    {
+        Init();
+
+        JobStart();
+    }
+
+    // Init함수는 스타트 함수 공통내용
+    public void Init()
     {
         _moveSpeed = 10.0f;
         _rotationSpeed = 10f;
         _rollSpeed = 5f;
         _creatureState = CreatureState.Idle;
-        _sceneAttackButton = SceneAttackButton.None;
+        //_sceneAttackButton = SceneAttackButton.None;
         checkPoint = new Vector3(0, 0, 0);
 
         _anim = GetComponent<Animator>();
@@ -137,120 +145,51 @@ public class PlayerController : MonoBehaviour
         _skill3PlayerScale = Util.FindChild("Armature", transform).GetComponent<Transform>();
 
         playerStat = transform.GetComponent<PlayerStat>();
-        if (playerStat.Job == Job.Superhuman.ToString())
-        {
-            //SuperHuman Skill1 파티클 연결
-            _skill1SlashEffect2_1 = FindEffect("Skill1SlashEffect2_1", transform);
-            _skill1SlashEffect2_2 = FindEffect("Skill1SlashEffect2_2", transform);
-            _skill1SlashEffect2_3 = FindEffect("Skill1SlashEffect2_3", transform);
-            _skill1SlashEffect2_4 = FindEffect("Skill1SlashEffect2_4", transform);
-            _skill1SlashEffect2_5 = FindEffect("Skill1SlashEffect2_5", transform);
-            // Skill2 파티클 연결
-            Transform skill2Tr = Util.FindChild("Skill2WheelWindEffect", transform);
-            _skill2WheelWindEffect = skill2Tr.GetComponent<ParticleSystem>();
-            // Skill2 파티클 Stop;
-            Skill2WheelWindOff();
-            // Skill2 공격범위용 콜라이더
-            _skill2BoxCollider = skill2Tr.GetComponent<BoxCollider>();
-            //SuperHuman Skill3 파티클 연결
-            _skill3GroundEffect = FindEffect("Skill3GroundEffect", transform);
-            _skill3BoosterEffect = FindEffect("Skill3BoosterEffect", transform);
-            // 공격이펙트 연결
-            Transform tmp = Util.FindChild("SwordEffect", transform);
-            _swordEffect = tmp.GetComponent<TrailRenderer>();
-        }
-        else if (playerStat.Job == Job.Cyborg.ToString())
-        {
-            //사이보그 Skill1 파티클 연결
-            _skill1FlamethrowerEffect = FindEffect("Skill1FlamethrowerEffect", transform);
-            // 사이보그 Skill1 공격범위용 콜라이더
-            _skill2BoxCollider = _skill1FlamethrowerEffect.GetComponent<BoxCollider>();
-            //사이보그 논타겟 스킬 범위
-            _skillGround = Util.FindChild("SkillGround", transform).gameObject;
-            //사이보그 Skill2 파티클 연결
-            _cyborgSkill2 = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particle_Prefab/Skill2Effect"));
-            _skill2FireExplosionEffect = FindEffect("FireExplosion", _cyborgSkill2.transform);
-            _skill2FireBigEffect = FindEffect("FireBig", _cyborgSkill2.transform);
-            //폭탄 위치
-            _bomb = Util.FindChild("bomb", transform);
-            _bombPosition = _bomb.localPosition;
-            //사이보그 Skill3 파티클 연결
-            _cyborgSkill3 = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particle_Prefab/Skill3Effect"));
-            _skill3Explosion1Effect = FindEffect("Explosion1", _cyborgSkill3.transform);
-            _skill3Explosion2Effect = FindEffect("Explosion2", _cyborgSkill3.transform);
-            _skill3Explosion3Effect = FindEffect("Explosion3", _cyborgSkill3.transform);
-            _skill3Explosion4Effect = FindEffect("Explosion4", _cyborgSkill3.transform);
-        }
-        else if (playerStat.Job == Job.Scientist.ToString())
-        {
-            //논타겟 스킬 범위 변수
-            _skillGround = Util.FindChild("SkillGround", transform).gameObject;
-            _scientistSkill1 = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particle_Prefab/ScientistSkill1"));
-            _poison = FindEffect("Poison", _scientistSkill1.transform);
-            _explosion = FindEffect("Explosion", _scientistSkill1.transform);
-            _scientistSkill2 = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particle_Prefab/ScientistSkill2"));
-            _powerDraw = FindEffect("PowerDraw", _scientistSkill2.transform);
-            _electricity = FindEffect("Electricity", _scientistSkill2.transform);
-            _scientistSkill3 = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particle_Prefab/ScientistSkill3"));
-            _powerBeam = FindEffect("PowerBeam", _scientistSkill3.transform);
-            _poisonPortion = Util.FindChild("potion", transform);
-            _portionPosition = _poisonPortion.localPosition;
-        }
     }
+    // JobStart함수는 직업별로 다른 Start 함수
+    public virtual void JobStart(){ }
 
     // Update is called once per frame
     protected void Update()
     {
-        KeyboardInput();
-        if (_sceneAttackButton == SceneAttackButton.None)
-        {
-            switch (_creatureState)
-            {
-                case CreatureState.Idle:
-                    Idle();
-                    break;
-                case CreatureState.Move:
-                    Move();
-                    break;
-                case CreatureState.AutoMove:
-                    AutoMove();
-                    break;
-                case CreatureState.Attack:
-                    Attack();
-                    break;
-                case CreatureState.Dead:
-                    Dead();
-                    break;
-                case CreatureState.None:
-                    break;
-            }
-            UpdateAnimation();
-        }
-        else
-        {
-            switch (_sceneAttackButton)
-            {
-                case SceneAttackButton.Rolling:
-                    Roll();
-                    break;
-                case SceneAttackButton.Skill1:
-                    Skill1();
-                    break;
-                case SceneAttackButton.Skill2:
-                    Skill2();
-                    break;
-                case SceneAttackButton.Skill3:
-                    Skill3();
-                    break;
-                case SceneAttackButton.None:
-                    break;
-            }
-            SkillAnimation();
-        }
 
+        switch (_creatureState)
+        {
+            case CreatureState.Idle:
+                Idle();
+                break;
+            case CreatureState.Move:
+                Move();
+                break;
+            case CreatureState.AutoMove:
+                AutoMove();
+                break;
+            case CreatureState.Attack:
+                Attack();
+                break;
+            case CreatureState.Dead:
+                Dead();
+                break;
+            case CreatureState.Rolling:
+                Roll();
+                break;
+            case CreatureState.Skill:
+                Skill1();
+                break;
+            case CreatureState.Skill2:
+                Skill2();
+                break;
+            case CreatureState.Skill3:
+                Skill3();
+                break;
+            case CreatureState.None:
+                break;
+        }
+        UpdateAnimation();
+        
     }
     // 애니메이션을 따로 관리
-    protected void UpdateAnimation()
+    protected virtual void UpdateAnimation()
     {
         switch (_creatureState)
         {
@@ -269,26 +208,17 @@ public class PlayerController : MonoBehaviour
             case CreatureState.Dead:
                 _anim.SetInteger("playerStat", 3);
                 break;
-            case CreatureState.None:
-                break;
-        }
-    }
-    protected void SkillAnimation()
-    {
-        switch (_sceneAttackButton)
-        {
-            case SceneAttackButton.Rolling:
+            case CreatureState.Rolling:
                 _anim.SetInteger("playerStat", 9);
                 break;
-            case SceneAttackButton.Skill1:
+            case CreatureState.Skill:
                 break;
-            case SceneAttackButton.Skill2:
-                if (playerStat.Job == Job.Superhuman.ToString())
-                    _anim.SetInteger("playerStat", 6);
+            case CreatureState.Skill2:
+                _anim.SetInteger("playerStat", 6);
                 break;
-            case SceneAttackButton.Skill3:
+            case CreatureState.Skill3:
                 break;
-            case SceneAttackButton.None:
+            case CreatureState.None:
                 break;
         }
     }
@@ -304,126 +234,72 @@ public class PlayerController : MonoBehaviour
 
     protected void Move()
     {
-        if (_KeyboardInputOnOff == true)
-        {
-            KeyboardMove();
-        }
-        else
-        {
-            // 이동 중 대기
-            if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
-            {
-                _creatureState = CreatureState.Idle;
-            }
-            _inputDir = GameManager.Ui._joyStickController.inputDirection;
-            // Debug.Log("플레이어 : " + _inputDir);
-            bool isMove = _inputDir.magnitude != 0;
-            //if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
-            if (isMove)
-            {
-                // 이동
-                float x = _inputDir.x;
-                float y = _inputDir.y;
-                _tempVector = new Vector3(x, 0, y);
-                _tempVector = _tempVector * Time.deltaTime * _moveSpeed;
-                transform.position += _tempVector;
-                // 회전
-                if (playerStat.Job == Job.Cyborg.ToString() && _isSkill1 == true)
-                {
-                    transform.rotation = Quaternion.LookRotation(_tempDir.normalized);
-                }
-                else
-                {
-                    _tempDir = new Vector3(x, 0, y);
-                    _tempDir = Vector3.RotateTowards(transform.forward, _tempDir, Time.deltaTime * _rotationSpeed, 0);
-                    transform.rotation = Quaternion.LookRotation(_tempDir.normalized);
-                }
-
-            }
-        }
-    }
-    public void KeyboardInput()
-    {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ||
-            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            _creatureState = CreatureState.Move;
-            _KeyboardInputOnOff = true;
-        }
-        else
-        {
-            _KeyboardInputOnOff = false;
-        }
-    }
-    public void KeyboardMove()
-    {
-        float x = 0f;
-        float y = 0f;
-        if (Input.GetKey(KeyCode.W))
-        {
-            y += 1f;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            y -= 1f;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            x -= 1f;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            x += 1f;
-        }
-        _tempVector = new Vector3(x, 0, y);
-        _tempVector = _tempVector * Time.deltaTime * _moveSpeed;
-        transform.position += _tempVector;
-
-        if (playerStat.Job == Job.Cyborg.ToString() && _isSkill1 == true)
-        {
-            transform.rotation = Quaternion.LookRotation(_tempDir.normalized);
-        }
-        else
-        {
-            _tempDir = new Vector3(x, 0, y);
-            _tempDir = Vector3.RotateTowards(transform.forward, _tempDir, Time.deltaTime * _rotationSpeed, 0);
-            transform.rotation = Quaternion.LookRotation(_tempDir.normalized);
-        }
-
-        if (_KeyboardInputOnOff == false)
+        // 이동 중 대기
+        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
         {
             _creatureState = CreatureState.Idle;
         }
+        _inputDir = GameManager.Ui._joyStickController.inputDirection;
+        // Debug.Log("플레이어 : " + _inputDir);
+        bool isMove = _inputDir.magnitude != 0;
+        //if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
+        if (isMove)
+        {
+            // 이동
+            float x = _inputDir.x;
+            float y = _inputDir.y;
+            _tempVector = new Vector3(x, 0, y);
+            _tempVector = _tempVector * Time.deltaTime * _moveSpeed;
+            transform.position += _tempVector;
+            // 회전
+            if (playerStat.Job == Job.Cyborg.ToString() && _isSkill1 == true)
+            {
+                transform.rotation = Quaternion.LookRotation(_tempDir.normalized);
+            }
+            else
+            {
+                _tempDir = new Vector3(x, 0, y);
+                _tempDir = Vector3.RotateTowards(transform.forward, _tempDir, Time.deltaTime * _rotationSpeed, 0);
+                transform.rotation = Quaternion.LookRotation(_tempDir.normalized);
+            }
+        }
     }
+
     public void Roll()
     {
-        _creatureState = CreatureState.None;
-        //현재 스킬의 상태는 나타내는 조건
-        if (_isRoll == false)
-        {
-            //보고 있는 방향을 저장한다.
-            _rollDir = _tempDir.normalized;
-            _isRoll = true;
-            GameManager.Ui._uiSceneAttackButton.RollingButton(true);
-        }
+        _rollDir = _tempDir.normalized;
+        // 쿨타임은 추후 
+        //GameManager.Ui._uiSceneAttackButton.RollingButton(true);
         _tempVector = _rollDir;
         _tempVector = _tempVector * Time.deltaTime * _rollSpeed;
         transform.position += _tempVector;
-        StartCoroutine(CoRoll());
+
+        if (_coRoll == null)
+        {
+            //보고 있는 방향을 저장한다.
+
+            _coRoll = StartCoroutine(CoRoll());
+        }
     }
     protected IEnumerator CoRoll()
     {
         yield return new WaitForSeconds(1f);
-        _isRoll = false;
-        _sceneAttackButton = SceneAttackButton.None;
-        _creatureState = CreatureState.Idle;
+        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
+        {
+            _creatureState = CreatureState.Idle;
+        }
+        if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputTrue)
+        {
+            _creatureState = CreatureState.Move;
+        }
+        _coRoll = null;
     }
-    public void Skill1()
+    public virtual void Skill1()
     {
         _creatureState = CreatureState.None;
         if (playerStat.Job == Job.Superhuman.ToString())
         {
-            if (GameManager.Obj._targetMonster == null)
+/*            if (GameManager.Obj._targetMonster == null)
             {
                 GameManager.Ui._uiSceneAttackButton.Skill1Button(false);
                 _sceneAttackButton = SceneAttackButton.None;
@@ -453,11 +329,11 @@ public class PlayerController : MonoBehaviour
                 GameManager.Ui._uiSceneAttackButton.Skill1Button(false);
                 _sceneAttackButton = SceneAttackButton.None;
                 _creatureState = CreatureState.Move;
-            }
+            }*/
         }
         else if (playerStat.Job == Job.Cyborg.ToString())
         {
-            Vector3 _skill1CyborgDir;
+/*            Vector3 _skill1CyborgDir;
             if (_coAttack == null && _isSkill1 == false && _isSkill2 == false)
             {
                 _skill1CyborgDir = _tempDir.normalized;
@@ -473,58 +349,58 @@ public class PlayerController : MonoBehaviour
             }
             else if (_KeyboardInputOnOff == true)
             {
-                KeyboardMove();
+                //KeyboardMove();
                 _anim.SetInteger("playerStat", 5);
             }
             else
             {
                 _anim.SetInteger("playerStat", 2);
-            }
+            }*/
         }
         else if (playerStat.Job == Job.Scientist.ToString())
         {
-            if (_isSkill1 == false)
-            {
-                _skillGround.SetActive(true);
-                if (checkPoint == new Vector3(0, 0, 0))
-                {
-                    checkPoint = RaycastInfo();
-                }
-                else
-                {
-                    float distance = Vector3.Distance(checkPoint, transform.position);
-                    if (distance < 5f)
-                    {
-                        _skillGround.SetActive(false);
-                        Vector3 tempDir = checkPoint - transform.position;
-                        transform.rotation = Quaternion.LookRotation(tempDir.normalized);
-                        _anim.SetInteger("playerStat", 5);
-                        if (_poisonPortion.gameObject.activeSelf == true)
-                        {
-                            _poisonPortion.position = Vector3.Slerp(_poisonPortion.position, checkPoint, 0.05f);
-                            _portionDistance = Vector3.Distance(_poisonPortion.position, checkPoint);
-                        }
-                        else
-                        {
-                            return;
-                        }
-                        if (_portionDistance < 0.5f)
-                        {
-                            _isSkill1 = true;
-                            StartCoroutine(ScientistCoSkill1());
-                            _sceneAttackButton = SceneAttackButton.None;
-                            _creatureState = CreatureState.Idle;
-                        }
-                    }
-                    else
-                    {
-                        _skillGround.SetActive(false);
-                        checkPoint = new Vector3(0, 0, 0);
-                        _sceneAttackButton = SceneAttackButton.None;
-                        _creatureState = CreatureState.Idle;
-                    }
-                }
-            }
+            //if (_isSkill1 == false)
+            //{
+            //    _skillGround.SetActive(true);
+            //    if (checkPoint == new Vector3(0, 0, 0))
+            //    {
+            //        checkPoint = RaycastInfo();
+            //    }
+            //    else
+            //    {
+            //        float distance = Vector3.Distance(checkPoint, transform.position);
+            //        if (distance < 5f)
+            //        {
+            //            _skillGround.SetActive(false);
+            //            Vector3 tempDir = checkPoint - transform.position;
+            //            transform.rotation = Quaternion.LookRotation(tempDir.normalized);
+            //            _anim.SetInteger("playerStat", 5);
+            //            if (_poisonPortion.gameObject.activeSelf == true)
+            //            {
+            //                _poisonPortion.position = Vector3.Slerp(_poisonPortion.position, checkPoint, 0.05f);
+            //                _portionDistance = Vector3.Distance(_poisonPortion.position, checkPoint);
+            //            }
+            //            else
+            //            {
+            //                return;
+            //            }
+            //            if (_portionDistance < 0.5f)
+            //            {
+            //                _isSkill1 = true;
+            //                StartCoroutine(ScientistCoSkill1());
+            //                _sceneAttackButton = SceneAttackButton.None;
+            //                _creatureState = CreatureState.Idle;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            _skillGround.SetActive(false);
+            //            checkPoint = new Vector3(0, 0, 0);
+            //            _sceneAttackButton = SceneAttackButton.None;
+            //            _creatureState = CreatureState.Idle;
+            //        }
+            //    }
+            //}
         }
     }
     public void ScientistSkill3Event()
@@ -584,20 +460,8 @@ public class PlayerController : MonoBehaviour
     {
         _poisonPortion.gameObject.SetActive(true);
     }
-    protected IEnumerator CyborgCoSkill1()
-    {
-        _skill2BoxCollider.enabled = true;
-        _skill1FlamethrowerEffect.Play();
-        _anim.SetInteger("playerStat", 2);
-        yield return new WaitForSeconds(4f);
-        _skill2BoxCollider.enabled = false;
-        _skill1FlamethrowerEffect.Stop();
-        _isSkill1 = false;
-        _coAttack = null;
-        _sceneAttackButton = SceneAttackButton.None;
-        _creatureState = CreatureState.Attack;
-    }
-    protected IEnumerator CoSkill1()
+
+/*    protected IEnumerator CoSkill1()
     {
         _swordEffect.enabled = true;
         _anim.SetInteger("playerStat", 5);
@@ -612,8 +476,8 @@ public class PlayerController : MonoBehaviour
         _coAttack = null;
         _sceneAttackButton = SceneAttackButton.None;
         _creatureState = CreatureState.Attack;
-    }
-    public void Skill1Event1()
+    }*/
+/*    public void Skill1Event1()
     {
         switch (effectChange)
         {
@@ -632,12 +496,12 @@ public class PlayerController : MonoBehaviour
         }
         effectChange++;
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 2);
-    }
+    }*/
 
-    public void Skill2()
+    public virtual void Skill2()
     {
         _creatureState = CreatureState.None;
-        if (playerStat.Job == Job.Superhuman.ToString())
+/*        if (playerStat.Job == Job.Superhuman.ToString())
         {
             float skillDelay = 1.0f;
             float skillSpeed = 10.0f;
@@ -652,10 +516,10 @@ public class PlayerController : MonoBehaviour
             {
                 _coAttack = StartCoroutine(CoSkill2(skillDelay));
             }
-        }
-        else if (playerStat.Job == Job.Cyborg.ToString())
+        }*/
+        if (playerStat.Job == Job.Cyborg.ToString())
         {
-            if (_isSkill1 == false)
+/*            if (_isSkill1 == false)
             {
                 _skillGround.SetActive(true);
                 if (checkPoint == new Vector3(0, 0, 0))
@@ -694,9 +558,9 @@ public class PlayerController : MonoBehaviour
                         _sceneAttackButton = SceneAttackButton.None;
                         _creatureState = CreatureState.Idle;
                     }
-                }
-            }
-            else if (playerStat.Job == Job.Scientist.ToString())
+                }*/
+            
+            /*else if (playerStat.Job == Job.Scientist.ToString())
             {
                 if (_isSkill2 == false)
                 {
@@ -736,7 +600,7 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                 }
-            }
+            }*/
         }
     }
     IEnumerator ScientistCoSkill2()
@@ -767,7 +631,7 @@ public class PlayerController : MonoBehaviour
     {
         _scientistSkill2.gameObject.SetActive(true);
     }
-    IEnumerator CyborgCoSkill2()
+/*    IEnumerator CyborgCoSkill2()
     {
         _bomb.gameObject.SetActive(false);
         _cyborgSkill2.transform.position = checkPoint;
@@ -782,22 +646,22 @@ public class PlayerController : MonoBehaviour
         _skill2FireBigEffect.Stop();
         _cyborgSkill2.gameObject.SetActive(false);
         _bomb.localPosition = _bombPosition;
-    }
+    }*/
     //수류탄 던지는 애니메이터 이벤트
-    public void CybogSkill2ThrowBombEvent()
+/*    public void CybogSkill2ThrowBombEvent()
     {
         _bomb.gameObject.SetActive(true);
-    }
-    public void Skill1Event2()
-    {
-        _skill1SlashEffect2_5.Play();
-        effectChange = 0;
-        GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 1);
-    }
-    public void Skill3()
+    }*/
+    //public void Skill1Event2()
+    //{
+    //    _skill1SlashEffect2_5.Play();
+    //    effectChange = 0;
+    //    GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 1);
+    //}
+    public virtual void Skill3()
     {
         _creatureState = CreatureState.None;
-        if (playerStat.Job == Job.Superhuman.ToString())
+/*        if (playerStat.Job == Job.Superhuman.ToString())
         {
             if (_isSkill1 == false && _isSkill3 == false)
             {
@@ -809,10 +673,10 @@ public class PlayerController : MonoBehaviour
                 _sceneAttackButton = SceneAttackButton.None;
                 _creatureState = CreatureState.Idle;
             }
-        }
-        else if (playerStat.Job == Job.Cyborg.ToString())
+        }*/
+        if (playerStat.Job == Job.Cyborg.ToString())
         {
-            if (_isSkill1 == false)
+           /* if (_isSkill1 == false)
             {
                 _skillGround.SetActive(true);
                 if (checkPoint == new Vector3(0, 0, 0))
@@ -840,7 +704,7 @@ public class PlayerController : MonoBehaviour
                         _creatureState = CreatureState.Idle;
                     }
                 }
-            }
+            }*/
         }
         else if (playerStat.Job == Job.Scientist.ToString())
         {
@@ -890,7 +754,7 @@ public class PlayerController : MonoBehaviour
 
         _cyborgSkill3.gameObject.SetActive(false);
     }
-    protected IEnumerator CoSkill3()
+/*    protected IEnumerator CoSkill3()
     {
         _anim.SetInteger("playerStat", 7);
         _skill3PlayerScale.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
@@ -914,7 +778,7 @@ public class PlayerController : MonoBehaviour
         _skill3PlayerScale.transform.localScale = new Vector3(1f, 1f, 1f);
         _isSkill3 = false;
         GameManager.Ui._uiSceneAttackButton.Skill3Button(2);
-    }
+    }*/
     public void Skill3DataLoad()
     {
         TextAsset _skill3Info = Resources.Load<TextAsset>("Data/Json/Skill/Skill3Info");
@@ -967,14 +831,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    protected void Attack()
+    protected virtual void Attack()
     {
         // 타겟 널 판정
         if (GameManager.Obj._targetMonster == null)
         {
             _creatureState = CreatureState.Idle;
             // 공격상태인대 타겟이 없을 경우 소드 이펙트를 제거
-            SwordEffectOff();
+            //SwordEffectOff();
             return;
         }
         if (GameManager.Ui._joyStickController._joystickState == JoystickState.InputFalse)
@@ -997,7 +861,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 공격 딜레이 계산 (애니메이션 딜레이만)
-    protected IEnumerator CoAttackDelay(float _delay)
+    protected virtual IEnumerator CoAttackDelay(float _delay)
     {
         // 딜레이
         yield return new WaitForSeconds(_delay);
@@ -1008,7 +872,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Obj._targetMonster == null)
         {
             // 공격상태인대 타겟이 없을 경우 소드 이펙트를 제거
-            SwordEffectOff();
+            //SwordEffectOff();
             yield break;
         }
         // 코루틴 초기화
@@ -1016,7 +880,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 공격 대미지 계산 + 사운드는 애니메이션 클립 Attack에서 이벤트로 처리
-    public void AttackEvent()
+    public virtual void AttackEvent()
     {
         // 대미지 계산
         GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 1);
@@ -1024,19 +888,10 @@ public class PlayerController : MonoBehaviour
         GameManager.Sound.SFXPlay("Punch1");
     }
 
-    // 기본공격 이펙트 애니메이션 클립 Attack에서 이벤트로 처리
-    public void SwordEffectOn()
-    {
-        _swordEffect.enabled = true;
-    }
-    public void SwordEffectOff()
-    {
-        _swordEffect.enabled = false;
-    }
 
 
 
-    protected IEnumerator CoSkill2(float _delay)
+/*    protected IEnumerator CoSkill2(float _delay)
     {
         // 딜레이
         yield return new WaitForSeconds(_delay);
@@ -1044,23 +899,10 @@ public class PlayerController : MonoBehaviour
         _coAttack = null;
         _sceneAttackButton = SceneAttackButton.None;
         _creatureState = CreatureState.Idle;
-    }
-    // Skill2 애니메이션 클립에서 관리
-    // 스킬 이펙트 온
-    public void Skill2WheelWindOn()
-    {
-        _skill2WheelWindEffect.Play();
-        GameManager.Sound.SFXPlay("Skill2");
-    }
-    // Skill2 애니메이션 클립에서 관리
-    // 스킬 이펙트 오프
-    public void Skill2WheelWindOff()
-    {
-        _skill2WheelWindEffect.Stop();
-        // 오브젝트 매니저에있는 스킬공격대상 리스트를 초기화함 >> 다음 스킬에 다시 계산 후 적용
-        GameManager.Obj._targetMonstersControllerList = null;
-    }
-    // Skill2 애니메이션 클립에서 관리
+    }*/
+
+
+/*    // Skill2 애니메이션 클립에서 관리
     // 대미지 계산
     public void Skill2Event()
     {
@@ -1085,7 +927,7 @@ public class PlayerController : MonoBehaviour
                 targetList[i].OnDamaged(_playerStat.Atk, 1);
             }
         }
-    }
+    }*/
 
     protected void Dead()
     {

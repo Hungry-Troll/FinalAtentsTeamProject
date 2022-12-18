@@ -19,10 +19,10 @@ public class Ui_SceneAttackButton : MonoBehaviour
     public Image _skill3CoolTimeImage;
     public Image _attackCoolTimeImage;
     bool _rollCoolTimeCheck;
-    bool _skill1CoolTimeCheck;
-    bool _skill2CoolTimeCheck;
-    bool _skill3CoolTimeCheck;
-    bool _attackCoolTimeCheck;
+    //bool _skill1CoolTimeCheck;
+    //bool _skill2CoolTimeCheck;
+    //bool _skill3CoolTimeCheck;
+    //bool _attackCoolTimeCheck;
     Color originalColor;
     Color newColor;
     public void Start()
@@ -44,10 +44,10 @@ public class Ui_SceneAttackButton : MonoBehaviour
         _skill3CoolTimeImage = Util.FindChild("Skill3Cooltime", transform).GetComponent<Image>();
         _attackCoolTimeImage = Util.FindChild("AttackCooltime", transform).GetComponent<Image>();
         _rollCoolTimeCheck = false;
-        _skill1CoolTimeCheck = false;
-        _skill2CoolTimeCheck = false;
-        _skill3CoolTimeCheck = false;
-        _attackCoolTimeCheck = false;
+        //_skill1CoolTimeCheck = false;
+        //_skill2CoolTimeCheck = false;
+        //_skill3CoolTimeCheck = false;
+        //_attackCoolTimeCheck = false;
         newColor = new Color(0, 1f, 0);
         newColor.a = 0.5f;
         originalColor = _skill3CoolTimeImage.color;
@@ -86,17 +86,17 @@ public class Ui_SceneAttackButton : MonoBehaviour
 
     public void Skill1Button(bool isSkill1)
     {
-        if (isSkill1 == true)
-        {
-            _skill1CoolTimeCheck = true;
-            StartCoroutine(Skill1CoolTime(10f));
-        }
-        if (_skill1CoolTimeCheck == false)
-        {
+        //if (isSkill1 == true)
+        //{
+            //_skill1CoolTimeCheck = true;
+            //StartCoroutine(Skill1CoolTime(10f));
+        //}
+        //if (_skill1CoolTimeCheck == false)
+        //{
             GameManager.Ui.Skill1Button(_skill1CoolTimeImage.sprite.name);
-        }
+        //}
     }
-    IEnumerator Skill1CoolTime(float coolTime)
+/*    IEnumerator Skill1CoolTime(float coolTime)
     {
         while (coolTime > 0)
         {
@@ -105,7 +105,7 @@ public class Ui_SceneAttackButton : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         _skill1CoolTimeCheck = false;
-    }
+    }*/
 
     public void Skill2Button()
     {
@@ -114,21 +114,21 @@ public class Ui_SceneAttackButton : MonoBehaviour
 
     public void Skill3Button(int isSkill3)
     {
-        if (isSkill3 == 1)
-        {
-            StartCoroutine(Skill3Duration(15f));
-        }
-        if (isSkill3 == 2)
-        {
-            _skill3CoolTimeCheck = true;
-            StartCoroutine(Skill3CoolTime(15f));
-        }
-        if (_skill3CoolTimeCheck == false)
-        {
+        //if (isSkill3 == 1)
+        //{
+        //    StartCoroutine(Skill3Duration(15f));
+        //}
+        //if (isSkill3 == 2)
+        //{
+        //    _skill3CoolTimeCheck = true;
+        //    StartCoroutine(Skill3CoolTime(15f));
+        //}
+        //if (_skill3CoolTimeCheck == false)
+        //{
             GameManager.Ui.Skill3Button(_skill3CoolTimeImage.sprite.name);
-        }
+        //}
     }
-    IEnumerator Skill3CoolTime(float coolTime)
+/*    IEnumerator Skill3CoolTime(float coolTime)
     {
         while (coolTime > 0)
         {
@@ -137,8 +137,8 @@ public class Ui_SceneAttackButton : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         _skill3CoolTimeCheck = false;
-    }
-    IEnumerator Skill3Duration(float Duration)
+    }*/
+/*    IEnumerator Skill3Duration(float Duration)
     {
         while (Duration > 0)
         {
@@ -149,18 +149,18 @@ public class Ui_SceneAttackButton : MonoBehaviour
         }
         _skill1CoolTimeCheck = false;
         _skill3CoolTimeImage.color = originalColor;
-    }
+    }*/
     public void RollingButton(bool isRoll)
     {
-        if (isRoll == true)
-        {
-            _rollCoolTimeCheck = true;
-            StartCoroutine(RollCoolTime(5f));
-        }
-        if (_rollCoolTimeCheck == false)
-        {
+        //if (isRoll == true)
+        //{
+            //_rollCoolTimeCheck = true;
+            //StartCoroutine(RollCoolTime(5f));
+        //}
+        //if (_rollCoolTimeCheck == false)
+        //{
             GameManager.Ui.RollingButton();
-        }
+        //}
     }
     IEnumerator RollCoolTime(float coolTime)
     {

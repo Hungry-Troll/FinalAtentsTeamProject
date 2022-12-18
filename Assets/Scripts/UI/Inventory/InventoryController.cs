@@ -51,6 +51,7 @@ public class InventoryController : MonoBehaviour, IDragHandler, IBeginDragHandle
     void Update()
     {
         Text_Count.text = _item.Count.ToString() + "/20";
+        _level_Count.text = GameManager.Obj._playerStat.Lv.ToString();
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

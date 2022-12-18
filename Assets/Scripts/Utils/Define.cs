@@ -69,6 +69,8 @@ public class Define
         AutoMove,
         Skill,
         Skill2,
+        Skill3,
+        Rolling,
         Attack,
         Dead,
         None,
