@@ -10,6 +10,8 @@ public class Ui_NpcController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        GameManager.Quest._ui_NpcController = GetComponent<Ui_NpcController>();
+
         // 게임오브젝트
         //Transform goTr = Util.FindChild("WesleyObjects", transform);
         //GameObject whesleyObject = goTr.gameObject;
@@ -83,6 +85,8 @@ public class Ui_NpcController : MonoBehaviour
                     // 방향 화살표 생성(마을 맵 포탈로 향하는 화살표)
                     GameManager.Ui._directionArrowController.OnArrow("ToVenice");
                     GameManager.Ui._directionArrowController.OnArrow("TutorialToVillage");
+                    // 베니스 하트 이펙트 켜기
+                    GameManager.Quest._veniceController.QuestHeartOn();
                 }
                 break;
             case 4 :

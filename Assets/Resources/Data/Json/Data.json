@@ -262,7 +262,7 @@
       "_Name": "",
       "_Job": "Superhuman",
       "_Exp": 0,
-      "_Lv_Exp": 500,
+      "_Lv_Exp": 400,
       "_Gold": 0
     },
     {
@@ -310,7 +310,7 @@
       "_Name": "",
       "_Job": "Cyborg",
       "_Exp": 0,
-      "_Lv_Exp": 500,
+      "_Lv_Exp": 400,
       "_Gold": 0
     },
     {
@@ -358,7 +358,7 @@
       "_Name": "",
       "_Job": "Scientist",
       "_Exp": 0,
-      "_Lv_Exp": 500,
+      "_Lv_Exp": 400,
       "_Gold": 0
     },
     {

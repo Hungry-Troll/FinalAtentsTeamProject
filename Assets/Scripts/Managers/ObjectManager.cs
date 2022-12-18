@@ -49,6 +49,8 @@ public class ObjectManager
     {
         _go = new GameObject();
         _go.name = "@ObjPool_Root";
+        // 시작 시 오브젝트풀 리스트 초기화
+        _objPool.Clear();
     }
 
     // 몬스터 정보에서 타겟 몬스터를 찾는 함수 길찾기 x

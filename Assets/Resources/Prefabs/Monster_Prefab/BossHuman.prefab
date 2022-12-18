@@ -424,6 +424,7 @@ MonoBehaviour:
   _playerController: {fileID: 0}
   _isQuest: 0
   _mobBoxCollider: {fileID: 0}
+  _material: {fileID: 0}
   _damage: 0
   _time: 0
   _skillPersent: 0

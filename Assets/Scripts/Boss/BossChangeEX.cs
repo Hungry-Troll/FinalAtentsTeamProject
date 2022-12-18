@@ -11,12 +11,15 @@ public class BossChangeEX : MonsterControllerEX
     private ParticleSystem _smokeEffect;
 
     // Start is called before the first frame update
-    public override void Start()
+    public override void Awake()
     {
         _smokeEffect = Util.FindChild("Smoke", transform).GetComponent<ParticleSystem>();
+        smokeOff();
+    }
+    public override void Start()
+    {
         _animator = GetComponent<Animator>();
         dead();
-        smokeOff();
         //Invoke("spwan", 13);
         StartCoroutine(SpawnBoss());
         transform.LookAt(GameManager.Obj._playerController.gameObject.transform);
@@ -33,11 +36,15 @@ public class BossChangeEX : MonsterControllerEX
         while (true)
         {
             time += Time.deltaTime;
-            if(time > 19.5f)
+            if(time > 17.0f)
             {
                 spwan();
+            }
+            if(time > 19.5f)
+            {
                 smokeOff();
-                StopCoroutine(SpawnBoss());
+                //StopCoroutine(SpawnBoss());
+                yield break;
             }
             yield return null;
         }
@@ -61,9 +68,9 @@ public class BossChangeEX : MonsterControllerEX
         //EffectManager.Instance.MonsterEffect(this.transform.position, Vector3.zero, null, EffectType.Smoke);
     }
 
+
     //
     // ÀÌÇÏ ºó ²®´ë±â¿ë
-    public override void Awake() { }
     public override void Update() { }
     public override void UpdateState() { }
     public override void UpdateIdle() { }

@@ -2,7 +2,7 @@
     "_Player": {
         "_Name": "1234",
         "_Hp": 150,
-        "_Atk": 20,
+        "_Atk": 30,
         "_Def": 10,
         "_Lv": 2,
         "_Max_Hp": 150,
@@ -16,14 +16,14 @@
     "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
     "_Item_List": [
-        "sword2",
-        "armour1"
+        "potion1",
+        "sword1"
     ],
     "_Item_Count_List": [
-        1,
+        10,
         1
     ],
-    "_Weapon": "sword1",
+    "_Weapon": "sword2",
     "_Armour": "",
     "_Gold": 300,
     "_SkillInfo": [],

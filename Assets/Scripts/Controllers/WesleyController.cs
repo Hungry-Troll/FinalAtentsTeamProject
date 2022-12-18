@@ -20,6 +20,8 @@ public class WesleyController : MonoBehaviour
 
     ParticleSystem _heart;
 
+    TextMesh _tmesh;
+
     void Awake()
     {
         WesleyAnimator = WesleyPrefab.GetComponent<Animator>();
@@ -31,6 +33,8 @@ public class WesleyController : MonoBehaviour
         _heart = Util.FindChild("QuestHeart", transform).GetComponent<ParticleSystem>();
         // 퀘스트 하트 끔
         QuestHeartOff();
+        // 이름연결 연결
+        _tmesh = Util.FindChild("Name", transform).GetComponent<TextMesh>();
     }
 
     private void Start()
@@ -85,6 +89,8 @@ public class WesleyController : MonoBehaviour
                 }
             }
         }
+        // 카메라를 바라보는 텍스트;
+        NameLookCam();
     }
 
     public void EndToTalkWithWesley()
@@ -180,5 +186,10 @@ public class WesleyController : MonoBehaviour
     public void QuestHeartOff()
     {
         _heart.Stop();
+    }
+
+    public void NameLookCam()
+    {
+        _tmesh.transform.rotation = Camera.main.transform.rotation;
     }
 }

@@ -23,7 +23,8 @@ public class Util
     // 이니시에잇 할때마다 이름 바꾸기 귀찮아서 만든 함수
     public static GameObject Instantiate(GameObject go)
     {
-        // 오브젝트매니저 _objPool 에서 동일한 아이템을 가지고 있으면
+        // 오브젝트매니저
+        // 에서 동일한 아이템을 가지고 있으면
         for (int i = 0; i < GameManager.Obj._objPool.Count; i++)
         {
             // 널이면 스킵

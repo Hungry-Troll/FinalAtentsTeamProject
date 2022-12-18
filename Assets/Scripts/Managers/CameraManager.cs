@@ -137,6 +137,10 @@ public class CameraManager
     public void VeniceCamOn()
     {
         _vam3.SetActive(true);
+        if(GameManager.Scene._sceneNameEnum == Define.SceneName.DunGeon)
+        {
+            _vam3.transform.position = new Vector3((float)60.70, (float)11.51, (float)126.25);
+        }
     }
 
     public void VeniceCamOff()

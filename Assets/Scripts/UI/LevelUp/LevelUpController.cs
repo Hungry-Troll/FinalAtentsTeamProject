@@ -43,6 +43,10 @@ public class LevelUpController : MonoBehaviour
     // 경험치 체크 함수
     public void LevelUpCheck()
     {
+        // 4레벨 이상 안오름
+        if (GameManager.Obj._playerStat.Lv >= 4)
+            return;
+
         if(GameManager.Obj._playerStat.Exp >= GameManager.Obj._playerStat.Lv_Exp)
         {
             // 레벨업
@@ -63,6 +67,7 @@ public class LevelUpController : MonoBehaviour
 
         // 레벨에 맞는 데이터 로드
         GameManager.Parse.FindPlayerObjData(++Lv, job);
+
         // 이펙트 및 UI 생성
         _coLevel = StartCoroutine(LevelUpEffect());
         // 레벨업 사운드 재생

@@ -21,11 +21,22 @@ public class VeniceController : MonoBehaviour
     char[] ArrOfStrVeniceDialog0;
     char[] ArrOfStrVeniceDialog1;
 
+    TextMesh _tmesh;
+    ParticleSystem _heart;
 
     void Awake()
     {
         VeniceAnimator = VenicePrefab.GetComponent<Animator>();
         capsuleCollider = gameObject.GetComponentInChildren<CapsuleCollider>();
+
+        GameManager.Quest._veniceController = GetComponent<VeniceController>();
+
+        // 이름연결
+        _tmesh = Util.FindChild("Name", transform).GetComponent<TextMesh>();
+        // 퀘스트 하트 연결
+        _heart = Util.FindChild("QuestHeart", transform).GetComponent<ParticleSystem>();
+        // 퀘스트 하트 끔
+        QuestHeartOff();
     }
 
     private void Start()
@@ -68,6 +79,8 @@ public class VeniceController : MonoBehaviour
                 };
             }
         }
+
+        NameLookCam();
     }
 
     IEnumerator VeniceDialog0Coroutine(char[] _Arr)
@@ -118,6 +131,10 @@ public class VeniceController : MonoBehaviour
     public void CloseShop()
     {
         Shop.SetActive(false);
+        // 하트 끔
+        QuestHeartOff();
+        // 구매 취소 버튼 상점 꺼지면 같이 끔
+        GameManager.Ui._buyCancel.SetActive(false);
         // 상점 골드 창 끔
         GameManager.Ui.goldDisplayShopOnOff(false);
         GameManager.Ui.InventoryClose();
@@ -132,5 +149,18 @@ public class VeniceController : MonoBehaviour
         GameManager.Ui.UISetActiveTrue();
 
         CloseShop();
+    }
+
+    public void NameLookCam()
+    {
+        _tmesh.transform.rotation = Camera.main.transform.rotation;
+    }
+    public void QuestHeartOn()
+    {
+        _heart.Play();
+    }
+    public void QuestHeartOff()
+    {
+        _heart.Stop();
     }
 }

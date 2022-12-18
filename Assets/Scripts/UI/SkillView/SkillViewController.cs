@@ -181,14 +181,13 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         _skillUpButton1.interactable = true;
         _skillUpButton2.interactable = true;
 
+        // 스킬레벨이 부족할경우 스킬 오픈x
+        _skillUpButton3.interactable = false;
         // 스킬레벨 총합이 3이상일때만 3번 슬롯 스킬 오픈
-        if(_skillLevel.skill1 + _skillLevel.skill2 + _skillLevel.skill3 >= 2)
+        if (_skillLevel.skill1 + _skillLevel.skill2 + _skillLevel.skill3 >= 2)
         {
             _skillUpButton3.interactable = true;
         }
-        // 스킬레벨이 부족할경우 스킬 오픈x
-        _skillUpButton3.interactable = false;
-
         // 스킬포인트 증가
         _skillLevel.skillPoint++;
         _skillPointText.text = _skillLevel.skillPoint.ToString();
@@ -208,13 +207,13 @@ public class SkillViewController : MonoBehaviour, IPointerDownHandler, IDragHand
         _skillUpButton1.interactable = true;
         _skillUpButton2.interactable = true;
 
+        // 스킬레벨이 부족할경우 스킬 오픈x
+        _skillUpButton3.interactable = false;
         // 스킬레벨 총합이 3이상일때만 3번 슬롯 스킬 오픈
         if (_skillLevel.skill1 + _skillLevel.skill2 + _skillLevel.skill3 >= 2)
         {
             _skillUpButton3.interactable = true;
         }
-        // 스킬레벨이 부족할경우 스킬 오픈x
-        _skillUpButton3.interactable = false;
 
         // 스킬포인트 증가하지 않음
         //_skillLevel.skillPoint++;

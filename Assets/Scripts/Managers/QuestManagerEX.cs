@@ -73,6 +73,9 @@ public class QuestManagerEX
     // 퀘스트 진행 NPC인 웨슬리컨트롤러도 퀘스트 매니저에서 가지고 있음
     [HideInInspector]
     public WesleyController _wesleyController;
+    [HideInInspector]
+    public VeniceController _veniceController;
+
     // 퀘스트 진행 NPC도 가지고 있음
     [HideInInspector]
     public Ui_NpcController _ui_NpcController;
@@ -357,7 +360,6 @@ public class QuestManagerEX
         // 플레이어 상태를 대기로
         GameManager.Obj._playerController._creatureState = Define.CreatureState.Idle;
     }
-
     //위 내용 다 구현 후 정리
     /*
         //코루틴을 통하여 퀘스트 미완료 경교표시 시간 설정

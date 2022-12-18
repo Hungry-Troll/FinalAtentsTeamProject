@@ -141,6 +141,7 @@ public class BossMonsterControllerEX : MonsterControllerEX
     // 대기 상태일때도  스스로 판단해서 공격이나 대기를 할 수 있도록...
     public override void UpdateIdle()
     {
+
         if (_PosToPos <= _distance)
         {
             Property_state = CreatureState.Move;
@@ -180,7 +181,7 @@ public class BossMonsterControllerEX : MonsterControllerEX
         else if (_PosToPos <= _attack)
         {
 
-            Property_state = CreatureState.Attack;
+            UpdateAttack();
 
         }
         // 대기
@@ -195,6 +196,7 @@ public class BossMonsterControllerEX : MonsterControllerEX
     // 무빙 상태에서만 스킬 여부를 판단하면 대기 일때와 공격상태일때 다시 스킬을 사용할지 판단을 할 수 가 없음
     public override void UpdateAttack()
     {
+
         _skillPersent = Random.Range(0, 99);
         if (_skillPersent > 70)
         {
@@ -224,6 +226,8 @@ public class BossMonsterControllerEX : MonsterControllerEX
     {
         if (_coBossSkill1 == null)
         {
+            // 강제 애니메이션 재생
+            _ani.SetInteger("state", 3);
             // 이펙트 온
             Skill1EffectOn();
             // 소환
@@ -245,8 +249,7 @@ public class BossMonsterControllerEX : MonsterControllerEX
             // 이펙트 온
             //Skill2EffectOn(); 이펙트는 애니메이션 클립에서 관리
 
-            _coBossSkill1 = StartCoroutine(coBossSkill1(0.8f));
-
+            _coBossSkill1 = StartCoroutine(coBossSkill2(0.8f));
         }
     }
 
@@ -264,12 +267,21 @@ public class BossMonsterControllerEX : MonsterControllerEX
     {
         yield return new WaitForSeconds(delay);
 
-        Property_state = CreatureState.Move;
+        Property_state = CreatureState.Idle;
         _coBossSkill1 = null;
-        _coBossSkill2 = null;
 
         // 스킬 이펙트 오프
         Skill1EffectOff();
+        // 코루틴 정지
+        yield break;
+    }
+
+    public IEnumerator coBossSkill2(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Property_state = CreatureState.Idle;
+        _coBossSkill2 = null;
         // 코루틴 정지
         yield break;
     }

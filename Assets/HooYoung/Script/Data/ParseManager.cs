@@ -220,8 +220,14 @@ public class ParseManager
                     GameManager.Obj._playerStat.Job = one.Job;
                     GameManager.Obj._playerStat.Exp = one.Exp;
                     GameManager.Obj._playerStat.Lv_Exp = one.Lv_Exp;
-                    GameManager.Obj._playerStat.Gold = one.Gold;
-
+                    if (GameManager.Obj._playerStat.Gold != 0)
+                    {
+                        GameManager.Obj._playerStat.Gold = GameManager.Obj._playerStat.Gold;
+                    }
+                    else
+                    {
+                        GameManager.Obj._playerStat.Gold = one.Gold;
+                    }
                     // 다 넣었으면 탈출하기
                     break;
                 }

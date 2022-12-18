@@ -67,7 +67,7 @@ public class MonsterControllerEX : MonoBehaviour
     public virtual void Awake()
     {
         _distance = 15.0f;
-        _rotateSpeed = 90f;
+        _rotateSpeed = 45f;
         _attack = 2.0f;
         _mobNum = 0;
     }

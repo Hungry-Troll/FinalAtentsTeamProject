@@ -1201,6 +1201,11 @@ public class UiManager
         _miniMap.SetActive(true);
         //_itemStatView.SetActive(false);
         // 스킬 포인트가 0보다 클 경우에만 포트레이트 이펙트 온
+        // 보스 hp바가 있으면 켜지게
+        if (_bossHpbar != null)
+        {
+            _bossHpbar.SetActive(true);
+        }
         _questButton.SetActive(true);
         if (_skillViewController._skillLevel.skillPoint > 0)
         {

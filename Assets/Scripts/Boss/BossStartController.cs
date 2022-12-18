@@ -35,6 +35,7 @@ public class BossStartController : MonoBehaviour
         
         // 3. 퀘스트 시작
         GameManager.Quest.QuestProgressValueAdd();
+        GameManager.Ui.UISetActiveFalse();
         // 4. 3초 뒤에 카메라 돌아감
         StartCoroutine(BossCreator());
     }
@@ -51,7 +52,7 @@ public class BossStartController : MonoBehaviour
             GameManager.Create.CreateHumanBoss(_startPos, "BossHuman");
             _bossSwan = true;
             //18초동안 보스가 물약먹고 뻗고 변신함..
-            yield return new WaitForSeconds(18f);
+            yield return new WaitForSeconds(17f);
             GameManager.Cam.BossCamOff2();
             GameManager.Cam.BossCamOn3();
             yield return StartCoroutine(TurnOffCam());
@@ -63,7 +64,7 @@ public class BossStartController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         //마지막 캠 끄기
         GameManager.Cam.BossCamOff3();
-
+        GameManager.Ui.UISetActiveTrue();
     }
 }
 
