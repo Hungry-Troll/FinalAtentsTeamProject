@@ -479,7 +479,7 @@ public class DataManager //: MonoBehaviour 게임매니저에서 관리하도록 변경
                     // 스킬뷰(스킬 목록 창)
                     case -1:
                         // 스킬뷰의 몇 번째 슬롯인지 판별
-                        int skillViewSlotNumber = skillIdNumber - ((int)jobCode);
+                        int skillViewSlotNumber = skillIdNumber - ((int)jobCode) * 3;
                         switch(skillViewSlotNumber)
                         {
                             // 첫 번째 슬롯
