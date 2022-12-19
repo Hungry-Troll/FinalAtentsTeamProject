@@ -33,12 +33,16 @@ public class CyborgController : PlayerController
         //폭탄 위치
         _bomb = Util.FindChild("bomb", transform);
         _bombPosition = _bomb.localPosition;
+        _bomb.gameObject.SetActive(false);
         //사이보그 Skill3 파티클 연결
         _cyborgSkill3 = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Particle_Prefab/Skill3Effect"));
         _skill3Explosion1Effect = FindEffect("Explosion1", _cyborgSkill3.transform);
         _skill3Explosion2Effect = FindEffect("Explosion2", _cyborgSkill3.transform);
         _skill3Explosion3Effect = FindEffect("Explosion3", _cyborgSkill3.transform);
         _skill3Explosion4Effect = FindEffect("Explosion4", _cyborgSkill3.transform);
+        _coSkill1 = null;
+        _coSkill2 = null;
+        _coSkill3 = null;
     }
 
     protected override void UpdateAnimation()
@@ -143,6 +147,9 @@ public class CyborgController : PlayerController
 
     public override void Skill2()
     {
+        if (_coSkill2 != null)
+            return;
+
         _skillGround.SetActive(true);
         if (checkPoint == new Vector3(0, 0, 0))
         {
@@ -156,22 +163,22 @@ public class CyborgController : PlayerController
                 _skillGround.SetActive(false);
                 Vector3 tempDir = checkPoint - transform.position;
                 transform.rotation = Quaternion.LookRotation(tempDir.normalized);
-                // 로테이션 x값 튀는 것 보정
-                //transform.rotation = Quaternion.Euler(0, transform.rotation.y, transform.rotation.z);
                 _anim.SetInteger("playerStat", 6);
-                if (_bomb.gameObject.activeSelf == true)
-                {
-                    _bomb.position = Vector3.Slerp(_bomb.position, checkPoint, 0.05f);
-                    bombDistance = Vector3.Distance(_bomb.position, checkPoint);
-                }
-                else
-                {
-                    return;
-                }
+                _bomb.gameObject.SetActive(true);
+                _bomb.position = Vector3.Slerp(_bomb.position, checkPoint, 0.1f);
+                bombDistance = Vector3.Distance(_bomb.position, checkPoint);
+                /*                if (_bomb.gameObject.activeSelf == true)
+                                {
+                                    _bomb.position = Vector3.Slerp(_bomb.position, checkPoint, 0.1f);
+                                    bombDistance = Vector3.Distance(_bomb.position, checkPoint);
+                                }
+                                else
+                                {
+                                    return;
+                                }*/
                 if (bombDistance < 0.5f)
                 {
-                    StartCoroutine(CyborgCoSkill2());
-                    //_sceneAttackButton = SceneAttackButton.None;
+                    _coSkill2 = StartCoroutine(CyborgCoSkill2());
                     _creatureState = CreatureState.Idle;
                 }
             }
@@ -193,6 +200,8 @@ public class CyborgController : PlayerController
         _cyborgSkill2.gameObject.SetActive(true);
         _skill2FireBigEffect.Stop();
         _skill2FireExplosionEffect.Play();
+        // 사운드 추가
+        GameManager.Sound.SFXPlay("CyborgSkill1");
         yield return new WaitForSeconds(0.5f);
         _skill2FireExplosionEffect.Stop();
         _skill2FireBigEffect.Play();
@@ -200,6 +209,9 @@ public class CyborgController : PlayerController
         _skill2FireBigEffect.Stop();
         _cyborgSkill2.gameObject.SetActive(false);
         _bomb.localPosition = _bombPosition;
+        _bomb.gameObject.SetActive(false);
+        _coSkill2 = null;
+        _creatureState = CreatureState.Idle;
     }
 
     //수류탄 던지는 애니메이터 이벤트
@@ -207,15 +219,16 @@ public class CyborgController : PlayerController
     //_bomb.gameObject에 콜라이더와 리지드 바디를 넣고 충돌 계산 처리
     public void CybogSkill2ThrowBombEvent()
     {
-/*        _bomb.gameObject.SetActive(true);
-        _skill2BoxCollider = null;
+        //_bomb.gameObject.SetActive(true);
+/*        _skill2BoxCollider = null;
         _skill2BoxCollider = _cyborgSkill2.GetComponent<BoxCollider>();
         Skill1Event2();*/
     }
 
     public override void Skill3()
     {
-
+        if (_coSkill3 != null)
+            return;
         _skillGround.SetActive(true);
         if (checkPoint == new Vector3(0, 0, 0))
         {
@@ -230,19 +243,15 @@ public class CyborgController : PlayerController
                 Vector3 tempDir = checkPoint - transform.position;
                 transform.rotation = Quaternion.LookRotation(tempDir.normalized);
                 _anim.SetInteger("playerStat", 7);
-                StartCoroutine(CyborgCoSkill3());
-                _sceneAttackButton = SceneAttackButton.None;
-                _creatureState = CreatureState.Idle;
+                _coSkill3 = StartCoroutine(CyborgCoSkill3());
             }
             else
             {
                 _skillGround.SetActive(false);
                 checkPoint = new Vector3(0, 0, 0);
-                _sceneAttackButton = SceneAttackButton.None;
                 _creatureState = CreatureState.Idle;
             }
         }
-
     }
 
     IEnumerator CyborgCoSkill3()
@@ -252,12 +261,45 @@ public class CyborgController : PlayerController
         _cyborgSkill3.transform.position = checkPoint;
         checkPoint = new Vector3(0, 0, 0);
         _skill3Explosion1Effect.Play();
+        GameManager.Sound.SFXPlay("CyborgSkill3_1");
         _skill3Explosion2Effect.Play();
+        GameManager.Sound.SFXPlay("CyborgSkill3_2");
         _skill3Explosion3Effect.Play();
+        GameManager.Sound.SFXPlay("CyborgSkill3_3");
         _skill3Explosion4Effect.Play();
+        GameManager.Sound.SFXPlay("CyborgSkill3_4");
+        _skill2BoxCollider = _skill3Explosion4Effect.GetComponent<BoxCollider>();        skill3Event();
         yield return new WaitForSeconds(1f);
-
+        _creatureState = CreatureState.Idle;
         _cyborgSkill3.gameObject.SetActive(false);
+        _skillGround.SetActive(false);
+        _coSkill3 = null;
+    }
+
+    public void skill3Event()
+    {
+        effectChange = 0;
+        // 공격 대상을 찾음
+        List<MonsterControllerEX> targetList = GameManager.Obj.FindMobListTargets();
+
+        // 광역 스킬에 맞을 대상이 없으면 리턴
+        if (targetList == null)
+        {
+            return;
+        }
+        else if (targetList.Count < 0)
+        {
+            return;
+        }
+        // 대상이 있으면
+        else
+        {
+            // 대미지 계산
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                targetList[i].OnDamaged(_playerStat.Atk, 1);
+            }
+        }
     }
 
     public override void AttackEvent()

@@ -26,18 +26,20 @@ public class BossStartController : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         mine.enabled = false;
+
         // 플레이어 콜라이더와 한번 충돌했다면 끄기 => 안끄면 움직일때마다 계속 호출
         // 1. 조이스틱 멈춤
         GameManager.Quest.QuestJoystickStop();
-        
+
         // 2. 보스 시네머신1 작동
         GameManager.Cam.BossCamOn1();
-        
+
         // 3. 퀘스트 시작
         GameManager.Quest.QuestProgressValueAdd();
         GameManager.Ui.UISetActiveFalse();
         // 4. 3초 뒤에 카메라 돌아감
         StartCoroutine(BossCreator());
+
     }
 
     IEnumerator BossCreator()

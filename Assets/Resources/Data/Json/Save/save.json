@@ -1,18 +1,18 @@
 {
     "_Player": {
         "_Name": "1234",
-        "_Hp": 150,
+        "_Hp": 120,
         "_Atk": 30,
-        "_Def": 15,
+        "_Def": 10,
         "_Lv": 2,
-        "_Max_Hp": 150,
-        "_Job": "Superhuman",
+        "_Max_Hp": 120,
+        "_Job": "Cyborg",
         "_Exp": 0,
         "_Lv_Exp": 300,
         "_Gold": 300
     },
     "_Name": "1234",
-    "_Job": "Superhuman",
+    "_Job": "Cyborg",
     "_Pet": "Brachiosaurus",
     "_Scene": "Village02",
     "_Item_List": [
@@ -21,46 +21,28 @@
     "_Item_Count_List": [
         1
     ],
-    "_Weapon": "sword2",
-    "_Armour": "armour1",
+    "_Weapon": "gun2",
+    "_Armour": "armour2",
     "_Gold": 300,
     "_SkillInfo": [
         {
-            "_Id": "Skill1",
-            "_SkillName": "집중공격",
-            "_SkillContent": "순간적으로 10번 찌르는 공격을 합니다.",
-            "_SkillEffect": "1번 공격 20%,(총 공격력 200%)",
+            "_Id": "Skill5",
+            "_SkillName": "유탄발사",
+            "_SkillContent": "유탄으로 적을 공격한다.",
+            "_SkillEffect": "공격력 200%",
             "_SkillAtk": 200,
             "_SkillSlotNumber": -1,
             "_SkillLevel": 1
         },
         {
-            "_Id": "Skill1",
-            "_SkillName": "집중공격",
-            "_SkillContent": "순간적으로 10번 찌르는 공격을 합니다.",
-            "_SkillEffect": "1번 공격 20%,(총 공격력 200%)",
+            "_Id": "Skill5",
+            "_SkillName": "유탄발사",
+            "_SkillContent": "유탄으로 적을 공격한다.",
+            "_SkillEffect": "공격력 200%",
             "_SkillAtk": 200,
             "_SkillSlotNumber": 1,
             "_SkillLevel": 1
-        },
-        {
-            "_Id": "Skill2",
-            "_SkillName": "소용돌이",
-            "_SkillContent": "회전하면서 상대를 공격합니다.",
-            "_SkillEffect": "3초 지속 (초당 공격력 100%) (총 300%)",
-            "_SkillAtk": 300,
-            "_SkillSlotNumber": -1,
-            "_SkillLevel": 1
-        },
-        {
-            "_Id": "Skill2",
-            "_SkillName": "소용돌이",
-            "_SkillContent": "회전하면서 상대를 공격합니다.",
-            "_SkillEffect": "3초 지속 (초당 공격력 100%) (총 300%)",
-            "_SkillAtk": 300,
-            "_SkillSlotNumber": 2,
-            "_SkillLevel": 1
         }
     ],
-    "_SkillPoint": 0
+    "_SkillPoint": 1
 }

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float _autoMoveSpeed;
 
     //포션이 레이캐스트 도착지점 계산값
-    float _portionDistance;
+    public float _portionDistance;
 
     public CreatureState _creatureState;
     public SceneAttackButton _sceneAttackButton;
@@ -433,7 +433,7 @@ public class PlayerController : MonoBehaviour
         _scientistSkill3.gameObject.SetActive(false);
         _isSkill3 = false;
     }
-    IEnumerator ScientistCoSkill1()
+/*    IEnumerator ScientistCoSkill1()
     {
         _poisonPortion.gameObject.SetActive(false);
         _scientistSkill1.transform.position = checkPoint;
@@ -455,11 +455,11 @@ public class PlayerController : MonoBehaviour
         _scientistSkill1.gameObject.SetActive(false);
         _poisonPortion.localPosition = _portionPosition;
         _isSkill1 = false;
-    }
-    public void ScientistSkill1ThrowPortionEvent()
+    }*/
+/*    public void ScientistSkill1ThrowPortionEvent()
     {
         _poisonPortion.gameObject.SetActive(true);
-    }
+    }*/
 
 /*    protected IEnumerator CoSkill1()
     {
@@ -603,7 +603,7 @@ public class PlayerController : MonoBehaviour
             }*/
         }
     }
-    IEnumerator ScientistCoSkill2()
+/*    IEnumerator ScientistCoSkill2()
     {
         _scientistSkill2.transform.position = transform.position;
         Vector3 tmp = _scientistSkill2.transform.position;
@@ -626,11 +626,11 @@ public class PlayerController : MonoBehaviour
         _scientistSkill2.gameObject.SetActive(false);
         checkPoint = new Vector3(0, 0, 0);
         _isSkill2 = false;
-    }
-    public void ScientistSkill2Event()
+    }*/
+/*    public void ScientistSkill2Event()
     {
         _scientistSkill2.gameObject.SetActive(true);
-    }
+    }*/
 /*    IEnumerator CyborgCoSkill2()
     {
         _bomb.gameObject.SetActive(false);

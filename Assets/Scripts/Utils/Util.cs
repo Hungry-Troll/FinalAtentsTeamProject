@@ -42,6 +42,7 @@ public class Util
         //만든 객체를 오브젝트 매니저에서 관리
         GameObj.transform.SetParent(GameManager.Obj._go.transform);
         GameManager.Obj._objPool.Add(GameObj);
+        GameObj.transform.position = Vector3.zero;
         return GameObj;
     }
 
