@@ -349,6 +349,7 @@ public class PetController : MonoBehaviour
     public void PetSkill1() //Bra : 데미지가 2배로 들어감 (완)
     {
         GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk * 2, 1);
+        GameManager.Sound.SFXPlay("PetSkill1");
         transform.LookAt(_target);
     }
 
@@ -358,12 +359,14 @@ public class PetController : MonoBehaviour
         PlayerController _playerController = GameManager.Obj._playerController;
         //MonsterControllerEX _monsterController = GameManager.Obj._targetMonsterController;
         _playerController.OnDamaged(0);
+        GameManager.Sound.SFXPlay("PetSkill2");
 
     }
     public void PetSkill3() //Pachy : 공격속도 2배 (스킬 애니메이션이 2번 빠르게 작동함) (완)
     {
         GameManager.Obj._targetMonsterController.OnDamaged(_petStat.Atk/2, 1);
         transform.LookAt(_target);
+        GameManager.Sound.SFXPlay("PetSkill3");
     }
 
 

@@ -64,7 +64,7 @@ public class ScientistController : PlayerController
                 _anim.SetInteger("playerStat", 9);
                 break;
             case CreatureState.Skill:
-                _anim.SetInteger("playerStat", 5);
+                //_anim.SetInteger("playerStat", 5);
                 break;
             case CreatureState.Skill2:
                 // 누를때 애니메이션 재생하는것으로
@@ -96,7 +96,7 @@ public class ScientistController : PlayerController
                 _anim.SetInteger("playerStat", 5);
                 if (_poisonPortion.gameObject.activeSelf == true)
                 {
-                    _poisonPortion.position = Vector3.Slerp(_poisonPortion.position, checkPoint, 0.05f);
+                    _poisonPortion.position = Vector3.Slerp(_poisonPortion.position, checkPoint, 0.1f);
                     _portionDistance = Vector3.Distance(_poisonPortion.position, checkPoint);
                 }
                 else
@@ -124,6 +124,9 @@ public class ScientistController : PlayerController
     {
         _poisonPortion.gameObject.SetActive(false);
         _scientistSkill1.transform.position = checkPoint;
+        Vector3 tmp = _scientistSkill1.transform.position;
+        tmp.y += 1f;
+        _scientistSkill1.transform.position = tmp;
         checkPoint = new Vector3(0, 0, 0);
         _scientistSkill1.gameObject.SetActive(true);
         _poison.Play();
@@ -134,11 +137,14 @@ public class ScientistController : PlayerController
                                  _scientistSkill2.transform.position) < 5f)
             {
                 _explosion.Play();
+                _explosion.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1.0f);
                 break;
             }
             yield return new WaitForSeconds(0.5f);
         }
         _poison.Stop();
+        _explosion.gameObject.SetActive(false);
         _scientistSkill1.gameObject.SetActive(false);
         _poisonPortion.localPosition = _portionPosition;
         _isSkill1 = false;
@@ -146,6 +152,7 @@ public class ScientistController : PlayerController
     // 대미지 계산은 트리거 충돌 처리로 함
     public void ScientistSkill1ThrowPortionEvent()
     {
+        GameManager.Sound.SFXPlay("ScientistSkill1");
         _poisonPortion.gameObject.SetActive(true);
     }
 
@@ -190,6 +197,7 @@ public class ScientistController : PlayerController
 
     IEnumerator ScientistCoSkill2()
     {
+        GameManager.Sound.SFXPlay("ScientistSkill2");
         _scientistSkill2.transform.position = transform.position;
         Vector3 tmp = _scientistSkill2.transform.position;
         tmp.y += 1f;
@@ -216,6 +224,86 @@ public class ScientistController : PlayerController
     public void ScientistSkill2Event()
     {
         _scientistSkill2.gameObject.SetActive(true);
+    }
+
+    public override void Skill3()
+    {
+        if (_coSkill3 != null)
+            return;
+
+        if (GameManager.Obj._targetMonster == null)
+        {
+            _sceneAttackButton = SceneAttackButton.None;
+            _creatureState = CreatureState.Idle;
+            return;
+        }
+        float distance = Vector3.Distance(GameManager.Obj._targetMonster.transform.position, transform.position);
+        if (distance < 5f)
+        {
+            // 회전
+            Vector3 tempDir = GameManager.Obj._targetMonster.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(tempDir.normalized);
+            _anim.SetInteger("playerStat", 7);
+            if (_scientistSkill3.gameObject.activeSelf == true)
+            {
+                _coSkill3 = StartCoroutine(ScientistCoSkil3());
+                _creatureState = CreatureState.Idle;
+            }
+
+        }
+        else
+        {
+            _creatureState = CreatureState.Idle;
+        }
+    }
+
+    IEnumerator ScientistCoSkil3()
+    {
+        _powerBeam.Play();
+        float skill3Check = 0;
+        float skill3DamageCheck = 0;
+        while (true)
+        {
+            _scientistSkill3.transform.position = GameManager.Obj._targetMonster.transform.position;
+            Vector3 tmp = _scientistSkill3.transform.position;
+            tmp.y += 10f;
+            _scientistSkill3.transform.position = tmp;
+            yield return null;
+            skill3Check += Time.deltaTime;
+            skill3DamageCheck += Time.deltaTime;
+            if (GameManager.Obj._targetMonster == null)
+            {
+                break;
+            }
+            // 총 9번 대미지를 주는 방식
+            if (skill3DamageCheck > 0.1f)
+            {
+                Skill3Event();
+                skill3DamageCheck -= skill3DamageCheck;
+            }
+            if (skill3Check > 10f)
+            {
+                skill3Check = 0f;
+                GameManager.Sound.SFXPlayOff();
+                break;
+            }
+        }
+        _powerBeam.Stop();
+        _scientistSkill3.gameObject.SetActive(false);
+        _coSkill3 = null;
+    }
+    // 대미지 계산 함수
+    public void Skill3Event()
+    { 
+        // 대미지 계산
+        GameManager.Obj._targetMonsterController.OnDamaged(_playerStat.Atk, 10);
+        // 사운드 추가
+        GameManager.Sound.SFXPlay("ScientistSkill3");
+    }
+
+    public void ScientistSkill3Event()
+    {
+        _scientistSkill3.gameObject.SetActive(true);
     }
 
     public void AttackEffectOn()

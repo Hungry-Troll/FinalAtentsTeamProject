@@ -16,6 +16,15 @@ public class SuperhumanController : PlayerController
     // 공격 이펙트용
     protected TrailRenderer _swordEffect;
 
+    public void Awake()
+    {
+        //SuperHuman Skill3 파티클 연결
+        _skill3GroundEffect = FindEffect("Skill3GroundEffect", transform);
+        _skill3GroundEffect.gameObject.SetActive(false);
+        _skill3BoosterEffect = FindEffect("Skill3BoosterEffect", transform);
+        _skill3BoosterEffect.gameObject.SetActive(false); ;
+    }
+
     public override void JobStart()
     {
         //SuperHuman Skill1 파티클 연결
@@ -31,9 +40,6 @@ public class SuperhumanController : PlayerController
         Skill2WheelWindOff();
         // Skill2 공격범위용 콜라이더
         _skill2BoxCollider = skill2Tr.GetComponent<BoxCollider>();
-        //SuperHuman Skill3 파티클 연결
-        _skill3GroundEffect = FindEffect("Skill3GroundEffect", transform);
-        _skill3BoosterEffect = FindEffect("Skill3BoosterEffect", transform);
         // 공격이펙트 연결
         Transform tmp = Util.FindChild("SwordEffect", transform);
         _swordEffect = tmp.GetComponent<TrailRenderer>();
@@ -67,6 +73,7 @@ public class SuperhumanController : PlayerController
                 _anim.SetInteger("playerStat", 6);
                 break;
             case CreatureState.Skill3:
+                _anim.SetInteger("playerStat", 7);
                 break;
             case CreatureState.None:
                 break;
@@ -205,30 +212,31 @@ public class SuperhumanController : PlayerController
 
     public override void Skill3()
     {
-        //if (_isSkill1 == false && _isSkill3 == false)
-        //{
-        if (_skill3Stat.Skill3Level != skill3Level)
+        if(_coSkill3 == null)
         {
-            Skill3DataLoad();
+            if (_skill3Stat.Skill3Level != skill3Level)
+            {
+                Skill3DataLoad();
+            }
+            _anim.SetInteger("playerStat", 7);
+            _coSkill3 = StartCoroutine(CoSkill3());
         }
-        StartCoroutine(CoSkill3());
-        //_sceneAttackButton = SceneAttackButton.None;
-        _creatureState = CreatureState.Idle;
-        //}
     }
 
     protected IEnumerator CoSkill3()
     {
-        _anim.SetInteger("playerStat", 7);
+        GameManager.Sound.SFXPlay("SuperHumanSkill3");
+        _skill3GroundEffect.gameObject.SetActive(true);
+        _skill3GroundEffect.Play();
+        _skill3BoosterEffect.gameObject.SetActive(true);
+        _skill3BoosterEffect.Play();
+        yield return new WaitForSeconds(3.0f);
+        _creatureState = CreatureState.Idle;
         _skill3PlayerScale.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
         _playerStat.Max_Hp += _skill3Stat.Skill3StatMaxHp;
         _playerStat.Hp += _skill3Stat.Skill3StatHp;
         _playerStat.Atk += _skill3Stat.Skill3StatAtk;
         _playerStat.Def += _skill3Stat.Skill3StatDef;
-        _skill3GroundEffect.Play();
-        _skill3BoosterEffect.Play();
-        _isSkill3 = true;
-        GameManager.Ui._uiSceneAttackButton.Skill3Button(1);
         yield return new WaitForSeconds(_skill3Stat.Duration);
         _playerStat.Max_Hp -= _skill3Stat.Skill3StatMaxHp;
         if (_playerStat.Max_Hp < _playerStat.Hp)
@@ -238,9 +246,11 @@ public class SuperhumanController : PlayerController
         _playerStat.Atk -= _skill3Stat.Skill3StatAtk;
         _playerStat.Def -= _skill3Stat.Skill3StatDef;
         _skill3BoosterEffect.Stop();
+        _skill3BoosterEffect.gameObject.SetActive(false);
+        _skill3GroundEffect.Stop();
+        _skill3GroundEffect.gameObject.SetActive(false);
         _skill3PlayerScale.transform.localScale = new Vector3(1f, 1f, 1f);
-        _isSkill3 = false;
-        GameManager.Ui._uiSceneAttackButton.Skill3Button(2);
+        _coSkill3 = null;
     }
 
     protected override void Attack()

@@ -157,7 +157,6 @@ public class Ui_NpcController : MonoBehaviour
                 }
                 break;
         }
-
         GameManager.Quest.QuestConversationText(GameManager.Quest._conversationCount);
         GameManager.Quest.QuestConversationCountAdd();
     }

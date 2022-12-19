@@ -15,24 +15,26 @@ public class UiDesign3 : MonoBehaviour
 
     public Image SkillInfo;
 
+    public Image skill_1;
+    public Image skill_2;
+    public Image skill_3;
 
     Animator ani;
     
     GameObject job;
     GameObject playerObject;
-    GameObject nicknameObject;
+    public GameObject nicknameObject;
 
     bool WButtom = false;
     bool AButtom = false;
     bool SButtom = false;
 
     int pickNumber;
-
-
+    Image[] images;
     void Start()
     {
         pickNumber = 0;
-        nicknameObject = GameObject.Find("Canvas/NicknameObject");
+        //nicknameObject = GameObject.Find("Canvas/NicknameObject");
         Debug.Log(nicknameObject);
         nicknameObject.gameObject.SetActive(false);
         SkillInfo.gameObject.SetActive(false);
@@ -49,7 +51,20 @@ public class UiDesign3 : MonoBehaviour
             jobInformation.text = "근접전투 스타일에 밸런스형이 특징";
             characterGeneration("SuperhumanCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
-            wSkill.text = "설명";
+
+            wSkill.text = "집중공격";
+            aSkill.text = "소용돌이";
+            sSkill.text = "강화약물";
+
+            skill_1.sprite =
+                Resources.Load("Skills/집중공격", typeof(Sprite)) as Sprite;
+
+            skill_2.sprite =
+                Resources.Load("Skills/소용돌이", typeof(Sprite)) as Sprite;
+
+            skill_3.sprite =
+                Resources.Load("Skills/강화약물", typeof(Sprite)) as Sprite;
+
             //SkillInfo.sprite = wSkill;
             WButtom = false;
             //선택한 직업을 게임매니저에서 관리
@@ -63,7 +78,20 @@ public class UiDesign3 : MonoBehaviour
             jobInformation.text = "원거리전투 스타일에 폭발적인 데미지가 특징";
             characterGeneration("CyborgCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
-            aSkill.text = "설명";
+            wSkill.text = "화염방사";
+            aSkill.text = "유탄발사";
+            sSkill.text = "공중폭격";
+
+
+            skill_1.sprite =
+                 Resources.Load("Skills/화염방사", typeof(Sprite)) as Sprite;
+
+            skill_2.sprite =
+                Resources.Load("Skills/유탄발사", typeof(Sprite)) as Sprite;
+
+            skill_3.sprite =
+                Resources.Load("Skills/공중폭격", typeof(Sprite)) as Sprite;
+
             //SkillInfo.sprite = aSkill;
             AButtom = false;
             //선택한 직업을 게임매니저에서 관리
@@ -78,7 +106,20 @@ public class UiDesign3 : MonoBehaviour
             characterGeneration("ScientistCharacterSelect");
             SkillInfo.gameObject.SetActive(true);
             //SkillInfo.sprite = sSkill;
-            sSkill.text = "설명";
+            wSkill.text = "독 구름";
+            aSkill.text = "익스플로전";
+            sSkill.text = "번개";
+
+            skill_1.sprite =
+                Resources.Load("Skills/독구름", typeof(Sprite)) as Sprite;
+
+            skill_2.sprite =
+                Resources.Load("Skills/익스플로전", typeof(Sprite)) as Sprite;
+
+            skill_3.sprite =
+                Resources.Load("Skills/번개1", typeof(Sprite)) as Sprite;
+
+
             SButtom = false;
             //선택한 직업을 게임매니저에서 관리
             GameManager.Select._jobName = "Scientist";

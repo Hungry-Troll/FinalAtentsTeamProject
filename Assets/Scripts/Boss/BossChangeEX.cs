@@ -23,6 +23,7 @@ public class BossChangeEX : MonsterControllerEX
         //Invoke("spwan", 13);
         StartCoroutine(SpawnBoss());
         transform.LookAt(GameManager.Obj._playerController.gameObject.transform);
+        GameManager.Sound.SFXPlay("BossText");
     }
 
     public void dead()

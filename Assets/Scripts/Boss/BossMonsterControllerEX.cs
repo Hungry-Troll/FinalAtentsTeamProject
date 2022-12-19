@@ -63,6 +63,8 @@ public class BossMonsterControllerEX : MonsterControllerEX
     {
         base.Start();
         _attack = 5.0f;
+        // 보스 울음소리
+        GameManager.Sound.SFXPlay("BossOpning");
     }
 
     public override void FindMaterial()
@@ -228,6 +230,7 @@ public class BossMonsterControllerEX : MonsterControllerEX
         {
             // 강제 애니메이션 재생
             _ani.SetInteger("state", 3);
+            GameManager.Sound.SFXPlay("BossSkill1");
             // 이펙트 온
             Skill1EffectOn();
             // 소환
@@ -298,7 +301,7 @@ public class BossMonsterControllerEX : MonsterControllerEX
             // 대미지 계산
             _playerController.OnDamaged(_monsterStat.Atk);
             // 사운드 적용
-            GameManager.Sound.SFXPlay("Dino-raptor");
+            GameManager.Sound.SFXPlay("BossSound1");
         }
     }
 
