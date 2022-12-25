@@ -3,6 +3,7 @@
 <!--<hr width=66.5% border=none;/>-->
 
 <a href="https://www.youtube.com/watch?v=vOQgDTH6m5A" target="_blank"><img src="https://user-images.githubusercontent.com/64481653/209466340-256dae25-f768-41cf-924c-38549625d4f3.png" style="display: block; margin: 0 auto; width:65%; height:65%;"/>
+(클릭하시면 요약된 영상이 나옵니다.)
 
 # Atens GameAcademy TeamProject
 아텐츠 게임아카데미 D조 팀프로젝트
