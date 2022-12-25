@@ -2,7 +2,7 @@
 
 <!--<hr width=66.5% border=none;/>-->
 
-<img src="https://user-images.githubusercontent.com/64481653/209466340-256dae25-f768-41cf-924c-38549625d4f3.png" style="display: block; margin: 0 auto; width:65%; height:65%;"/>
+<a href="https://www.youtube.com/watch?v=vOQgDTH6m5A" target="_blank"><img src="https://user-images.githubusercontent.com/64481653/209466340-256dae25-f768-41cf-924c-38549625d4f3.png" style="display: block; margin: 0 auto; width:65%; height:65%;"/>
 
 # Atens GameAcademy TeamProject
 아텐츠 게임아카데미 D조 팀프로젝트
@@ -21,7 +21,10 @@
   + 펫 구현 / 시네머신 (오프닝/NPC/보스전) / 맵 제작 (듀토리얼 / 마을) / 아이템 일부 구현
 + 주용선
   + 캐릭터 구현 / 맵 제작 (던전) / 아이템 일부 구현
+<br>
 
+## 게임 스크린샷
+<br>
 <div>
 <section>
 <img src="https://user-images.githubusercontent.com/64481653/209461367-feae015c-7830-4ca0-bd80-3d80ef03f583.PNG" style="float: left;  width:33%; height:33%;"/>
@@ -54,3 +57,6 @@
 <section>
 <img src="https://user-images.githubusercontent.com/64481653/209461368-220fd3d0-d9c1-48d7-aabf-5ba0f72e6ed0.png" style="float: left; width:33%; height:33%;"/>
 <img src="https://user-images.githubusercontent.com/64481653/209461369-553a66fb-a3b3-481a-a84a-1100c79ba7af.png" style="float: left; width:33%; height:33%;"/>
+</div>
+
+## 플레이 영상
