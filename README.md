@@ -5,6 +5,22 @@
 <img src="https://user-images.githubusercontent.com/64481653/209466340-256dae25-f768-41cf-924c-38549625d4f3.png" style="display: block; margin: 0 auto; width:65%; height:65%;"/>
 
 # Atens GameAcademy TeamProject
+아텐츠 게임아카데미 D조 팀프로젝트
+<br>
+<br>
+## 구성원
++ 김용현(팀장)
+  + 메인 UI / 프로젝트 관리
++ 김후영
+  + 데이터 관리 / 펫 선택 / A* 알고리즘 / 서브 UI
++ 박상철
+  + 몬스터, 보스몬스터 구현 / 미니맵 / 대미지 UI / 오브젝트 풀링 / 파티클 관리
++ 박수종
+  + 타이틀 / 엔딩 UI / 사운드 관리 / NPC 일부
++ 윤나은
+  + 펫 구현 / 시네머신 (오프닝/NPC/보스전) / 맵 제작 (듀토리얼 / 마을) / 아이템 일부 구현
++ 주용선
+  + 캐릭터 구현 / 맵 제작 (던전) / 아이템 일부 구현
 
 <div>
 <section>
