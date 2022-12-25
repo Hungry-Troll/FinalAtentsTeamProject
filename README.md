@@ -3,7 +3,9 @@
 <!--<hr width=66.5% border=none;/>-->
 
 <a href="https://www.youtube.com/watch?v=vOQgDTH6m5A" target="_blank"><img src="https://user-images.githubusercontent.com/64481653/209466340-256dae25-f768-41cf-924c-38549625d4f3.png" style="display: block; margin: 0 auto; width:65%; height:65%;"/>
-(클릭하시면 요약된 영상이 나옵니다.)
+<br>
+
+(위 그림을 클릭하면 짧은 영상이 나옵니다.)
 
 # Atens GameAcademy TeamProject
 아텐츠 게임아카데미 D조 팀프로젝트
@@ -61,3 +63,7 @@
 </div>
 
 ## 플레이 영상
+<a href="https://youtu.be/Z7N_vioZMyA" target="_blank"><img src="https://user-images.githubusercontent.com/64481653/209461351-c94a847b-8fbd-442c-9170-9c5de1901d04.png" style="float: left; width:65%; height:65%;"/>
+<br>
+
+(위 그림을 클릭하면 플레이 영상이 나옵니다.)
