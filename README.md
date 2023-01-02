@@ -13,9 +13,9 @@
 <br>
 <br>
 ## 구성원
-+ 김용현(팀장) [깃허브](https://github.com/Hungry-Troll) [블로그](https://blog.naver.com/i_am_gamer) [유튜브](https://www.youtube.com/channel/UC1vY8HLaBPPzphSV4-8ZcLw)
++ 김용현(팀장) [Resume](https://sedate-juice-519.notion.site/Dev_YH-resume-bff021d2b5e24b93a0724c1819a1c6bb) [깃허브](https://github.com/Hungry-Troll) [블로그](https://blog.naver.com/i_am_gamer) [유튜브](https://www.youtube.com/channel/UC1vY8HLaBPPzphSV4-8ZcLw)
   + 메인 UI / 프로젝트 관리
-+ 김후영
++ 김후영 [업무 기록](https://sedate-juice-519.notion.site/920b6bdda8a84cc8aedd68149ec94f53)
   + 데이터 관리 / 펫 선택 씬 제작 / A* 알고리즘 / 서브 UI
 + 박상철
   + 몬스터, 보스몬스터 구현 / 미니맵 / 대미지 UI / 오브젝트 풀링 / 파티클 관리
