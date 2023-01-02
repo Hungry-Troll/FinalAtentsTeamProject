@@ -15,15 +15,15 @@
 ## 구성원
 + 김용현(팀장) [Resume](https://sedate-juice-519.notion.site/Dev_YH-resume-bff021d2b5e24b93a0724c1819a1c6bb) [깃허브](https://github.com/Hungry-Troll) [블로그](https://blog.naver.com/i_am_gamer) [유튜브](https://www.youtube.com/channel/UC1vY8HLaBPPzphSV4-8ZcLw)
   + 메인 UI / 프로젝트 관리
-+ 김후영 [업무 기록](https://sedate-juice-519.notion.site/920b6bdda8a84cc8aedd68149ec94f53)
++ 김후영 [작업 목록](https://sedate-juice-519.notion.site/920b6bdda8a84cc8aedd68149ec94f53)
   + 데이터 관리 / 펫 선택 씬 제작 / A* 알고리즘 / 서브 UI
-+ 박상철
++ 박상철 [작업 목록](https://sedate-juice-519.notion.site/9e4e89743175462e919e2309a2f6bf62)
   + 몬스터, 보스몬스터 구현 / 미니맵 / 대미지 UI / 오브젝트 풀링 / 파티클 관리
-+ 박수종
++ 박수종 [작업 목록](https://sedate-juice-519.notion.site/8fdaa9b535204fa2be4460a4c28b2eab)
   + 타이틀 / 엔딩 UI / 사운드 관리 / NPC 일부
-+ 윤나은
++ 윤나은 [작업 목록](https://sedate-juice-519.notion.site/df85e719a1dd47359e406b4396e76296)
   + 펫 구현 / 시네머신 (오프닝/NPC/보스전) / 맵 제작 (듀토리얼 / 마을) / 아이템 일부 구현
-+ 주용선
++ 주용선 [작업 목록](https://sedate-juice-519.notion.site/05c1a6df8cb145749a5cf8a2243b994e)
   + 캐릭터 구현 / 캐릭터 선택 씬 제작 / 맵 제작 (던전) / 아이템 일부 구현 / 퀘스트 시스템 구현
 <br>
 
