@@ -162,11 +162,14 @@ public class FieldManager : MonoBehaviour
         GameManager.Obj.RemoveAllMobList();
         // Ui 불러옴
         GameManager.Ui.Init();
+        // Parse 매니저
+        GameManager.Parse.Init();
+
         // 듀토리얼씬이 아니면 데이터 로드
         if (GameManager.Scene._sceneNameEnum != SceneName.Tutorial)
         {
             // 데이터 로드
-            GameManager.Data.LoadData(false);
+            GameManager.Data.LoadData_1(false);
         }
 
         // Select 매니저에서 어떤 캐릭터랑 펫을 선택했는지 확인
@@ -179,8 +182,7 @@ public class FieldManager : MonoBehaviour
         GameManager.Cam.Init();
         // 파티클 생성
         GameManager.Effect.Init();
-        // Parse 매니저
-        GameManager.Parse.Init();
+
     }
 
     public void CreatePlayer()

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using LitJson;
+using UnityEngine.Networking;
 
 //                                       * 참고
 // <    MonoBehaviour 상속        -          상속 받지 않은 일반 클래스    >
@@ -40,19 +41,89 @@ public class ParseManager
     // Data json 파일 로드해서 각 리스트로 넘겨주는 함수
     public void LoadJson()
     {
-        _fileName = "Data";
-        _path = Application.dataPath + "/Resources/Data/Json/" + _fileName + ".json";
+        _fileName = "/Data";
+        string url = "https://drive.google.com/uc?export=download&id=10F_i76ia4scjxPxjX_GPZ-5y79Q1CHMq";
+        string JsonString = null;
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            UnityWebRequest www = 
+                UnityWebRequest.Get(url);
+            //WWW reader = new WWW("jar:file://" + Application.streamingAssetsPath + _fileName + ".json");
+            www.SendWebRequest();
+            while (!www.isDone) { }
+            byte[] temp = www.downloadHandler.data;
+            JsonString = Encoding.UTF8.GetString(temp);
+        }
+        else
+        {
+            UnityWebRequest www =
+                UnityWebRequest.Get(url);
+            //WWW reader = new WWW("jar:file://" + Application.streamingAssetsPath + _fileName + ".json");
+            www.SendWebRequest();
+            while (!www.isDone) { }   
+            byte[] temp = www.downloadHandler.data;
+            JsonString = Encoding.UTF8.GetString(temp);
+            //JsonString = File.ReadAllText(Application.streamingAssetsPath + _fileName + ".json");
+        }
+
 
         // 파일 가져와서 읽는 코드
-        FileStream fileStream = new FileStream(_path, FileMode.Open);
-        byte[] data = new byte[fileStream.Length];
-        fileStream.Read(data, 0, data.Length);
-        fileStream.Close();
-        string json = Encoding.UTF8.GetString(data);
+        //FileStream fileStream = new FileStream(_path, FileMode.Open);
+        //byte[] data = new byte[fileStream.Length];
+        //fileStream.Read(data, 0, data.Length);
+        //fileStream.Close();
+        //string json = Encoding.UTF8.GetString(data);
 
         // 가장 큰 {} -> 전체 데이터, 밑 예시처럼 사용
-        JsonData rootData = JsonMapper.ToObject(json);
+        JsonData rootData = JsonMapper.ToObject(JsonString);
         
+        // 예시) {["Player" : {"_Id" : 11, "_Job" : "boss", } , {...}, {...} ...]}    /-> boss 출력
+        //Debug.Log(rootData["Player"][0]["_Job"].ToString());
+
+        // 플레이어, 펫, 몬스터, 아이템 , 세이브 각 스탯 리스트로 변환
+        ParsePlayerStat(rootData["Player"]);
+        ParsePetStat(rootData["Pet"]);
+        ParseMonsterStat(rootData["Monster"]);
+        ParseItemStat(rootData["Item"]);
+        ParseSave(rootData["Save"]);
+
+        string path = Application.persistentDataPath + _fileName + ".json";
+
+        //if (!Directory.Exists(Application.persistentDataPath + "/" + _fileName))
+        //{
+        //    Directory.CreateDirectory(Application.persistentDataPath + "/" + _fileName);
+        //}
+
+        using (FileStream fileStream1 = File.Create(path))
+        {
+            byte[] data1 = Encoding.UTF8.GetBytes(JsonString);
+            fileStream1.Write(data1, 0, data1.Length);
+        }
+    }
+
+    public void LoadJson_1()
+    {
+        _fileName = "/Data";
+        string JsonString = null;
+
+        // Application.streamingAssetsPath에 json 파일을 만들어놓고 (로드만 가능함)
+        // 그 파일을 Application.persistentDataPath 에 저장한다 (로드 및 세이브 가능)
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            WWW reader = new WWW("jar:file://" + Application.streamingAssetsPath + _fileName + ".json");
+            while (!reader.isDone) { }
+            JsonString = reader.text;
+        }
+        else
+        {
+            JsonString = File.ReadAllText(Application.streamingAssetsPath + _fileName + ".json");
+        }
+
+        // 가장 큰 {} -> 전체 데이터, 밑 예시처럼 사용
+        JsonData rootData = JsonMapper.ToObject(JsonString);
+
         // 예시) {["Player" : {"_Id" : 11, "_Job" : "boss", } , {...}, {...} ...]}    /-> boss 출력
         //Debug.Log(rootData["Player"][0]["_Job"].ToString());
 
@@ -271,7 +342,7 @@ public class ParseManager
     }
 
     // 원하는 펫 데이터 검색해서 GameManager로 넘겨주는 함수
-    public void FindPetObjData(Define.Pet PetName)
+    public void FindPetObjData(string PetName)
     {
         foreach (TempPetStat one in _petList)
         {

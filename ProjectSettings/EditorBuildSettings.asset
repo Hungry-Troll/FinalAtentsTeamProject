@@ -9,35 +9,26 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Scenes/CharacterSelectScene5.unity
-    guid: d98f798e3ce427b489d4970bd4360abe
-  - enabled: 0
-    path: Assets/Scenes/SelectPet/SelectPet4.unity
-    guid: aa56a1c89a0ae68409a12ea1602057f8
-  - enabled: 0
-    path: Assets/Scenes/CharacterSelectScene4.unity
-    guid: 727447e177711204a8fef31f22bdd566
+    path: Assets/Scenes/Title.unity
+    guid: 6cdb5f449de2b634baa5f4763abec2e8
+  - enabled: 1
+    path: Assets/Scenes/SelectPet/CharacterSelectScene.unity
+    guid: 35d10ee1d99fe094eb2756134969df02
+  - enabled: 1
+    path: Assets/Scenes/SelectPet/SelectPet.unity
+    guid: 3e7f34f9f8a69df41b597bf6d731596b
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: f8ad99503713d2b4e9b74480b7dbd7d0
   - enabled: 1
     path: Assets/Scenes/DunGeon.unity
     guid: 32047a6693b130244b63ba1dc8fd7fee
-  - enabled: 0
-    path: Assets/Scenes/SelectPet/SelectPet3.unity
-    guid: fbd951b3e8c61264f9a7a300595575e0
   - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 54ab90946046f1541814e61c2451d7fe
   - enabled: 0
-    path: Assets/Scenes/DunGeon1.unity
-    guid: eac256ae12e18744fb68186b62f37ae7
-  - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
-    guid: f8ad99503713d2b4e9b74480b7dbd7d0
   - enabled: 1
     path: Assets/Scenes/Village02.unity
     guid: 25e815cb897b82c46835fcdb02978054
@@ -45,20 +36,11 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/SelectPet/SelectPet5.unity
-    guid: 6ae180e97381e56418abf215568dfeb5
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/SelectPet/CharacterSelectScene.unity
-    guid: 35d10ee1d99fe094eb2756134969df02
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/SelectPet/SelectPet.unity
-    guid: 3e7f34f9f8a69df41b597bf6d731596b
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000

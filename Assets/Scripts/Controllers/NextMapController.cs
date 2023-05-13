@@ -41,7 +41,7 @@ public class NextMapController : MonoBehaviour
     // 마을로 씬 이동하는 함수
     public void MoveToVillage02()
     {   
-         GameManager.Data.SaveData();
+         GameManager.Data.SaveData_1();
          GameManager.Scene.LoadScene("Village02");
          // 현재 데이터를 저장한다.
          // 다음 씬으로 넘어간다.
@@ -50,7 +50,7 @@ public class NextMapController : MonoBehaviour
     // 던전으로 씬 이동하는 함수
     public void MoveToDunGeon()
     {
-        GameManager.Data.SaveData();
+        GameManager.Data.SaveData_1();
         GameManager.Scene.LoadScene("DunGeon");
     }
 

@@ -54,7 +54,19 @@ public class CreateManager
                 // Obj 매니저에서 PlayerStat 관리
                 GameManager.Obj._playerStat = player.AddComponent<PlayerStat>();
                 // 스텟 적용
-                GameManager.Stat.PlayerStatLoadJson(1, GameManager.Select._job);
+                TempStatEX tempStat = GameManager.Parse.FindPlayerObjData2(1, GameManager.Select._job);
+
+                GameManager.Obj._playerStat.Atk = tempStat.Atk;
+                GameManager.Obj._playerStat.Def = tempStat.Def;
+                GameManager.Obj._playerStat.Hp = tempStat.Hp;
+                GameManager.Obj._playerStat.Job = tempStat.Job;
+                GameManager.Obj._playerStat.Lv = tempStat.Lv;
+                GameManager.Obj._playerStat.Max_Hp = tempStat.Max_Hp;
+                GameManager.Obj._playerStat.Name = tempStat.Name;
+                GameManager.Obj._playerStat.Exp = tempStat.Exp;
+                GameManager.Obj._playerStat.Lv_Exp = tempStat.Lv_Exp;
+                GameManager.Obj._playerStat.Gold = tempStat.Gold;
+
                 // 스텟 캐릭터창 적용
                 GameManager.Ui.InventoryStatUpdate();
                 // Hp 바 적용
@@ -88,7 +100,8 @@ public class CreateManager
                 // Obj 매니저에서 펫 Stat 관리 (스텟 매니저에서 관리해야될지 고민)
                 GameManager.Obj._petStat = pet.AddComponent<PetStat>();
                 // 스텟 적용
-                GameManager.Stat.PetStatLoadJson(_select_Pet);
+                //GameManager.Stat.PetStatLoadJson(_select_Pet);
+                GameManager.Parse.FindPetObjData(petName);
                 // Hp 바 적용
                 GameManager.Ui.HpBarCreate(pet);
                 return _pet;
@@ -145,7 +158,8 @@ public class CreateManager
                 _monsterStat = monster.AddComponent<MonsterStat>();
                 GameManager.Obj._monsterStatList.Add(_monsterStat);
                 // 스텟 스크립트에 json 파일 스텟 적용
-                GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                //GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                GameManager.Parse.FindMonsterObjData(Define.Monster.Velociraptor, _monsterStat);
                 _monster.name = tempName;
                 // Hp 바 적용
                 GameManager.Ui.HpBarCreate(monster);
@@ -173,7 +187,8 @@ public class CreateManager
                 _monsterStat = monster.AddComponent<MonsterStat>();
                 GameManager.Obj._monsterStatList.Add(_monsterStat);
                 // 스텟 스크립트에 json 파일 스텟 적용
-                GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                //GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                GameManager.Parse.FindMonsterObjData(Define.Monster.Velociraptor, _monsterStat);
                 _monster.name = tempName;
                 // Hp 바 적용
                 GameManager.Ui.HpBarCreate(monster);
@@ -224,7 +239,8 @@ public class CreateManager
                 GameManager.Obj._bossStat = _monsterStat;
                 GameManager.Obj._boss = _boss;
                 // 스텟 스크립트에 json 파일 스텟 적용
-                GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                //GameManager.Stat.MonsterStatLoadJson(tempName, _monsterStat);
+                GameManager.Parse.FindMonsterObjData(Define.Monster.Boss, GameManager.Obj._bossStat);
                 _boss.name = tempName;
                 // Hp 바 적용
                 GameManager.Ui._bossHpbar = GameManager.Create.CreateUi("UI_BossHpBar", _boss.gameObject);

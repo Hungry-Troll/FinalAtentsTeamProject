@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Util;
 using static Define;
-using TMPro.EditorUtilities;
 
 public class ItemStatViewController : MonoBehaviour, IBeginDragHandler, IDragHandler
 {

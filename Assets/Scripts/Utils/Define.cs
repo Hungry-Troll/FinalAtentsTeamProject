@@ -44,6 +44,7 @@ public class Define
         Parasaurolophus,
         Iguanodon,
         Velociraptor,
+        Boss,
         None,
     }
     public enum Job

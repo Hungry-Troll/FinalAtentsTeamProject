@@ -30,7 +30,7 @@ public class LoadSelect : MonoBehaviour
         Creat();
 
         //DataManager.instance.LoadData();
-        GameManager.Data.LoadData(true);
+        GameManager.Data.LoadData_1(true);
         StartGame();
     }
 

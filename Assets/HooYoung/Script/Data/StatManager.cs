@@ -132,10 +132,10 @@ public class StatManager
     public void PlayerStatLoadJson(int Lv, Define.Job Job)
     {
         // 불러올 파일 이름
-        string fileName = Job.ToString();
-        fileName += Lv.ToString();
+        string fileName = "Data";
+        //fileName += Lv.ToString();
         // 경로
-        string path = Application.dataPath + "/Resources/Data/Json/Player/" + fileName + ".json";
+        string path = Application.persistentDataPath + "/" + fileName + ".json";
 
         FileStream fileStream = new FileStream(path, FileMode.Open);
         byte[] data = new byte[fileStream.Length];
